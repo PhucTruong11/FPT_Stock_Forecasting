@@ -34,6 +34,10 @@ class ModelService:
         for name, spec in self.manifest["models"].items():
             if spec["kind"] == "sklearn":
                 self.loaded[name] = joblib.load(self.artifact_dir / spec["file"])
+            elif spec["kind"] == "xgboost":
+                from xgboost import XGBRegressor
+                self.loaded[name] = XGBRegressor()
+                self.loaded[name].load_model(self.artifact_dir / spec["file"])
             elif spec["kind"] == "lstm":
                 import tensorflow as tf
                 self.loaded[name] = (
@@ -62,7 +66,7 @@ class ModelService:
             prediction = float(spec["value"])
         elif spec["kind"] == "persistence":
             prediction = float(frame["Log_Return"].iloc[-1])
-        elif spec["kind"] == "sklearn":
+        elif spec["kind"] in ("sklearn", "xgboost"):
             prediction = float(self.loaded[name].predict(frame[FEATURE_COLUMNS].iloc[[-1]])[0])
         else:
             if len(frame) < spec["lookback"]:

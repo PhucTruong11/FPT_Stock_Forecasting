@@ -1,6 +1,6 @@
 {
-  "reference_run": "20261025T121448987851Z",
-  "candidate_run": "20261025T121448987851Z",
+  "reference_run": "20261025T124951351761Z",
+  "candidate_run": "20261025T124951351761Z",
   "protocol_checks": {
     "data_sha256": true,
     "raw_sha256": true,

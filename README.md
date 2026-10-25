@@ -110,14 +110,14 @@ python -m src.models.experiment --epochs 40 --seed 42
 python -m unittest discover -s tests -v
 ```
 
-Mỗi lượt có `models/experiments/<run_id>/manifest.json`, model/scaler và báo cáo riêng. `models/latest_experiment.json` trỏ lượt đang dùng; `models/reference_experiment.json` khóa CPU reference để so với Colab. Không ghép weights và scaler giữa các lượt.
+Mỗi lượt có `models/experiments/<run_id>/manifest.json`, model/scaler và báo cáo riêng. `models/latest_experiment.json` trỏ lượt đang dùng; `models/reference_experiment.json` khóa CPU reference để so với Colab. Không ghép weights và scaler giữa các lượt. XGBoost lưu bằng native JSON (`save_model`/`load_model`) để chuyển giữa Windows và Colab; không dùng pickle cho XGBoost.
 
 ## 6. Colab: đúng code GitHub, đúng snapshot
 
 [Mở notebook training trên Colab](https://colab.research.google.com/github/PhucTruong11/FPT_Stock_Forecasting/blob/feature/train-model/notebooks/02_train_deep_learning_fpt.ipynb)
 
 1. Mở notebook mới từ link GitHub, không chạy bản cũ trong Drive.
-2. Setup clone vào `/content/Stock_Prediction_Project_v2`, cài `requirements-colab.txt` và phục hồi ZIP snapshot có hash. Nếu thư viện đã load đổi phiên bản, restart session rồi Run all lại.
+2. Setup clone vào `/content/FPT_Stock_Forecasting_portable_v2`, cài `requirements-colab.txt` và phục hồi ZIP snapshot có hash. Nếu thư viện đã load đổi phiên bản, restart session rồi Run all lại.
 3. Có thể dùng GPU Pro; nguồn dữ liệu và công thức giữ nguyên. **Không tải Yahoo lại để so với CPU**.
 4. Cuối notebook tự so với CPU reference: hash, code, config, split, seed, phiên bản và sai số. Cùng phiên bản chưa bảo đảm bitwise giống trên CPU/GPU.
 5. Ngưỡng RMSE lệch tương đối 5% là kiểm tra kỹ thuật, không phải kiểm định thống kê. Phần LSTM so đúng lookback 30 của reference, kể cả GPU chọn lookback khác trên validation.
@@ -174,7 +174,7 @@ Muốn thu thập snapshot mới, chạy downloader/build như một nghiên c�
 
 ## 9. Kiểm chứng và giới hạn
 
-35 unit test đã qua. Bốn notebook chạy từ đầu; API model thật khớp inference offline; sample OHLCV đầy đủ khớp snapshot prediction; Streamlit đã thử dự báo LSTM và Train Mean qua HTTP. Tất cả dùng manifest v2.
+36 unit test đã qua. Bốn notebook chạy từ đầu; API model thật khớp inference offline; sample OHLCV đầy đủ khớp snapshot prediction; Streamlit đã thử dự báo LSTM và Train Mean qua HTTP. Tất cả dùng manifest v2.
 
 Chưa có walk-forward/feature-group ablation, lịch HOSE/corporate actions độc lập hoặc backtest thực thi giao dịch. Đây là demo nghiên cứu hoàn chỉnh về luồng, không phải hệ thống giao dịch sản xuất.
 

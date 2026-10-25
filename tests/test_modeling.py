@@ -1,14 +1,29 @@
 """Regression checks for forecast dates, shared context and honest direction metrics."""
 
 import unittest
+import tempfile
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
-from src.models.experiment import make_sequences, metrics, split_masks
+from src.models.experiment import make_sequences, metrics, split_masks, _predict
+from src.features.build_features import FEATURE_COLUMNS
 
 
 class ModelingTests(unittest.TestCase):
+    def test_native_xgboost_artifact_reloads_with_identical_predictions(self):
+        from xgboost import XGBRegressor
+        frame = pd.DataFrame(np.random.default_rng(42).normal(size=(24, len(FEATURE_COLUMNS))),
+                             columns=FEATURE_COLUMNS)
+        model = XGBRegressor(n_estimators=3, max_depth=2, n_jobs=1, random_state=42)
+        model.fit(frame, frame.iloc[:, 0])
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder)
+            model.save_model(path / "xgboost.json")
+            actual = _predict({"kind": "xgboost", "file": "xgboost.json"}, frame, frame, path)
+        np.testing.assert_array_equal(actual, model.predict(frame))
+
     def test_labels_crossing_partition_boundary_are_excluded(self):
         frame = pd.DataFrame({
             "Date": pd.to_datetime(["2022-12-29", "2022-12-30", "2023-01-03", "2024-12-31", "2025-01-02"]),

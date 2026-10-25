@@ -1,6 +1,6 @@
 # Kết quả FPT v2 đã chốt
 
-CPU reference: `20261025T121448987851Z`; seed 42; TensorFlow 2.21.0.
+CPU reference: `20261025T124951351761Z`; seed 42; TensorFlow 2.21.0.
 
 **Quyết định:** dùng pipeline v2 duy nhất; LSTM lookback 30 để demo ML, Train Mean là model thắng validation. Không đổi model theo test.
 
@@ -19,7 +19,7 @@ Hit Rate test trên 211 actual khác 0; 37 actual đứng giá được báo ri�
 
 ## Đã kiểm chứng
 
-- 35 unit test: data, target boundary, sequence, metric, snapshot, HTTP schema.
+- 36 unit test: data, target boundary, sequence, metric, snapshot, HTTP schema.
 - 4 notebook chạy từ đầu; source/scaler/feature order dùng chung.
 - Dữ liệu và artifact khớp hash; nạp lại metrics khớp manifest.
 - FastAPI model thật khớp inference offline; OHLCV sample đầy đủ cho cùng prediction.
@@ -31,9 +31,9 @@ Colab phải dùng notebook GitHub mới, cùng ZIP snapshot và requirements-co
 
 ## Nguồn
 
-- [Manifest](../models/experiments/20261025T121448987851Z/manifest.json)
-- [Metrics](../reports/experiments/20261025T121448987851Z/metrics.csv)
-- [Predictions](../reports/experiments/20261025T121448987851Z/predictions.csv)
+- [Manifest](../models/experiments/20261025T124951351761Z/manifest.json)
+- [Metrics](../reports/experiments/20261025T124951351761Z/metrics.csv)
+- [Predictions](../reports/experiments/20261025T124951351761Z/predictions.csv)
 - [API/UI smoke checks](../reports/verification/api_ui_smoke.json)
 
 ## Giới hạn

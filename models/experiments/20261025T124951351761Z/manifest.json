@@ -1,7 +1,7 @@
 {
   "schema_version": "fpt-experiment-v1",
   "ticker": "FPT.VN",
-  "run_id": "20261025T121448987851Z",
+  "run_id": "20261025T124951351761Z",
   "seed": 42,
   "feature_columns": [
     "Log_Return",
@@ -73,8 +73,8 @@
       }
     },
     "XGBoost": {
-      "kind": "sklearn",
-      "file": "xgboost_0.pkl",
+      "kind": "xgboost",
+      "file": "xgboost_0.json",
       "parameters": {
         "max_depth": 2
       }
@@ -85,7 +85,7 @@
       "scalers": "lstm_scalers.pkl",
       "lookback": 30,
       "epochs_trained": 12,
-      "seconds": 3.5789981999987504
+      "seconds": 3.7334072000012384
     }
   },
   "selection": {
@@ -109,7 +109,7 @@
     "excluded": "a0c259f6ffb7abd165b5f8716077a4a9e457b8b58ba02b276b370140de7650c1"
   },
   "raw_sha256": "501d6a8e0c511dca824994bdd8e91c58e222506eef667780eb15433c2070c8ea",
-  "source_code_sha256": "d4a1e3601ced771cc76e7c47649cb489ef709cfcb37ae2d14ab1dbe3d067b612",
+  "source_code_sha256": "24bbc95e82d8ebf981c031b3418be7e0f18bf05b693d0ff71f7afc8efb00e5b1",
   "versions": {
     "numpy": "2.5.3",
     "pandas": "3.0.6",
@@ -153,15 +153,15 @@
   },
   "artifact_sha256": {
     "linear_regression_0.pkl": "f769ec96add7c21cea4b1123f6f6f96cc1f554833ccbfb3705f57ccd06578b93",
-    "lstm_lb10.keras": "b2413852f7330efe3654f10319306a13405c44eba01c3e4e0c8c01643201765b",
-    "lstm_lb30.keras": "edfb7f76919b7278f14e9ad024beffb87a6b4887f155a04905401c7f60f8467c",
-    "lstm_lb60.keras": "555970e41fff4093b4cd9266fcfbfdac45f30c45b5fd61ea15681043af2c5dfd",
+    "lstm_lb10.keras": "caaccc1940895c741f171869d8d639c5afdec2a3461da90937ab72e023f2d528",
+    "lstm_lb30.keras": "bf5ad380d68c9c87fba251ec69fea7b919a9b084b89c4dc7475f2d15e652027c",
+    "lstm_lb60.keras": "43df483e06e755186d58cd928516aa949aa15c85e3019c501556605cba858aa3",
     "lstm_scalers.pkl": "c1e9ab1a1ff571476976443afb3b93ffb2643c7d413f4ef6180eef25c4bb78d6",
     "ridge_0.pkl": "d3e507115ea602bae855a3db03261b66134c3dd8cebd603d47bc320b7a00878e",
     "ridge_1.pkl": "af8aaec36c7a339fd735bf2365c4b0f7d29bad73abeeb0957e94ef8ebb40b8ad",
     "ridge_2.pkl": "76d11d185a2803fed1e8bca919c799d144b27f5e7e7d38f92dcd534bad4ceccc",
-    "xgboost_0.pkl": "cde10fdbafc971c68ee20f670c1667fab68667c46d6f301ae621f6a335530537",
-    "xgboost_1.pkl": "d48a5b4e25fc14ee4efefccbfa8bfe769609a9b0135efc0f87c9974c36860a52"
+    "xgboost_0.json": "79dff489d79888bc81d660dbaf4e64a7b81a854e3517266966b0540613f5016c",
+    "xgboost_1.json": "91e57590b25b06eca92e003ecf63c77abb03c89b38a10ebc9723cc350b186c84"
   },
   "caveats": [
     "2025 was inspected in earlier experiments; this is a reused historical evaluation, not a pristine holdout.",

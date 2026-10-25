@@ -116,6 +116,10 @@ def _predict(spec: dict, features: pd.DataFrame, labels: pd.DataFrame, artifact_
         return labels["Log_Return"].to_numpy()
     if spec["kind"] == "sklearn":
         return joblib.load(artifact_dir / spec["file"]).predict(labels[FEATURE_COLUMNS])
+    if spec["kind"] == "xgboost":
+        model = XGBRegressor()
+        model.load_model(artifact_dir / spec["file"])
+        return model.predict(labels[FEATURE_COLUMNS])
     import tensorflow as tf
     model = tf.keras.models.load_model(artifact_dir / spec["file"], compile=False)
     scalers = joblib.load(artifact_dir / spec["scalers"])
@@ -200,8 +204,14 @@ def run_experiment(root: Path = BASE_DIR, *, include_lstm: bool = True, epochs: 
                                      objective="reg:squarederror", n_jobs=2, random_state=seed)
             model.fit(train[FEATURE_COLUMNS], ytr)
             name, filename = f"{family}/{number}", f"{family.replace(' ', '_').lower()}_{number}.pkl"
-            joblib.dump(model, artifact_dir / filename)
-            spec = {"kind": "sklearn", "file": filename, "parameters": parameters}
+            if family == "XGBoost":
+                filename = filename.removesuffix(".pkl") + ".json"
+                model.save_model(artifact_dir / filename)
+                kind = "xgboost"
+            else:
+                joblib.dump(model, artifact_dir / filename)
+                kind = "sklearn"
+            spec = {"kind": kind, "file": filename, "parameters": parameters}
             score = record(name, family, spec, model.predict(val[FEATURE_COLUMNS]), parameters)
             if best is None or score < best[0]:
                 best = (score, spec, name)
