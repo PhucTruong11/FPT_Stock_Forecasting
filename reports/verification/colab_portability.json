@@ -1,0 +1,15 @@
+{
+  "candidate_run": "20261025T132243824425Z",
+  "source_commit": "5eddc456971ae435dce5770c1f395aa5afd92d27",
+  "notebook_code_cells_executed": 8,
+  "notebook_code_errors": 0,
+  "artifact_sha256_verified": true,
+  "reloaded_all_16_model_split_metrics_match_colab_recorded_metrics": true,
+  "reference_pointer_unchanged": "20261025T124951351761Z",
+  "comparison_status": "protocol_match_numeric_difference",
+  "all_rmse_within_predeclared_5_percent_tolerance": true,
+  "notes": [
+    "XGBoost retraining differs between environments; this is reported, not hidden by a relaxed exact-match claim.",
+    "Native JSON fixes artifact portability. It does not eliminate platform-dependent training differences."
+  ]
+}

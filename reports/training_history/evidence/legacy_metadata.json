@@ -1,0 +1,52 @@
+{
+  "classification": "legacy_unverified_comparison",
+  "training_timestamp": null,
+  "archive": "data/backups/training-before-review-20261025T104543Z.zip",
+  "archive_sha256": "f21b38d7b5283877c89a14292ad7fe762b7189dc801d2509cf161a82e77ef486",
+  "member": "models/deep_learning/fpt/FPT.VN_lstm_metadata.json",
+  "member_sha256": "ebb894d70cde6db728bd19cbd45ad0ad26acb1dc74f7a5c7632ae38f5c01783f",
+  "metadata": {
+    "ticker": "FPT.VN",
+    "model_type": "LSTM",
+    "lookback": 60,
+    "feature_columns": [
+      "Log_Return",
+      "Return_Lag_1",
+      "Return_Lag_2",
+      "Return_Lag_5",
+      "Return_5",
+      "Return_20",
+      "Volatility_5",
+      "Volatility_20",
+      "SMA_Distance_20",
+      "SMA_Distance_50",
+      "RSI_14",
+      "ATR_Ratio",
+      "Intraday_Range",
+      "Volume_Ratio_20",
+      "Volume_Log_Change",
+      "Volume_ZScore_20"
+    ],
+    "target_column": "Target_Return_1d",
+    "train_sessions": 1087,
+    "val_sessions": 493,
+    "test_sessions": 248,
+    "validation_metrics": {
+      "hit_rate": 52.58620689655172,
+      "rmse": 0.014085049163801424,
+      "mae": 0.010166674859411846
+    },
+    "test_metrics": {
+      "hit_rate": 47.39336492890995,
+      "rmse": 0.02004013866068613,
+      "mae": 0.013511785033664863
+    },
+    "best_val_loss": 0.003830130910500884,
+    "epochs_trained": 17,
+    "tensorflow_version": "2.21.0"
+  },
+  "limits": [
+    "No dataset hash or per-origin prediction export; do not treat as controlled before/after evidence.",
+    "Legacy direction metric excludes zero predictions and substitutes 50 percent for no signals."
+  ]
+}

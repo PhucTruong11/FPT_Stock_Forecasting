@@ -1,0 +1,365 @@
+{
+  "schema_version": "fpt-experiment-v1",
+  "ticker": "FPT.VN",
+  "run_id": "20261025T132243824425Z",
+  "seed": 42,
+  "feature_columns": [
+    "Log_Return",
+    "Return_Lag_1",
+    "Return_Lag_2",
+    "Return_Lag_5",
+    "Return_5",
+    "Return_20",
+    "Volatility_5",
+    "Volatility_20",
+    "SMA_Distance_20",
+    "SMA_Distance_50",
+    "RSI_14",
+    "ATR_Ratio",
+    "Intraday_Range",
+    "Volume_Ratio_20",
+    "Volume_Log_Change",
+    "Volume_ZScore_20"
+  ],
+  "target_column": "Target_Return_1d",
+  "target_date_column": "Target_Date_1d",
+  "common_context": 60,
+  "splits": {
+    "train": {
+      "n": 1087,
+      "origin_start": "2018-06-19",
+      "origin_end": "2022-12-29",
+      "target_end": "2022-12-30"
+    },
+    "validation": {
+      "n": 493,
+      "origin_start": "2023-01-03",
+      "origin_end": "2024-12-30",
+      "target_end": "2024-12-31"
+    },
+    "test": {
+      "n": 248,
+      "origin_start": "2025-01-02",
+      "origin_end": "2025-12-30",
+      "target_end": "2025-12-31"
+    }
+  },
+  "models": {
+    "Zero-Return": {
+      "kind": "constant",
+      "value": 0.0
+    },
+    "Return Persistence": {
+      "kind": "persistence"
+    },
+    "Train Mean": {
+      "kind": "constant",
+      "value": 0.0011591656680351383
+    },
+    "Always Up": {
+      "kind": "constant",
+      "value": 0.012461749556357243
+    },
+    "Linear Regression": {
+      "kind": "sklearn",
+      "file": "linear_regression_0.pkl",
+      "parameters": {}
+    },
+    "Ridge": {
+      "kind": "sklearn",
+      "file": "ridge_2.pkl",
+      "parameters": {
+        "alpha": 10.0
+      }
+    },
+    "XGBoost": {
+      "kind": "xgboost",
+      "file": "xgboost_0.json",
+      "parameters": {
+        "max_depth": 2
+      }
+    },
+    "LSTM": {
+      "kind": "lstm",
+      "file": "lstm_lb30.keras",
+      "scalers": "lstm_scalers.pkl",
+      "lookback": 30,
+      "epochs_trained": 12,
+      "seconds": 5.756103251000013
+    }
+  },
+  "selection": {
+    "criterion": "lowest validation RMSE",
+    "selected_model": "Train Mean",
+    "validation_rmse": {
+      "Zero-Return": 0.01409504606857425,
+      "Return Persistence": 0.019069289870308065,
+      "Train Mean": 0.01398137164976996,
+      "Always Up": 0.01747022988699406,
+      "Linear Regression": 0.014051452996738401,
+      "Ridge": 0.014035253794997492,
+      "XGBoost": 0.014063946944167648,
+      "LSTM": 0.014032664706662727
+    },
+    "test_used_for_selection": false
+  },
+  "data_sha256": {
+    "features": "9d81786aa94fec6530714c661eeb2543594ac0ceaba908c0bb5545f693e61ef4",
+    "supervised": "41a849f26749bf789b712466b3c707d48315f2954375c7bbfc88f3f5ea77b44d",
+    "excluded": "a0c259f6ffb7abd165b5f8716077a4a9e457b8b58ba02b276b370140de7650c1"
+  },
+  "raw_sha256": "501d6a8e0c511dca824994bdd8e91c58e222506eef667780eb15433c2070c8ea",
+  "source_code_sha256": "24bbc95e82d8ebf981c031b3418be7e0f18bf05b693d0ff71f7afc8efb00e5b1",
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "xgboost": "3.4.1",
+    "joblib": "1.6.0"
+  },
+  "python": "3.13.16",
+  "runtime": {
+    "device": "GPU",
+    "tensorflow": "2.21.0"
+  },
+  "training_config": {
+    "epochs_limit": 40,
+    "seed": 42,
+    "common_context": 60,
+    "train_end": "2022-12-31",
+    "validation_end": "2024-12-31",
+    "test_end": "2025-12-31",
+    "lookbacks": [
+      10,
+      30,
+      60
+    ],
+    "lstm_units": 32,
+    "dense_units": 8,
+    "dropout": 0.2,
+    "batch_size": 32,
+    "shuffle": false,
+    "loss": "huber",
+    "learning_rate": 0.001,
+    "clipnorm": 1.0,
+    "early_stopping_patience": 7,
+    "feature_scaler": "StandardScaler",
+    "target_scaler": "StandardScaler"
+  },
+  "serving_policy": {
+    "demo_model": "LSTM",
+    "validation_selected_model": "Train Mean",
+    "note": "LSTM demonstrates ML; the overall validation winner is reported separately."
+  },
+  "artifact_sha256": {
+    "linear_regression_0.pkl": "d9b40939f726efb3affe5df1e9d5380f3c0d767e5a2f9ced75f23c327bb8375c",
+    "lstm_lb30.keras": "3e4c9d2c666e9bbb70e5dfba477c7dadc55e9ba04a8764029b915b85e0d54ef6",
+    "ridge_0.pkl": "90e631db1a7bf35f022317fc43a477ff2bad0b730d39441a1f31fb2c31c61713",
+    "xgboost_0.json": "38d514a4cd9aee670efe25db48d220c4aba3e38ad1cdbdb0c32aec574a2c8e42",
+    "lstm_scalers.pkl": "c1e9ab1a1ff571476976443afb3b93ffb2643c7d413f4ef6180eef25c4bb78d6",
+    "ridge_2.pkl": "e8a671d5d7bb9248d655553e1108769f343ff0fd2894a914ef6f21101838477d",
+    "lstm_lb10.keras": "65de2b12565fe6866fda4f29297b58f1533b3f12c930a1ad125bebfc2cc46fac",
+    "xgboost_1.json": "55448e4e86b388ee57f60f2f9d6ee6fdc6d6b9d6ab98721d4d094d2b2483e8d2",
+    "lstm_lb60.keras": "f8ec868d8bea0e7b3fc7c39f37f5e75c14c6ea4b2dda19d4673015993f06ec0b",
+    "ridge_1.pkl": "e26113d207d056560d64f5c1542ea80a9c10ce29bc4432f0c2409ee4ca47c350"
+  },
+  "caveats": [
+    "2025 was inspected in earlier experiments; this is a reused historical evaluation, not a pristine holdout.",
+    "Snapshot-adjusted prices and observed sessions; HOSE calendar not independently verified.",
+    "No trading profitability or causal claims; preprocessing fit on training history only."
+  ],
+  "metrics": [
+    {
+      "model": "Zero-Return",
+      "split": "validation",
+      "n": 493,
+      "rmse": 0.0140950461,
+      "mae": 0.0101017285,
+      "hit_rate_pct": null,
+      "nonzero_actual_n": 464,
+      "neutral_actual_n": 29,
+      "direction_coverage_pct": 0.0,
+      "mse_skill_vs_zero": 0.0
+    },
+    {
+      "model": "Return Persistence",
+      "split": "validation",
+      "n": 493,
+      "rmse": 0.0190692899,
+      "mae": 0.014454281,
+      "hit_rate_pct": 48.9224137931,
+      "nonzero_actual_n": 464,
+      "neutral_actual_n": 29,
+      "direction_coverage_pct": 94.6120689655,
+      "mse_skill_vs_zero": -0.8303579993
+    },
+    {
+      "model": "Train Mean",
+      "split": "validation",
+      "n": 493,
+      "rmse": 0.0139813716,
+      "mae": 0.0100761596,
+      "hit_rate_pct": 54.7413793103,
+      "nonzero_actual_n": 464,
+      "neutral_actual_n": 29,
+      "direction_coverage_pct": 100.0,
+      "mse_skill_vs_zero": 0.0160646563
+    },
+    {
+      "model": "Always Up",
+      "split": "validation",
+      "n": 493,
+      "rmse": 0.0174702299,
+      "mae": 0.014261133,
+      "hit_rate_pct": 54.7413793103,
+      "nonzero_actual_n": 464,
+      "neutral_actual_n": 29,
+      "direction_coverage_pct": 100.0,
+      "mse_skill_vs_zero": -0.5362582929
+    },
+    {
+      "model": "Linear Regression",
+      "split": "validation",
+      "n": 493,
+      "rmse": 0.014051453,
+      "mae": 0.0101035443,
+      "hit_rate_pct": 51.724137931,
+      "nonzero_actual_n": 464,
+      "neutral_actual_n": 29,
+      "direction_coverage_pct": 100.0,
+      "mse_skill_vs_zero": 0.0061760223
+    },
+    {
+      "model": "Ridge",
+      "split": "validation",
+      "n": 493,
+      "rmse": 0.0140352538,
+      "mae": 0.0100849672,
+      "hit_rate_pct": 50.6465517241,
+      "nonzero_actual_n": 464,
+      "neutral_actual_n": 29,
+      "direction_coverage_pct": 100.0,
+      "mse_skill_vs_zero": 0.0084661592
+    },
+    {
+      "model": "XGBoost",
+      "split": "validation",
+      "n": 493,
+      "rmse": 0.0140639469,
+      "mae": 0.0100922993,
+      "hit_rate_pct": 54.525862069,
+      "nonzero_actual_n": 464,
+      "neutral_actual_n": 29,
+      "direction_coverage_pct": 100.0,
+      "mse_skill_vs_zero": 0.0044079056
+    },
+    {
+      "model": "LSTM",
+      "split": "validation",
+      "n": 493,
+      "rmse": 0.0140326647,
+      "mae": 0.0099973137,
+      "hit_rate_pct": 54.7413793103,
+      "nonzero_actual_n": 464,
+      "neutral_actual_n": 29,
+      "direction_coverage_pct": 100.0,
+      "mse_skill_vs_zero": 0.0088319427
+    },
+    {
+      "model": "Zero-Return",
+      "split": "test",
+      "n": 248,
+      "rmse": 0.0199172131,
+      "mae": 0.0131459283,
+      "hit_rate_pct": null,
+      "nonzero_actual_n": 211,
+      "neutral_actual_n": 37,
+      "direction_coverage_pct": 0.0,
+      "mse_skill_vs_zero": 0.0
+    },
+    {
+      "model": "Return Persistence",
+      "split": "test",
+      "n": 248,
+      "rmse": 0.0279954444,
+      "mae": 0.0212208052,
+      "hit_rate_pct": 36.018957346,
+      "nonzero_actual_n": 211,
+      "neutral_actual_n": 37,
+      "direction_coverage_pct": 83.4123222749,
+      "mse_skill_vs_zero": -0.9756844974
+    },
+    {
+      "model": "Train Mean",
+      "split": "test",
+      "n": 248,
+      "rmse": 0.0200217349,
+      "mae": 0.0134292191,
+      "hit_rate_pct": 45.0236966825,
+      "nonzero_actual_n": 211,
+      "neutral_actual_n": 37,
+      "direction_coverage_pct": 100.0,
+      "mse_skill_vs_zero": -0.0105231634
+    },
+    {
+      "model": "Always Up",
+      "split": "test",
+      "n": 248,
+      "rmse": 0.0241334561,
+      "mae": 0.0190551302,
+      "hit_rate_pct": 45.0236966825,
+      "nonzero_actual_n": 211,
+      "neutral_actual_n": 37,
+      "direction_coverage_pct": 100.0,
+      "mse_skill_vs_zero": -0.4681887884
+    },
+    {
+      "model": "Linear Regression",
+      "split": "test",
+      "n": 248,
+      "rmse": 0.0200795996,
+      "mae": 0.0136226158,
+      "hit_rate_pct": 52.1327014218,
+      "nonzero_actual_n": 211,
+      "neutral_actual_n": 37,
+      "direction_coverage_pct": 100.0,
+      "mse_skill_vs_zero": -0.0163726199
+    },
+    {
+      "model": "Ridge",
+      "split": "test",
+      "n": 248,
+      "rmse": 0.0200551206,
+      "mae": 0.0135878348,
+      "hit_rate_pct": 52.6066350711,
+      "nonzero_actual_n": 211,
+      "neutral_actual_n": 37,
+      "direction_coverage_pct": 100.0,
+      "mse_skill_vs_zero": -0.01389601
+    },
+    {
+      "model": "XGBoost",
+      "split": "test",
+      "n": 248,
+      "rmse": 0.019938554,
+      "mae": 0.013785781,
+      "hit_rate_pct": 45.4976303318,
+      "nonzero_actual_n": 211,
+      "neutral_actual_n": 37,
+      "direction_coverage_pct": 100.0,
+      "mse_skill_vs_zero": -0.0021441065
+    },
+    {
+      "model": "LSTM",
+      "split": "test",
+      "n": 248,
+      "rmse": 0.0198583183,
+      "mae": 0.0134415191,
+      "hit_rate_pct": 54.9763033175,
+      "nonzero_actual_n": 211,
+      "neutral_actual_n": 37,
+      "direction_coverage_pct": 100.0,
+      "mse_skill_vs_zero": 0.0059052114
+    }
+  ]
+}

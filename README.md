@@ -179,3 +179,9 @@ Muốn thu thập snapshot mới, chạy downloader/build như một nghiên c�
 Chưa có walk-forward/feature-group ablation, lịch HOSE/corporate actions độc lập hoặc backtest thực thi giao dịch. Đây là demo nghiên cứu hoàn chỉnh về luồng, không phải hệ thống giao dịch sản xuất.
 
 Tham khảo: [review ban đầu](docs/PROJECT_REVIEW.md), [kết quả CPU và giới hạn](docs/TRAINING_RESULTS.md), [TensorFlow determinism](https://www.tensorflow.org/api_docs/python/tf/config/experimental/enable_op_determinism).
+
+## 10. Nhật ký train và bằng chứng
+
+Xem [TRAINING_HISTORY.md](docs/TRAINING_HISTORY.md) để đọc quá trình thay đổi, cấu hình, chỉ số, kết quả Colab và giới hạn của so sánh. Mỗi run giữ manifest, predictions và metrics riêng. Cập nhật nhật ký sau lượt train bằng `python -m src.models.training_history`; lệnh này không train lại hoặc chọn model theo test.
+
+Lượt Colab T4 đã chạy đủ 8 cell và model JSON/Keras đã nạp lại trên Windows. LSTM gần như trùng CPU; XGBoost RMSE lệch nhỏ nên báo cáo giữ trạng thái `protocol_match_numeric_difference`.

@@ -1,0 +1,179 @@
+{
+  "reference_run": "20261025T124951351761Z",
+  "candidate_run": "20261025T132243824425Z",
+  "protocol_checks": {
+    "data_sha256": true,
+    "raw_sha256": true,
+    "feature_columns": true,
+    "splits": true,
+    "seed": true,
+    "training_config": true,
+    "source_code_sha256": true
+  },
+  "protocol_match": true,
+  "reference_runtime": {
+    "device": "CPU",
+    "tensorflow": "2.21.0"
+  },
+  "candidate_runtime": {
+    "device": "GPU",
+    "tensorflow": "2.21.0"
+  },
+  "package_versions_match": true,
+  "tensorflow_version_match": true,
+  "python_version_match": false,
+  "same_overall_validation_winner": true,
+  "reference_lstm_lookback": 30,
+  "candidate_selected_lstm_lookback": 30,
+  "rmse_relative_tolerance": 0.05,
+  "tolerance_meaning": "Engineering comparison only; not statistical equivalence or evidence of trading profit.",
+  "metrics": [
+    {
+      "model": "Zero-Return",
+      "split": "validation",
+      "reference_rmse": 0.0140950461,
+      "candidate_rmse": 0.01409504606857425,
+      "rmse_relative_difference": 2.2295598703796564e-09,
+      "within_tolerance": true,
+      "candidate_hit_rate_pct": null
+    },
+    {
+      "model": "Return Persistence",
+      "split": "validation",
+      "reference_rmse": 0.0190692899,
+      "candidate_rmse": 0.019069289870308065,
+      "rmse_relative_difference": 1.5570551690841597e-09,
+      "within_tolerance": true,
+      "candidate_hit_rate_pct": 48.922413793103445
+    },
+    {
+      "model": "Train Mean",
+      "split": "validation",
+      "reference_rmse": 0.0139813716,
+      "candidate_rmse": 0.01398137164976996,
+      "rmse_relative_difference": 3.5597336521276864e-09,
+      "within_tolerance": true,
+      "candidate_hit_rate_pct": 54.741379310344826
+    },
+    {
+      "model": "Always Up",
+      "split": "validation",
+      "reference_rmse": 0.0174702299,
+      "candidate_rmse": 0.01747022988699406,
+      "rmse_relative_difference": 7.444630179089502e-10,
+      "within_tolerance": true,
+      "candidate_hit_rate_pct": 54.741379310344826
+    },
+    {
+      "model": "Linear Regression",
+      "split": "validation",
+      "reference_rmse": 0.014051453,
+      "candidate_rmse": 0.014051452996738401,
+      "rmse_relative_difference": 2.3211829580584848e-10,
+      "within_tolerance": true,
+      "candidate_hit_rate_pct": 51.724137931034484
+    },
+    {
+      "model": "Ridge",
+      "split": "validation",
+      "reference_rmse": 0.0140352538,
+      "candidate_rmse": 0.014035253794997492,
+      "rmse_relative_difference": 3.564244124409522e-10,
+      "within_tolerance": true,
+      "candidate_hit_rate_pct": 50.646551724137936
+    },
+    {
+      "model": "XGBoost",
+      "split": "validation",
+      "reference_rmse": 0.0140460009,
+      "candidate_rmse": 0.014063946944167648,
+      "rmse_relative_difference": 0.0012776621826678292,
+      "within_tolerance": true,
+      "candidate_hit_rate_pct": 54.525862068965516
+    },
+    {
+      "model": "LSTM",
+      "split": "validation",
+      "reference_rmse": 0.0140326647,
+      "candidate_rmse": 0.014032664706662727,
+      "rmse_relative_difference": 4.748013156229121e-10,
+      "within_tolerance": true,
+      "candidate_hit_rate_pct": 54.741379310344826
+    },
+    {
+      "model": "Zero-Return",
+      "split": "test",
+      "reference_rmse": 0.0199172131,
+      "candidate_rmse": 0.019917213095412847,
+      "rmse_relative_difference": 2.3031101543288375e-10,
+      "within_tolerance": true,
+      "candidate_hit_rate_pct": null
+    },
+    {
+      "model": "Return Persistence",
+      "split": "test",
+      "reference_rmse": 0.0279954444,
+      "candidate_rmse": 0.02799544440616894,
+      "rmse_relative_difference": 2.2035515030230684e-10,
+      "within_tolerance": true,
+      "candidate_hit_rate_pct": 36.018957345971565
+    },
+    {
+      "model": "Train Mean",
+      "split": "test",
+      "reference_rmse": 0.0200217349,
+      "candidate_rmse": 0.02002173488385902,
+      "rmse_relative_difference": 8.061729412349671e-10,
+      "within_tolerance": true,
+      "candidate_hit_rate_pct": 45.023696682464454
+    },
+    {
+      "model": "Always Up",
+      "split": "test",
+      "reference_rmse": 0.0241334561,
+      "candidate_rmse": 0.024133456147809276,
+      "rmse_relative_difference": 1.9810373272793975e-09,
+      "within_tolerance": true,
+      "candidate_hit_rate_pct": 45.023696682464454
+    },
+    {
+      "model": "Linear Regression",
+      "split": "test",
+      "reference_rmse": 0.0200795996,
+      "candidate_rmse": 0.02007959960044191,
+      "rmse_relative_difference": 2.200792874197729e-11,
+      "within_tolerance": true,
+      "candidate_hit_rate_pct": 52.13270142180095
+    },
+    {
+      "model": "Ridge",
+      "split": "test",
+      "reference_rmse": 0.0200551206,
+      "candidate_rmse": 0.020055120553806347,
+      "rmse_relative_difference": 2.3033345942257023e-09,
+      "within_tolerance": true,
+      "candidate_hit_rate_pct": 52.60663507109005
+    },
+    {
+      "model": "XGBoost",
+      "split": "test",
+      "reference_rmse": 0.0200173195,
+      "candidate_rmse": 0.019938553975546038,
+      "rmse_relative_difference": 0.003934868724754127,
+      "within_tolerance": true,
+      "candidate_hit_rate_pct": 45.497630331753555
+    },
+    {
+      "model": "LSTM",
+      "split": "test",
+      "reference_rmse": 0.0198583183,
+      "candidate_rmse": 0.019858318343368733,
+      "rmse_relative_difference": 2.1839075978832124e-09,
+      "within_tolerance": true,
+      "candidate_hit_rate_pct": 54.976303317535546
+    }
+  ],
+  "deterministic_baselines_match": false,
+  "all_rmse_within_tolerance": true,
+  "status": "protocol_match_numeric_difference"
+}

@@ -1,0 +1,1141 @@
+{
+  "reference_run": "20261025T124951351761Z",
+  "runs": [
+    {
+      "run_id": "20261025T121448987851Z",
+      "started_utc": "2026-10-25T12:14:48.987851+00:00",
+      "started_bangkok": "2026-10-25T19:14:48.987851+07:00",
+      "manifest_path": "reports/training_history/evidence/20261025T121448987851Z/manifest.json",
+      "manifest_sha256": "8df42e601c02b1a272cba402e18dc16a74680debf79e955bb270ce55d6d48852",
+      "manifest_hash_basis": "UTF-8 with LF line endings, matching Git attributes",
+      "source_code_sha256": "d4a1e3601ced771cc76e7c47649cb489ef709cfcb37ae2d14ab1dbe3d067b612",
+      "raw_sha256": "501d6a8e0c511dca824994bdd8e91c58e222506eef667780eb15433c2070c8ea",
+      "data_sha256": {
+        "features": "9d81786aa94fec6530714c661eeb2543594ac0ceaba908c0bb5545f693e61ef4",
+        "supervised": "41a849f26749bf789b712466b3c707d48315f2954375c7bbfc88f3f5ea77b44d",
+        "excluded": "a0c259f6ffb7abd165b5f8716077a4a9e457b8b58ba02b276b370140de7650c1"
+      },
+      "training_config": {
+        "epochs_limit": 40,
+        "seed": 42,
+        "common_context": 60,
+        "train_end": "2022-12-31",
+        "validation_end": "2024-12-31",
+        "test_end": "2025-12-31",
+        "lookbacks": [
+          10,
+          30,
+          60
+        ],
+        "lstm_units": 32,
+        "dense_units": 8,
+        "dropout": 0.2,
+        "batch_size": 32,
+        "shuffle": false,
+        "loss": "huber",
+        "learning_rate": 0.001,
+        "clipnorm": 1.0,
+        "early_stopping_patience": 7,
+        "feature_scaler": "StandardScaler",
+        "target_scaler": "StandardScaler"
+      },
+      "splits": {
+        "train": {
+          "n": 1087,
+          "origin_start": "2018-06-19",
+          "origin_end": "2022-12-29",
+          "target_end": "2022-12-30"
+        },
+        "validation": {
+          "n": 493,
+          "origin_start": "2023-01-03",
+          "origin_end": "2024-12-30",
+          "target_end": "2024-12-31"
+        },
+        "test": {
+          "n": 248,
+          "origin_start": "2025-01-02",
+          "origin_end": "2025-12-30",
+          "target_end": "2025-12-31"
+        }
+      },
+      "seed": 42,
+      "runtime": {
+        "device": "CPU",
+        "tensorflow": "2.21.0"
+      },
+      "python": "3.13.15",
+      "versions": {
+        "numpy": "2.5.3",
+        "pandas": "3.0.6",
+        "scikit-learn": "1.9.1",
+        "xgboost": "3.4.1",
+        "joblib": "1.6.0"
+      },
+      "selected_model": "Train Mean",
+      "lstm_lookback": 30,
+      "xgboost_format": ".pkl",
+      "metrics": [
+        {
+          "model": "Zero-Return",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0140950461,
+          "mae": 0.0101017285,
+          "hit_rate_pct": null,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 0.0,
+          "mse_skill_vs_zero": 0.0
+        },
+        {
+          "model": "Return Persistence",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0190692899,
+          "mae": 0.014454281,
+          "hit_rate_pct": 48.9224137931,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 94.6120689655,
+          "mse_skill_vs_zero": -0.8303579993
+        },
+        {
+          "model": "Train Mean",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0139813716,
+          "mae": 0.0100761596,
+          "hit_rate_pct": 54.7413793103,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0160646563
+        },
+        {
+          "model": "Always Up",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0174702299,
+          "mae": 0.014261133,
+          "hit_rate_pct": 54.7413793103,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.5362582929
+        },
+        {
+          "model": "Linear Regression",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.014051453,
+          "mae": 0.0101035443,
+          "hit_rate_pct": 51.724137931,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0061760223
+        },
+        {
+          "model": "Ridge",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0140352538,
+          "mae": 0.0100849672,
+          "hit_rate_pct": 50.6465517241,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0084661592
+        },
+        {
+          "model": "XGBoost",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0140460009,
+          "mae": 0.0100595759,
+          "hit_rate_pct": 56.0344827586,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0069470988
+        },
+        {
+          "model": "LSTM",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0140326647,
+          "mae": 0.0099973137,
+          "hit_rate_pct": 54.7413793103,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0088319464
+        },
+        {
+          "model": "Zero-Return",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0199172131,
+          "mae": 0.0131459283,
+          "hit_rate_pct": null,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 0.0,
+          "mse_skill_vs_zero": 0.0
+        },
+        {
+          "model": "Return Persistence",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0279954444,
+          "mae": 0.0212208052,
+          "hit_rate_pct": 36.018957346,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 83.4123222749,
+          "mse_skill_vs_zero": -0.9756844974
+        },
+        {
+          "model": "Train Mean",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0200217349,
+          "mae": 0.0134292191,
+          "hit_rate_pct": 45.0236966825,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.0105231634
+        },
+        {
+          "model": "Always Up",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0241334561,
+          "mae": 0.0190551302,
+          "hit_rate_pct": 45.0236966825,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.4681887884
+        },
+        {
+          "model": "Linear Regression",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0200795996,
+          "mae": 0.0136226158,
+          "hit_rate_pct": 52.1327014218,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.0163726199
+        },
+        {
+          "model": "Ridge",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0200551206,
+          "mae": 0.0135878348,
+          "hit_rate_pct": 52.6066350711,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.01389601
+        },
+        {
+          "model": "XGBoost",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0200173195,
+          "mae": 0.013807105,
+          "hit_rate_pct": 43.1279620853,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.0100775143
+        },
+        {
+          "model": "LSTM",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0198583183,
+          "mae": 0.0134415191,
+          "hit_rate_pct": 54.9763033175,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.005905216
+        }
+      ]
+    },
+    {
+      "run_id": "20261025T124129642764Z",
+      "started_utc": "2026-10-25T12:41:29.642764+00:00",
+      "started_bangkok": "2026-10-25T19:41:29.642764+07:00",
+      "manifest_path": "reports/training_history/evidence/20261025T124129642764Z/manifest.json",
+      "manifest_sha256": "61e0ee5bbe66492a0d4dd6f9a19569cf006556676c1b290c65dfe2515b99909a",
+      "manifest_hash_basis": "UTF-8 with LF line endings, matching Git attributes",
+      "source_code_sha256": "d4a1e3601ced771cc76e7c47649cb489ef709cfcb37ae2d14ab1dbe3d067b612",
+      "raw_sha256": "501d6a8e0c511dca824994bdd8e91c58e222506eef667780eb15433c2070c8ea",
+      "data_sha256": {
+        "features": "9d81786aa94fec6530714c661eeb2543594ac0ceaba908c0bb5545f693e61ef4",
+        "supervised": "41a849f26749bf789b712466b3c707d48315f2954375c7bbfc88f3f5ea77b44d",
+        "excluded": "a0c259f6ffb7abd165b5f8716077a4a9e457b8b58ba02b276b370140de7650c1"
+      },
+      "training_config": {
+        "epochs_limit": 40,
+        "seed": 42,
+        "common_context": 60,
+        "train_end": "2022-12-31",
+        "validation_end": "2024-12-31",
+        "test_end": "2025-12-31",
+        "lookbacks": [
+          10,
+          30,
+          60
+        ],
+        "lstm_units": 32,
+        "dense_units": 8,
+        "dropout": 0.2,
+        "batch_size": 32,
+        "shuffle": false,
+        "loss": "huber",
+        "learning_rate": 0.001,
+        "clipnorm": 1.0,
+        "early_stopping_patience": 7,
+        "feature_scaler": "StandardScaler",
+        "target_scaler": "StandardScaler"
+      },
+      "splits": {
+        "train": {
+          "n": 1087,
+          "origin_start": "2018-06-19",
+          "origin_end": "2022-12-29",
+          "target_end": "2022-12-30"
+        },
+        "validation": {
+          "n": 493,
+          "origin_start": "2023-01-03",
+          "origin_end": "2024-12-30",
+          "target_end": "2024-12-31"
+        },
+        "test": {
+          "n": 248,
+          "origin_start": "2025-01-02",
+          "origin_end": "2025-12-30",
+          "target_end": "2025-12-31"
+        }
+      },
+      "seed": 42,
+      "runtime": {
+        "device": "GPU",
+        "tensorflow": "2.21.0"
+      },
+      "python": "3.13.16",
+      "versions": {
+        "numpy": "2.5.3",
+        "pandas": "3.0.6",
+        "scikit-learn": "1.9.1",
+        "xgboost": "3.4.1",
+        "joblib": "1.6.0"
+      },
+      "selected_model": "Train Mean",
+      "lstm_lookback": 30,
+      "xgboost_format": ".pkl",
+      "metrics": [
+        {
+          "model": "Zero-Return",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0140950461,
+          "mae": 0.0101017285,
+          "hit_rate_pct": null,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 0.0,
+          "mse_skill_vs_zero": 0.0
+        },
+        {
+          "model": "Return Persistence",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0190692899,
+          "mae": 0.014454281,
+          "hit_rate_pct": 48.9224137931,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 94.6120689655,
+          "mse_skill_vs_zero": -0.8303579993
+        },
+        {
+          "model": "Train Mean",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0139813716,
+          "mae": 0.0100761596,
+          "hit_rate_pct": 54.7413793103,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0160646563
+        },
+        {
+          "model": "Always Up",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0174702299,
+          "mae": 0.014261133,
+          "hit_rate_pct": 54.7413793103,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.5362582929
+        },
+        {
+          "model": "Linear Regression",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.014051453,
+          "mae": 0.0101035443,
+          "hit_rate_pct": 51.724137931,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0061760223
+        },
+        {
+          "model": "Ridge",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0140352538,
+          "mae": 0.0100849672,
+          "hit_rate_pct": 50.6465517241,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0084661592
+        },
+        {
+          "model": "XGBoost",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0140639469,
+          "mae": 0.0100922993,
+          "hit_rate_pct": 54.525862069,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0044079056
+        },
+        {
+          "model": "LSTM",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0140326647,
+          "mae": 0.0099973137,
+          "hit_rate_pct": 54.7413793103,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0088319427
+        },
+        {
+          "model": "Zero-Return",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0199172131,
+          "mae": 0.0131459283,
+          "hit_rate_pct": null,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 0.0,
+          "mse_skill_vs_zero": 0.0
+        },
+        {
+          "model": "Return Persistence",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0279954444,
+          "mae": 0.0212208052,
+          "hit_rate_pct": 36.018957346,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 83.4123222749,
+          "mse_skill_vs_zero": -0.9756844974
+        },
+        {
+          "model": "Train Mean",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0200217349,
+          "mae": 0.0134292191,
+          "hit_rate_pct": 45.0236966825,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.0105231634
+        },
+        {
+          "model": "Always Up",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0241334561,
+          "mae": 0.0190551302,
+          "hit_rate_pct": 45.0236966825,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.4681887884
+        },
+        {
+          "model": "Linear Regression",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0200795996,
+          "mae": 0.0136226158,
+          "hit_rate_pct": 52.1327014218,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.0163726199
+        },
+        {
+          "model": "Ridge",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0200551206,
+          "mae": 0.0135878348,
+          "hit_rate_pct": 52.6066350711,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.01389601
+        },
+        {
+          "model": "XGBoost",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.019938554,
+          "mae": 0.013785781,
+          "hit_rate_pct": 45.4976303318,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.0021441065
+        },
+        {
+          "model": "LSTM",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0198583183,
+          "mae": 0.0134415191,
+          "hit_rate_pct": 54.9763033175,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0059052114
+        }
+      ]
+    },
+    {
+      "run_id": "20261025T124951351761Z",
+      "started_utc": "2026-10-25T12:49:51.351761+00:00",
+      "started_bangkok": "2026-10-25T19:49:51.351761+07:00",
+      "manifest_path": "models/experiments/20261025T124951351761Z/manifest.json",
+      "manifest_sha256": "3f5cd5f5235122af1cea5b295f712dc7b7b454a94a6a9633585e4391efa49259",
+      "manifest_hash_basis": "UTF-8 with LF line endings, matching Git attributes",
+      "source_code_sha256": "24bbc95e82d8ebf981c031b3418be7e0f18bf05b693d0ff71f7afc8efb00e5b1",
+      "raw_sha256": "501d6a8e0c511dca824994bdd8e91c58e222506eef667780eb15433c2070c8ea",
+      "data_sha256": {
+        "features": "9d81786aa94fec6530714c661eeb2543594ac0ceaba908c0bb5545f693e61ef4",
+        "supervised": "41a849f26749bf789b712466b3c707d48315f2954375c7bbfc88f3f5ea77b44d",
+        "excluded": "a0c259f6ffb7abd165b5f8716077a4a9e457b8b58ba02b276b370140de7650c1"
+      },
+      "training_config": {
+        "epochs_limit": 40,
+        "seed": 42,
+        "common_context": 60,
+        "train_end": "2022-12-31",
+        "validation_end": "2024-12-31",
+        "test_end": "2025-12-31",
+        "lookbacks": [
+          10,
+          30,
+          60
+        ],
+        "lstm_units": 32,
+        "dense_units": 8,
+        "dropout": 0.2,
+        "batch_size": 32,
+        "shuffle": false,
+        "loss": "huber",
+        "learning_rate": 0.001,
+        "clipnorm": 1.0,
+        "early_stopping_patience": 7,
+        "feature_scaler": "StandardScaler",
+        "target_scaler": "StandardScaler"
+      },
+      "splits": {
+        "train": {
+          "n": 1087,
+          "origin_start": "2018-06-19",
+          "origin_end": "2022-12-29",
+          "target_end": "2022-12-30"
+        },
+        "validation": {
+          "n": 493,
+          "origin_start": "2023-01-03",
+          "origin_end": "2024-12-30",
+          "target_end": "2024-12-31"
+        },
+        "test": {
+          "n": 248,
+          "origin_start": "2025-01-02",
+          "origin_end": "2025-12-30",
+          "target_end": "2025-12-31"
+        }
+      },
+      "seed": 42,
+      "runtime": {
+        "device": "CPU",
+        "tensorflow": "2.21.0"
+      },
+      "python": "3.13.15",
+      "versions": {
+        "numpy": "2.5.3",
+        "pandas": "3.0.6",
+        "scikit-learn": "1.9.1",
+        "xgboost": "3.4.1",
+        "joblib": "1.6.0"
+      },
+      "selected_model": "Train Mean",
+      "lstm_lookback": 30,
+      "xgboost_format": ".json",
+      "metrics": [
+        {
+          "model": "Zero-Return",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0140950461,
+          "mae": 0.0101017285,
+          "hit_rate_pct": null,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 0.0,
+          "mse_skill_vs_zero": 0.0
+        },
+        {
+          "model": "Return Persistence",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0190692899,
+          "mae": 0.014454281,
+          "hit_rate_pct": 48.9224137931,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 94.6120689655,
+          "mse_skill_vs_zero": -0.8303579993
+        },
+        {
+          "model": "Train Mean",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0139813716,
+          "mae": 0.0100761596,
+          "hit_rate_pct": 54.7413793103,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0160646563
+        },
+        {
+          "model": "Always Up",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0174702299,
+          "mae": 0.014261133,
+          "hit_rate_pct": 54.7413793103,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.5362582929
+        },
+        {
+          "model": "Linear Regression",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.014051453,
+          "mae": 0.0101035443,
+          "hit_rate_pct": 51.724137931,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0061760223
+        },
+        {
+          "model": "Ridge",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0140352538,
+          "mae": 0.0100849672,
+          "hit_rate_pct": 50.6465517241,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0084661592
+        },
+        {
+          "model": "XGBoost",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0140460009,
+          "mae": 0.0100595759,
+          "hit_rate_pct": 56.0344827586,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0069470988
+        },
+        {
+          "model": "LSTM",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0140326647,
+          "mae": 0.0099973137,
+          "hit_rate_pct": 54.7413793103,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0088319464
+        },
+        {
+          "model": "Zero-Return",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0199172131,
+          "mae": 0.0131459283,
+          "hit_rate_pct": null,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 0.0,
+          "mse_skill_vs_zero": 0.0
+        },
+        {
+          "model": "Return Persistence",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0279954444,
+          "mae": 0.0212208052,
+          "hit_rate_pct": 36.018957346,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 83.4123222749,
+          "mse_skill_vs_zero": -0.9756844974
+        },
+        {
+          "model": "Train Mean",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0200217349,
+          "mae": 0.0134292191,
+          "hit_rate_pct": 45.0236966825,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.0105231634
+        },
+        {
+          "model": "Always Up",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0241334561,
+          "mae": 0.0190551302,
+          "hit_rate_pct": 45.0236966825,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.4681887884
+        },
+        {
+          "model": "Linear Regression",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0200795996,
+          "mae": 0.0136226158,
+          "hit_rate_pct": 52.1327014218,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.0163726199
+        },
+        {
+          "model": "Ridge",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0200551206,
+          "mae": 0.0135878348,
+          "hit_rate_pct": 52.6066350711,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.01389601
+        },
+        {
+          "model": "XGBoost",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0200173195,
+          "mae": 0.013807105,
+          "hit_rate_pct": 43.1279620853,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.0100775143
+        },
+        {
+          "model": "LSTM",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0198583183,
+          "mae": 0.0134415191,
+          "hit_rate_pct": 54.9763033175,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.005905216
+        }
+      ]
+    },
+    {
+      "run_id": "20261025T132243824425Z",
+      "started_utc": "2026-10-25T13:22:43.824425+00:00",
+      "started_bangkok": "2026-10-25T20:22:43.824425+07:00",
+      "manifest_path": "models/experiments/20261025T132243824425Z/manifest.json",
+      "manifest_sha256": "a5ac95aa4b9b1d191fd98675f5bdf394d976287c8fb17440d492f850f9287199",
+      "manifest_hash_basis": "UTF-8 with LF line endings, matching Git attributes",
+      "source_code_sha256": "24bbc95e82d8ebf981c031b3418be7e0f18bf05b693d0ff71f7afc8efb00e5b1",
+      "raw_sha256": "501d6a8e0c511dca824994bdd8e91c58e222506eef667780eb15433c2070c8ea",
+      "data_sha256": {
+        "features": "9d81786aa94fec6530714c661eeb2543594ac0ceaba908c0bb5545f693e61ef4",
+        "supervised": "41a849f26749bf789b712466b3c707d48315f2954375c7bbfc88f3f5ea77b44d",
+        "excluded": "a0c259f6ffb7abd165b5f8716077a4a9e457b8b58ba02b276b370140de7650c1"
+      },
+      "training_config": {
+        "epochs_limit": 40,
+        "seed": 42,
+        "common_context": 60,
+        "train_end": "2022-12-31",
+        "validation_end": "2024-12-31",
+        "test_end": "2025-12-31",
+        "lookbacks": [
+          10,
+          30,
+          60
+        ],
+        "lstm_units": 32,
+        "dense_units": 8,
+        "dropout": 0.2,
+        "batch_size": 32,
+        "shuffle": false,
+        "loss": "huber",
+        "learning_rate": 0.001,
+        "clipnorm": 1.0,
+        "early_stopping_patience": 7,
+        "feature_scaler": "StandardScaler",
+        "target_scaler": "StandardScaler"
+      },
+      "splits": {
+        "train": {
+          "n": 1087,
+          "origin_start": "2018-06-19",
+          "origin_end": "2022-12-29",
+          "target_end": "2022-12-30"
+        },
+        "validation": {
+          "n": 493,
+          "origin_start": "2023-01-03",
+          "origin_end": "2024-12-30",
+          "target_end": "2024-12-31"
+        },
+        "test": {
+          "n": 248,
+          "origin_start": "2025-01-02",
+          "origin_end": "2025-12-30",
+          "target_end": "2025-12-31"
+        }
+      },
+      "seed": 42,
+      "runtime": {
+        "device": "GPU",
+        "tensorflow": "2.21.0"
+      },
+      "python": "3.13.16",
+      "versions": {
+        "numpy": "2.5.3",
+        "pandas": "3.0.6",
+        "scikit-learn": "1.9.1",
+        "xgboost": "3.4.1",
+        "joblib": "1.6.0"
+      },
+      "selected_model": "Train Mean",
+      "lstm_lookback": 30,
+      "xgboost_format": ".json",
+      "metrics": [
+        {
+          "model": "Zero-Return",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0140950461,
+          "mae": 0.0101017285,
+          "hit_rate_pct": null,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 0.0,
+          "mse_skill_vs_zero": 0.0
+        },
+        {
+          "model": "Return Persistence",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0190692899,
+          "mae": 0.014454281,
+          "hit_rate_pct": 48.9224137931,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 94.6120689655,
+          "mse_skill_vs_zero": -0.8303579993
+        },
+        {
+          "model": "Train Mean",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0139813716,
+          "mae": 0.0100761596,
+          "hit_rate_pct": 54.7413793103,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0160646563
+        },
+        {
+          "model": "Always Up",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0174702299,
+          "mae": 0.014261133,
+          "hit_rate_pct": 54.7413793103,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.5362582929
+        },
+        {
+          "model": "Linear Regression",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.014051453,
+          "mae": 0.0101035443,
+          "hit_rate_pct": 51.724137931,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0061760223
+        },
+        {
+          "model": "Ridge",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0140352538,
+          "mae": 0.0100849672,
+          "hit_rate_pct": 50.6465517241,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0084661592
+        },
+        {
+          "model": "XGBoost",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0140639469,
+          "mae": 0.0100922993,
+          "hit_rate_pct": 54.525862069,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0044079056
+        },
+        {
+          "model": "LSTM",
+          "split": "validation",
+          "n": 493,
+          "rmse": 0.0140326647,
+          "mae": 0.0099973137,
+          "hit_rate_pct": 54.7413793103,
+          "nonzero_actual_n": 464,
+          "neutral_actual_n": 29,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0088319427
+        },
+        {
+          "model": "Zero-Return",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0199172131,
+          "mae": 0.0131459283,
+          "hit_rate_pct": null,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 0.0,
+          "mse_skill_vs_zero": 0.0
+        },
+        {
+          "model": "Return Persistence",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0279954444,
+          "mae": 0.0212208052,
+          "hit_rate_pct": 36.018957346,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 83.4123222749,
+          "mse_skill_vs_zero": -0.9756844974
+        },
+        {
+          "model": "Train Mean",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0200217349,
+          "mae": 0.0134292191,
+          "hit_rate_pct": 45.0236966825,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.0105231634
+        },
+        {
+          "model": "Always Up",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0241334561,
+          "mae": 0.0190551302,
+          "hit_rate_pct": 45.0236966825,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.4681887884
+        },
+        {
+          "model": "Linear Regression",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0200795996,
+          "mae": 0.0136226158,
+          "hit_rate_pct": 52.1327014218,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.0163726199
+        },
+        {
+          "model": "Ridge",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0200551206,
+          "mae": 0.0135878348,
+          "hit_rate_pct": 52.6066350711,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.01389601
+        },
+        {
+          "model": "XGBoost",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.019938554,
+          "mae": 0.013785781,
+          "hit_rate_pct": 45.4976303318,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": -0.0021441065
+        },
+        {
+          "model": "LSTM",
+          "split": "test",
+          "n": 248,
+          "rmse": 0.0198583183,
+          "mae": 0.0134415191,
+          "hit_rate_pct": 54.9763033175,
+          "nonzero_actual_n": 211,
+          "neutral_actual_n": 37,
+          "direction_coverage_pct": 100.0,
+          "mse_skill_vs_zero": 0.0059052114
+        }
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "run_id": "20261025T121448987851Z",
+      "started_bangkok": "2026-10-25T19:14:48.987851+07:00",
+      "device": "CPU",
+      "xgboost_format": ".pkl",
+      "same_data_and_training_config_as_reference": true,
+      "same_source_as_reference": false,
+      "lstm_lookback": 30,
+      "validation_rmse": 0.0140326647,
+      "test_rmse": 0.0198583183,
+      "test_mae": 0.0134415191,
+      "test_hit_rate_pct": 54.9763033175,
+      "manifest_path": "reports/training_history/evidence/20261025T121448987851Z/manifest.json"
+    },
+    {
+      "run_id": "20261025T124129642764Z",
+      "started_bangkok": "2026-10-25T19:41:29.642764+07:00",
+      "device": "GPU",
+      "xgboost_format": ".pkl",
+      "same_data_and_training_config_as_reference": true,
+      "same_source_as_reference": false,
+      "lstm_lookback": 30,
+      "validation_rmse": 0.0140326647,
+      "test_rmse": 0.0198583183,
+      "test_mae": 0.0134415191,
+      "test_hit_rate_pct": 54.9763033175,
+      "manifest_path": "reports/training_history/evidence/20261025T124129642764Z/manifest.json"
+    },
+    {
+      "run_id": "20261025T124951351761Z",
+      "started_bangkok": "2026-10-25T19:49:51.351761+07:00",
+      "device": "CPU",
+      "xgboost_format": ".json",
+      "same_data_and_training_config_as_reference": true,
+      "same_source_as_reference": true,
+      "lstm_lookback": 30,
+      "validation_rmse": 0.0140326647,
+      "test_rmse": 0.0198583183,
+      "test_mae": 0.0134415191,
+      "test_hit_rate_pct": 54.9763033175,
+      "manifest_path": "models/experiments/20261025T124951351761Z/manifest.json"
+    },
+    {
+      "run_id": "20261025T132243824425Z",
+      "started_bangkok": "2026-10-25T20:22:43.824425+07:00",
+      "device": "GPU",
+      "xgboost_format": ".json",
+      "same_data_and_training_config_as_reference": true,
+      "same_source_as_reference": true,
+      "lstm_lookback": 30,
+      "validation_rmse": 0.0140326647,
+      "test_rmse": 0.0198583183,
+      "test_mae": 0.0134415191,
+      "test_hit_rate_pct": 54.9763033175,
+      "manifest_path": "models/experiments/20261025T132243824425Z/manifest.json"
+    }
+  ],
+  "scope": "Development runs on one fixed historical snapshot; not longitudinal market performance.",
+  "last_run_started_at": "2026-10-25T13:22:43.824425+00:00"
+}
