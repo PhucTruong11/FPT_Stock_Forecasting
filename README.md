@@ -114,7 +114,7 @@ Mỗi lượt có `models/experiments/<run_id>/manifest.json`, model/scaler và 
 
 ## 6. Colab: đúng code GitHub, đúng snapshot
 
-[Mở notebook training trên Colab](https://colab.research.google.com/github/PhucTruong11/Stock_Prediction_Project/blob/feature/train-model/notebooks/02_train_deep_learning_fpt.ipynb)
+[Mở notebook training trên Colab](https://colab.research.google.com/github/PhucTruong11/FPT_Stock_Forecasting/blob/feature/train-model/notebooks/02_train_deep_learning_fpt.ipynb)
 
 1. Mở notebook mới từ link GitHub, không chạy bản cũ trong Drive.
 2. Setup clone vào `/content/Stock_Prediction_Project_v2`, cài `requirements-colab.txt` và phục hồi ZIP snapshot có hash. Nếu thư viện đã load đổi phiên bản, restart session rồi Run all lại.
