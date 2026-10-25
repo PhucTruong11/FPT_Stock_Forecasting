@@ -1,0 +1,190 @@
+[
+  {
+    "candidate": "Zero-Return",
+    "family": "Zero-Return",
+    "parameters": {},
+    "n": 493,
+    "rmse": 0.01409504606857425,
+    "mae": 0.010101728485089763,
+    "hit_rate_pct": null,
+    "nonzero_actual_n": 464,
+    "neutral_actual_n": 29,
+    "direction_coverage_pct": 0.0,
+    "mse_skill_vs_zero": 0.0
+  },
+  {
+    "candidate": "Return Persistence",
+    "family": "Return Persistence",
+    "parameters": {},
+    "n": 493,
+    "rmse": 0.019069289870308065,
+    "mae": 0.014454280955206317,
+    "hit_rate_pct": 48.922413793103445,
+    "nonzero_actual_n": 464,
+    "neutral_actual_n": 29,
+    "direction_coverage_pct": 94.61206896551724,
+    "mse_skill_vs_zero": -0.8303579992766226
+  },
+  {
+    "candidate": "Train Mean",
+    "family": "Train Mean",
+    "parameters": {},
+    "n": 493,
+    "rmse": 0.01398137164976996,
+    "mae": 0.010076159577525274,
+    "hit_rate_pct": 54.741379310344826,
+    "nonzero_actual_n": 464,
+    "neutral_actual_n": 29,
+    "direction_coverage_pct": 100.0,
+    "mse_skill_vs_zero": 0.016064656296914115
+  },
+  {
+    "candidate": "Always Up",
+    "family": "Always Up",
+    "parameters": {},
+    "n": 493,
+    "rmse": 0.01747022988699406,
+    "mae": 0.014261132969766296,
+    "hit_rate_pct": 54.741379310344826,
+    "nonzero_actual_n": 464,
+    "neutral_actual_n": 29,
+    "direction_coverage_pct": 100.0,
+    "mse_skill_vs_zero": -0.5362582929262769
+  },
+  {
+    "candidate": "Linear Regression/0",
+    "family": "Linear Regression",
+    "parameters": {},
+    "n": 493,
+    "rmse": 0.014051452996738401,
+    "mae": 0.010103544290171119,
+    "hit_rate_pct": 51.724137931034484,
+    "nonzero_actual_n": 464,
+    "neutral_actual_n": 29,
+    "direction_coverage_pct": 100.0,
+    "mse_skill_vs_zero": 0.006176022331788378
+  },
+  {
+    "candidate": "Ridge/0",
+    "family": "Ridge",
+    "parameters": {
+      "alpha": 0.1
+    },
+    "n": 493,
+    "rmse": 0.014051257227402907,
+    "mae": 0.010103337743616362,
+    "hit_rate_pct": 51.724137931034484,
+    "nonzero_actual_n": 464,
+    "neutral_actual_n": 29,
+    "direction_coverage_pct": 100.0,
+    "mse_skill_vs_zero": 0.006203714685655726
+  },
+  {
+    "candidate": "Ridge/1",
+    "family": "Ridge",
+    "parameters": {
+      "alpha": 1.0
+    },
+    "n": 493,
+    "rmse": 0.014049530858849149,
+    "mae": 0.010101498391395588,
+    "hit_rate_pct": 51.724137931034484,
+    "nonzero_actual_n": 464,
+    "neutral_actual_n": 29,
+    "direction_coverage_pct": 100.0,
+    "mse_skill_vs_zero": 0.006447899705292803
+  },
+  {
+    "candidate": "Ridge/2",
+    "family": "Ridge",
+    "parameters": {
+      "alpha": 10.0
+    },
+    "n": 493,
+    "rmse": 0.014035253794997492,
+    "mae": 0.010084967237996739,
+    "hit_rate_pct": 50.646551724137936,
+    "nonzero_actual_n": 464,
+    "neutral_actual_n": 29,
+    "direction_coverage_pct": 100.0,
+    "mse_skill_vs_zero": 0.0084661591833336
+  },
+  {
+    "candidate": "XGBoost/0",
+    "family": "XGBoost",
+    "parameters": {
+      "max_depth": 2
+    },
+    "n": 493,
+    "rmse": 0.014063946944167648,
+    "mae": 0.010092299276534697,
+    "hit_rate_pct": 54.525862068965516,
+    "nonzero_actual_n": 464,
+    "neutral_actual_n": 29,
+    "direction_coverage_pct": 100.0,
+    "mse_skill_vs_zero": 0.00440790557274906
+  },
+  {
+    "candidate": "XGBoost/1",
+    "family": "XGBoost",
+    "parameters": {
+      "max_depth": 3
+    },
+    "n": 493,
+    "rmse": 0.014086432186785992,
+    "mae": 0.010094627291082441,
+    "hit_rate_pct": 56.896551724137936,
+    "nonzero_actual_n": 464,
+    "neutral_actual_n": 29,
+    "direction_coverage_pct": 100.0,
+    "mse_skill_vs_zero": 0.001221883157078163
+  },
+  {
+    "candidate": "LSTM/10",
+    "family": "LSTM",
+    "parameters": {
+      "lookback": 10,
+      "units": 32
+    },
+    "n": 493,
+    "rmse": 0.014055343953644673,
+    "mae": 0.010011078118392126,
+    "hit_rate_pct": 55.172413793103445,
+    "nonzero_actual_n": 464,
+    "neutral_actual_n": 29,
+    "direction_coverage_pct": 100.0,
+    "mse_skill_vs_zero": 0.005625550909161281
+  },
+  {
+    "candidate": "LSTM/30",
+    "family": "LSTM",
+    "parameters": {
+      "lookback": 30,
+      "units": 32
+    },
+    "n": 493,
+    "rmse": 0.014032664706662727,
+    "mae": 0.009997313696057582,
+    "hit_rate_pct": 54.741379310344826,
+    "nonzero_actual_n": 464,
+    "neutral_actual_n": 29,
+    "direction_coverage_pct": 100.0,
+    "mse_skill_vs_zero": 0.008831942653302782
+  },
+  {
+    "candidate": "LSTM/60",
+    "family": "LSTM",
+    "parameters": {
+      "lookback": 60,
+      "units": 32
+    },
+    "n": 493,
+    "rmse": 0.014078786171205702,
+    "mae": 0.010037336546174837,
+    "hit_rate_pct": 53.44827586206896,
+    "nonzero_actual_n": 464,
+    "neutral_actual_n": 29,
+    "direction_coverage_pct": 100.0,
+    "mse_skill_vs_zero": 0.002305848262704746
+  }
+]

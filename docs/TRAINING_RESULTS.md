@@ -27,7 +27,9 @@ Hit Rate test trên 211 actual khác 0; 37 actual đứng giá được báo ri�
 
 ## Colab
 
-Colab phải dùng notebook GitHub mới, cùng ZIP snapshot và requirements-colab.txt. Ghi thành run riêng, so với CPU reference bằng src.models.compare_runs. Mức chênh RMSE 5% là tolerance kỹ thuật định trước; không bảo đảm cùng weights hoặc ý nghĩa thống kê. Kết quả Colab sẽ được ghi riêng sau khi thực thi, không giả định trước là khớp.
+Đã chạy đủ 8 cell trên Colab T4: `20261025T132243824425Z` từ commit `5eddc45`. Hash dữ liệu/code/config/split khớp CPU; cùng Train Mean thắng validation và LSTM lookback 30. LSTM test RMSE gần như trùng CPU. XGBoost test RMSE 0.019939 so với CPU 0.020017 (lệch 0,3935%); trạng thái chính thức là `protocol_match_numeric_difference`, không gọi toàn bộ kết quả trùng tuyệt đối. Tất cả RMSE nằm trong tolerance kỹ thuật 5% định trước; đây không phải kiểm định thống kê.
+
+Model XGBoost native JSON và Keras từ Colab đã nạp được trên Windows; 16 hàng model/split metrics khớp báo cáo Colab. Xem [kiểm chứng portability](../reports/verification/colab_portability.json) và [nhật ký retraining](TRAINING_HISTORY.md).
 
 ## Nguồn
 

@@ -1,0 +1,5 @@
+run_id,started_bangkok,device,xgboost_format,same_data_and_training_config_as_reference,same_source_as_reference,lstm_lookback,validation_rmse,test_rmse,test_mae,test_hit_rate_pct,manifest_path
+20261025T121448987851Z,2026-10-25T19:14:48.987851+07:00,CPU,.pkl,True,False,30,0.0140326647,0.0198583183,0.0134415191,54.9763033175,reports/training_history/evidence/20261025T121448987851Z/manifest.json
+20261025T124129642764Z,2026-10-25T19:41:29.642764+07:00,GPU,.pkl,True,False,30,0.0140326647,0.0198583183,0.0134415191,54.9763033175,reports/training_history/evidence/20261025T124129642764Z/manifest.json
+20261025T124951351761Z,2026-10-25T19:49:51.351761+07:00,CPU,.json,True,True,30,0.0140326647,0.0198583183,0.0134415191,54.9763033175,models/experiments/20261025T124951351761Z/manifest.json
+20261025T132243824425Z,2026-10-25T20:22:43.824425+07:00,GPU,.json,True,True,30,0.0140326647,0.0198583183,0.0134415191,54.9763033175,models/experiments/20261025T132243824425Z/manifest.json
