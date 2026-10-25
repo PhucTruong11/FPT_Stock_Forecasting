@@ -1,0 +1,11 @@
+# Portable experiment environment, matching the canonical CPU reference.
+# Install before importing TensorFlow; restart the runtime if Colab requests it.
+numpy==2.5.3
+pandas==3.0.6
+scikit-learn==1.9.1
+xgboost==3.4.1
+joblib==1.6.0
+tensorflow==2.21.0
+ta>=0.10.0
+matplotlib>=3.7.0
+nbformat>=5.10.0

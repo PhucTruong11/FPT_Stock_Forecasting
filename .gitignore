@@ -13,14 +13,14 @@ __pycache__/
 # Jupyter Notebook Caches
 .ipynb_checkpoints/
 
-# Dữ liệu (Không push data lên Github để tránh nặng repo, mỗi máy tự chạy script tải về)
+# CSV sinh ra được bỏ qua; snapshot công khai có hash được lưu trong data/snapshots/.
 data/raw/*.csv
 data/interim/*.csv
 data/processed/*.csv
 data/processed/*.npy
 data/backups/
 
-# Thư mục chứa Model (File weight AI thường rất nặng)
+# Weight mới mặc định bỏ qua; bộ CPU reference nhỏ được track có chủ đích.
 models/**/*.h5
 models/**/*.pkl
 models/**/*.keras
@@ -29,5 +29,5 @@ models/**/*.keras
 .vscode/
 .idea/
 
-# Chặn ảnh đồ thị (Không push ảnh lên mạng)
+# Ảnh legacy; biểu đồ benchmark v2 nằm trong reports/experiments/.
 reports/figures/*.png

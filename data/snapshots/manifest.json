@@ -1,0 +1,15 @@
+{
+  "snapshot_id": "fpt-v2-20261025",
+  "archive": "fpt-v2-20261025.zip",
+  "archive_sha256": "bc8c6d2f2eabd450ccc12fee0a87a21518087ee5559eaf9a517cdfb6c33aee6d",
+  "source": "Yahoo Finance via yfinance; adjusted OHLCV; downloaded 2026-10-25",
+  "research_period": "2018-01-01 <= Date < 2026-01-01",
+  "files": {
+    "data/raw/FPT.VN_raw.csv": "501d6a8e0c511dca824994bdd8e91c58e222506eef667780eb15433c2070c8ea",
+    "data/raw/FPT.VN_raw.metadata.json": "9a06daeb0d862e171367105296573fd1f41b6cb11d9f3c185c4e667c87bc51d9",
+    "data/interim/FPT.VN_features.csv": "9d81786aa94fec6530714c661eeb2543594ac0ceaba908c0bb5545f693e61ef4",
+    "data/interim/FPT.VN_features.metadata.json": "2d5770e96310d5c2358538f235f5281f58e22c6fcbd917ac77ef7d830b5e6e68",
+    "data/processed/FPT.VN_supervised.csv": "41a849f26749bf789b712466b3c707d48315f2954375c7bbfc88f3f5ea77b44d",
+    "data/processed/FPT.VN_excluded_rows.csv": "a0c259f6ffb7abd165b5f8716077a4a9e457b8b58ba02b276b370140de7650c1"
+  }
+}
