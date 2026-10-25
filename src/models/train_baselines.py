@@ -13,7 +13,7 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 INTERIM_DATA_DIR = os.path.join(BASE_DIR, 'data', 'interim')
-MODELS_DIR = os.path.join(BASE_DIR, 'models')
+MODELS_DIR = os.path.join(BASE_DIR, 'models', 'baselines')
 REPORTS_DIR = os.path.join(BASE_DIR, 'reports', 'figures')
 #RSI > 70 là quá mua, < 30 là quá bán 
 #MACD > 0 là xu hướng tăng, < 0 là xu hướng giảm 
@@ -31,7 +31,8 @@ def prepare_data(df):
     #điểm target hôm nay là điểm return vào ngày mai 
     df['Target_Return'] = df['Log_Return'].shift(-1)
     
-    # TODO 2: Drop các dòng bị NaN sinh ra do hàm shift (dòng cuối cùng sẽ bị rỗng)
+    # TODO 2: Xử lý vô hạn và drop các dòng bị NaN sinh ra do hàm shift
+    df.replace([np.inf, -np.inf], np.nan, inplace=True)
     df.dropna(inplace=True)
     
     # TODO 3: Phân tách X (Features) và y (Target)
@@ -119,9 +120,9 @@ def print_and_evaluate(model_name, y_true, y_pred, results_dict):
     
     hit_rate_pct = hit_rate * 100
     if hit_rate > 0.5:
-        color_text = f"\033[92m{hit_rate_pct:.2f}% 📈\033[0m" # Xanh
+        color_text = f"\033[92m{hit_rate_pct:.2f}%\033[0m" # Xanh
     else:
-        color_text = f"\033[91m{hit_rate_pct:.2f}% 📉\033[0m" # Đỏ
+        color_text = f"\033[91m{hit_rate_pct:.2f}%\033[0m" # Đỏ
         
     print(f"   + {model_name:<20}: Hit Rate = {color_text} | RMSE = {rmse:.5f} | MAE = {mae:.5f}")
     results_dict[model_name] = {'Hit Rate': hit_rate_pct, 'RMSE': rmse}
@@ -131,7 +132,9 @@ if __name__ == "__main__":
     os.makedirs(REPORTS_DIR, exist_ok=True)
     print("BẮT ĐẦU HUẤN LUYỆN BASELINE MODELS CHO TOÀN BỘ VN30\n" + "="*60)
     
-    tickers = ["FPT.VN", "HPG.VN", "VCB.VN", "SSI.VN", "VNM.VN", "MWG.VN"]
+    # Tự động quét toàn bộ các mã đã có features trong data/interim/
+    tickers = sorted([f.replace('_features.csv', '') for f in os.listdir(INTERIM_DATA_DIR) if f.endswith('_features.csv')])
+    print(f"Tổng số mã tìm thấy: {len(tickers)} -> {tickers}")
     
     for ticker in tickers:
         print("\n" + "#"*60)
