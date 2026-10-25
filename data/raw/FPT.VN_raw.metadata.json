@@ -3,7 +3,7 @@
   "ticker": "FPT.VN",
   "source": "Yahoo Finance via yfinance",
   "yfinance_version": "1.7.0",
-  "downloaded_at_utc": "2026-10-25T07:04:53.136806+00:00",
+  "downloaded_at_utc": "2026-10-25T10:05:15.661027+00:00",
   "start_inclusive": "2018-01-01",
   "end_exclusive": "2026-01-01",
   "interval": "1d",
@@ -21,7 +21,7 @@
     "2021-11-02"
   ],
   "calendar_verified": false,
-  "raw_sha256": "54ed76a1de3814ae9bf5a126b9dfd1ebcdff92c0c91e00f81e6c35308d4d5ca8",
+  "raw_sha256": "501d6a8e0c511dca824994bdd8e91c58e222506eef667780eb15433c2070c8ea",
   "imputation": "none",
   "market_proxy": "not_downloaded_or_used"
 }

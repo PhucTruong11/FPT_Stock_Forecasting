@@ -1,0 +1,15 @@
+{
+  "criterion": "lowest validation RMSE",
+  "selected_model": "Train Mean",
+  "validation_rmse": {
+    "Zero-Return": 0.01409504606857425,
+    "Return Persistence": 0.019069289870308065,
+    "Train Mean": 0.01398137164976996,
+    "Always Up": 0.01747022988699406,
+    "Linear Regression": 0.014051452996738401,
+    "Ridge": 0.014035253794997492,
+    "XGBoost": 0.014046000900651532,
+    "LSTM": 0.014032664680004912
+  },
+  "test_used_for_selection": false
+}

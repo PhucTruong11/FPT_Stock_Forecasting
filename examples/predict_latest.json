@@ -1,0 +1,5 @@
+{
+  "ticker": "FPT.VN",
+  "model": "LSTM",
+  "price_basis": "provider_adjusted_ohlc"
+}

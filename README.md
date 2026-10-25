@@ -1,255 +1,181 @@
 # FPT Stock Forecasting
 
-**Đồ án môn Máy học · Phân tích dữ liệu và dự báo cổ phiếu FPT**
+**Đồ án Máy học · Phân tích FPT và dự báo một quan sát kế tiếp**
 
-Nghiên cứu khả năng dự báo lợi suất và giá đóng cửa phiên kế tiếp của **FPT.VN** từ giá và khối lượng trong quá khứ. Hướng triển khai gồm **notebook nghiên cứu → REST API Python → ứng dụng có UI**.
+Một pipeline v2 dùng chung trên local và Google Colab: **snapshot có hash → EDA/features → training/benchmark → artifact theo manifest → FastAPI → Streamlit**.
 
-Pipeline tải dữ liệu và tạo đặc trưng **schema v2** đã chạy. Source huấn luyện và notebook cũ cần cập nhật trước khi đánh giá lại; FastAPI và Streamlit là phần triển khai tiếp theo.
+![Flow dự án](docs/assets/pipeline.svg)
 
-![Luồng dự án FPT và trạng thái từng thành phần](docs/assets/pipeline.svg)
+## 1. Phạm vi và kết quả
 
-## 1. Bài toán và phạm vi
+- Chỉ dự báo **FPT.VN**, dữ liệu điều chỉnh giai đoạn 2018–2025.
+- Mục tiêu: `log(Close[t+1] / Close[t])`; quy đổi giá bằng `Close[t] * exp(predicted_return)`.
+- LSTM lookback 30 là model ML dùng demo. **Train Mean** có RMSE validation thấp nhất toàn bộ nhóm; hai vai trò được hiển thị riêng.
+- Không dùng Hit Rate lịch sử như xác suất đúng của từng dự báo. LSTM chỉ cải thiện RMSE test nhẹ và có MAE cao hơn zero-return.
+- Năm 2025 đã được xem trong các lần thử, nên ghi là test lịch sử sử dụng lại; chưa chứng minh lợi thế tổng quát hay lợi nhuận giao dịch.
 
-Với thông tin đã biết sau đóng cửa tại thời điểm `t`:
+[Kết quả và giới hạn](docs/TRAINING_RESULTS.md)
 
-```text
-y[t] = log(Close[t+1] / Close[t])
-predicted_close[t+1] = Close[t] × exp(predicted_log_return[t])
-```
-
-- **Đối tượng:** một mã FPT, dữ liệu ngày và giá điều chỉnh của nhà cung cấp.
-- **Khoảng mặc định:** `2018-01-01 ≤ Date < 2026-01-01`.
-- **Câu hỏi nghiên cứu:** mô hình có tốt hơn baseline đơn giản trên cùng giai đoạn ngoài mẫu không?
-- **T+1 hiện tại:** quan sát khối lượng dương kế tiếp trong nguồn. Chưa đối chiếu đầy đủ lịch HOSE, nên chưa khẳng định mọi quan sát là một phiên chính thức.
-- **Chưa triển khai:** giá trực tiếp, dự báo 5/20 phiên và giao dịch tự động.
-
-Giữ FPT để tập trung kiểm tra dữ liệu, thực nghiệm và phân tích lỗi. Lựa chọn này không hàm ý cổ phiếu không chịu tác động bên ngoài.
-
-## 2. Làm sạch, build features và train theo thứ tự nào?
-
-**Kiểm tra và làm sạch trước khi tính chỉ báo; tạo dataset trước khi train.** Một phần kiểm tra nằm trong downloader và `contracts.py`; `build_features.py` tiếp tục cách ly dòng lỗi, tạo nhãn và tính đặc trưng. Không train ngay trên CSV raw.
-
-```mermaid
-flowchart TD
-    A["Yahoo Finance: FPT.VN"] --> B["download_dataset.py<br/>Kiểm tra schema, ngày; lưu raw và metadata"]
-    B --> C["build_features.py<br/>Kiểm tra hash và chất lượng nguồn"]
-    C --> D["Loại Volume = 0 khỏi trục quan sát"]
-    D --> E["Tạo nhãn và Target_Date<br/>trước khi loại nến OHLC lỗi"]
-    E --> F["Cách ly nến lỗi<br/>không dùng nhãn chạm nến lỗi"]
-    F --> G["Tính 16 đặc trưng<br/>chỉ từ hiện tại và quá khứ"]
-    G --> H["Bỏ 49 quan sát warm-up"]
-    H --> I["interim: features<br/>giữ dòng mới nhất để inference"]
-    H --> J["processed: supervised<br/>chỉ các mẫu có nhãn hợp lệ"]
-    C -.-> K["processed: excluded_rows<br/>dòng nguồn và lý do cách ly"]
-```
-
-| Xử lý | Thời điểm phù hợp |
-| --- | --- |
-| Kiểm tra ngày trùng, schema, giá/volume không hợp lệ | Trước tính đặc trưng |
-| Return, lag, SMA, RSI, rolling volatility | Có thể tính trước split nếu từng dòng chỉ dùng hiện tại và quá khứ |
-| Scaler, imputer học tham số, chọn feature theo kết quả, tuning | Sau split; chỉ fit trên train trong từng fold |
-| Chọn cấu hình | Dựa trên validation |
-| Báo cáo cuối | Trên test, sau khi khóa cấu hình |
-
-Không dùng `dropna()` chung để xóa mọi ô thiếu: warm-up, nhãn tương lai chưa có và lỗi nguồn cần xử lý riêng để không lệch ngày đích.
-
-EDA chất lượng bắt đầu từ raw. Khi khảo sát phân phối để chọn model/features, dùng phần train/development; không dựa vào kết quả test để quyết định cấu hình.
-
-## 3. Thiết kế huấn luyện tiếp theo
-
-Sơ đồ này là **thiết kế cần triển khai cho modeling v2**, chưa phải mô tả notebook cũ đã hoàn tất:
-
-```mermaid
-flowchart TD
-    A["Supervised v2<br/>Date, Target_Date, X và y"] --> B["Chia theo thời gian<br/>kiểm tra nhãn không vượt ranh giới"]
-    B --> T["Train: giai đoạn trước"]
-    B --> V["Validation: giai đoạn sau"]
-    B --> Q["Test: giai đoạn cuối"]
-    T --> P["Fit preprocessing trên train<br/>nếu mô hình cần scaler"]
-    P --> M["Fit baseline và mô hình"]
-    P --> VP["Transform validation<br/>bằng tham số của train"]
-    V --> VP
-    M --> S["So sánh trên validation<br/>chọn feature, model và siêu tham số"]
-    VP --> S
-    S --> L["Khóa cấu hình và artifact"]
-    L --> E["Transform và đánh giá test<br/>không fit hoặc chọn lại theo test"]
-    Q --> E
-```
-
-- **Baseline hồi quy:** predicted return = 0, tương ứng giá dự báo bằng giá hiện tại; thêm persistence-return để đối chiếu.
-- **Mô hình:** Ridge/Linear Regression, XGBoost và một LSTM nhỏ.
-- **So sánh:** cùng ngày dự báo, horizon và thông tin sẵn có.
-- **Thước đo:** MAE/RMSE trên return, sai số giá quy đổi và directional accuracy với chính sách ngày đứng giá rõ ràng.
-- **LSTM:** cửa sổ kết thúc đúng ngày dự báo. Lịch sử trước ranh giới có thể làm context, nhưng không fit preprocessing trên tương lai.
-
-Không mặc định LSTM tốt hơn mô hình đơn giản hoặc Hit Rate > 50% tự chứng minh lợi thế.
-
-## 4. Có cần tải thêm mã khác không?
-
-**Downloader hiện tại chỉ tải FPT.VN.** `TARGET_TICKER = "FPT.VN"` và hàm tải từ chối ticker khác. Không còn tải VCB, HPG, VNM, GAS, BID hay tạo rổ proxy.
-
-Phần tải nhiều mã thuộc phiên bản trước. Market proxy cũ đã được dọn khỏi thư mục làm việc; `build_features.py` v2 **không phụ thuộc dữ liệu của mã khác**.
-
-| Hướng thực hiện | Có cần lúc này? | Mục đích |
-| --- | --- | --- |
-| FPT với OHLCV và đặc trưng của chính FPT | **Có — phạm vi chính** | Xây baseline và đánh giá đúng trước |
-| Một chỉ số thị trường có nguồn rõ ràng | Tùy chọn về sau | Thử thêm bối cảnh thị trường vào dự báo FPT |
-| Tải một rổ mã rồi tự gọi là VN30 | Không | Tăng phạm vi; cần kiểm chứng thành phần, trọng số và lịch dữ liệu |
-
-Tập trung một mã nghĩa là **một đối tượng cần dự báo**. Vẫn có thể dùng thông tin thị trường làm biến ngoại sinh, mà không phải huấn luyện mô hình cho tất cả mã khác.
-
-Nếu thêm market context, so sánh **FPT-only** và **FPT + market context** trên cùng validation. Chỉ giữ nếu cải thiện đủ ổn định và đáng với độ phức tạp thêm; không mặc định thêm dữ liệu là tốt hơn.
-
-## 5. Snapshot đã chạy
-
-Lần tải **25/10/2026**, khoảng nghiên cứu đến **31/12/2025**:
-
-| Bước | Số lượng | Ghi chú |
-| --- | ---: | --- |
-| Raw | 2.088 dòng | Giữ quan sát nguồn và bất thường được ghi nhận |
-| Volume = 0 | 147 dòng | Giữ trong raw, cách ly khỏi chuỗi tính chỉ báo |
-| OHLC không hợp lệ | 1 dòng | Cách ly, không tự sửa giá |
-| Quan sát hợp lệ | 1.940 dòng | Dùng tính đặc trưng |
-| Warm-up | 49 dòng | SMA-50 cần đủ lịch sử |
-| Features | 1.891 dòng × 16 đầu vào | Thêm Date và Close làm cột đối chiếu |
-| Supervised | 1.889 mẫu có nhãn | Bỏ nhãn chạm nến lỗi và dòng cuối chưa có nhãn |
-
-- Bốn dòng Volume = 0 thiếu toàn bộ OHLC; giữ nguyên trong raw, không điền giá.
-- Nến `2021-11-02` có Close lớn hơn High; cách ly cả mẫu này và nhãn chạm ngày đó.
-- Dòng `2025-12-31` vẫn có trong features để inference.
-- `data/processed/FPT.VN_excluded_rows.csv` lưu dòng nguồn cùng lý do.
-- Metadata ghi SHA-256, thứ tự features, ngày đích và chính sách xử lý.
-- Ghi qua file tạm; bản cũ được sao lưu tại `data/backups/` trước khi thay thế.
-
-Đây là dữ liệu lịch sử tải năm 2026, chưa phải snapshot point-in-time được kiểm chứng. Giá điều chỉnh/số dòng có thể đổi khi nguồn cập nhật. Giá điều chỉnh không đồng nhất giá khớp lệnh lịch sử; loại Volume = 0 không thay thế việc đối soát lịch HOSE.
-
-## 6. Bộ đặc trưng
-
-| Nhóm | Cột |
-| --- | --- |
-| Return hiện tại | `Log_Return` |
-| Return trễ | `Return_Lag_1`, `Return_Lag_2`, `Return_Lag_5` |
-| Động lượng | `Return_5`, `Return_20` |
-| Biến động | `Volatility_5`, `Volatility_20` |
-| Khoảng cách đến SMA | `SMA_Distance_20`, `SMA_Distance_50` |
-| RSI chuẩn hóa 0–1 | `RSI_14` |
-| Biên độ theo tỷ lệ giá | `ATR_Ratio`, `Intraday_Range` |
-| Khối lượng | `Volume_Ratio_20`, `Volume_Log_Change`, `Volume_ZScore_20` |
-
-Cửa sổ tính theo số quan sát hợp lệ, không phải ngày lịch. Tỷ lệ giúp giảm phụ thuộc mức giá tuyệt đối, không bảo đảm tính dừng. Chưa fit scaler ở bước build features.
-
-**Chỉ dùng `FEATURE_COLUMNS` làm X.** `Date`, `Close`, `Target_Date_1d` và `Target_Return_1d` không thuộc danh sách đầu vào.
-
-## 7. API và UI sau khi có model
-
-Đây là kiến trúc dự kiến; FastAPI và Streamlit chưa có implementation:
-
-```mermaid
-sequenceDiagram
-    actor User as Người dùng
-    participant UI as Streamlit
-    participant API as FastAPI
-    participant Model as Artifact đã train
-    User->>UI: Chọn hoặc nhập sample FPT
-    UI->>API: POST /predict
-    API->>API: Kiểm tra ngày, lịch sử và schema
-    API->>Model: Tính features và transform bằng scaler đã lưu
-    Model-->>API: Predicted log return
-    API-->>UI: JSON chứa as_of, dự báo, model_version
-    UI-->>User: Biểu đồ và kết quả dự báo
-```
-
-Inference dùng cùng công thức/thứ tự features với training. Không fit lại scaler và không cần giá tương lai hay target thật.
-
-## 8. Công nghệ và cấu trúc
-
-| Phần | Công nghệ | Trạng thái |
-| --- | --- | --- |
-| Data pipeline | Python, yfinance, pandas, NumPy, ta | Đã chạy v2 |
-| Modeling | scikit-learn, XGBoost, TensorFlow/Keras | Giữ source để migrate; cần train artifact v2 |
-| Nghiên cứu, biểu đồ | Jupyter, matplotlib, Plotly | Notebook cần cập nhật |
-| Backend | FastAPI | Kế hoạch |
-| UI | Streamlit | Kế hoạch |
-
-```text
-Stock_Prediction_Project/
-├── data/
-│   ├── raw/                       # Raw CSV + metadata nguồn
-│   ├── interim/                   # Features CSV + metadata v2
-│   ├── processed/                 # Supervised và excluded_rows
-│   └── backups/                   # ZIP dự phòng v1, không commit
-├── docs/
-│   ├── assets/pipeline.svg
-│   └── PROJECT_REVIEW.md          # Bản đánh giá trước khi chuyển sang v2
-├── src/
-│   ├── data/contracts.py          # Kiểm tra, hash, ghi và sao lưu
-│   ├── data/download_dataset.py   # Chỉ tải FPT
-│   ├── features/build_features.py # Làm sạch tiếp, nhãn và đặc trưng
-│   └── models/train_baselines.py  # Source cũ, cần migrate
-├── notebooks/                     # Ba notebook cũ, cần cập nhật v2
-├── models/                        # Dành cho artifact v2 sau khi train
-├── reports/                       # Dành cho kết quả đánh giá mới
-├── tests/test_data_pipeline.py
-├── requirements.txt
-└── README.md
-```
-
-## 9. Cài đặt và chạy dữ liệu
-
-Chạy tại thư mục gốc. Pipeline đã kiểm tra trên Python 3.13.15; dùng Python 3.11+ với dependency phù hợp môi trường.
+## 2. Chạy trên máy local
 
 ```powershell
 python -m venv venv
 .\venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 
-# 1. Tải raw và metadata; cần kết nối Yahoo Finance.
-python -m src.data.download_dataset --start 2018-01-01 --end 2026-01-01
+# Phục hồi đúng snapshot đã chốt, không tải lại Yahoo.
+python -m src.data.snapshot
 
-# 2. Làm sạch tiếp, tạo features và supervised dataset.
-python -m src.features.build_features
+# Backend: load model/scaler một lần, Swagger tại /docs.
+python -m uvicorn src.api.main:app --host 127.0.0.1 --port 8000
+```
 
-# 3. Kiểm tra pipeline offline.
+Trong terminal thứ hai:
+
+```powershell
+.\venv\Scripts\Activate.ps1
+python -m streamlit run src/app/streamlit_app.py
+```
+
+- API/Swagger: `http://127.0.0.1:8000/docs`.
+- UI: `http://127.0.0.1:8501`. Giao diện lấy dữ liệu và gọi dự báo qua HTTP, không tự load model.
+- Model/scaler canonical nhỏ được version cùng repo để clone xong có thể demo. Không dùng alias `best_lstm_model.keras` cũ.
+- UI hiển thị ngày dữ liệu cuối; snapshot đến 31/12/2025, **không phải giá trực tiếp**.
+
+## 3. API mẫu
+
+```json
+{"ticker":"FPT.VN","model":"LSTM","price_basis":"provider_adjusted_ohlc"}
+```
+
+```powershell
+Invoke-RestMethod -Method Post -Uri http://127.0.0.1:8000/api/v1/predict -ContentType application/json -Body (Get-Content -Raw examples/predict_latest.json)
+```
+
+| Endpoint | Chức năng |
+| --- | --- |
+| `GET /health` | Sẵn sàng, phiên bản, ngày dữ liệu |
+| `GET /api/v1/models` | Model demo và model thắng validation |
+| `GET /api/v1/fpt/history` | Lịch sử giá điều chỉnh |
+| `GET /api/v1/metrics` | Benchmark, split và giới hạn |
+| `POST /api/v1/predict` | Nhận sample/tham số, trả JSON dự báo |
+
+`observations` tùy chọn nhận các dòng `date/open/high/low/close/volume` của giá đã điều chỉnh. LSTM 30 cần ít nhất 79 quan sát hợp lệ; lịch sử dài hơn giúp các chỉ báo đệ quy như RSI/ATR ổn định hơn. Muốn lặp lại chính xác prediction snapshot thì dùng toàn bộ lịch sử hợp lệ, hoặc bỏ `observations` để dùng feature store chuẩn.
+
+Input sai ticker, thiếu lịch sử, volume/giá không hợp lệ hoặc origin trước thời kỳ chốt cấu hình bị từ chối. Không fit scaler khi inference; không cần biết giá tương lai. Chưa xác minh lịch HOSE nên API không tự gán ngày đích giả.
+
+## 4. Dữ liệu và thứ tự xử lý
+
+```mermaid
+flowchart TD
+    A["Raw snapshot + source metadata"] --> B["Kiểm tra ngày, schema, OHLCV"]
+    B --> C["Trục quan sát Volume dương và ngày đích"]
+    C --> D["Cách ly nến lỗi và nhãn liên quan"]
+    D --> E["16 causal features; bỏ 49 warm-up rows"]
+    E --> F["Features đầy đủ, giữ dòng cuối"]
+    E --> G["Supervised có Date và Target_Date"]
+```
+
+| Phần | Số lượng |
+| --- | ---: |
+| Raw | 2.088 dòng |
+| Volume = 0 / nến OHLC lỗi | 147 / 1 dòng |
+| Quan sát hợp lệ | 1.940 dòng |
+| Features | 1.891 dòng, 16 đầu vào |
+| Supervised | 1.889 mẫu |
+
+Raw giữ nguyên bất thường; không ffill/bfill giá. `excluded_rows.csv` ghi dòng và lý do. Chưa đối soát độc lập lịch HOSE/corporate actions; T+1 là quan sát khối lượng dương kế tiếp trong nguồn. Giá điều chỉnh tải năm 2026 chưa phải snapshot point-in-time được kiểm chứng.
+
+Chỉ `FEATURE_COLUMNS` là X; không dùng Date/Close/Target_Date/Target_Return làm đầu vào. Nhóm features gồm return và lag, momentum, volatility, SMA distance, RSI, ATR/range theo tỷ lệ và volume. Tỷ lệ không bảo đảm tính dừng.
+
+Không cần tải thêm rổ mã; market proxy cũ đã loại. Nếu nghiên cứu market context về sau, chỉ thêm khi có nguồn rõ ràng và ablation trên development.
+
+## 5. Training và lựa chọn
+
+```mermaid
+flowchart LR
+    A["Dataset v2"] --> B["Chia theo origin + target date"]
+    B --> C["Train tới 2022: fit scaler/model"]
+    B --> D["Validation 2023-2024"]
+    C --> E["So sánh cấu hình trên validation"]
+    D --> E
+    E --> F["Khóa model, ghi selection.json"]
+    F --> G["Test lịch sử 2025; không tuning lại"]
+```
+
+Mọi model dùng cùng 1.087 mẫu train, 493 validation, 248 test và tối thiểu 60 quan sát context. Cửa sổ LSTM bao gồm ngày dự báo; scaler chỉ fit trên train. Zero-return không phát hướng nên Hit Rate N/A, không gán 50%.
+
+```powershell
+python -m src.models.experiment --epochs 40 --seed 42
 python -m unittest discover -s tests -v
 ```
 
-Nếu venv đã có, dùng `.\venv\Scripts\python.exe` thay cho `python`. Hai script cũng hỗ trợ gọi trực tiếp bằng đường dẫn.
+Mỗi lượt có `models/experiments/<run_id>/manifest.json`, model/scaler và báo cáo riêng. `models/latest_experiment.json` trỏ lượt đang dùng; `models/reference_experiment.json` khóa CPU reference để so với Colab. Không ghép weights và scaler giữa các lượt.
 
-Downloader trả exit code khác 0 khi tải lỗi; không ghi đè bằng phản hồi rỗng. Build chạy offline khi raw và metadata/hash hợp lệ. Không cần tải lại dữ liệu khi chỉ sửa tài liệu.
+## 6. Colab: đúng code GitHub, đúng snapshot
 
-### Đọc dataset để cập nhật modeling
+[Mở notebook training trên Colab](https://colab.research.google.com/github/PhucTruong11/Stock_Prediction_Project/blob/feature/train-model/notebooks/02_train_deep_learning_fpt.ipynb)
 
-```python
-import pandas as pd
-from src.features.build_features import FEATURE_COLUMNS, TARGET_COLUMN
+1. Mở notebook mới từ link GitHub, không chạy bản cũ trong Drive.
+2. Setup clone vào `/content/Stock_Prediction_Project_v2`, cài `requirements-colab.txt` và phục hồi ZIP snapshot có hash. Nếu thư viện đã load đổi phiên bản, restart session rồi Run all lại.
+3. Có thể dùng GPU Pro; nguồn dữ liệu và công thức giữ nguyên. **Không tải Yahoo lại để so với CPU**.
+4. Cuối notebook tự so với CPU reference: hash, code, config, split, seed, phiên bản và sai số. Cùng phiên bản chưa bảo đảm bitwise giống trên CPU/GPU.
+5. Ngưỡng RMSE lệch tương đối 5% là kiểm tra kỹ thuật, không phải kiểm định thống kê. Phần LSTM so đúng lookback 30 của reference, kể cả GPU chọn lookback khác trên validation.
+6. Kết quả/weights Colab được nén tại `/content/fpt-colab-<run_id>.zip`; tải xuống để lưu. Không ghi đè CPU reference hoặc chọn lại theo test.
 
-df = pd.read_csv(
-    "data/processed/FPT.VN_supervised.csv",
-    parse_dates=["Date", "Target_Date_1d"],
-)
-X = df[FEATURE_COLUMNS]
-y = df[TARGET_COLUMN]
-# Chia theo thời gian và target date trước khi fit preprocessing/model.
+```powershell
+python -m src.models.compare_runs --candidate models/experiments/<colab_run_id> --output reports/colab_comparison.json
 ```
 
-**Chưa chạy lại baseline/notebook cũ để báo cáo kết quả v2.** Cần sửa cách suy ra nhãn bằng shift, chọn feature, sequence LSTM và split. Model/scaler v1 không tương thích với bộ 16 features, nên đã dọn khỏi `models/`; phải train lại trước khi chạy notebook đánh giá/demo.
+## 7. Notebook và kiến trúc ứng dụng
 
-### Phần đã dọn
+| Notebook | Nội dung |
+| --- | --- |
+| `01_eda_fpt.ipynb` | Chất lượng nguồn, giá/return, phân phối và tương quan train |
+| `02_train_deep_learning_fpt.ipynb` | Baseline/LSTM, validation selection, artifact và Colab comparison |
+| `03_evaluate_fpt_benchmark.ipynb` | Nạp lại artifact, kiểm tra hash/metrics, phân tích lỗi |
+| `04_demo_fpt_dashboard.ipynb` | Demo offline từ manifest; UI chính là Streamlit |
 
-Model/scaler v1, biểu đồ cũ, market proxy, hai kế hoạch cũ và snapshot dữ liệu trước v2 được gom tại `data/backups/legacy-v1-20261025.zip`. File ZIP có manifest và hash để đối chiếu, được gitignore và không tham gia pipeline hiện tại. Cache, ảnh render tạm, thư mục trống không dùng và placeholder dư đã được xóa. Ba notebook và source baseline được giữ để cập nhật, cùng toàn bộ dữ liệu/metadata v2.
+```mermaid
+sequenceDiagram
+    actor User as Người dùng
+    participant UI as Streamlit
+    participant API as FastAPI
+    participant M as ModelService + manifest
+    User->>UI: Chọn model, bấm dự báo
+    UI->>API: POST /api/v1/predict
+    API->>M: Validate sample và inference
+    M-->>API: Return và giá quy đổi
+    API-->>UI: JSON có as_of và model_version
+    UI-->>User: Giá dự báo và benchmark đối chứng
+```
 
-## 10. Kiểm tra và bước tiếp theo
+## 8. Cấu trúc
 
-Đã chạy **14 kiểm thử thành công**, gồm nhãn/ngày đích, cách ly nến lỗi, tính nhân quả của features, hash và bảo toàn snapshot khi nguồn lỗi. Đã đối chiếu công thức target trên dữ liệu thật. Chưa có benchmark model mới hoặc xác minh đầy đủ với HOSE.
+```text
+data/{raw,interim,processed}/       # Working CSV/metadata
+data/snapshots/                    # ZIP snapshot chuẩn được version trong Git
+docs/                             # Review và kết quả thực nghiệm
+examples/predict_latest.json
+src/data/                         # Download, validation, snapshot, feature inputs
+src/features/build_features.py
+src/models/                       # Experiment, comparison, inference
+src/api/main.py
+src/app/streamlit_app.py
+notebooks/                        # 01 -> 04
+models/experiments/<run_id>/       # Model/scaler/manifest
+models/{latest,reference}_experiment.json
+reports/experiments/<run_id>/      # Metrics, predictions, plots, environment
+reports/verification/             # Kiểm tra API/UI thật
+tests/                            # Data, modeling, snapshot và HTTP contracts
+```
 
-1. Bổ sung notebook EDA cho FPT, giải thích dữ liệu và báo cáo chất lượng.
-2. Chuyển baseline/notebook sang v2; thống nhất split, scaler và ngày đánh giá.
-3. Train lại, so sánh baseline/XGBoost/LSTM, phân tích lỗi.
-4. Đóng gói model tốt nhất thành API và nối UI.
-5. Sau đó cân nhắc market context hoặc dự báo 5 phiên.
+Muốn thu thập snapshot mới, chạy downloader/build như một nghiên cứu riêng; snapshot v2 không tự bị thay khi clone/train. Các file model/biểu đồ alias cũ và notebook Top10 đã được dọn khỏi luồng làm việc.
 
-## 11. Tài liệu liên quan
+## 9. Kiểm chứng và giới hạn
 
-- [Đánh giá và kế hoạch tổng thể](docs/PROJECT_REVIEW.md): review trước lần cập nhật dữ liệu/schema v2; số liệu và mô tả file thuộc snapshot cũ.
-- [Tài liệu yfinance](https://ranaroussi.github.io/yfinance/reference/api/yfinance.download.html): tham số tải, trong đó ngày end không bao gồm.
-- [TimeSeriesSplit](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.TimeSeriesSplit.html): tham khảo thiết kế split thời gian.
+35 unit test đã qua. Bốn notebook chạy từ đầu; API model thật khớp inference offline; sample OHLCV đầy đủ khớp snapshot prediction; Streamlit đã thử dự báo LSTM và Train Mean qua HTTP. Tất cả dùng manifest v2.
+
+Chưa có walk-forward/feature-group ablation, lịch HOSE/corporate actions độc lập hoặc backtest thực thi giao dịch. Đây là demo nghiên cứu hoàn chỉnh về luồng, không phải hệ thống giao dịch sản xuất.
+
+Tham khảo: [review ban đầu](docs/PROJECT_REVIEW.md), [kết quả CPU và giới hạn](docs/TRAINING_RESULTS.md), [TensorFlow determinism](https://www.tensorflow.org/api_docs/python/tf/config/experimental/enable_op_determinism).

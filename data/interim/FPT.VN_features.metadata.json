@@ -1,7 +1,7 @@
 {
   "schema_version": "fpt-features-v2",
   "ticker": "FPT.VN",
-  "created_at_utc": "2026-10-25T07:05:20.325923+00:00",
+  "created_at_utc": "2026-10-25T10:05:21.413486+00:00",
   "raw_rows": 2088,
   "zero_volume_excluded": 147,
   "invalid_candle_excluded": 1,
@@ -60,13 +60,13 @@
     "10": 3
   },
   "model_compatibility": "Existing v1 model/scaler artifacts require retraining.",
-  "source_raw_sha256": "54ed76a1de3814ae9bf5a126b9dfd1ebcdff92c0c91e00f81e6c35308d4d5ca8",
-  "source_metadata_sha256": "2779f2f4b5da9f351a9ef35e88f781e5cfbda942d7b90e2faae8533d2db1827b",
-  "source_downloaded_at_utc": "2026-10-25T07:04:53.136806+00:00",
+  "source_raw_sha256": "501d6a8e0c511dca824994bdd8e91c58e222506eef667780eb15433c2070c8ea",
+  "source_metadata_sha256": "9a06daeb0d862e171367105296573fd1f41b6cb11d9f3c185c4e667c87bc51d9",
+  "source_downloaded_at_utc": "2026-10-25T10:05:15.661027+00:00",
   "price_basis": "provider_adjusted_ohlc_not_execution_prices",
   "output_sha256": {
-    "features": "c388978f9e12ed12816043a1ee994cf8102e33df7eb988d543ffbc3ac7a91b36",
-    "supervised": "d0c82cdabcb5a86dc296205001b22890b0fee26994a2acf22a9bad72973a5ae8",
-    "excluded": "f2a875ce38fe4fadea37e4d286c05f3a318b516260d007bfa6c747e2c8a02464"
+    "features": "9d81786aa94fec6530714c661eeb2543594ac0ceaba908c0bb5545f693e61ef4",
+    "supervised": "41a849f26749bf789b712466b3c707d48315f2954375c7bbfc88f3f5ea77b44d",
+    "excluded": "a0c259f6ffb7abd165b5f8716077a4a9e457b8b58ba02b276b370140de7650c1"
   }
 }

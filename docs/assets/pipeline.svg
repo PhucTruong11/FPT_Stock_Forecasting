@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="740" viewBox="0 0 1280 740" role="img" aria-labelledby="title desc">
   <title id="title">FPT data and application pipeline</title>
-  <desc id="desc">Working data pipeline: Yahoo Finance, raw snapshot, quality checks, 16 causal features, explicit next-observation labels. Model migration, FastAPI and Streamlit are subsequent work.</desc>
+  <desc id="desc">Working v2 project: exact FPT snapshot, quality checks, 16 causal features, explicit labels, versioned models, FastAPI JSON inference and a Streamlit HTTP application.</desc>
   <defs>
     <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0b1220"/><stop offset="1" stop-color="#142238"/></linearGradient>
     <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 8 4 0 8" fill="none" stroke="#5eead4" stroke-width="1.5"/></marker>
@@ -48,18 +48,18 @@
   </g>
   <path d="M1136 359V392H212V458" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="7 6" marker-end="url(#future)"/>
   <rect x="450" y="380" width="382" height="25" rx="10" fill="#142238"/>
-  <text x="469" y="398" class="sub" font-size="14">NEXT · migrate training to the v2 dataset</text>
+  <text x="469" y="398" class="sub" font-size="14">TRAIN · VALIDATE · HISTORICAL TEST</text>
   <rect x="32" y="464" width="360" height="180" rx="16" fill="#29271f" stroke="#a7803c"/>
-  <rect x="440" y="464" width="360" height="180" rx="16" fill="#182338" stroke="#62748c" stroke-dasharray="7 5"/>
-  <rect x="848" y="464" width="400" height="180" rx="16" fill="#182338" stroke="#62748c" stroke-dasharray="7 5"/>
-  <text x="54" y="496" class="meta" style="fill:#fbbf24">MODEL · MIGRATION REQUIRED</text>
-  <text x="462" y="496" class="meta" style="fill:#a9bbd0">BACKEND · PLANNED</text>
-  <text x="870" y="496" class="meta" style="fill:#a9bbd0">APPLICATION · PLANNED</text>
+  <rect x="440" y="464" width="360" height="180" rx="16" fill="#14253b" stroke="#31526b"/>
+  <rect x="848" y="464" width="400" height="180" rx="16" fill="#14253b" stroke="#31526b"/>
+  <text x="54" y="496" class="meta" style="fill:#fbbf24">MODEL · TRAINED ON CPU</text>
+  <text x="462" y="496" class="meta">BACKEND · WORKING</text>
+  <text x="870" y="496" class="meta">APPLICATION · WORKING</text>
   <text x="54" y="534" class="label">Train → evaluate → artifact</text>
   <text x="462" y="534" class="label">FastAPI · JSON inference</text>
   <text x="870" y="534" class="label">Streamlit · analysis &amp; forecast</text>
   <text x="54" y="568" class="body">Baselines · XGBoost · LSTM</text>
-  <text x="54" y="594" class="body">Shared time split; retrain old weights</text>
+  <text x="54" y="594" class="body">1,087 train / 493 val / 248 test</text>
   <text x="462" y="568" class="body">Load a versioned model once</text>
   <text x="462" y="594" class="body">Validate sample → return prediction</text>
   <text x="870" y="568" class="body">Call the backend over HTTP</text>
@@ -68,7 +68,7 @@
     <path d="M394 554H434"/><path d="M802 554H842"/>
   </g>
   <circle cx="43" cy="695" r="5" fill="#5eead4"/><text x="57" y="700" class="body">Working data pipeline</text>
-  <circle cx="320" cy="695" r="5" fill="#fbbf24"/><text x="334" y="700" class="body">Existing code needs migration</text>
-  <circle cx="650" cy="695" r="5" fill="#94a3b8"/><text x="664" y="700" class="body">Planned integration</text>
+  <circle cx="320" cy="695" r="5" fill="#fbbf24"/><text x="334" y="700" class="body">Versioned models and scalers</text>
+  <circle cx="650" cy="695" r="5" fill="#5eead4"/><text x="664" y="700" class="body">HTTP application integration</text>
   <text x="1017" y="700" class="code">Snapshot · 2026-10-25</text>
 </svg>

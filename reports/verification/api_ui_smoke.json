@@ -1,0 +1,124 @@
+{
+  "run_id": "20261025T121448987851Z",
+  "api_checks": [
+    {
+      "model": "LSTM",
+      "api_matches_offline": true,
+      "prediction": {
+        "ticker": "FPT.VN",
+        "as_of": "2025-12-31",
+        "horizon_observations": 1,
+        "target_date": null,
+        "model": "LSTM",
+        "model_version": "20261025T121448987851Z",
+        "price_basis": "provider_adjusted_ohlc",
+        "latest_close_adjusted": 85907.609375,
+        "predicted_log_return": -0.0012733686016872525,
+        "predicted_simple_return_pct": -0.1272558211900838,
+        "predicted_close_adjusted": 85798.28694122507,
+        "validation_selected_model": "Train Mean",
+        "model_role": "ML demonstration",
+        "training_target_end": "2022-12-30",
+        "selection_cutoff": "2024-12-31",
+        "calendar_verified": false,
+        "excluded_input_rows": null
+      }
+    },
+    {
+      "model": "Train Mean",
+      "api_matches_offline": true,
+      "prediction": {
+        "ticker": "FPT.VN",
+        "as_of": "2025-12-31",
+        "horizon_observations": 1,
+        "target_date": null,
+        "model": "Train Mean",
+        "model_version": "20261025T121448987851Z",
+        "price_basis": "provider_adjusted_ohlc",
+        "latest_close_adjusted": 85907.609375,
+        "predicted_log_return": 0.0011591656680351383,
+        "predicted_simple_return_pct": 0.11598377602217562,
+        "predicted_close_adjusted": 86007.2482642435,
+        "validation_selected_model": "Train Mean",
+        "model_role": "comparison model",
+        "training_target_end": "2022-12-30",
+        "selection_cutoff": "2024-12-31",
+        "calendar_verified": false,
+        "excluded_input_rows": null
+      }
+    },
+    {
+      "model": "Zero-Return",
+      "api_matches_offline": true,
+      "prediction": {
+        "ticker": "FPT.VN",
+        "as_of": "2025-12-31",
+        "horizon_observations": 1,
+        "target_date": null,
+        "model": "Zero-Return",
+        "model_version": "20261025T121448987851Z",
+        "price_basis": "provider_adjusted_ohlc",
+        "latest_close_adjusted": 85907.609375,
+        "predicted_log_return": 0.0,
+        "predicted_simple_return_pct": 0.0,
+        "predicted_close_adjusted": 85907.609375,
+        "validation_selected_model": "Train Mean",
+        "model_role": "comparison model",
+        "training_target_end": "2022-12-30",
+        "selection_cutoff": "2024-12-31",
+        "calendar_verified": false,
+        "excluded_input_rows": null
+      }
+    },
+    {
+      "model": "Ridge",
+      "api_matches_offline": true,
+      "prediction": {
+        "ticker": "FPT.VN",
+        "as_of": "2025-12-31",
+        "horizon_observations": 1,
+        "target_date": null,
+        "model": "Ridge",
+        "model_version": "20261025T121448987851Z",
+        "price_basis": "provider_adjusted_ohlc",
+        "latest_close_adjusted": 85907.609375,
+        "predicted_log_return": -0.002114186476402102,
+        "predicted_simple_return_pct": -0.21119531583344708,
+        "predicted_close_adjusted": 85726.17652805551,
+        "validation_selected_model": "Train Mean",
+        "model_role": "comparison model",
+        "training_target_end": "2022-12-30",
+        "selection_cutoff": "2024-12-31",
+        "calendar_verified": false,
+        "excluded_input_rows": null
+      }
+    },
+    {
+      "model": "XGBoost",
+      "api_matches_offline": true,
+      "prediction": {
+        "ticker": "FPT.VN",
+        "as_of": "2025-12-31",
+        "horizon_observations": 1,
+        "target_date": null,
+        "model": "XGBoost",
+        "model_version": "20261025T121448987851Z",
+        "price_basis": "provider_adjusted_ohlc",
+        "latest_close_adjusted": 85907.609375,
+        "predicted_log_return": 6.676542398054153e-05,
+        "predicted_simple_return_pct": 0.006676765284106451,
+        "predicted_close_adjusted": 85913.34522443915,
+        "validation_selected_model": "Train Mean",
+        "model_role": "comparison model",
+        "training_target_end": "2022-12-30",
+        "selection_cutoff": "2024-12-31",
+        "calendar_verified": false,
+        "excluded_input_rows": null
+      }
+    }
+  ],
+  "full_ohlcv_sample_matches_snapshot_prediction": true,
+  "invalid_requests_rejected": true,
+  "swagger_ok": true,
+  "streamlit_load_and_predict_lstm_and_train_mean": true
+}
