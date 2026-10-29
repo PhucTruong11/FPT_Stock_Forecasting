@@ -1,0 +1,112 @@
+{
+  "study_id": "20261029T131205702813Z",
+  "registered_before_training_utc": "2026-10-29T13:12:05.703194+00:00",
+  "config": {
+    "protocol_version": "fpt-retrospective-robustness-v1",
+    "purpose": "Historical robustness and feature ablation; no automatic serving promotion",
+    "seeds": [
+      42,
+      123,
+      2026
+    ],
+    "lookback": 30,
+    "epochs_limit": 40,
+    "folds": [
+      {
+        "id": "eval_2022",
+        "train_end": "2020-12-31",
+        "validation_end": "2021-12-31",
+        "evaluation_end": "2022-12-31"
+      },
+      {
+        "id": "eval_2023",
+        "train_end": "2021-12-31",
+        "validation_end": "2022-12-31",
+        "evaluation_end": "2023-12-31"
+      },
+      {
+        "id": "eval_2024",
+        "train_end": "2022-12-31",
+        "validation_end": "2023-12-31",
+        "evaluation_end": "2024-12-31"
+      }
+    ],
+    "feature_groups": {
+      "returns": [
+        "Log_Return",
+        "Return_Lag_1",
+        "Return_Lag_2",
+        "Return_Lag_5",
+        "Return_5",
+        "Return_20"
+      ],
+      "returns_technical": [
+        "Log_Return",
+        "Return_Lag_1",
+        "Return_Lag_2",
+        "Return_Lag_5",
+        "Return_5",
+        "Return_20",
+        "Volatility_5",
+        "Volatility_20",
+        "SMA_Distance_20",
+        "SMA_Distance_50",
+        "RSI_14",
+        "ATR_Ratio",
+        "Intraday_Range"
+      ],
+      "full": [
+        "Log_Return",
+        "Return_Lag_1",
+        "Return_Lag_2",
+        "Return_Lag_5",
+        "Return_5",
+        "Return_20",
+        "Volatility_5",
+        "Volatility_20",
+        "SMA_Distance_20",
+        "SMA_Distance_50",
+        "RSI_14",
+        "ATR_Ratio",
+        "Intraday_Range",
+        "Volume_Ratio_20",
+        "Volume_Log_Change",
+        "Volume_ZScore_20"
+      ]
+    },
+    "selection": {
+      "primary_metric": "validation_rmse",
+      "evaluation_role": "retrospective diagnostics only",
+      "automatic_promotion": false,
+      "reason": "Architecture and features were previously inspected using 2023-2025; these folds are not pristine holdouts. A new untouched forward period and verified source are required before promotion."
+    }
+  },
+  "config_sha256": "4da08ef7a5f806cf107f9b2faf4c25dcaf449d9c99b44932247cc164716d528e",
+  "source_sha256": {
+    "src/models/robustness.py": "dac1f356b579a177cd8cb55364efe65dc33f99f55d6d6c40a1d76656590c5ea6",
+    "src/models/experiment.py": "24bbc95e82d8ebf981c031b3418be7e0f18bf05b693d0ff71f7afc8efb00e5b1",
+    "src/features/build_features.py": "29935bd688c01e570c40bcfa127f2ef61e9b108d4a7a80ce6fa72c6d1f6621db"
+  },
+  "data_sha256": {
+    "features": "9d81786aa94fec6530714c661eeb2543594ac0ceaba908c0bb5545f693e61ef4",
+    "supervised": "41a849f26749bf789b712466b3c707d48315f2954375c7bbfc88f3f5ea77b44d",
+    "excluded": "a0c259f6ffb7abd165b5f8716077a4a9e457b8b58ba02b276b370140de7650c1"
+  },
+  "raw_sha256": "501d6a8e0c511dca824994bdd8e91c58e222506eef667780eb15433c2070c8ea",
+  "incumbent": {
+    "run_id": "20261025T124951351761Z",
+    "artifact_dir": "models/experiments/20261025T124951351761Z",
+    "report_dir": "reports/experiments/20261025T124951351761Z"
+  },
+  "common_context": 60,
+  "schema": "fpt-robustness-v1",
+  "python": "3.13.15",
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "xgboost": "3.4.1",
+    "joblib": "1.6.0"
+  },
+  "warning": "Retrospective diagnostic. Evaluation windows overlap historical development knowledge; not a new prospective holdout."
+}

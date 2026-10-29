@@ -174,7 +174,7 @@ Muốn thu thập snapshot mới, chạy downloader/build như một nghiên c�
 
 ## 9. Kiểm chứng và giới hạn
 
-36 unit test đã qua. Bốn notebook chạy từ đầu; API model thật khớp inference offline; sample OHLCV đầy đủ khớp snapshot prediction; Streamlit đã thử dự báo LSTM và Train Mean qua HTTP. Tất cả dùng manifest v2.
+42 unit test đã qua. Bốn notebook chạy từ đầu; API model thật khớp inference offline; sample OHLCV đầy đủ khớp snapshot prediction; Streamlit đã thử dự báo LSTM và Train Mean qua HTTP. Tất cả dùng manifest v2.
 
 Chưa có walk-forward/feature-group ablation, lịch HOSE/corporate actions độc lập hoặc backtest thực thi giao dịch. Đây là demo nghiên cứu hoàn chỉnh về luồng, không phải hệ thống giao dịch sản xuất.
 
@@ -185,3 +185,18 @@ Tham khảo: [review ban đầu](docs/PROJECT_REVIEW.md), [kết quả CPU và g
 Xem [TRAINING_HISTORY.md](docs/TRAINING_HISTORY.md) để đọc quá trình thay đổi, cấu hình, chỉ số, kết quả Colab và giới hạn của so sánh. Mỗi run giữ manifest, predictions và metrics riêng. Cập nhật nhật ký sau lượt train bằng `python -m src.models.training_history`; lệnh này không train lại hoặc chọn model theo test.
 
 Lượt Colab T4 đã chạy đủ 8 cell và model JSON/Keras đã nạp lại trên Windows. LSTM gần như trùng CPU; XGBoost RMSE lệch nhỏ nên báo cáo giữ trạng thái `protocol_match_numeric_difference`.
+
+## 11. Nghiên cứu độ ổn định và retraining
+
+Đợt 29/10/2026 chạy 3 fold thời gian, 3 seed cho XGBoost/LSTM và 3 nhóm feature: 63 model train, 156 hàng metrics. Xem [báo cáo đối chứng](reports/robustness/20261029T131205702813Z/REPORT.md) và [chỉ mục các đợt nghiên cứu](reports/robustness/studies.json).
+
+LSTM returns-only có mean-fold RMSE thấp hơn full 16 features khoảng 0,66%, nhưng vẫn chưa vượt Zero-Return nhất quán; chưa promote model mới. Đây là kiểm tra hồi cứu, không phải holdout chưa từng xem. Model và pointer dùng cho API/UI giữ nguyên.
+
+```powershell
+python -m src.models.robustness --config configs/robustness_v1.json
+python -m src.models.robustness_report --reload-artifacts
+```
+
+Mỗi study có protocol đăng ký trước train, source snapshot, hashes, metrics/predictions, seed stability và quyết định giữ/thay. Research weights nằm local trong `models/research/` và được Git ignore; báo cáo, predictions và bằng chứng kiểm tra được lưu trong repository. Lệnh trên tạo một study và weights mới theo cùng protocol; không tái tạo nguyên byte hoặc ID cũ. Muốn nạp lại đúng checkpoint cũ cần giữ thư mục weights tương ứng; bản clone GitHub chỉ có báo cáo và bằng chứng đã lưu. Không dùng weights nghiên cứu trực tiếp cho API.
+
+Xem [bài toán supervised regression, vòng lặp drift/retrain và các lựa chọn deploy](docs/ML_WORKFLOW_AND_DEPLOYMENT.md). Tài liệu cloud được kiểm tra ngày 29/10/2026; chưa tạo hoặc deploy dịch vụ cloud. API/Streamlit tiếp tục do thành viên phụ trách cập nhật.

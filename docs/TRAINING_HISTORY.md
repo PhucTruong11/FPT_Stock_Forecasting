@@ -133,3 +133,12 @@ python -m src.models.compare_runs --candidate models/experiments/<run_id> --outp
 ```
 
 [calculation_checks.json](../reports/training_history/calculation_checks.json) tính độc lập lại RMSE/MAE/hit rate từ prediction export của reference và kiểm tra khớp manifest. Bản Markdown này là biên bản ngày 25/10/2026; ledger có thể cập nhật về sau mà không sửa ngược kết luận lịch sử này.
+
+
+## 9. Cập nhật nghiên cứu ngày 29/10/2026
+
+Đã thực hiện [đợt rolling-origin/feature ablation](../reports/robustness/20261029T131205702813Z/REPORT.md): 63 model train, 156 hàng metrics, 3 fold và 3 seed cho từng model stochastic. Mọi forecast origin được đối chiếu; 63 model đã nạp lại và qua 126 kiểm tra validation/evaluation prediction. Bộ kiểm thử hiện tại có 42 test qua.
+
+Các kết quả này thuộc protocol/window khác với test 2025 bên trên, nên không vẽ chúng nối thành một đường tăng accuracy theo ngày train. LSTM returns-only giảm mean-fold RMSE khoảng 0,66% so với full features, nhưng chưa vượt baseline nhất quán và seed variation không cải thiện đồng thời. Quyết định giữ model phục vụ hiện tại. Chỉ mục study và toàn bộ kết quả tốt/xấu nằm trong [studies.json](../reports/robustness/studies.json).
+
+[Vòng lặp monitoring/retraining và giải thích supervised regression/deploy](ML_WORKFLOW_AND_DEPLOYMENT.md) là thiết kế cho bước tiếp theo; chưa có live monitor hoặc auto-promotion.

@@ -24,6 +24,7 @@ data/backups/
 models/**/*.h5
 models/**/*.pkl
 models/**/*.keras
+models/research/
 
 # IDE settings
 .vscode/

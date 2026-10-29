@@ -1,0 +1,18 @@
+{
+  "raw_rows": 2088,
+  "feature_rows": 1891,
+  "common_context_label_rows": 1830,
+  "zero_volume_rows": 147,
+  "invalid_candles": 1,
+  "missing_close_rows": 4,
+  "weekend_rows": 0,
+  "raw_dates_unique_and_sorted": true,
+  "feature_inputs_finite": true,
+  "labels_independently_recomputed_from_source_closes": true,
+  "calendar_verified": false,
+  "unresolved": [
+    "HOSE calendar not independently reconciled",
+    "Corporate actions and point-in-time adjustments not independently reconciled"
+  ],
+  "scope": "Internal validation of the frozen research snapshot, not independent source certification"
+}

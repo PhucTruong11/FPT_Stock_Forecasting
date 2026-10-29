@@ -1,0 +1,1413 @@
+{
+  "metric_rows_independently_verified": 156,
+  "same_origin_dates_per_fold_phase": true,
+  "artifact_hashes_verified": 72,
+  "source_snapshot_verified": true,
+  "original_protocol_verified": true,
+  "checks": [
+    {
+      "candidate": "eval_2022_baseline_Always_Down",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.024092071845537664,
+      "mae": 0.01864713383083909,
+      "hit_rate_pct": 45.614035087719294,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_baseline_Always_Down",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.02376057305658143,
+      "mae": 0.017747108256026784,
+      "hit_rate_pct": 48.803827751196174,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_baseline_Always_Up",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.02405539907770145,
+      "mae": 0.01800990297332463,
+      "hit_rate_pct": 54.385964912280706,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_baseline_Always_Up",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.020960303041583302,
+      "mae": 0.01649535133986105,
+      "hit_rate_pct": 51.196172248803826,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_baseline_Return_Persistence",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.029611016902754635,
+      "mae": 0.02123829282560882,
+      "hit_rate_pct": 46.49122807017544,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_baseline_Return_Persistence",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.026194615903182155,
+      "mae": 0.01853404451900023,
+      "hit_rate_pct": 46.889952153110045,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_baseline_Train_Mean",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.02116589385141607,
+      "mae": 0.014251812790133612,
+      "hit_rate_pct": 54.385964912280706,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_baseline_Train_Mean",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.01910479246046517,
+      "mae": 0.013162380365824665,
+      "hit_rate_pct": 51.196172248803826,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_baseline_Zero-Return",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.021143703133679276,
+      "mae": 0.01426415646993078,
+      "hit_rate_pct": null,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_baseline_Zero-Return",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.019221359855437367,
+      "mae": 0.013126053620475637,
+      "hit_rate_pct": null,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_LSTM_s123",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.02140084634439281,
+      "mae": 0.014496453383873443,
+      "hit_rate_pct": 55.26315789473685,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_LSTM_s123",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.01930987819860416,
+      "mae": 0.013512366785406817,
+      "hit_rate_pct": 46.889952153110045,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.02139034037665664,
+      "mae": 0.014482821313919373,
+      "hit_rate_pct": 53.07017543859649,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_LSTM_s2026",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.018951663296370082,
+      "mae": 0.013333554223337771,
+      "hit_rate_pct": 50.23923444976076,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_LSTM_s42",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.021610522318978496,
+      "mae": 0.014847973745019751,
+      "hit_rate_pct": 50.877192982456144,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_LSTM_s42",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.018934059884312633,
+      "mae": 0.013188834978802338,
+      "hit_rate_pct": 52.15311004784689,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.0213383108642497,
+      "mae": 0.014374438015334258,
+      "hit_rate_pct": 54.824561403508774,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_Ridge_sNone",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.019776921989088148,
+      "mae": 0.013799069677420575,
+      "hit_rate_pct": 53.588516746411486,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.02205293227790799,
+      "mae": 0.015169268486983321,
+      "hit_rate_pct": 46.49122807017544,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_XGBoost_s123",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.019436833976754157,
+      "mae": 0.013510618543693394,
+      "hit_rate_pct": 47.368421052631575,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.022067620812976585,
+      "mae": 0.015239823473203984,
+      "hit_rate_pct": 44.29824561403509,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_XGBoost_s2026",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.019559407564624536,
+      "mae": 0.013570852746106166,
+      "hit_rate_pct": 46.889952153110045,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.02212043216677668,
+      "mae": 0.015295025821781948,
+      "hit_rate_pct": 43.42105263157895,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_XGBoost_s42",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.019570731249951304,
+      "mae": 0.013575588093977234,
+      "hit_rate_pct": 46.411483253588514,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_LSTM_s123",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.02134072362522597,
+      "mae": 0.014281800230260605,
+      "hit_rate_pct": 52.63157894736842,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_LSTM_s123",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.019019799479169187,
+      "mae": 0.013217449839134789,
+      "hit_rate_pct": 51.196172248803826,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.021111969101765764,
+      "mae": 0.01430117704017025,
+      "hit_rate_pct": 52.19298245614035,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_LSTM_s2026",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.018884952231699646,
+      "mae": 0.013085987232393995,
+      "hit_rate_pct": 54.54545454545454,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_LSTM_s42",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.021145263487137654,
+      "mae": 0.014139113167905516,
+      "hit_rate_pct": 53.94736842105263,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_LSTM_s42",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.019135354116290824,
+      "mae": 0.013220678573802117,
+      "hit_rate_pct": 50.23923444976076,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.021329028035171376,
+      "mae": 0.014343199333881344,
+      "hit_rate_pct": 52.19298245614035,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_Ridge_sNone",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.01915813412163161,
+      "mae": 0.013230650273498758,
+      "hit_rate_pct": 51.196172248803826,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.022120625495208428,
+      "mae": 0.015062893090951927,
+      "hit_rate_pct": 43.859649122807014,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_XGBoost_s123",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.019964531156659665,
+      "mae": 0.013724966195578859,
+      "hit_rate_pct": 44.49760765550239,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.02205940714849074,
+      "mae": 0.015024095327374573,
+      "hit_rate_pct": 42.98245614035088,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_XGBoost_s2026",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.019920844842238588,
+      "mae": 0.013737595292514922,
+      "hit_rate_pct": 46.889952153110045,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.022013779216575928,
+      "mae": 0.01496117518301974,
+      "hit_rate_pct": 43.42105263157895,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_XGBoost_s42",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.019909476254374357,
+      "mae": 0.013684909798865804,
+      "hit_rate_pct": 46.411483253588514,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_LSTM_s123",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.02142277217977789,
+      "mae": 0.01453403786965177,
+      "hit_rate_pct": 52.63157894736842,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_LSTM_s123",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.019271119695734466,
+      "mae": 0.013481439796912987,
+      "hit_rate_pct": 45.45454545454545,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.02137742212092176,
+      "mae": 0.014477605695207004,
+      "hit_rate_pct": 52.63157894736842,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_LSTM_s2026",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.018899620561241774,
+      "mae": 0.013138819389137493,
+      "hit_rate_pct": 46.889952153110045,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_LSTM_s42",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.021660158248538286,
+      "mae": 0.014862765477851557,
+      "hit_rate_pct": 51.75438596491229,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_LSTM_s42",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.018894180469988878,
+      "mae": 0.013122024532854397,
+      "hit_rate_pct": 51.674641148325364,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.021371011231892802,
+      "mae": 0.01435617528802756,
+      "hit_rate_pct": 53.94736842105263,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_Ridge_sNone",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.019169074229478156,
+      "mae": 0.013294938533483005,
+      "hit_rate_pct": 52.63157894736842,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.022067071447157603,
+      "mae": 0.015110550281912641,
+      "hit_rate_pct": 48.24561403508772,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_XGBoost_s123",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.019531107575065154,
+      "mae": 0.01357542138857463,
+      "hit_rate_pct": 47.84688995215311,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.022050645302660307,
+      "mae": 0.01512782875028975,
+      "hit_rate_pct": 43.859649122807014,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_XGBoost_s2026",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.019418681257051627,
+      "mae": 0.01338282290475042,
+      "hit_rate_pct": 51.196172248803826,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 245,
+      "rmse": 0.02207967462967868,
+      "mae": 0.015130607761346913,
+      "hit_rate_pct": 46.05263157894737,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_XGBoost_s42",
+      "phase": "validation",
+      "n": 222,
+      "rmse": 0.01950091057837273,
+      "mae": 0.013453700217843478,
+      "hit_rate_pct": 50.23923444976076,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_baseline_Always_Down",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.01814967454364819,
+      "mae": 0.015096126240922532,
+      "hit_rate_pct": 46.46017699115044,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_baseline_Always_Down",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.02430345938228404,
+      "mae": 0.018902660676295157,
+      "hit_rate_pct": 45.614035087719294,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_baseline_Always_Up",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.016180461527545587,
+      "mae": 0.013192813519386,
+      "hit_rate_pct": 53.53982300884957,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_baseline_Always_Up",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.02426573198217047,
+      "mae": 0.0182717398210924,
+      "hit_rate_pct": 54.385964912280706,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_baseline_Return_Persistence",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.01757006282347974,
+      "mae": 0.013007279119868641,
+      "hit_rate_pct": 48.67256637168141,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_baseline_Return_Persistence",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.029611016902754635,
+      "mae": 0.02123829282560882,
+      "hit_rate_pct": 46.49122807017544,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_baseline_Train_Mean",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012285182564711766,
+      "mae": 0.008705664554644462,
+      "hit_rate_pct": 53.53982300884957,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_baseline_Train_Mean",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.02119280628089881,
+      "mae": 0.014280279691067975,
+      "hit_rate_pct": 54.385964912280706,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_baseline_Zero-Return",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012366214034986433,
+      "mae": 0.008646065198226787,
+      "hit_rate_pct": null,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_baseline_Zero-Return",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.021143703133679276,
+      "mae": 0.01426415646993078,
+      "hit_rate_pct": null,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_LSTM_s123",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012514625763019488,
+      "mae": 0.008667587665028426,
+      "hit_rate_pct": 54.424778761061944,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_LSTM_s123",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.021240514778593823,
+      "mae": 0.014334849632660024,
+      "hit_rate_pct": 53.07017543859649,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012526464554248159,
+      "mae": 0.008785647504294529,
+      "hit_rate_pct": 49.557522123893804,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_LSTM_s2026",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.021494137090410228,
+      "mae": 0.014371538325906779,
+      "hit_rate_pct": 53.50877192982456,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_LSTM_s42",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.01256233383417593,
+      "mae": 0.008690474625582926,
+      "hit_rate_pct": 52.21238938053098,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_LSTM_s42",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.02152587470849821,
+      "mae": 0.014494055137827531,
+      "hit_rate_pct": 47.368421052631575,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012491311051775022,
+      "mae": 0.008762825364512006,
+      "hit_rate_pct": 51.76991150442478,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_Ridge_sNone",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.02142762849401076,
+      "mae": 0.014432480865616293,
+      "hit_rate_pct": 55.26315789473685,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012568990346706133,
+      "mae": 0.009019339042027499,
+      "hit_rate_pct": 52.654867256637175,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_XGBoost_s123",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.021946087340216476,
+      "mae": 0.014935684223010863,
+      "hit_rate_pct": 50.43859649122807,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012563447977578728,
+      "mae": 0.009030732324119509,
+      "hit_rate_pct": 54.86725663716814,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_XGBoost_s2026",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.021818133574325126,
+      "mae": 0.014890354698466949,
+      "hit_rate_pct": 48.68421052631579,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.01257518616148789,
+      "mae": 0.00903955038070532,
+      "hit_rate_pct": 53.09734513274337,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_XGBoost_s42",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.021846350459475358,
+      "mae": 0.014865232707038283,
+      "hit_rate_pct": 51.31578947368421,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_LSTM_s123",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012453848031335936,
+      "mae": 0.008709037695063034,
+      "hit_rate_pct": 51.76991150442478,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_LSTM_s123",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.02127029699298,
+      "mae": 0.0142287217166454,
+      "hit_rate_pct": 53.50877192982456,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012567147323728088,
+      "mae": 0.008685032662232538,
+      "hit_rate_pct": 55.309734513274336,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_LSTM_s2026",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.021088303387881265,
+      "mae": 0.014136549411777461,
+      "hit_rate_pct": 52.63157894736842,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_LSTM_s42",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012611037921001255,
+      "mae": 0.00875415780976857,
+      "hit_rate_pct": 50.0,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_LSTM_s42",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.02097009927368258,
+      "mae": 0.014001145093976779,
+      "hit_rate_pct": 52.19298245614035,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012390054069348719,
+      "mae": 0.00874111002890415,
+      "hit_rate_pct": 50.88495575221239,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_Ridge_sNone",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.021312388474468317,
+      "mae": 0.0143290419460565,
+      "hit_rate_pct": 56.14035087719298,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.01259363773243969,
+      "mae": 0.008848430186244602,
+      "hit_rate_pct": 53.09734513274337,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_XGBoost_s123",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.021219322930463448,
+      "mae": 0.014546671453492095,
+      "hit_rate_pct": 50.877192982456144,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012541470421227711,
+      "mae": 0.00879980425826708,
+      "hit_rate_pct": 53.98230088495575,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_XGBoost_s2026",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.02104354321886082,
+      "mae": 0.014498768356777521,
+      "hit_rate_pct": 51.31578947368421,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012566715841810582,
+      "mae": 0.008823048613103361,
+      "hit_rate_pct": 53.53982300884957,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_XGBoost_s42",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.021118731893330814,
+      "mae": 0.014478022670030113,
+      "hit_rate_pct": 51.75438596491229,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_LSTM_s123",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012380209206746184,
+      "mae": 0.008676845569328835,
+      "hit_rate_pct": 53.09734513274337,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_LSTM_s123",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.021153441603678463,
+      "mae": 0.0142225385979991,
+      "hit_rate_pct": 53.94736842105263,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012418620872258649,
+      "mae": 0.008736990660100419,
+      "hit_rate_pct": 50.88495575221239,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_LSTM_s2026",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.021482047769783342,
+      "mae": 0.014367077957921602,
+      "hit_rate_pct": 55.26315789473685,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_LSTM_s42",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012471334518027755,
+      "mae": 0.008602254632796376,
+      "hit_rate_pct": 50.88495575221239,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_LSTM_s42",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.021526387294872946,
+      "mae": 0.014386699414314747,
+      "hit_rate_pct": 51.31578947368421,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.01250849133496849,
+      "mae": 0.008789929330644226,
+      "hit_rate_pct": 48.23008849557522,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_Ridge_sNone",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.02138698727148179,
+      "mae": 0.014372773151111672,
+      "hit_rate_pct": 56.57894736842105,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012529126489892406,
+      "mae": 0.009006912209160552,
+      "hit_rate_pct": 53.53982300884957,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_XGBoost_s123",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.02190419612928846,
+      "mae": 0.014911133441981283,
+      "hit_rate_pct": 51.31578947368421,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012577604292478142,
+      "mae": 0.009084960844230671,
+      "hit_rate_pct": 52.654867256637175,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_XGBoost_s2026",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.021932338418235654,
+      "mae": 0.014961078567991764,
+      "hit_rate_pct": 50.0,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.012519320754646051,
+      "mae": 0.00903828717479196,
+      "hit_rate_pct": 52.21238938053098,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_XGBoost_s42",
+      "phase": "validation",
+      "n": 245,
+      "rmse": 0.02202067903658088,
+      "mae": 0.01507306417636887,
+      "hit_rate_pct": 48.24561403508772,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_baseline_Always_Down",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.02152118504025889,
+      "mae": 0.01707990996732363,
+      "hit_rate_pct": 43.88185654008439,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_baseline_Always_Down",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.018533269393079872,
+      "mae": 0.01551380444341491,
+      "hit_rate_pct": 46.46017699115044,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_baseline_Always_Up",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.018380525248448566,
+      "mae": 0.014971557337228306,
+      "hit_rate_pct": 56.118143459915615,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_baseline_Always_Up",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.016521344640568987,
+      "mae": 0.013549553767969525,
+      "hit_rate_pct": 53.53982300884957,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_baseline_Return_Persistence",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.020494084764041007,
+      "mae": 0.015947413937128757,
+      "hit_rate_pct": 48.9451476793249,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_baseline_Return_Persistence",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.01757006282347974,
+      "mae": 0.013007279119868641,
+      "hit_rate_pct": 48.67256637168141,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_baseline_Train_Mean",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015515238510470444,
+      "mae": 0.011511149352584467,
+      "hit_rate_pct": 56.118143459915615,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_baseline_Train_Mean",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.012287667262863212,
+      "mae": 0.008668948344131703,
+      "hit_rate_pct": 53.53982300884957,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_baseline_Zero-Return",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015659098153073512,
+      "mae": 0.011589986307828112,
+      "hit_rate_pct": null,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_baseline_Zero-Return",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.012366214034986433,
+      "mae": 0.008646065198226787,
+      "hit_rate_pct": null,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_LSTM_s123",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015624530664051386,
+      "mae": 0.011458280920001212,
+      "hit_rate_pct": 53.16455696202531,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_LSTM_s123",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.01242670777406353,
+      "mae": 0.00863949171202871,
+      "hit_rate_pct": 50.442477876106196,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015656728371297324,
+      "mae": 0.011601309164529337,
+      "hit_rate_pct": 53.16455696202531,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_LSTM_s2026",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.01248171021006346,
+      "mae": 0.008891947676750224,
+      "hit_rate_pct": 53.53982300884957,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_LSTM_s42",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015587293990486424,
+      "mae": 0.0114344026777803,
+      "hit_rate_pct": 54.43037974683544,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_LSTM_s42",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.012408623540935913,
+      "mae": 0.008658288244601223,
+      "hit_rate_pct": 53.09734513274337,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015518681554966017,
+      "mae": 0.011423899113184317,
+      "hit_rate_pct": 51.0548523206751,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_Ridge_sNone",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.01240706871797442,
+      "mae": 0.008779865173968747,
+      "hit_rate_pct": 50.0,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015504900615194338,
+      "mae": 0.011409121348849057,
+      "hit_rate_pct": 56.9620253164557,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_XGBoost_s123",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.012393413376449747,
+      "mae": 0.008697371856179414,
+      "hit_rate_pct": 54.86725663716814,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015470629179583372,
+      "mae": 0.011421288649346549,
+      "hit_rate_pct": 57.80590717299579,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_XGBoost_s2026",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.012438029247319023,
+      "mae": 0.008750353472446975,
+      "hit_rate_pct": 53.98230088495575,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015532294133458406,
+      "mae": 0.011413648350439662,
+      "hit_rate_pct": 57.80590717299579,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_XGBoost_s42",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.012412614718821954,
+      "mae": 0.008731159423347911,
+      "hit_rate_pct": 54.424778761061944,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_LSTM_s123",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015623239996772845,
+      "mae": 0.011456614920892533,
+      "hit_rate_pct": 55.27426160337553,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_LSTM_s123",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.012421273382788292,
+      "mae": 0.008657805012043612,
+      "hit_rate_pct": 53.53982300884957,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015485178134330145,
+      "mae": 0.011387643063203863,
+      "hit_rate_pct": 56.118143459915615,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_LSTM_s2026",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.012382290213912168,
+      "mae": 0.008624139283911472,
+      "hit_rate_pct": 55.75221238938053,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_LSTM_s42",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015551430707507185,
+      "mae": 0.011442499598907278,
+      "hit_rate_pct": 57.80590717299579,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_LSTM_s42",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.012393478171048869,
+      "mae": 0.008659089841962602,
+      "hit_rate_pct": 53.98230088495575,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015490002788208657,
+      "mae": 0.011411501805446748,
+      "hit_rate_pct": 58.64978902953587,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_Ridge_sNone",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.012388081138207508,
+      "mae": 0.008699103341187621,
+      "hit_rate_pct": 52.654867256637175,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015489893128077947,
+      "mae": 0.011432190107420602,
+      "hit_rate_pct": 57.383966244725734,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_XGBoost_s123",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.01245820096007937,
+      "mae": 0.008776612849719046,
+      "hit_rate_pct": 53.53982300884957,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015466098014836161,
+      "mae": 0.011433609538096573,
+      "hit_rate_pct": 53.58649789029536,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_XGBoost_s2026",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.012466893873392929,
+      "mae": 0.008764334161593536,
+      "hit_rate_pct": 53.09734513274337,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015504106676898896,
+      "mae": 0.01142376229611218,
+      "hit_rate_pct": 56.118143459915615,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_XGBoost_s42",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.012473387344135138,
+      "mae": 0.008810951201111928,
+      "hit_rate_pct": 53.98230088495575,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_LSTM_s123",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015568631420409009,
+      "mae": 0.011408369291365513,
+      "hit_rate_pct": 59.07172995780591,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_LSTM_s123",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.012382388447578276,
+      "mae": 0.008668128439082615,
+      "hit_rate_pct": 50.442477876106196,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015629398271766556,
+      "mae": 0.011517556130374742,
+      "hit_rate_pct": 58.22784810126582,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_LSTM_s2026",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.0123852578330473,
+      "mae": 0.00869691840283185,
+      "hit_rate_pct": 48.67256637168141,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_LSTM_s42",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015494525705291938,
+      "mae": 0.011357442376218106,
+      "hit_rate_pct": 59.91561181434599,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_LSTM_s42",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.01230496740386957,
+      "mae": 0.008545398703189842,
+      "hit_rate_pct": 54.86725663716814,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.01552347395965254,
+      "mae": 0.01142410657549483,
+      "hit_rate_pct": 52.742616033755276,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_Ridge_sNone",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.012392095748750427,
+      "mae": 0.00878412587782048,
+      "hit_rate_pct": 51.32743362831859,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.01554752488230332,
+      "mae": 0.011454509187907089,
+      "hit_rate_pct": 57.383966244725734,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_XGBoost_s123",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.012406975327819815,
+      "mae": 0.008757478175505519,
+      "hit_rate_pct": 52.654867256637175,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.015519176021609103,
+      "mae": 0.011432100348324373,
+      "hit_rate_pct": 56.118143459915615,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_XGBoost_s2026",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.012366875151999412,
+      "mae": 0.008731413926647289,
+      "hit_rate_pct": 53.98230088495575,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 246,
+      "rmse": 0.0155536596549488,
+      "mae": 0.011433477113344656,
+      "hit_rate_pct": 56.540084388185655,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_XGBoost_s42",
+      "phase": "validation",
+      "n": 246,
+      "rmse": 0.012376083873741154,
+      "mae": 0.0087310771842495,
+      "hit_rate_pct": 52.21238938053098,
+      "verified": true
+    }
+  ]
+}
