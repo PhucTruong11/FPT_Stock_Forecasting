@@ -1,0 +1,36 @@
+{
+  "protocol_version": "fpt-source-comparison-v1",
+  "audit_id": "20261029T135735663765Z",
+  "sources": ["yahoo_v2", "vietcap_v3_candidate"],
+  "reference_source": "vietcap_v3_candidate",
+  "training_cohort": "same_origin_and_target_date_with_60_observation_context_in_both_sources",
+  "training_labels": "native_to_each_source",
+  "validation_and_evaluation_labels": "one_fixed_vietcap_reference_for_all_candidates",
+  "automatic_promotion": false,
+  "seeds": [42, 123, 2026],
+  "lookback": 30,
+  "common_context": 60,
+  "folds": [
+    {"id": "eval_2022", "train_end": "2020-12-31", "validation_end": "2021-12-31", "evaluation_end": "2022-12-31", "role": "primary_retrospective"},
+    {"id": "eval_2023", "train_end": "2021-12-31", "validation_end": "2022-12-31", "evaluation_end": "2023-12-31", "role": "primary_retrospective"},
+    {"id": "eval_2024", "train_end": "2022-12-31", "validation_end": "2023-12-31", "evaluation_end": "2024-12-31", "role": "primary_retrospective"},
+    {"id": "eval_2025", "train_end": "2023-12-31", "validation_end": "2024-12-31", "evaluation_end": "2025-12-31", "role": "previously_inspected_stress_diagnostic"}
+  ],
+  "feature_groups": {
+    "returns": ["Log_Return", "Return_Lag_1", "Return_Lag_2", "Return_Lag_5", "Return_5", "Return_20"],
+    "full": ["Log_Return", "Return_Lag_1", "Return_Lag_2", "Return_Lag_5", "Return_5", "Return_20", "Volatility_5", "Volatility_20", "SMA_Distance_20", "SMA_Distance_50", "RSI_14", "ATR_Ratio", "Intraday_Range", "Volume_Ratio_20", "Volume_Log_Change", "Volume_ZScore_20"]
+  },
+  "models": {
+    "Ridge": {"alpha": 10.0},
+    "XGBoost": {"max_depth": 2, "n_estimators": 150, "learning_rate": 0.03, "min_child_weight": 5, "subsample": 0.9, "colsample_bytree": 0.9, "objective": "reg:squarederror", "n_jobs": 2},
+    "LSTM": {"units": 32, "dense_units": 8, "dropout": 0.2, "learning_rate": 0.001, "clipnorm": 1.0, "loss": "huber", "epochs": 40, "batch_size": 32, "early_stopping_patience": 7, "reduce_lr_patience": 3}
+  },
+  "interpretation": {
+    "primary": "paired source differences within the same fold, feature group and seed; three primary folds summarized separately from 2025",
+    "reference_is_exchange_certified": false,
+    "no_2026_prices_or_evaluation": true,
+    "no_more_training_rows_for_v3": true,
+    "native_context_calendars_may_differ": true,
+    "limitations": "Retrospective, not a pristine holdout. The source contrast includes native-label quality and context-history availability. Known provider flags are retained; adjusted prices are not point-in-time certified."
+  }
+}

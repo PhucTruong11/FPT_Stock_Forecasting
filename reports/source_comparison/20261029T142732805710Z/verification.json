@@ -1,0 +1,1596 @@
+{
+  "protocol_and_input_and_source_hashes_verified": true,
+  "trained_candidates": 112,
+  "metric_rows_verified": 264,
+  "same_origin_target_and_reference_for_every_candidate": true,
+  "raw_native_labels_recomputed": true,
+  "baselines_train_only_verified": true,
+  "maximum_metric_recomputation_error": 1.0061396160665481e-16,
+  "protected_files_unchanged": true,
+  "checks": [
+    {
+      "candidate": "eval_2022_zero",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_zero",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_Train Mean",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_Train Mean",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_Return Persistence",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_Return Persistence",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_returns_Ridge_sNone",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_returns_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_returns_XGBoost_s42",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_returns_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_returns_XGBoost_s123",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_returns_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_returns_XGBoost_s2026",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_returns_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_returns_LSTM_s42",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_returns_LSTM_s42",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_returns_LSTM_s123",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_returns_LSTM_s123",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_returns_LSTM_s2026",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_returns_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_full_Ridge_sNone",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_full_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_full_XGBoost_s42",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_full_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_full_XGBoost_s123",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_full_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_full_XGBoost_s2026",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_full_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_full_LSTM_s42",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_full_LSTM_s42",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_full_LSTM_s123",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_full_LSTM_s123",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_full_LSTM_s2026",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_yahoo_v2_full_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_Train Mean",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_Train Mean",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_Return Persistence",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_Return Persistence",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_returns_Ridge_sNone",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_returns_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_returns_XGBoost_s42",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_returns_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_returns_XGBoost_s123",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_returns_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_returns_XGBoost_s2026",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_returns_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_returns_LSTM_s42",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_returns_LSTM_s42",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_returns_LSTM_s123",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_returns_LSTM_s123",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_returns_LSTM_s2026",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_returns_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_full_Ridge_sNone",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_full_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_full_XGBoost_s42",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_full_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_full_XGBoost_s123",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_full_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_full_XGBoost_s2026",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_full_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_full_LSTM_s42",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_full_LSTM_s42",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_full_LSTM_s123",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_full_LSTM_s123",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_full_LSTM_s2026",
+      "phase": "validation",
+      "n": 205,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_vietcap_v3_candidate_full_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_zero",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_zero",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_Train Mean",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_Train Mean",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_Return Persistence",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_Return Persistence",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_returns_Ridge_sNone",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_returns_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_returns_XGBoost_s42",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_returns_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_returns_XGBoost_s123",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_returns_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_returns_XGBoost_s2026",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_returns_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_returns_LSTM_s42",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_returns_LSTM_s42",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_returns_LSTM_s123",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_returns_LSTM_s123",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_returns_LSTM_s2026",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_returns_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_full_Ridge_sNone",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_full_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_full_XGBoost_s42",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_full_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_full_XGBoost_s123",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_full_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_full_XGBoost_s2026",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_full_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_full_LSTM_s42",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_full_LSTM_s42",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_full_LSTM_s123",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_full_LSTM_s123",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_full_LSTM_s2026",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_yahoo_v2_full_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_Train Mean",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_Train Mean",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_Return Persistence",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_Return Persistence",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_returns_Ridge_sNone",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_returns_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_returns_XGBoost_s42",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_returns_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_returns_XGBoost_s123",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_returns_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_returns_XGBoost_s2026",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_returns_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_returns_LSTM_s42",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_returns_LSTM_s42",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_returns_LSTM_s123",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_returns_LSTM_s123",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_returns_LSTM_s2026",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_returns_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_full_Ridge_sNone",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_full_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_full_XGBoost_s42",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_full_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_full_XGBoost_s123",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_full_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_full_XGBoost_s2026",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_full_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_full_LSTM_s42",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_full_LSTM_s42",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_full_LSTM_s123",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_full_LSTM_s123",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_full_LSTM_s2026",
+      "phase": "validation",
+      "n": 242,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_vietcap_v3_candidate_full_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_zero",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_zero",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_Train Mean",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_Train Mean",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_Return Persistence",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_Return Persistence",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_returns_Ridge_sNone",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_returns_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_returns_XGBoost_s42",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_returns_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_returns_XGBoost_s123",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_returns_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_returns_XGBoost_s2026",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_returns_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_returns_LSTM_s42",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_returns_LSTM_s42",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_returns_LSTM_s123",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_returns_LSTM_s123",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_returns_LSTM_s2026",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_returns_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_full_Ridge_sNone",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_full_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_full_XGBoost_s42",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_full_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_full_XGBoost_s123",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_full_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_full_XGBoost_s2026",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_full_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_full_LSTM_s42",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_full_LSTM_s42",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_full_LSTM_s123",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_full_LSTM_s123",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_full_LSTM_s2026",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_yahoo_v2_full_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_Train Mean",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_Train Mean",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_Return Persistence",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_Return Persistence",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_returns_Ridge_sNone",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_returns_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_returns_XGBoost_s42",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_returns_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_returns_XGBoost_s123",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_returns_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_returns_XGBoost_s2026",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_returns_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_returns_LSTM_s42",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_returns_LSTM_s42",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_returns_LSTM_s123",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_returns_LSTM_s123",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_returns_LSTM_s2026",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_returns_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_full_Ridge_sNone",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_full_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_full_XGBoost_s42",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_full_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_full_XGBoost_s123",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_full_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_full_XGBoost_s2026",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_full_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_full_LSTM_s42",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_full_LSTM_s42",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_full_LSTM_s123",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_full_LSTM_s123",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_full_LSTM_s2026",
+      "phase": "validation",
+      "n": 244,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_vietcap_v3_candidate_full_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_zero",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_zero",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_Train Mean",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_Train Mean",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_Return Persistence",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_Return Persistence",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_returns_Ridge_sNone",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_returns_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_returns_XGBoost_s42",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_returns_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_returns_XGBoost_s123",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_returns_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_returns_XGBoost_s2026",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_returns_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_returns_LSTM_s42",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_returns_LSTM_s42",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_returns_LSTM_s123",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_returns_LSTM_s123",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_returns_LSTM_s2026",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_returns_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_full_Ridge_sNone",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_full_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_full_XGBoost_s42",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_full_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_full_XGBoost_s123",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_full_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_full_XGBoost_s2026",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_full_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_full_LSTM_s42",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_full_LSTM_s42",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_full_LSTM_s123",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_full_LSTM_s123",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_full_LSTM_s2026",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_yahoo_v2_full_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_Train Mean",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_Train Mean",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_Return Persistence",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_Return Persistence",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_returns_Ridge_sNone",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_returns_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_returns_XGBoost_s42",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_returns_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_returns_XGBoost_s123",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_returns_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_returns_XGBoost_s2026",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_returns_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_returns_LSTM_s42",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_returns_LSTM_s42",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_returns_LSTM_s123",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_returns_LSTM_s123",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_returns_LSTM_s2026",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_returns_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_full_Ridge_sNone",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_full_Ridge_sNone",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_full_XGBoost_s42",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_full_XGBoost_s42",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_full_XGBoost_s123",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_full_XGBoost_s123",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_full_XGBoost_s2026",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_full_XGBoost_s2026",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_full_LSTM_s42",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_full_LSTM_s42",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_full_LSTM_s123",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_full_LSTM_s123",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_full_LSTM_s2026",
+      "phase": "validation",
+      "n": 243,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_vietcap_v3_candidate_full_LSTM_s2026",
+      "phase": "evaluation",
+      "n": 248,
+      "verified": true
+    }
+  ]
+}

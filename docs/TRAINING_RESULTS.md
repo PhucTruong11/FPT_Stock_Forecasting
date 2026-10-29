@@ -43,3 +43,5 @@ Model XGBoost native JSON và Keras từ Colab đã nạp được trên Windows
 2025 đã được xem trong lần thử trước, là historical test sử dụng lại. Giá điều chỉnh không phải giá khớp lệnh lịch sử; chưa chứng nhận lịch HOSE, corporate actions hoặc point-in-time. Sau lượt reference này đã có [rolling-origin/feature ablation hồi cứu](../reports/robustness/20261029T131205702813Z/REPORT.md); chưa có backtest thực thi.
 
 **Cập nhật nguồn ngày 29/10/2026:** [audit Yahoo–Vietcap–KBS](../reports/data_audits/20261029T135735663765Z/REPORT.md) phát hiện thiếu quan sát giao dịch và bất đồng lợi suất theo ngày trên Yahoo. Các metric bên trên được giữ làm bằng chứng của snapshot v2; chúng chưa chứng minh hiệu quả trên dữ liệu đã hòa giải nguồn. Audit chưa train hoặc promote model mới.
+
+Sau audit đã [train 112 model đối chứng nguồn](../reports/source_comparison/20261029T142732805710Z/DECISION.md), dùng cùng origin/target và nhãn Vietcap cố định. Một số nhánh giảm RMSE nhẹ nhưng chưa vượt baseline nhất quán; chưa thay serving model. Đây là nghiên cứu riêng với protocol/nhãn khác, không ghi đè các metric v2 phía trên.

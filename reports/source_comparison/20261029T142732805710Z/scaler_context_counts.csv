@@ -1,0 +1,9 @@
+fold,source,labeled_train_rows,unique_scaler_context_rows,first_date,last_date
+eval_2022,yahoo_v2,604,647,2018-05-09,2020-12-30
+eval_2022,vietcap_v3_candidate,604,668,2018-05-09,2020-12-30
+eval_2023,yahoo_v2,810,871,2018-05-09,2021-12-30
+eval_2023,vietcap_v3_candidate,810,918,2018-05-09,2021-12-30
+eval_2024,yahoo_v2,1053,1117,2018-05-09,2022-12-29
+eval_2024,vietcap_v3_candidate,1053,1167,2018-05-09,2022-12-29
+eval_2025,yahoo_v2,1298,1364,2018-05-09,2023-12-28
+eval_2025,vietcap_v3_candidate,1298,1416,2018-05-09,2023-12-28

@@ -13,7 +13,7 @@ Nguồn là Yahoo Finance qua thư viện yfinance, mã `FPT.VN`. yfinance tải
 
 Một mẫu minh họa: features từ các quan sát đến t → nhãn lợi suất từ t đến next(t). Nhãn được sinh tự động từ lịch sử vẫn là nhãn giám sát, không cần con người gắn nhãn bằng tay.
 
-## 2. Đợt thí nghiệm hiện tại nhằm tăng độ tin cậy của đánh giá
+## 2. Đợt robustness ban đầu ngày 29/10/2026
 
 Đây là nghiên cứu hồi cứu, không hứa sai số chắc chắn giảm sau training. Protocol được ghi ra file trước khi fit bất kỳ model nào, gồm hash source/data, seed, feature order, splits và cấu hình.
 
@@ -46,7 +46,9 @@ Mỗi lần chạy tạo study ID riêng dưới `reports/robustness/` và artif
 
 Data hiện được kiểm tra nội bộ: ngày duy nhất và tăng dần, features hữu hạn, nhãn tính độc lập lại từ giá nguồn, tách 147 dòng zero-volume và 1 nến bất hợp lệ. Có 4 dòng Close thiếu trong raw không được điền giá giả.
 
-Đã thực hiện [audit ba nguồn ngày 29/10](../reports/data_audits/20261029T135735663765Z/REPORT.md). Yahoo mới vẫn có 56 ngày zero-volume mà Vietcap/KBS cùng ghi nhận giao dịch; 131/249 cặp lợi suất năm 2025 khác Vietcap trên 10 bps. Vietcap là ứng viên nguồn v3; chưa thay v2 hoặc train lại. Lịch HOSE chính thức, action ledger và tính point-in-time vẫn chưa được chứng nhận; không xem đồng thuận hai chart là chứng nhận của sàn. Không xóa các ngày đứng giá thật hoặc các biến động thật để tăng điểm.
+Đã thực hiện [audit ba nguồn ngày 29/10](../reports/data_audits/20261029T135735663765Z/REPORT.md). Yahoo mới vẫn có 56 ngày zero-volume mà Vietcap/KBS cùng ghi nhận giao dịch; 131/249 cặp lợi suất năm 2025 khác Vietcap trên 10 bps. Tại thời điểm kết thúc audit, Vietcap được đề xuất làm ứng viên nguồn v3 và chưa train lại. Lịch HOSE chính thức, action ledger và tính point-in-time vẫn chưa được chứng nhận; không xem đồng thuận hai chart là chứng nhận của sàn. Không xóa các ngày đứng giá thật hoặc các biến động thật để tăng điểm.
+
+Cập nhật sau audit: [đã train 112 model đối chứng nguồn](../reports/source_comparison/20261029T142732805710Z/DECISION.md), với cùng origin/target và nhãn đánh giá Vietcap. Một số nhánh giảm RMSE nhẹ và giảm biến động seed, nhưng chưa vượt baseline nhất quán. Chưa thay model serving; bước nghiên cứu tiếp ưu tiên returns-only và đối chứng training window, không tăng độ phức tạp model chỉ để train thêm.
 
 Mục tiêu gần nhất là kiểm tra: nhóm feature nào giúp nhiều giai đoạn và nhiều seed; sai số thay đổi vì seed hay regime; model có vượt baseline đủ nhất quán không. Kết quả xấu cũng là bằng chứng để bỏ bớt feature/model không hữu ích. Sau đó mới thử thay regularization, learning rate hoặc training window, mỗi thí nghiệm chỉ thay một nhóm yếu tố với đối chứng.
 

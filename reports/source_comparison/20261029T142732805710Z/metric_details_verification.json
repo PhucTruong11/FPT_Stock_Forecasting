@@ -1,0 +1,16 @@
+{
+  "metric_rows": 264,
+  "all_metrics_including_balanced_accuracy_and_denominators_verified": true,
+  "maximum_absolute_errors": {
+    "n": 0.0,
+    "rmse": 9.8879238130678e-17,
+    "mae": 1.0061396160665481e-16,
+    "nonzero_actual_n": 0.0,
+    "neutral_actual_n": 0.0,
+    "direction_coverage_pct": 1.4210854715202004e-14,
+    "mse_skill_vs_zero": 1.7763568394002505e-15,
+    "hit_rate_pct": 7.105427357601002e-15,
+    "balanced_accuracy_pct": 7.105427357601002e-15
+  },
+  "source_script": "design_checks.py"
+}

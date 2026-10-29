@@ -16,7 +16,7 @@ Một pipeline v2 dùng chung trên local và Google Colab: **snapshot có hash 
 
 [Kết quả và giới hạn](docs/TRAINING_RESULTS.md)
 
-**Audit nguồn 29/10/2026:** Yahoo có 56 ngày volume=0 nhưng Vietcap và KBS cùng ghi nhận giao dịch; riêng 2025 có nhiều bất đồng giá theo ngày. [Báo cáo và bằng chứng](reports/data_audits/20261029T135735663765Z/REPORT.md) đề xuất Vietcap cho snapshot nghiên cứu v3. Snapshot/model v2 hiện vẫn giữ nguyên; chưa train hoặc công bố accuracy mới.
+**Audit nguồn 29/10/2026:** Yahoo có 56 ngày volume=0 nhưng Vietcap và KBS cùng ghi nhận giao dịch; riêng 2025 có nhiều bất đồng giá theo ngày. [Báo cáo và bằng chứng](reports/data_audits/20261029T135735663765Z/REPORT.md) đề xuất Vietcap cho snapshot nghiên cứu v3. Đã train đối chứng nghiên cứu ở mục 13; snapshot/model phục vụ v2 hiện vẫn giữ nguyên, chưa có bằng chứng accuracy ngoài mẫu tăng.
 
 ## 2. Chạy trên máy local
 
@@ -176,7 +176,7 @@ Muốn thu thập snapshot mới, chạy downloader/build như một nghiên c�
 
 ## 9. Kiểm chứng và giới hạn
 
-51 unit test đã qua, gồm 9 test đối chiếu nguồn. Bốn notebook đã chạy từ đầu trong đợt v2; API model thật khớp inference offline; sample OHLCV đầy đủ khớp snapshot prediction; Streamlit đã thử dự báo LSTM và Train Mean qua HTTP. Các kiểm chứng model/UI đó dùng manifest v2.
+59 unit test đã qua, gồm 9 test audit nguồn và 8 test căn cohort/nhãn/context cho đối chứng training. Bốn notebook đã chạy từ đầu trong đợt v2; API model thật khớp inference offline; sample OHLCV đầy đủ khớp snapshot prediction; Streamlit đã thử dự báo LSTM và Train Mean qua HTTP. Các kiểm chứng model/UI đó dùng manifest v2.
 
 Đã có rolling-origin/feature-group ablation hồi cứu ở mục 11 và đối chiếu ba nguồn ở mục 12. Lịch HOSE/corporate actions chưa được chứng nhận; chưa có backtest thực thi giao dịch. Đây là demo nghiên cứu về luồng; kết quả v2 cần đọc cùng các bất đồng dữ liệu đã phát hiện.
 
@@ -212,4 +212,19 @@ Xem [bài toán supervised regression, vòng lặp drift/retrain và các lựa 
 python -m src.data.source_audit --analyze reports/data_audits/20261029T135735663765Z
 ```
 
-Ứng viên v3 chưa thay snapshot/model phục vụ. Đợt tiếp theo cần khóa nguồn, cohort, nhãn đánh giá và cấu hình trước khi fit; chưa mở dữ liệu 2026.
+Ứng viên v3 chưa thay snapshot/model phục vụ. Đối chứng sau audit đã được triển khai ở mục 13, với nguồn, cohort, nhãn đánh giá và cấu hình khóa trước khi fit; chưa mở dữ liệu 2026.
+
+## 13. Đã train đối chứng Yahoo–Vietcap
+
+[Kết luận và quyết định](reports/source_comparison/20261029T142732805710Z/DECISION.md), [báo cáo đầy đủ](reports/source_comparison/20261029T142732805710Z/REPORT.md): đã train 112 model, kiểm tra 264 hàng metrics và nạp lại toàn bộ 112 model/224 bộ prediction. Hai nguồn dùng cùng origin/target pairs và cùng nhãn đánh giá Vietcap; không cho v3 thêm labeled training rows. Protocol, nguồn code và dữ liệu được khóa trước training.
+
+Trên ba fold 2022–2024, Vietcap giảm RMSE của XGBoost returns khoảng 0,99%, LSTM returns khoảng 0,13%; LSTM full tăng sai số khoảng 0,16%. Các model học chưa vượt baseline nhất quán. Năm 2025 báo cáo riêng và không cải thiện đồng loạt. Chọn Vietcap làm hướng nghiên cứu dữ liệu, returns-only làm hướng thử tiếp; **chưa promote model** hoặc sửa API/Streamlit.
+
+```powershell
+# Lượt train mới luôn có ID riêng; không thay model serving.
+python -m src.models.source_comparison --config configs/source_comparison_v1.json
+# Kiểm tra lại báo cáo đã lưu; thêm --reload-artifacts khi có weights local.
+python -m src.models.source_comparison_report --study reports/source_comparison/20261029T142732805710Z
+```
+
+Các chỉ số v2 cũ dùng nhãn Yahoo; không ghép trực tiếp với điểm mới thành một đường accuracy tăng theo thời gian. Xem [chỉ mục studies](reports/source_comparison/studies.json) và [nhật ký training](docs/TRAINING_HISTORY.md).
