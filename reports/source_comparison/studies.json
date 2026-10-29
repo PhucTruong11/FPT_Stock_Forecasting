@@ -1,0 +1,33 @@
+{
+  "schema": "fpt-source-comparison-index-v1",
+  "studies": [
+    {
+      "study_id": "20261029T142732805710Z",
+      "protocol_version": "fpt-source-comparison-v1",
+      "audit_id": "20261029T135735663765Z",
+      "status": "complete",
+      "trained_candidates": 112,
+      "metric_rows": 264,
+      "reloaded_candidates": 112,
+      "prediction_reload_checks": 224,
+      "seeds": [
+        42,
+        123,
+        2026
+      ],
+      "primary_evaluation_years": [
+        2022,
+        2023,
+        2024
+      ],
+      "previously_inspected_stress_year": 2025,
+      "reference_labels": "fixed_vietcap",
+      "common_cohort_pairs": 1791,
+      "same_labeled_training_rows_for_both_sources": true,
+      "automatic_promotion": false,
+      "decision": "retain_serving_models; Vietcap source candidate and returns-only for further research; learned models not consistently above baselines",
+      "report": "20261029T142732805710Z/REPORT.md",
+      "decision_report": "20261029T142732805710Z/DECISION.md"
+    }
+  ]
+}

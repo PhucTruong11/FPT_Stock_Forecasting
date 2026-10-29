@@ -1,0 +1,10 @@
+{
+  "common_labeled_origins": 1791,
+  "rebuilt_yahoo_features_max_absolute_difference_to_v2": 0.0,
+  "common_origins_with_different_native_context_calendars": 601,
+  "all_context_dates_at_or_before_origin": true,
+  "all_scaler_context_dates_at_or_before_train_cutoff": true,
+  "extra_v3_labeled_training_rows_used": 0,
+  "training_failures": 0,
+  "preparation_note": "One pre-training parser error was fixed and covered by a regression test. Its incomplete preparation archive is retained locally under .cache/source-comparison-failed-preparation; no model was fitted in that attempt."
+}

@@ -1,0 +1,9 @@
+year,refreshed_positive_volume_days,vci_positive_volume_days,kbs_positive_volume_days,yahoo_zero_two_providers_positive,refreshed_vci_return_pairs,refreshed_vci_abs_return_diff_gt_10bps,vci_kbs_return_pairs,vci_kbs_abs_return_diff_gt_10bps
+2018,244,248,248,4,239,0,247,0
+2019,240,250,250,10,235,3,250,2
+2020,243,252,252,9,236,0,252,0
+2021,225,250,250,25,207,1,250,0
+2022,246,249,249,3,243,1,249,0
+2023,247,249,249,2,245,1,249,0
+2024,247,250,250,3,244,0,250,0
+2025,249,249,249,0,249,131,249,0

@@ -1,0 +1,160 @@
+{
+  "schema": "fpt-source-comparison-v1",
+  "study_id": "20261029T142732805710Z",
+  "registered_before_training_utc": "2026-10-29T14:27:33.157674+00:00",
+  "config": {
+    "protocol_version": "fpt-source-comparison-v1",
+    "audit_id": "20261029T135735663765Z",
+    "sources": [
+      "yahoo_v2",
+      "vietcap_v3_candidate"
+    ],
+    "reference_source": "vietcap_v3_candidate",
+    "training_cohort": "same_origin_and_target_date_with_60_observation_context_in_both_sources",
+    "training_labels": "native_to_each_source",
+    "validation_and_evaluation_labels": "one_fixed_vietcap_reference_for_all_candidates",
+    "automatic_promotion": false,
+    "seeds": [
+      42,
+      123,
+      2026
+    ],
+    "lookback": 30,
+    "common_context": 60,
+    "folds": [
+      {
+        "id": "eval_2022",
+        "train_end": "2020-12-31",
+        "validation_end": "2021-12-31",
+        "evaluation_end": "2022-12-31",
+        "role": "primary_retrospective"
+      },
+      {
+        "id": "eval_2023",
+        "train_end": "2021-12-31",
+        "validation_end": "2022-12-31",
+        "evaluation_end": "2023-12-31",
+        "role": "primary_retrospective"
+      },
+      {
+        "id": "eval_2024",
+        "train_end": "2022-12-31",
+        "validation_end": "2023-12-31",
+        "evaluation_end": "2024-12-31",
+        "role": "primary_retrospective"
+      },
+      {
+        "id": "eval_2025",
+        "train_end": "2023-12-31",
+        "validation_end": "2024-12-31",
+        "evaluation_end": "2025-12-31",
+        "role": "previously_inspected_stress_diagnostic"
+      }
+    ],
+    "feature_groups": {
+      "returns": [
+        "Log_Return",
+        "Return_Lag_1",
+        "Return_Lag_2",
+        "Return_Lag_5",
+        "Return_5",
+        "Return_20"
+      ],
+      "full": [
+        "Log_Return",
+        "Return_Lag_1",
+        "Return_Lag_2",
+        "Return_Lag_5",
+        "Return_5",
+        "Return_20",
+        "Volatility_5",
+        "Volatility_20",
+        "SMA_Distance_20",
+        "SMA_Distance_50",
+        "RSI_14",
+        "ATR_Ratio",
+        "Intraday_Range",
+        "Volume_Ratio_20",
+        "Volume_Log_Change",
+        "Volume_ZScore_20"
+      ]
+    },
+    "models": {
+      "Ridge": {
+        "alpha": 10.0
+      },
+      "XGBoost": {
+        "max_depth": 2,
+        "n_estimators": 150,
+        "learning_rate": 0.03,
+        "min_child_weight": 5,
+        "subsample": 0.9,
+        "colsample_bytree": 0.9,
+        "objective": "reg:squarederror",
+        "n_jobs": 2
+      },
+      "LSTM": {
+        "units": 32,
+        "dense_units": 8,
+        "dropout": 0.2,
+        "learning_rate": 0.001,
+        "clipnorm": 1.0,
+        "loss": "huber",
+        "epochs": 40,
+        "batch_size": 32,
+        "early_stopping_patience": 7,
+        "reduce_lr_patience": 3
+      }
+    },
+    "interpretation": {
+      "primary": "paired source differences within the same fold, feature group and seed; three primary folds summarized separately from 2025",
+      "reference_is_exchange_certified": false,
+      "no_2026_prices_or_evaluation": true,
+      "no_more_training_rows_for_v3": true,
+      "native_context_calendars_may_differ": true,
+      "limitations": "Retrospective, not a pristine holdout. The source contrast includes native-label quality and context-history availability. Known provider flags are retained; adjusted prices are not point-in-time certified."
+    }
+  },
+  "config_sha256": "b206bafbb83d5d7d954bf8d6b96f7db61fcea1bd64c3f1cc98f641c5e5592cc1",
+  "protected_before": {
+    "data/raw/FPT.VN_raw.csv": "501d6a8e0c511dca824994bdd8e91c58e222506eef667780eb15433c2070c8ea",
+    "data/raw/FPT.VN_raw.metadata.json": "9a06daeb0d862e171367105296573fd1f41b6cb11d9f3c185c4e667c87bc51d9",
+    "data/interim/FPT.VN_features.csv": "9d81786aa94fec6530714c661eeb2543594ac0ceaba908c0bb5545f693e61ef4",
+    "data/interim/FPT.VN_features.metadata.json": "2d5770e96310d5c2358538f235f5281f58e22c6fcbd917ac77ef7d830b5e6e68",
+    "data/processed/FPT.VN_supervised.csv": "41a849f26749bf789b712466b3c707d48315f2954375c7bbfc88f3f5ea77b44d",
+    "data/processed/FPT.VN_excluded_rows.csv": "a0c259f6ffb7abd165b5f8716077a4a9e457b8b58ba02b276b370140de7650c1",
+    "models/latest_experiment.json": "c396911638afb1564cda73c16c8d659b6f9d1c9f23b46d159a270cae7af11d2f",
+    "models/reference_experiment.json": "c396911638afb1564cda73c16c8d659b6f9d1c9f23b46d159a270cae7af11d2f"
+  },
+  "audit_archive_sha256": "15b4fbabc3e2bb107b62afbb32eb2797f32fabbc9f53cd1d12573b181b133ec9",
+  "input_zip_sha256": "c678388369d4b62303746dbbac96cbb5c83431076ac24b7ff49b5b952f6839b6",
+  "input_files_sha256": {
+    "yahoo_v2/raw.csv": "9466f179e3cb2c9ca2ee6436058ac4cc0710a2c3003ba9f7f10a29e1cab1f933",
+    "yahoo_v2/features.csv": "661e2863c2abf23974d2b2c0be2f80cad1f0e57243cd28bc0d3b4efdce96d7e8",
+    "yahoo_v2/labels.csv": "b7ca3abdb9be8061a9f8671f5e207beb934749379935661d6a4f5c608e7ed63f",
+    "yahoo_v2/excluded.csv": "a1cb2a64b7c8d41c12e336a088f949ced1a1266d1880abda1053259a232e89c8",
+    "vietcap_v3_candidate/raw.csv": "787b2f4db57b653281cad3a92c90d15b14335615ecf9334b9d358907864dad46",
+    "vietcap_v3_candidate/features.csv": "c95de491210bc8658777218d24cd2925010009ce06ed0c1ed67f925e1e946439",
+    "vietcap_v3_candidate/labels.csv": "6aa9b151fea742dc0e96861044c24c85c8501d69c2ea1f0a1be16305d1789582",
+    "vietcap_v3_candidate/excluded.csv": "de7530eba01bd97d7724c30775b56660cf2e62a2acfd9205980bb96d6f4c09fe"
+  },
+  "source_sha256": {
+    "src/models/source_comparison.py": "d758cb92f382e18510ef12e0e54f55ea376e2cebe8bc3fa6fc0cdd0069648445",
+    "src/models/source_comparison_report.py": "0a17866a60b42435cfe4b362146c72cee15fe09a78f78818fa9009b5633653a5",
+    "src/models/robustness.py": "dac1f356b579a177cd8cb55364efe65dc33f99f55d6d6c40a1d76656590c5ea6",
+    "src/models/experiment.py": "24bbc95e82d8ebf981c031b3418be7e0f18bf05b693d0ff71f7afc8efb00e5b1",
+    "src/features/build_features.py": "29935bd688c01e570c40bcfa127f2ef61e9b108d4a7a80ce6fa72c6d1f6621db",
+    "src/data/contracts.py": "38a0c2202e38b262a42a3fc3ac974447ad1d1e3e109fc8a1eb3664f758fde468",
+    "src/data/source_audit.py": "2b6558c46692f7e902b7e06c26584ea68e98a123a8f0a7ed93218f97b28f3a21"
+  },
+  "python": "3.13.15",
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "xgboost": "3.4.1",
+    "tensorflow": "2.21.0",
+    "joblib": "1.6.0"
+  },
+  "warning": "Retrospective source sensitivity; adjusted reference is not certified ground truth. No serving promotion."
+}

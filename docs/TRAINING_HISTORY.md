@@ -142,3 +142,26 @@ python -m src.models.compare_runs --candidate models/experiments/<run_id> --outp
 Các kết quả này thuộc protocol/window khác với test 2025 bên trên, nên không vẽ chúng nối thành một đường tăng accuracy theo ngày train. LSTM returns-only giảm mean-fold RMSE khoảng 0,66% so với full features, nhưng chưa vượt baseline nhất quán và seed variation không cải thiện đồng thời. Quyết định giữ model phục vụ hiện tại. Chỉ mục study và toàn bộ kết quả tốt/xấu nằm trong [studies.json](../reports/robustness/studies.json).
 
 [Vòng lặp monitoring/retraining và giải thích supervised regression/deploy](ML_WORKFLOW_AND_DEPLOYMENT.md) là thiết kế cho bước tiếp theo; chưa có live monitor hoặc auto-promotion.
+
+## 10. Audit dữ liệu trước vòng train tiếp theo — 29/10/2026
+
+[Báo cáo đối chiếu Yahoo cũ/mới, Vietcap và KBS](../reports/data_audits/20261029T135735663765Z/REPORT.md) phát hiện 56 ngày Yahoo volume=0 được cả hai nguồn kia ghi nhận giao dịch, cùng bất đồng lợi suất tập trung năm 2025. Tải lại Yahoo không tự sửa được. Dry-run cùng feature builder tạo 1.947 mẫu Vietcap so với 1.889 mẫu Yahoo, với 39 origin chung đổi ngày target.
+
+Lượt này **không có training mới**, không ghi thêm accuracy giả vào lịch sử model. Giữ hash cả snapshot và pointer v2. Đề xuất Vietcap làm nguồn nghiên cứu v3, KBS đối chiếu; cần khóa bộ nhãn/cohort chung trước thử nghiệm so sánh nguồn. Metric cũ giữ nguyên, được hiểu là kết quả lịch sử trên snapshot Yahoo chưa hòa giải nguồn.
+
+## 11. Đã train đối chứng nguồn — 29/10/2026
+
+Study **20261029T142732805710Z**: [quyết định](../reports/source_comparison/20261029T142732805710Z/DECISION.md), [protocol/bảng/biểu đồ](../reports/source_comparison/20261029T142732805710Z/REPORT.md). 112 model gồm 48 LSTM, 48 XGBoost, 16 Ridge; hai nguồn, hai feature groups, bốn fold và ba seed cho model stochastic. Khóa source/data/config trước training. 1.791 origin–target pairs chung; native train labels nhưng cùng nhãn Vietcap cho validation/early stopping/evaluation. Hai nguồn có cùng số labeled training rows; lịch sử context native có thể khác.
+
+| Thay đổi trong cùng study, mean-fold 2022–2024 | Kết quả |
+| --- | --- |
+| XGBoost returns: Yahoo → Vietcap | RMSE 0,0166373 → 0,0164722, giảm khoảng 0,99% |
+| LSTM returns: Yahoo → Vietcap | RMSE 0,0164172 → 0,0163951, giảm khoảng 0,13%; mean seed SD giảm khoảng 30,1% |
+| LSTM full: Yahoo → Vietcap | RMSE 0,0164958 → 0,0165224, tăng khoảng 0,16% |
+| Baseline trên cùng nhãn/cohort | Train Mean/Vietcap 0,0162915; Zero Return 0,0163497 |
+
+LSTM returns/Vietcap vẫn kém Zero Return khoảng 0,28% và Train Mean khoảng 0,64% về RMSE. Năm 2025 được tách riêng: không cải thiện đồng loạt; trung bình seed của cả sáu nhóm Vietcap vẫn kém Zero Return. Không chọn một seed thắng để thay kết quả cả nhóm.
+
+Đã tính độc lập lại 264 hàng metrics, nạp lại 112 model với 224 đối chiếu prediction/scaler; 59/59 unit tests qua. Không có model train thất bại trong study; một lỗi parser ở giai đoạn chuẩn bị trước training đã được sửa và thêm test. Canonical data/model pointers giữ nguyên. Lượt này chạy CPU local, không phải một lượt kiểm chứng Colab mới.
+
+**Quyết định:** tiếp tục dùng Vietcap làm nguồn ứng viên nghiên cứu, ưu tiên returns-only cho thử nghiệm tiếp, chưa promote serving. Tác động đổi nguồn/nhãn được ghi riêng; không nối metric này với các lượt chấm theo nhãn Yahoo cũ để tuyên bố accuracy tăng. Chỉ mục [source_comparison/studies.json](../reports/source_comparison/studies.json) giữ các lượt đối chứng về sau.

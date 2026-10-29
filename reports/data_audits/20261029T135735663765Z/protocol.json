@@ -1,0 +1,32 @@
+{
+  "schema": "fpt-source-audit-v1",
+  "started_at_utc": "2026-10-29T13:57:35.675438+00:00",
+  "start_inclusive": "2018-01-01",
+  "end_exclusive": "2026-01-01",
+  "sources": {
+    "vci_request_and_parser": "https://github.com/thinh-vu/vnstock/blob/main/vnstock/explorer/vci/quote.py",
+    "vci_endpoint_and_fields": "https://github.com/thinh-vu/vnstock/blob/main/vnstock/explorer/vci/const.py",
+    "price_basis_and_adapter_units": "https://www.vnstocks.com/docs/vnstock/thi-truong-market",
+    "yahoo_auto_adjust": "https://github.com/ranaroussi/yfinance/blob/main/yfinance/utils.py"
+  },
+  "training_or_promotion": false,
+  "python": "3.13.15",
+  "versions": {
+    "pandas": "3.0.6",
+    "numpy": "2.5.3",
+    "yfinance": "1.7.0",
+    "requests": "2.34.2"
+  },
+  "thresholds": {
+    "price_rtol": 1e-06,
+    "price_atol_vnd": 0.02,
+    "material_price_difference_pct": 0.1,
+    "return_difference_bps": 10
+  },
+  "notes": [
+    "Thresholds flag diagnostics; they do not certify a provider as ground truth.",
+    "The direct VCI price is VND, not vnstock adapter thousand-VND.",
+    "Adjusted histories are retrieved now, not point-in-time histories.",
+    "No 2026 prices or model evaluation are requested in this audit."
+  ]
+}
