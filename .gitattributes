@@ -8,3 +8,4 @@
 *.zip binary
 *.keras binary
 *.pkl binary
+*.gz binary

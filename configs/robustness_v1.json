@@ -1,0 +1,23 @@
+{
+  "protocol_version": "fpt-retrospective-robustness-v1",
+  "purpose": "Historical robustness and feature ablation; no automatic serving promotion",
+  "seeds": [42, 123, 2026],
+  "lookback": 30,
+  "epochs_limit": 40,
+  "folds": [
+    {"id": "eval_2022", "train_end": "2020-12-31", "validation_end": "2021-12-31", "evaluation_end": "2022-12-31"},
+    {"id": "eval_2023", "train_end": "2021-12-31", "validation_end": "2022-12-31", "evaluation_end": "2023-12-31"},
+    {"id": "eval_2024", "train_end": "2022-12-31", "validation_end": "2023-12-31", "evaluation_end": "2024-12-31"}
+  ],
+  "feature_groups": {
+    "returns": ["Log_Return", "Return_Lag_1", "Return_Lag_2", "Return_Lag_5", "Return_5", "Return_20"],
+    "returns_technical": ["Log_Return", "Return_Lag_1", "Return_Lag_2", "Return_Lag_5", "Return_5", "Return_20", "Volatility_5", "Volatility_20", "SMA_Distance_20", "SMA_Distance_50", "RSI_14", "ATR_Ratio", "Intraday_Range"],
+    "full": ["Log_Return", "Return_Lag_1", "Return_Lag_2", "Return_Lag_5", "Return_5", "Return_20", "Volatility_5", "Volatility_20", "SMA_Distance_20", "SMA_Distance_50", "RSI_14", "ATR_Ratio", "Intraday_Range", "Volume_Ratio_20", "Volume_Log_Change", "Volume_ZScore_20"]
+  },
+  "selection": {
+    "primary_metric": "validation_rmse",
+    "evaluation_role": "retrospective diagnostics only",
+    "automatic_promotion": false,
+    "reason": "Architecture and features were previously inspected using 2023-2025; these folds are not pristine holdouts. A new untouched forward period and verified source are required before promotion."
+  }
+}

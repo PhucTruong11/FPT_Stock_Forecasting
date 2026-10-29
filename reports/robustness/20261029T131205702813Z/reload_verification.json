@@ -1,0 +1,765 @@
+{
+  "candidates_reloaded": 63,
+  "phase_checks": 126,
+  "lstm_scalers_match_train_only_statistics": true,
+  "absolute_tolerance": 1e-08,
+  "relative_tolerance": 1e-05,
+  "checks": [
+    {
+      "candidate": "eval_2022_returns_Ridge_sNone",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_Ridge_sNone",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_XGBoost_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.90960785651751e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_XGBoost_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_XGBoost_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.969238976004213e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_XGBoost_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.985502008591496e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_XGBoost_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.80118763926896e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_XGBoost_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_LSTM_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.947554932554503e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_LSTM_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.8879238130678e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_LSTM_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.8879238130678e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_LSTM_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.963817965141786e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_LSTM_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.942133921692076e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_LSTM_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.93129189996722e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_Ridge_sNone",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_Ridge_sNone",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_XGBoost_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.80118763926896e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_XGBoost_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.8879238130678e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_XGBoost_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.996344030316351e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_XGBoost_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_XGBoost_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_XGBoost_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_LSTM_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.925870889104793e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_LSTM_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_LSTM_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.75781955236954e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_LSTM_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.8879238130678e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_LSTM_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.8879238130678e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_returns_technical_LSTM_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_Ridge_sNone",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_Ridge_sNone",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.839134715305953e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_XGBoost_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.958396954279358e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_XGBoost_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_XGBoost_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.912318361948724e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_XGBoost_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.82287168271867e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_XGBoost_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.980080997729068e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_XGBoost_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_LSTM_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.980080997729068e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_LSTM_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.90960785651751e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_LSTM_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.93129189996722e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_LSTM_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_LSTM_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_full_LSTM_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_Ridge_sNone",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.90960785651751e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_Ridge_sNone",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.8879238130678e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_XGBoost_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.93129189996722e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_XGBoost_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_XGBoost_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.996344030316351e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_XGBoost_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.996344030316351e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_XGBoost_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_XGBoost_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.93129189996722e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_LSTM_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.947554932554503e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_LSTM_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.93129189996722e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_LSTM_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.93129189996722e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_LSTM_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_LSTM_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_LSTM_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_Ridge_sNone",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.86623976961809e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_Ridge_sNone",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.912318361948724e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_XGBoost_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.985502008591496e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_XGBoost_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.996344030316351e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_XGBoost_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_XGBoost_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.920449878242366e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_XGBoost_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.8879238130678e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_XGBoost_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.8879238130678e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_LSTM_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.93129189996722e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_LSTM_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.90960785651751e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_LSTM_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.996344030316351e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_LSTM_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.969238976004213e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_LSTM_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.980080997729068e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_returns_technical_LSTM_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_Ridge_sNone",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_Ridge_sNone",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_XGBoost_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_XGBoost_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.920449878242366e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_XGBoost_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.996344030316351e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_XGBoost_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.8879238130678e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_XGBoost_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_XGBoost_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_LSTM_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.93129189996722e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_LSTM_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.871660780480518e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_LSTM_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.925870889104793e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_LSTM_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_LSTM_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_full_LSTM_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.93129189996722e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_Ridge_sNone",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.93129189996722e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_Ridge_sNone",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_XGBoost_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.920449878242366e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_XGBoost_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_XGBoost_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.93129189996722e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_XGBoost_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.942133921692076e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_XGBoost_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_XGBoost_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.93129189996722e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_LSTM_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.90960785651751e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_LSTM_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.985502008591496e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_LSTM_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.985502008591496e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_LSTM_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_LSTM_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_LSTM_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.996344030316351e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_Ridge_sNone",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_Ridge_sNone",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.93129189996722e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_XGBoost_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.8879238130678e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_XGBoost_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.8879238130678e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_XGBoost_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.71445146547012e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_XGBoost_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_XGBoost_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.985502008591496e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_XGBoost_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.985502008591496e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_LSTM_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.958396954279358e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_LSTM_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.8879238130678e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_LSTM_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.982791503160282e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_LSTM_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.86623976961809e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_LSTM_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.980080997729068e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_returns_technical_LSTM_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.963817965141786e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_Ridge_sNone",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.942133921692076e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_Ridge_sNone",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_XGBoost_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.996344030316351e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_XGBoost_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.996344030316351e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_XGBoost_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.8879238130678e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_XGBoost_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.93129189996722e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_XGBoost_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_XGBoost_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_LSTM_s42",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_LSTM_s42",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.90960785651751e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_LSTM_s123",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.952975943416931e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_LSTM_s123",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_LSTM_s2026",
+      "phase": "validation",
+      "max_absolute_log_return_difference": 9.974659986866641e-17,
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_full_LSTM_s2026",
+      "phase": "evaluation",
+      "max_absolute_log_return_difference": 9.93129189996722e-17,
+      "verified": true
+    }
+  ]
+}
