@@ -1,0 +1,32 @@
+{
+  "schema": "fpt-source-audit-verification-v1",
+  "offline_reproduction_summary_identical": true,
+  "source_archives_and_all_members_verified": true,
+  "independent_consensus_missing_days": 56,
+  "vci_kbs_positive_volume_dates_equal": true,
+  "independent_return_checks": {
+    "refreshed_vs_vci": {
+      "pairs": 1898,
+      "over_10bps": 137,
+      "max_abs_bps": 670.3328597207303
+    },
+    "vci_vs_kbs": {
+      "pairs": 1996,
+      "over_10bps": 2,
+      "max_abs_bps": 21.518830800300037
+    }
+  },
+  "protected_data_and_model_pointers_unchanged": true,
+  "unit_tests": {
+    "passed": 51,
+    "failures": 0
+  },
+  "local_document_links_checked": true,
+  "archive_sha256": {
+    "evidence.zip": "15b4fbabc3e2bb107b62afbb32eb2797f32fabbc9f53cd1d12573b181b133ec9",
+    "kbs_evidence.zip": "02869a03013b21f1722e1adb70daf45b9e68f53f1eda96d1a76b4366c01de33a",
+    "comparisons.zip": "b8f837ac3e0841e1864f2a6b8e5cb316394ff669b36a81317ebbeb766100b71f"
+  },
+  "code_sha256": "2b6558c46692f7e902b7e06c26584ea68e98a123a8f0a7ed93218f97b28f3a21",
+  "trained_models_this_audit": 0
+}

@@ -1,0 +1,259 @@
+{
+  "run_id": "20261029T135735663765Z",
+  "profiles": {
+    "frozen": {
+      "rows": 2088,
+      "first_date": "2018-01-01",
+      "last_date": "2025-12-31",
+      "duplicate_dates": 0,
+      "positive_volume_rows": 1941,
+      "zero_volume_rows": 147,
+      "missing_close_rows": 4,
+      "invalid_candle_rows": 1,
+      "invalid_candle_dates": [
+        "2021-11-02"
+      ]
+    },
+    "refreshed": {
+      "rows": 2088,
+      "first_date": "2018-01-01",
+      "last_date": "2025-12-31",
+      "duplicate_dates": 0,
+      "positive_volume_rows": 1941,
+      "zero_volume_rows": 147,
+      "missing_close_rows": 4,
+      "invalid_candle_rows": 1,
+      "invalid_candle_dates": [
+        "2021-11-02"
+      ]
+    },
+    "vci": {
+      "rows": 1999,
+      "first_date": "2018-01-02",
+      "last_date": "2025-12-31",
+      "duplicate_dates": 0,
+      "positive_volume_rows": 1997,
+      "zero_volume_rows": 2,
+      "missing_close_rows": 0,
+      "invalid_candle_rows": 0,
+      "invalid_candle_dates": []
+    },
+    "yahoo_unadjusted": {
+      "rows": 2088,
+      "first_date": "2018-01-01",
+      "last_date": "2025-12-31",
+      "duplicate_dates": 0,
+      "positive_volume_rows": 1941,
+      "zero_volume_rows": 147,
+      "missing_close_rows": 4,
+      "invalid_candle_rows": 1,
+      "invalid_candle_dates": [
+        "2021-11-02"
+      ]
+    },
+    "kbs": {
+      "rows": 1997,
+      "first_date": "2018-01-02",
+      "last_date": "2025-12-31",
+      "duplicate_dates": 0,
+      "positive_volume_rows": 1997,
+      "zero_volume_rows": 0,
+      "missing_close_rows": 0,
+      "invalid_candle_rows": 1,
+      "invalid_candle_dates": [
+        "2019-08-07"
+      ]
+    }
+  },
+  "pairs": {
+    "yahoo_revision": {
+      "left_rows": 2088,
+      "right_rows": 2088,
+      "common_dates": 2088,
+      "left_only_dates": 0,
+      "right_only_dates": 0,
+      "changed_common_rows": 0,
+      "common_positive_volume_dates": 1941,
+      "comparable_positive_close_rows": 1941,
+      "close_material_difference_rows": 0,
+      "close_max_abs_difference_pct": 4.0838746162563666e-05,
+      "volume_different_positive_rows": 0,
+      "Open_changed_rows": 0,
+      "Open_missing_mismatch_rows": 0,
+      "High_changed_rows": 0,
+      "High_missing_mismatch_rows": 0,
+      "Low_changed_rows": 0,
+      "Low_missing_mismatch_rows": 0,
+      "Close_changed_rows": 0,
+      "Close_missing_mismatch_rows": 0,
+      "Volume_changed_rows": 0,
+      "Volume_missing_mismatch_rows": 0
+    },
+    "frozen_vs_vci": {
+      "left_rows": 2088,
+      "right_rows": 1999,
+      "common_dates": 1999,
+      "left_only_dates": 89,
+      "right_only_dates": 0,
+      "changed_common_rows": 1999,
+      "common_positive_volume_dates": 1941,
+      "comparable_positive_close_rows": 1941,
+      "close_material_difference_rows": 1649,
+      "close_max_abs_difference_pct": 6.896062871664421,
+      "volume_different_positive_rows": 1941,
+      "Open_changed_rows": 1995,
+      "Open_missing_mismatch_rows": 4,
+      "High_changed_rows": 1995,
+      "High_missing_mismatch_rows": 4,
+      "Low_changed_rows": 1995,
+      "Low_missing_mismatch_rows": 4,
+      "Close_changed_rows": 1995,
+      "Close_missing_mismatch_rows": 4,
+      "Volume_changed_rows": 1997,
+      "Volume_missing_mismatch_rows": 0
+    },
+    "refreshed_vs_vci": {
+      "left_rows": 2088,
+      "right_rows": 1999,
+      "common_dates": 1999,
+      "left_only_dates": 89,
+      "right_only_dates": 0,
+      "changed_common_rows": 1999,
+      "common_positive_volume_dates": 1941,
+      "comparable_positive_close_rows": 1941,
+      "close_material_difference_rows": 1649,
+      "close_max_abs_difference_pct": 6.896073687553783,
+      "volume_different_positive_rows": 1941,
+      "Open_changed_rows": 1995,
+      "Open_missing_mismatch_rows": 4,
+      "High_changed_rows": 1995,
+      "High_missing_mismatch_rows": 4,
+      "Low_changed_rows": 1995,
+      "Low_missing_mismatch_rows": 4,
+      "Close_changed_rows": 1995,
+      "Close_missing_mismatch_rows": 4,
+      "Volume_changed_rows": 1997,
+      "Volume_missing_mismatch_rows": 0
+    },
+    "refreshed_vs_kbs": {
+      "left_rows": 2088,
+      "right_rows": 1997,
+      "common_dates": 1997,
+      "left_only_dates": 91,
+      "right_only_dates": 0,
+      "changed_common_rows": 1997,
+      "common_positive_volume_dates": 1941,
+      "comparable_positive_close_rows": 1941,
+      "close_material_difference_rows": 1651,
+      "close_max_abs_difference_pct": 6.926521992831702,
+      "volume_different_positive_rows": 1941,
+      "Open_changed_rows": 1993,
+      "Open_missing_mismatch_rows": 4,
+      "High_changed_rows": 1993,
+      "High_missing_mismatch_rows": 4,
+      "Low_changed_rows": 1993,
+      "Low_missing_mismatch_rows": 4,
+      "Close_changed_rows": 1993,
+      "Close_missing_mismatch_rows": 4,
+      "Volume_changed_rows": 1997,
+      "Volume_missing_mismatch_rows": 0
+    },
+    "vci_vs_kbs": {
+      "left_rows": 1999,
+      "right_rows": 1997,
+      "common_dates": 1997,
+      "left_only_dates": 2,
+      "right_only_dates": 0,
+      "changed_common_rows": 1997,
+      "common_positive_volume_dates": 1997,
+      "comparable_positive_close_rows": 1997,
+      "close_material_difference_rows": 242,
+      "close_max_abs_difference_pct": 0.1475985661853585,
+      "volume_different_positive_rows": 830,
+      "Open_changed_rows": 1997,
+      "Open_missing_mismatch_rows": 0,
+      "High_changed_rows": 1997,
+      "High_missing_mismatch_rows": 0,
+      "Low_changed_rows": 1997,
+      "Low_missing_mismatch_rows": 0,
+      "Close_changed_rows": 1997,
+      "Close_missing_mismatch_rows": 0,
+      "Volume_changed_rows": 830,
+      "Volume_missing_mismatch_rows": 0
+    }
+  },
+  "return_pairs": {
+    "yahoo_revision": {
+      "comparable_adjacent_pairs": 1940,
+      "abs_difference_gt_10bps": 0,
+      "median_abs_difference_bps": 0.0008249743926143013,
+      "max_abs_difference_bps": 0.005644336918426279
+    },
+    "frozen_vs_vci": {
+      "comparable_adjacent_pairs": 1898,
+      "abs_difference_gt_10bps": 137,
+      "median_abs_difference_bps": 0.0011017107403579404,
+      "max_abs_difference_bps": 670.3328597207301
+    },
+    "refreshed_vs_vci": {
+      "comparable_adjacent_pairs": 1898,
+      "abs_difference_gt_10bps": 137,
+      "median_abs_difference_bps": 0.0011661297196342672,
+      "max_abs_difference_bps": 670.3328597207301
+    },
+    "refreshed_vs_kbs": {
+      "comparable_adjacent_pairs": 1898,
+      "abs_difference_gt_10bps": 135,
+      "median_abs_difference_bps": 0.08212307616874094,
+      "max_abs_difference_bps": 670.3418918211343
+    },
+    "vci_vs_kbs": {
+      "comparable_adjacent_pairs": 1996,
+      "abs_difference_gt_10bps": 2,
+      "median_abs_difference_bps": 0.0692609174850721,
+      "max_abs_difference_bps": 21.51883080031034
+    }
+  },
+  "returns": {
+    "comparable_adjacent_pairs": 1898,
+    "abs_difference_gt_10bps": 137,
+    "median_abs_difference_bps": 0.0011661297196342672,
+    "max_abs_difference_bps": 670.3328597207301
+  },
+  "adjustment_bridge": {
+    "comparable_close_rows": 2084,
+    "mismatch_rows": 0,
+    "yahoo_reported_action_rows": 17,
+    "corporate_actions_independently_certified": false
+  },
+  "protected_files_unchanged": true,
+  "decision": "audit_only_no_training_no_data_replacement_no_model_promotion",
+  "confirmed_conflicts": {
+    "yahoo_zero_but_vci_and_kbs_positive": 56,
+    "official_calendar_verified": false,
+    "action_ledger_verified": false
+  },
+  "feature_builder_sha256": "29935bd688c01e570c40bcfa127f2ef61e9b108d4a7a80ce6fa72c6d1f6621db",
+  "feature_build_dry_run": {
+    "frozen": {
+      "eligible_rows": 1940,
+      "feature_rows": 1891,
+      "supervised_rows": 1889,
+      "excluded_rows": 148
+    },
+    "vci": {
+      "eligible_rows": 1997,
+      "feature_rows": 1948,
+      "supervised_rows": 1947,
+      "excluded_rows": 2
+    },
+    "kbs": {
+      "eligible_rows": 1996,
+      "feature_rows": 1947,
+      "supervised_rows": 1945,
+      "excluded_rows": 1
+    },
+    "common_labeled_origins": 1889,
+    "common_origins_with_changed_target_date": 39
+  }
+}

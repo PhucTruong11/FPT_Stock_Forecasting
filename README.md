@@ -16,6 +16,8 @@ Một pipeline v2 dùng chung trên local và Google Colab: **snapshot có hash 
 
 [Kết quả và giới hạn](docs/TRAINING_RESULTS.md)
 
+**Audit nguồn 29/10/2026:** Yahoo có 56 ngày volume=0 nhưng Vietcap và KBS cùng ghi nhận giao dịch; riêng 2025 có nhiều bất đồng giá theo ngày. [Báo cáo và bằng chứng](reports/data_audits/20261029T135735663765Z/REPORT.md) đề xuất Vietcap cho snapshot nghiên cứu v3. Snapshot/model v2 hiện vẫn giữ nguyên; chưa train hoặc công bố accuracy mới.
+
 ## 2. Chạy trên máy local
 
 ```powershell
@@ -174,9 +176,9 @@ Muốn thu thập snapshot mới, chạy downloader/build như một nghiên c�
 
 ## 9. Kiểm chứng và giới hạn
 
-42 unit test đã qua. Bốn notebook chạy từ đầu; API model thật khớp inference offline; sample OHLCV đầy đủ khớp snapshot prediction; Streamlit đã thử dự báo LSTM và Train Mean qua HTTP. Tất cả dùng manifest v2.
+51 unit test đã qua, gồm 9 test đối chiếu nguồn. Bốn notebook đã chạy từ đầu trong đợt v2; API model thật khớp inference offline; sample OHLCV đầy đủ khớp snapshot prediction; Streamlit đã thử dự báo LSTM và Train Mean qua HTTP. Các kiểm chứng model/UI đó dùng manifest v2.
 
-Chưa có walk-forward/feature-group ablation, lịch HOSE/corporate actions độc lập hoặc backtest thực thi giao dịch. Đây là demo nghiên cứu hoàn chỉnh về luồng, không phải hệ thống giao dịch sản xuất.
+Đã có rolling-origin/feature-group ablation hồi cứu ở mục 11 và đối chiếu ba nguồn ở mục 12. Lịch HOSE/corporate actions chưa được chứng nhận; chưa có backtest thực thi giao dịch. Đây là demo nghiên cứu về luồng; kết quả v2 cần đọc cùng các bất đồng dữ liệu đã phát hiện.
 
 Tham khảo: [review ban đầu](docs/PROJECT_REVIEW.md), [kết quả CPU và giới hạn](docs/TRAINING_RESULTS.md), [TensorFlow determinism](https://www.tensorflow.org/api_docs/python/tf/config/experimental/enable_op_determinism).
 
@@ -200,3 +202,14 @@ python -m src.models.robustness_report --reload-artifacts
 Mỗi study có protocol đăng ký trước train, source snapshot, hashes, metrics/predictions, seed stability và quyết định giữ/thay. Research weights nằm local trong `models/research/` và được Git ignore; báo cáo, predictions và bằng chứng kiểm tra được lưu trong repository. Lệnh trên tạo một study và weights mới theo cùng protocol; không tái tạo nguyên byte hoặc ID cũ. Muốn nạp lại đúng checkpoint cũ cần giữ thư mục weights tương ứng; bản clone GitHub chỉ có báo cáo và bằng chứng đã lưu. Không dùng weights nghiên cứu trực tiếp cho API.
 
 Xem [bài toán supervised regression, vòng lặp drift/retrain và các lựa chọn deploy](docs/ML_WORKFLOW_AND_DEPLOYMENT.md). Tài liệu cloud được kiểm tra ngày 29/10/2026; chưa tạo hoặc deploy dịch vụ cloud. API/Streamlit tiếp tục do thành viên phụ trách cập nhật.
+
+## 12. Đối chiếu nguồn trước training v3
+
+[Audit Yahoo cũ/mới – Vietcap – KBS](reports/data_audits/20261029T135735663765Z/REPORT.md) lưu request, response, hash, chênh lệch từng ngày và quyết định dữ liệu. Yahoo tải lại chưa giải quyết các vấn đề cũ. Vietcap tạo được 1.947 mẫu supervised bằng cùng feature builder, so với 1.889 của v2; 39 origin chung đổi ngày đích, nên không so trực tiếp metric trên hai bộ nhãn khác nhau.
+
+```powershell
+# Tái tạo từ bằng chứng đã lưu, không tải đè dữ liệu hiện tại.
+python -m src.data.source_audit --analyze reports/data_audits/20261029T135735663765Z
+```
+
+Ứng viên v3 chưa thay snapshot/model phục vụ. Đợt tiếp theo cần khóa nguồn, cohort, nhãn đánh giá và cấu hình trước khi fit; chưa mở dữ liệu 2026.

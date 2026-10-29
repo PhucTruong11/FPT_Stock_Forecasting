@@ -46,7 +46,7 @@ Mỗi lần chạy tạo study ID riêng dưới `reports/robustness/` và artif
 
 Data hiện được kiểm tra nội bộ: ngày duy nhất và tăng dần, features hữu hạn, nhãn tính độc lập lại từ giá nguồn, tách 147 dòng zero-volume và 1 nến bất hợp lệ. Có 4 dòng Close thiếu trong raw không được điền giá giả.
 
-Chưa có bằng chứng chứng nhận nguồn: lịch HOSE, corporate actions và tính point-in-time của adjusted prices chưa được đối chiếu độc lập. Trước khi gọi kết quả là thực nghiệm giao dịch, cần đối chiếu các mốc bất thường với nguồn thứ hai và lưu nguồn/phiên bản. Không xóa các ngày đứng giá thật hoặc các biến động thật để tăng điểm.
+Đã thực hiện [audit ba nguồn ngày 29/10](../reports/data_audits/20261029T135735663765Z/REPORT.md). Yahoo mới vẫn có 56 ngày zero-volume mà Vietcap/KBS cùng ghi nhận giao dịch; 131/249 cặp lợi suất năm 2025 khác Vietcap trên 10 bps. Vietcap là ứng viên nguồn v3; chưa thay v2 hoặc train lại. Lịch HOSE chính thức, action ledger và tính point-in-time vẫn chưa được chứng nhận; không xem đồng thuận hai chart là chứng nhận của sàn. Không xóa các ngày đứng giá thật hoặc các biến động thật để tăng điểm.
 
 Mục tiêu gần nhất là kiểm tra: nhóm feature nào giúp nhiều giai đoạn và nhiều seed; sai số thay đổi vì seed hay regime; model có vượt baseline đủ nhất quán không. Kết quả xấu cũng là bằng chứng để bỏ bớt feature/model không hữu ích. Sau đó mới thử thay regularization, learning rate hoặc training window, mỗi thí nghiệm chỉ thay một nhóm yếu tố với đối chứng.
 

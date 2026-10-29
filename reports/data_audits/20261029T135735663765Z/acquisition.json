@@ -1,0 +1,70 @@
+{
+  "schema": "fpt-source-audit-v1",
+  "started_at_utc": "2026-10-29T13:57:35.675438+00:00",
+  "start_inclusive": "2018-01-01",
+  "end_exclusive": "2026-01-01",
+  "sources": {
+    "vci_request_and_parser": "https://github.com/thinh-vu/vnstock/blob/main/vnstock/explorer/vci/quote.py",
+    "vci_endpoint_and_fields": "https://github.com/thinh-vu/vnstock/blob/main/vnstock/explorer/vci/const.py",
+    "price_basis_and_adapter_units": "https://www.vnstocks.com/docs/vnstock/thi-truong-market",
+    "yahoo_auto_adjust": "https://github.com/ranaroussi/yfinance/blob/main/yfinance/utils.py"
+  },
+  "training_or_promotion": false,
+  "python": "3.13.15",
+  "versions": {
+    "pandas": "3.0.6",
+    "numpy": "2.5.3",
+    "yfinance": "1.7.0",
+    "requests": "2.34.2"
+  },
+  "thresholds": {
+    "price_rtol": 1e-06,
+    "price_atol_vnd": 0.02,
+    "material_price_difference_pct": 0.1,
+    "return_difference_bps": 10
+  },
+  "notes": [
+    "Thresholds flag diagnostics; they do not certify a provider as ground truth.",
+    "The direct VCI price is VND, not vnstock adapter thousand-VND.",
+    "Adjusted histories are retrieved now, not point-in-time histories.",
+    "No 2026 prices or model evaluation are requested in this audit."
+  ],
+  "yahoo_actions_retrieved_at_utc": "2026-10-29T13:57:36.887298+00:00",
+  "yahoo_actions_flags": {
+    "auto_adjust": false,
+    "actions": true,
+    "repair": false,
+    "keepna": true
+  },
+  "vci": {
+    "url": "https://trading.vietcap.com.vn/api/chart/OHLCChart/gap-chart",
+    "method": "POST",
+    "request": {
+      "timeFrame": "ONE_DAY",
+      "symbols": [
+        "FPT"
+      ],
+      "to": 1767225600,
+      "countBack": 2098
+    },
+    "retrieved_at_utc": "2026-10-29T13:57:38.225373+00:00",
+    "status_code": 200,
+    "response_sha256": "6f626d3bd002cfc7d128a234bd1ed74abc8d1adfe0057b3d60474a64ec0aa9dd",
+    "currency": "VND",
+    "price_multiplier": 1,
+    "price_basis": "provider_corporate_action_adjusted_chart",
+    "volume_basis": "chart_volume_definition_not_independently_verified",
+    "calendar": "provider_observation_dates_not_official_HOSE_calendar"
+  },
+  "files": {
+    "frozen.csv": "501d6a8e0c511dca824994bdd8e91c58e222506eef667780eb15433c2070c8ea",
+    "frozen.metadata.json": "9a06daeb0d862e171367105296573fd1f41b6cb11d9f3c185c4e667c87bc51d9",
+    "vci.csv": "14b0330f066b2feb531620b84d65ed8beaff9a689f1cb1a5e768a918cd0648ad",
+    "vci_response.json": "6f626d3bd002cfc7d128a234bd1ed74abc8d1adfe0057b3d60474a64ec0aa9dd",
+    "yahoo_refreshed/FPT.VN_raw.csv": "28136e6264f0cb8f3e90df86e57dd283b5bf8d1b5cb3379899b3cbe858b04bad",
+    "yahoo_refreshed/FPT.VN_raw.metadata.json": "e71ec02227dae0c2c2034e6885fec8d8d6e37937a5c523247883e4a0dcc0bbb6",
+    "yahoo_unadjusted_actions.csv": "b052df26c92298631d1a9d3e1f89a390987767c5c9f4b96c5c5f0aa3805ee09b"
+  },
+  "evidence_zip_sha256": "15b4fbabc3e2bb107b62afbb32eb2797f32fabbc9f53cd1d12573b181b133ec9",
+  "finished_at_utc": "2026-10-29T13:57:38.275249+00:00"
+}
