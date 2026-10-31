@@ -11,56 +11,56 @@
     "Giai đoạn": "Robustness",
     "Công việc": "63 candidate; feature/seed/fold controls",
     "Kết luận": "Chưa vượt baseline ổn định",
-    "Evidence": "reports/robustness/20261029T131205702813Z/REPORT.md"
+    "Evidence": "reports/robustness/20261029T131205702813Z/verification.json"
   },
   {
     "Ngày": "29/10/2026",
     "Giai đoạn": "Đối chiếu nguồn",
     "Công việc": "Audit Yahoo/Vietcap/KBS; 112 candidate",
     "Kết luận": "Vietcap làm ứng viên nguồn nghiên cứu",
-    "Evidence": "reports/source_comparison/20261029T142732805710Z/REPORT.md"
+    "Evidence": "reports/source_comparison/20261029T142732805710Z/verification.json"
   },
   {
     "Ngày": "29/10/2026",
     "Giai đoạn": "Training window",
     "Công việc": "56 fit mới / 112 điều kiện",
     "Kết luận": "Ưu tiên kiểm tra Ridge returns-only",
-    "Evidence": "reports/window_comparison/20261029T150501819490Z/REPORT.md"
+    "Evidence": "reports/window_comparison/20261029T150501819490Z/verification.json"
   },
   {
     "Ngày": "30/10/2026",
     "Giai đoạn": "Ridge refinement",
     "Công việc": "48 fit mới / 80 điều kiện; giữ lượt export lỗi",
     "Kết luận": "Window 3y, alpha100 cho fold mới nhất",
-    "Evidence": "reports/ridge_refinement/20261030T011109863274Z/REPORT.md"
+    "Evidence": "reports/ridge_refinement/20261030T011109863274Z/verification.json"
   },
   {
     "Ngày": "30/10/2026",
     "Giai đoạn": "Frozen 2026",
     "Công việc": "0 fit; 200 cặp chung / 202 native",
     "Kết luận": "LSTM/Ridge chưa vượt Zero Return",
-    "Evidence": "reports/evaluation_2026/20261030T014012158951Z/REPORT.md"
+    "Evidence": "reports/evaluation_2026/20261030T014012158951Z/verification.json"
   },
   {
     "Ngày": "30/10/2026",
     "Giai đoạn": "Recency + bias",
     "Công việc": "13 fit mới; cùng 202 cặp",
     "Kết luận": "Refit cải thiện so Ridge cũ; edge vs zero rất nhỏ",
-    "Evidence": "reports/recency_bias/20261030T022440928507Z/REPORT.md"
+    "Evidence": "reports/recency_bias/20261030T022440928507Z/verification.json"
   },
   {
     "Ngày": "30/10/2026",
     "Giai đoạn": "Phân loại/selective",
     "Công việc": "20 base + 10 calibrator",
     "Kết luận": "Chưa thay regression; all-down sau calibration",
-    "Evidence": "reports/direction_selective/20261030T090621177786Z/REPORT.md"
+    "Evidence": "reports/direction_selective/20261030T090621177786Z/verification.json"
   },
   {
     "Ngày": "30/10/2026",
     "Giai đoạn": "Gap/thân nến",
     "Công việc": "20 fit B + 20 artifact A tái dùng",
     "Kết luận": "Chưa cải thiện ổn định; giữ A 6 feature",
-    "Evidence": "reports/candle_ablation/20261030T093521684942Z/REPORT.md"
+    "Evidence": "reports/candle_ablation/20261030T093521684942Z/verification.json"
   },
   {
     "Ngày": "30/10/2026",
@@ -72,8 +72,8 @@
   {
     "Ngày": "30/10/2026",
     "Giai đoạn": "Forecast Studio",
-    "Công việc": "0 fit; 6 trang, ngày/tuần/tháng recursive",
+    "Công việc": "0 fit; 4 mục UI, ngày/tuần/tháng recursive",
     "Kết luận": "h=1 đã train; nhiều bước chưa kiểm định riêng",
-    "Evidence": "docs/FORECAST_STUDIO.md"
+    "Evidence": "ARCHITECTURE.md#forecast-studio"
   }
 ]

@@ -9,6 +9,7 @@ from pathlib import Path
 import joblib
 import numpy as np
 import pandas as pd
+from src.models.research_notes import write_note
 from src.data.contracts import BASE_DIR,file_sha256,utc_now
 from src.data.source_audit import save_json,guarded_hashes
 from src.features.build_features import build_dataset,TARGET_COLUMN,TARGET_DATE_COLUMN
@@ -163,9 +164,9 @@ Khoảng dự báo danh nghĩa 80% = quantile 10–90% của tối đa 60 lỗi 
 ## Shadow phía trước
 `shadow_bundle.json` refit riêng đến target đã chín mới nhất, kèm calibration snapshot. Bundle **cố định** đến khi chủ động rebuild; không tự refit mỗi tháng hoặc tự cập nhật bias. Đây là ứng viên để ghi forecast tương lai, không promote serving, không tối ưu trên 2026 rồi tuyên bố lợi thế tương lai.
 
-Sổ `reports/forward_shadow/forecasts.jsonl` chỉ append forecast/outcome với hash-chain và ảnh chụp input. Forecast phải được phát thật trước khi có target, không backdate. Chỉ `issued_local_date < actual_target_date` mới đủ điều kiện báo điểm full-session; phát sáng cùng ngày target chỉ là pre-close shadow và bị loại khỏi nhóm này. Hash-chain local không chứng nhận thời gian bên thứ ba; single writer. Chưa có outcome chín thì không có kết luận cải thiện forward. Hướng dẫn: `docs/FORWARD_SHADOW.md`.
+Sổ `reports/forward_shadow/forecasts.jsonl` chỉ append forecast/outcome với hash-chain và ảnh chụp input. Forecast phải được phát thật trước khi có target, không backdate. Chỉ `issued_local_date < actual_target_date` mới đủ điều kiện báo điểm full-session; phát sáng cùng ngày target chỉ là pre-close shadow và bị loại khỏi nhóm này. Hash-chain local không chứng nhận thời gian bên thứ ba; single writer. Chưa có outcome chín thì không có kết luận cải thiện forward. Hướng dẫn: `ARCHITECTURE.md#forward-ledger`.
 '''
-    (study/'REPORT.md').write_text(report_text,encoding='utf-8')
+    write_note(study / 'REPORT.md', report_text)
     save_json(study/'status.json',{'status':'complete','new_fits':manifest['new_fits'],'completed_at_utc':utc_now()})
     index=study.parent/'studies.json';items=json.loads(index.read_text()) if index.exists() else []
     items=[s for s in items if s['study_id']!=study.name];items.append({'study_id':study.name,'status':'complete','new_fits':manifest['new_fits']})

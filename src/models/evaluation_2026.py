@@ -89,7 +89,7 @@ def freeze(config_path):
     protocol={'schema':'fpt-frozen-2026-v1','study_id':study.name,'frozen_before_2026_download_utc':utc_now(),'config':config,'config_sha256':file_sha256(config_path),
         'models':models,'model_sha256':{f:file_sha256(BASE_DIR/f) for f in files},'protected_before':guarded_hashes(),
         'versions':{p:importlib.metadata.version(p) for p in ['numpy','pandas','scikit-learn','tensorflow','xgboost','yfinance']},
-        'source_sha256':{n:file_sha256(BASE_DIR/n) for n in ['src/models/evaluation_2026.py','src/models/evaluation_2026_report.py',
+        'source_sha256':{n:file_sha256(BASE_DIR/n) for n in ['src/models/evaluation_2026.py','src/models/evaluation_2026_report.py', 'src/models/research_notes.py',
             'src/features/build_features.py','src/data/contracts.py','src/data/source_audit.py']}}
     save_json(study/'protocol.json',protocol)
     with zipfile.ZipFile(study/'model_snapshot.zip','w',zipfile.ZIP_DEFLATED) as archive:

@@ -9,6 +9,7 @@ import joblib
 import numpy as np
 import pandas as pd
 from xgboost import XGBClassifier
+from src.models.research_notes import write_note
 from src.data.contracts import BASE_DIR,file_sha256,utc_now
 from src.data.source_audit import save_json,guarded_hashes
 from src.features.build_features import TARGET_COLUMN,TARGET_DATE_COLUMN
@@ -173,7 +174,7 @@ Block-bootstrap10 origin/1.000 resamples, seed20261030, lưu CI95% mô tả củ
 
 Các giá trị margin cụ thể và stress2025/2026 được đọc trong Notebook07, không chỉ nêu model có điểm đẹp. Chưa commit/push.
 '''
-    (study/'REPORT.md').write_text(text,encoding='utf-8')
+    write_note(study / 'REPORT.md', text)
 
 
 if __name__=='__main__':

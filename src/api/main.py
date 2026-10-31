@@ -101,7 +101,7 @@ def create_app(root: Path = BASE_DIR, service_factory=LocalRidgeService) -> Fast
         import json
         path = Path(root) / "reports/training_history/study_timeline.json"
         return {"stages": json.loads(path.read_text(encoding="utf-8")),
-                "documentation": "docs/TRAINING_HISTORY.md"}
+                "documentation": "TRAINING_HISTORY.md"}
 
     @app.post("/api/v1/forecast")
     def forecast_path(request: ForecastRequest):

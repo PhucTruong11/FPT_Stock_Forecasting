@@ -6,7 +6,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
-from src.app.theme import MINT, BLUE, AMBER, PURPLE, COLORS, chart, hero, note, path_chart
+from src.app.theme import MINT, BLUE, COLORS, chart, hero, note, path_chart
 
 HORIZONS = {'Hôm nay':'today','Ngày mai':'tomorrow','1 tuần':'week','1 tháng':'month'}
 MODEL_LABELS = {'Ridge+bias60':'Ridge · hiệu chỉnh bias', 'Ridge':'Ridge · nguyên bản', 'Zero-Return':'Zero Return · baseline'}
@@ -161,53 +161,4 @@ def journey_view(api):
         st.caption('Hai biểu đồ từ báo cáo đã lưu; không có fit mới để vẽ hình.')
     with st.expander('Tra cứu toàn bộ đường dẫn evidence'):
         st.dataframe(pd.DataFrame(stages),hide_index=True,width='stretch')
-        st.write('Tài liệu: docs/TRAINING_HISTORY.md · Notebook 05–08 lưu output và biểu đồ đối chứng.')
-
-
-def methodology_view(api,health):
-    hero('FPT / Data & methodology', 'Biết model đã nhìn thấy điều gì.',
-         'Đầu vào, nhãn, cách chia thời gian và chất lượng nguồn là một phần của dự báo. Thông tin cần để kiểm tra và tái lập nằm ở đây.')
-    result=api('/api/v1/data-quality');quality=result['quality']
-    a,b,c,d=st.columns(4)
-    a.metric('Dòng raw',f"{quality.get('raw_rows',0):,}")
-    b.metric('Feature rows',f"{quality.get('feature_rows',0):,}")
-    c.metric('Dòng quarantine',f"{quality.get('excluded_rows',0):,}")
-    d.metric('Feature model chính',str(len(result['feature_columns'])))
-    a,b=st.columns(2)
-    with a:
-        note('Supervised regression','X tại phiên t → nhãn log(Close_next / Close_t). Nhãn tự tính từ giá lịch sử vẫn là học có giám sát. Giá dự báo = Close_t × exp(return dự báo).')
-        note('Tách theo thời gian','Scaler fit trên Train. Validation chọn cấu hình. Nhãn đi qua ranh giới phase bị loại. Năm đã xem không được gọi lại là holdout chưa chạm.')
-        note('Ridge và LSTM có input khác nhau','Ridge nhận vector 6 feature, squared error + L2. LSTM reference dùng 30 quan sát × 16 feature, loss Huber. Không phải mọi model đều cần tensor 60 phiên.')
-    with b:
-        note('Nguồn và adjustment','Vietcap cho bundle local, Yahoo cho reference cũ, KBS đối chiếu nguồn. Giá theo basis điều chỉnh của provider; chưa chứng nhận lịch sàn hoặc point-in-time.')
-        note('Classification và unsupervised','Đoán tăng/giảm là supervised classification. Clustering/PCA/HMM có thể nghiên cứu regime; fit chỉ trên Train. Chưa bật các nhánh này trong model chính.')
-        note('Phạm vi hiện tại','Một mã FPT, h=1 đã train. Ngày tuần/tháng là ước tính lịch weekday và mô phỏng recursive. Chưa có kiểm định riêng cho h=5/h=21, không tự retrain hoặc deploy.')
-    st.subheader('6 feature thực sự đi vào Ridge')
-    st.code(' · '.join(result['feature_columns']),language=None,wrap_lines=True)
-    st.caption('Builder chung tính 16 feature và warm-up 49 hàng để giữ tính tương thích; Ridge chỉ lấy allowlist 6 feature. Không dùng Close tuyệt đối làm feature model.')
-    with st.expander('Quality report & metadata'):
-        st.json(result)
-    a,b=st.columns(2)
-    a.link_button('Yahoo Finance · FPT.VN','https://finance.yahoo.com/quote/FPT.VN/history/')
-    b.link_button('Vietcap · FPT','https://trading.vietcap.com.vn/iq/company?ticker=FPT&tab=overview&isIndex=false')
-
-
-def roadmap_view(api):
-    hero('FPT / Model strategy', 'Một model chính. Một đối thủ xứng đáng.',
-         'Đơn giản hóa bản phục vụ, giữ toàn bộ evidence nghiên cứu. Model thứ hai phải bổ sung giá trị đo được, không chỉ để giao diện có thêm tên.')
-    a,b=st.columns(2)
-    with a:
-        note('01 / Model chính — Ridge','Hướng đã chốt: Ridge6, alpha100, window3 năm. Ridge raw và Ridge+bias là hai cấu hình của cùng model; chưa phải ensemble hai model độc lập.')
-        st.markdown('**Giữ:** inference nhẹ, giải thích được, artifact/version rõ. **Cần cải thiện:** kiểm định bias và độ ổn định trên dữ liệu mới; train/đánh giá horizon trực tiếp nếu cần tuần/tháng.')
-    with b:
-        note('02 / Challenger — chưa chốt người thắng','Giữ LSTM reference để so sánh. Tương lai chỉ phục vụ thêm LSTM hoặc XGBoost khi tốt hơn ổn định hoặc bổ sung lỗi khác Ridge, trên cùng nguồn/ngày/nhãn.')
-        st.markdown('**Điều kiện:** nhiều fold, baseline phù hợp, ổn định seed và forecast mới phát trước target. Nếu không thêm giá trị, sản phẩm dùng một model là đủ.')
-    st.subheader('Lộ trình hoàn thiện')
-    rows=[('Đã có','Local studio','API + dashboard, version/hash, đối chứng và nhật ký.'),
-          ('Đã có','Khung tuần / tháng','Recursive scenario tối đa23bước, chưa phải model đa horizon đã kiểm định.'),
-          ('Tiếp theo','Kiểm định nhiều bước','Backtest recursive và direct h=5/h=21; so cùng origin, baseline và uncertainty. Chốt giao thức trước fit.'),
-          ('Tiếp theo','Bằng chứng tương lai','Forecast phát trước target, chờ nhãn, rolling metrics/drift. Không dùng lại 2026 đã xem như holdout mới.'),
-          ('Sau kiểm chứng','1–2 model phục vụ','Chỉ giữ challenger/ensemble nếu có lợi ích ngoài mẫu, cost và rollback phù hợp.'),
-          ('Tương lai','Deploy có kiểm soát','Chọn host sau đo tài nguyên; HTTPS/auth, source refresh và lịch retrain là công việc riêng, chưa bật.')]
-    st.dataframe(pd.DataFrame(rows,columns=['Trạng thái','Hạng mục','Điều kiện / kết quả']),hide_index=True,width='stretch')
-    st.info('Zero Return luôn được giữ làm baseline kiểm chứng; không tính nó là model ML thứ hai. Không dùng Hit >50% hoặc một tháng đẹp để chọn production model.')
+        st.write('Tài liệu: TRAINING_HISTORY.md · Notebook 05 tổng hợp hành trình; notebook 06 so dự báo với giá thật.')

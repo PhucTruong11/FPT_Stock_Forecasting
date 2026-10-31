@@ -7,6 +7,76 @@ ROOT = Path(__file__).resolve().parents[2]
 OUTPUT = ROOT / 'notebooks/05_training_journey_fpt.ipynb'
 
 
+def append_final_studies(cells):
+    """One read-only research notebook replaces the separate classifier/feature notebooks."""
+    def md(text): cells.append(nbf.v4.new_markdown_cell(text))
+    def code(text): cells.append(nbf.v4.new_code_cell(text.strip()))
+    md('''## 11. Phân loại tăng/giảm và vùng chưa đủ tín hiệu
+Phần này gom kết quả notebook phân loại cũ. Chỉ đọc study đã hoàn tất, không fit/calibrate lại.
+Train đến tháng 6 năm trước, calibration Q3, validation chọn margin Q4, rồi evaluation năm sau.
+Ridge_shared dùng cùng dòng train với classifier; Ridge_recent có thêm dữ liệu đến cuối năm trước.
+Primary là mean riêng từng fold 2022–2024. Các năm đã xem nên là đối chứng hồi cứu, không phải holdout mới.''')
+    code('''DIRECTION = ROOT/'reports/direction_selective/20261030T090621177786Z'
+direction_metrics = read(DIRECTION/'metrics.csv')
+direction_primary = read(DIRECTION/'primary_summary.csv').set_index('strategy')
+direction_methods = ['Ridge_shared','Ridge_recent','Logistic_raw','XGBoost_raw','Logistic_selective','XGBoost_selective']
+direction_primary = direction_primary.loc[direction_methods]
+fig, ax = plt.subplots(figsize=(11,4.5))
+ax.barh(direction_methods, direction_primary.mean_fold_balanced, color=['#2563eb','#7799bb','#0d9488','#7c3aed','#59aa9d','#ab92d4'])
+ax.axvline(50,color='#b45309',ls='--',label='Always down: balanced 50%')
+ax.set_xlim(0,65);ax.invert_yaxis();ax.set_xlabel('Mean-fold balanced accuracy (%)')
+ax.set_title('Phân loại · cùng giao thức từng fold, primary 2022–2024')
+ax.legend(fontsize=9);show('19_direction_primary')
+display(direction_primary[['mean_fold_balanced','mean_fold_coverage','worst_fold_balanced']].round(2))''')
+    md('''### Hit cao phải đọc cùng balanced và coverage
+Sau sigmoid ở 2026, Logistic/XGBoost đều dự đoán giảm: 117/197 actual khác 0 là 59,39% Hit,
+nhưng balanced chỉ 50%. Năm đó margin chọn bằng 0 nên bộ lọc chưa loại ngày nào.
+Không tự tăng margin sau khi nhìn evaluation. Brier tốt hơn không tự chứng minh phân biệt hướng tốt hơn.''')
+    code('''direction_2026 = direction_metrics.loc[direction_metrics.year.eq(2026)].set_index('strategy')
+direction_2026 = direction_2026.loc[['Ridge_recent','Logistic_raw','Logistic_selective','XGBoost_selective','Always_down']]
+fig, axes = plt.subplots(1,2,figsize=(12,4.5))
+for ax, column, title in zip(axes,['hit_nonzero_called_pct','balanced_called_nonzero_pct'],['Hit trên calls nonzero (%)','Balanced trên calls nonzero (%)']):
+    ax.barh(direction_2026.index,direction_2026[column],color='#0d9488')
+    ax.invert_yaxis();ax.set_xlim(0,75);ax.set_xlabel(title)
+axes[1].axvline(50,color='#b45309',ls='--')
+fig.suptitle('2026 đến 29/10 · 202 origin, 197 actual khác 0; đọc cả coverage')
+show('20_direction_2026')
+display(direction_2026[['n','calls_n','coverage_pct','hit_nonzero_called_pct','balanced_called_nonzero_pct']].round(2))
+display(read(DIRECTION/'threshold_selection.csv')[['fold','model','margin','reason']])
+display(Markdown('Kết luận: nhánh phân loại/selective chưa đủ căn cứ thay regression. Chi tiết threshold candidates, probability diagnostics và matched-day controls vẫn nằm trong thư mục study.'))''')
+    md('''## 12. Gap mở cửa / thân nến: có cần đổi bộ feature không?
+Phần này gom notebook ablation cũ. A giữ 6 return features; B thay Log_Return bằng
+`log(Open_t / Close_previous_eligible)` và `log(Close_t / Open_t)`.
+Hai thành phần cộng lại bằng Log_Return_t, đều đã biết sau đóng cửa origin; không dùng Open tương lai.
+20 fit B so 20 artifact A trên cùng ngày/nhãn/hyperparameters. Không fit thêm trong notebook này.''')
+    code('''CANDLE = ROOT/'reports/candle_ablation/20261030T093521684942Z'
+candle_metrics = read(CANDLE/'metrics.csv')
+candle_primary = read(CANDLE/'primary_summary.csv')
+candle_ridge = candle_metrics.loc[candle_metrics.strategy.eq('Ridge_recent')].pivot(index='year',columns='case',values='return_rmse')
+fig, axes = plt.subplots(1,2,figsize=(12,4.5))
+positions = np.arange(len(candle_ridge))
+axes[0].bar(positions-.18,candle_ridge.A_returns6,.36,label='A: 6 returns',color='#2563eb')
+axes[0].bar(positions+.18,candle_ridge.B_gap_body7,.36,label='B: gap/body7',color='#0d9488',hatch='//')
+axes[0].set_xticks(positions,candle_ridge.index);axes[0].set_ylabel('RMSE log return')
+axes[0].set_title('Ridge_recent · cùng ngày trong từng năm');axes[0].legend(fontsize=9)
+candle_direction = candle_metrics.loc[candle_metrics.strategy.eq('Ridge_recent')].pivot(index='year',columns='case',values='balanced_called_nonzero_pct')
+axes[1].plot(candle_direction.index,candle_direction.A_returns6,marker='o',label='A',color='#2563eb')
+axes[1].plot(candle_direction.index,candle_direction.B_gap_body7,marker='s',label='B',color='#0d9488')
+axes[1].set_xticks(candle_direction.index)
+axes[1].axhline(50,color='#b45309',ls='--');axes[1].set_ylabel('Balanced accuracy (%)')
+axes[1].set_title('Hướng dự báo · không chỉ nhìn RMSE');axes[1].legend(fontsize=9)
+show('21_gap_body_comparison')
+display(candle_primary.loc[candle_primary.strategy.isin(['Ridge_recent','Logistic_raw'])].round(6))
+display(candle_metrics.loc[candle_metrics.year.eq(2026)&candle_metrics.strategy.eq('Ridge_recent'),
+    ['case','n','nonzero_calls_n','return_rmse','price_mae_adjusted_vnd','hit_nonzero_called_pct','balanced_called_nonzero_pct']].round(6))
+display(Markdown('Kết luận: B chưa cải thiện ổn định. Primary Ridge RMSE tăng khoảng 0,46%; Logistic balanced tăng khoảng 0,09 điểm %. Năm 2026 Ridge B kém A về cả RMSE và hướng. Giữ A6; CI từng fold và tất cả lượt tốt/xấu vẫn được giữ trong evidence.'))''')
+    md('''Nguồn hai phần cuối: `reports/direction_selective/20261030T090621177786Z/`
+và `reports/candle_ablation/20261030T093521684942Z/`.
+Đọc `metrics.csv`, `primary_summary.csv`, threshold/paired-effect CSV, protocol/manifest và
+`reports/training_history/research_notes.json` để tra diễn giải đầy đủ từ notebook/báo cáo cũ.
+Không dùng các bảng này để gán thành tích cho bundle train đến 29/10 đang chạy API.''')
+
+
 def build():
     cells = []
     def md(text): cells.append(nbf.v4.new_markdown_cell(text))
@@ -16,7 +86,7 @@ def build():
 ## Tóm tắt
 Notebook đọc kết quả đã lưu; **không tải giá, không train model, không thay model serving**. Các biểu đồ chia theo giao thức: tái lập CPU–Colab, robustness trên Yahoo, đổi nguồn với nhãn Vietcap, training window, rồi phân tích lỗi/Ridge refinement. Không nối các RMSE khác nhãn/cohort thành một đường “accuracy tăng”.
 
-Mọi kết quả là nghiên cứu hồi cứu; 2025 và khoảng 2026 đến 29/10 đã được xem. Phần 10 bổ sung recency/bias và khoảng dự báo. Chưa chứng minh hiệu quả giao dịch hoặc khả năng dự báo ở giai đoạn tương lai.''')
+Mọi kết quả là nghiên cứu hồi cứu; 2025 và khoảng 2026 đến 29/10 đã được xem. Phần 10 là recency/bias; phần 11–12 gom nhánh phân loại và gap/thân nến. API hiện dùng Ridge6+bias; tên LSTM serving trong bảng cũ là vai trò lịch sử. Chưa chứng minh hiệu quả giao dịch hoặc khả năng dự báo ở giai đoạn tương lai.''')
     md('''**Điểm cần nhớ:** CPU–Colab xác minh khả năng tái lập; audit đã tìm bất đồng nguồn; đổi nguồn/window/regularization chỉ cải thiện một số trường hợp. Baseline vẫn mạnh. Phần 6 là window; phần 7–8 là phân tích lỗi/Ridge. Lựa chọn theo validation, giữ cả kết quả evaluation kém hơn.''')
     md('''## Phương pháp và nguồn
 - Target: log-return ở quan sát hợp lệ kế tiếp. RMSE/MAE càng thấp càng tốt; MSE skill > 0 là vượt Zero Return trên cùng nhãn.
@@ -152,7 +222,7 @@ if complete:
     selected=read(WIN/'validation_selection.csv')
     display(selected.rename(columns={'fold':'Fold','model':'Model','selected_window':'Window','validation_rmse':'Val RMSE',
         'evaluation_rmse':'Eval RMSE','expanding_evaluation_rmse':'Control RMSE','evaluation_rmse_gain_pct':'Giảm RMSE (%)'}).round(7))
-    display(Markdown(f"Study local: `{WIN.name}`. Đọc `REPORT.md` và bảng selection để phân biệt kết quả chọn bằng validation với window thắng hậu nghiệm trên evaluation."))
+    display(Markdown(f"Study local: `{WIN.name}`. Đọc `TRAINING_HISTORY.md` và bảng selection để phân biệt kết quả chọn bằng validation với window thắng hậu nghiệm trên evaluation."))
 else:
     display(Markdown('Chưa có study training window hoàn tất. Chạy lại notebook sau khi kết thúc thí nghiệm để cập nhật biểu đồ.'))''')
     md('''### Window chọn bằng validation có giúp evaluation không?
@@ -326,18 +396,20 @@ Khoảng danh nghĩa 80% dùng quantile 10–90% của 60 lỗi calibrated trư�
     events=[json.loads(line) for line in ledger.read_text(encoding='utf-8').splitlines()] if ledger.exists() else []
     forecasts=[e for e in events if e['kind']=='forecast'];outcomes=[e for e in events if e['kind']=='outcome']
     eligible=[e for e in outcomes if e['full_session_eligible']]
-    display(Markdown(f"Sổ shadow local: **{len(forecasts)} forecast, {len(outcomes)} outcome, {len(eligible)} outcome full-session**. Chưa có nhãn thì chưa kết luận forward. Chỉ phát trước ngày target mới được chấm full-session. Forecast sáng cùng ngày target bị loại khỏi nhóm này. Hướng dẫn: `docs/FORWARD_SHADOW.md`; chi tiết: `{RECENCY.relative_to(ROOT)}/REPORT.md`."))''')
+    display(Markdown(f"Sổ shadow local: **{len(forecasts)} forecast, {len(outcomes)} outcome, {len(eligible)} outcome full-session**. Chưa có nhãn thì chưa kết luận forward. Chỉ phát trước ngày target mới được chấm full-session. Forecast sáng cùng ngày target bị loại khỏi nhóm này. Hướng dẫn: `ARCHITECTURE.md#forward-ledger`; chi tiết: `{RECENCY.relative_to(ROOT)}/metrics.csv`."))''')
+    append_final_studies(cells)
     md('''## Kết luận để trình bày với team
 1. Tái lập CPU–Colab xác minh pipeline và artifact; không đồng nghĩa dự báo chính xác hơn.
 2. Các nghiên cứu tiếp theo đã đối chứng seed/features/nguồn dữ liệu; giữ cả kết quả tốt và xấu.
 3. Nhãn/cohort đổi thì metric cũ và mới không so trực tiếp. Các biểu đồ trên được tách theo giao thức.
-4. Vietcap là hướng dữ liệu nghiên cứu; baseline vẫn cần giữ. Chưa promote model. Phần 2026 tới 29/10 đã được mở để đánh giá hồi cứu, không còn là holdout chưa xem.
+4. Vietcap là nguồn dữ liệu nghiên cứu và bundle Ridge local hiện tại; baseline vẫn cần giữ. Phần 2026 tới 29/10 đã được mở để đánh giá hồi cứu, không còn là holdout chưa xem.
 5. Mọi lần cải thiện tiếp phải khóa protocol trước fit và chọn bằng validation; không chọn theo điểm evaluation đẹp nhất.
 6. Phân tích lỗi và Ridge refinement được bổ sung ở phần 7–8; cải thiện nhỏ về RMSE chưa đồng nghĩa ổn định ở mọi fold hoặc hơn baseline.
 7. Phần 9 cho thấy các model đóng băng chưa vượt Zero Return năm 2026; cần xử lý nguồn/recency/bias và có đánh giá tương lai mới, không tune lại trên 2026 rồi gọi là holdout độc lập.
 8. Phần 10: recency giúp so bản cũ; bias cải thiện một số metric nhưng không ổn định ở mọi phương án. Edge hồi quy vs Zero rất nhỏ, CI chứa 0; giữ serving và theo dõi shadow phía trước.
+9. Phần 11–12: classifier/selective và gap/body chưa tạo cải thiện ổn định để thay Ridge6. Giữ kết quả âm và đọc cùng baseline, coverage, CI.
 
-Chi tiết: `docs/TRAINING_HISTORY.md`, `reports/source_comparison/20261029T142732805710Z/DECISION.md`. Notebook là bản tổng hợp bằng chứng, không phải khuyến nghị giao dịch.''')
+Chi tiết: `TRAINING_HISTORY.md`, `reports/source_comparison/20261029T142732805710Z/metrics.csv`. Notebook là bản tổng hợp bằng chứng, không phải khuyến nghị giao dịch.''')
     nb=nbf.v4.new_notebook(cells=cells,metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'},'language_info':{'name':'python','version':'3.13'}})
     nbf.validate(nb); nbf.write(nb, OUTPUT)
     return nb

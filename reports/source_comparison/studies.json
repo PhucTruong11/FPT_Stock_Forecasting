@@ -26,8 +26,10 @@
       "same_labeled_training_rows_for_both_sources": true,
       "automatic_promotion": false,
       "decision": "retain_serving_models; Vietcap source candidate and returns-only for further research; learned models not consistently above baselines",
-      "report": "20261029T142732805710Z/REPORT.md",
-      "decision_report": "20261029T142732805710Z/DECISION.md"
+      "report": "reports/training_history/research_notes.json",
+      "decision_report": "reports/training_history/research_notes.json",
+      "note_key": "reports/source_comparison/20261029T142732805710Z/REPORT.md",
+      "decision_report_note_key": "reports/source_comparison/20261029T142732805710Z/DECISION.md"
     }
   ]
 }

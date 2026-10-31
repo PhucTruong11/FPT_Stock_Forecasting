@@ -68,7 +68,7 @@ def run(config_path):
     assert file_sha256(BASE_DIR/old_spec['file'])==evaluation_proto['model_sha256'][old_spec['file']]
     study=BASE_DIR/'reports/recency_bias'/pd.Timestamp.now(tz='UTC').strftime('%Y%m%dT%H%M%S%fZ');study.mkdir(parents=True)
     artifacts=BASE_DIR/'models/research'/('recency-bias_'+study.name);artifacts.mkdir(parents=True)
-    code=['src/models/recency_bias.py','src/models/recency_bias_report.py','src/models/forward_ledger.py','src/features/build_features.py','src/models/evaluation_2026.py']
+    code=['src/models/recency_bias.py','src/models/recency_bias_report.py', 'src/models/research_notes.py','src/models/forward_ledger.py','src/features/build_features.py','src/models/evaluation_2026.py']
     protocol={'schema':'fpt-recency-bias-v1','study_id':study.name,'registered_before_fit_utc':utc_now(),'config':config,
         'python':sys.version,'packages':{p:importlib.metadata.version(p) for p in ['numpy','pandas','scikit-learn','joblib']},
         'feature_columns':columns,'alpha':config['alpha'],'evaluation_data_sha256':file_sha256(evaluation/'data_snapshot.zip'),

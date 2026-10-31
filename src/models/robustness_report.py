@@ -12,6 +12,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from src.models.research_notes import write_note
 from src.data.contracts import BASE_DIR, file_sha256
 
 
@@ -216,20 +217,20 @@ python -m src.models.robustness --config configs/robustness_v1.json
 python -m src.models.robustness_report
 ```
 
-Mỗi lần train tạo thư mục mới và lưu đầy đủ kết quả, kể cả kém baseline. Trọng số nghiên cứu nằm ở `{manifest['artifact_dir']}`; không ghép với scaler/weights của model demo. Chỉ số deployment của ngày 25/10/2026 nằm trong `docs/TRAINING_HISTORY.md`, không so trực tiếp mean-fold RMSE ở đây với một test-year RMSE 2025.
+Mỗi lần train tạo thư mục mới và lưu đầy đủ kết quả, kể cả kém baseline. Trọng số nghiên cứu nằm ở `{manifest['artifact_dir']}`; không ghép với scaler/weights của model demo. Chỉ số deployment của ngày 25/10/2026 nằm trong `TRAINING_HISTORY.md`, không so trực tiếp mean-fold RMSE ở đây với một test-year RMSE 2025.
 """
     if (study / "reload_verification.json").exists():
         reloaded = json.loads((study / "reload_verification.json").read_text(encoding="utf-8"))
         report += f"\n[Nạp lại artifact](reload_verification.json): {reloaded['candidates_reloaded']} model, {reloaded['phase_checks']} kiểm tra phase; scaler LSTM khớp thống kê train-only.\n"
-    (study / "REPORT.md").write_text(report, encoding="utf-8", newline="\n")
+    write_note(study / 'REPORT.md', report, root=root)
     studies = []
     for path in sorted((root / "reports/robustness").glob("*/manifest.json")):
         item = json.loads(path.read_text(encoding="utf-8"))
-        studies.append({"study_id": item["study_id"], "report": str(path.with_name("REPORT.md").relative_to(root)).replace("\\", "/"),
+        studies.append({"study_id": item["study_id"], "report": "reports/training_history/research_notes.json", "note_key": str(path.with_name("REPORT.md").relative_to(root)).replace("\\", "/"),
                         "automatic_promotion": item["automatic_promotion"], "promotion_decision": item["promotion_decision"]})
     write_json(root / "reports/robustness/studies.json", studies)
-    print(f"Verified {len(checked)} metric rows; report: {study / 'REPORT.md'}")
-    return study / "REPORT.md"
+    print(f"Verified {len(checked)} metric rows; notes: reports/training_history/research_notes.json")
+    return root / "reports/training_history/research_notes.json"
 
 
 if __name__ == "__main__":

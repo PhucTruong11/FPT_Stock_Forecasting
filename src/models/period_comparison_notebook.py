@@ -322,7 +322,7 @@ display(Markdown('MAE độ lớn bỏ dấu: dự báo +2% và thực tế −2
 3. Forecast return khá nhỏ so actual, bỏ lỡ nhiều cú nhảy; chưa đủ cơ sở phóng đại biên độ. Cần kiểm chứng bằng các phiên mới đã ghi forecast trước khi có nhãn.
 4. Muốn dự báo cả tháng từ đầu tháng hoặc High–Low cần target/horizon/baseline khác. Không dùng điểm one-step ở đây làm đại diện.
 
-**Nguồn đã lưu:** `reports/period_comparison/20261030T024048531444Z/COMPARISON.md`, `analysis.py`, `scope.json`, `verification.json`, `predictions.csv.gz`, `summary.csv`, `monthly_metrics.csv`.
+**Nguồn đã lưu:** `reports/period_comparison/20261030T024048531444Z/summary.csv`, `analysis.py`, `scope.json`, `verification.json`, `predictions.csv.gz`, `summary.csv`, `monthly_metrics.csv`.
 
 **Study gốc:** `reports/evaluation_2026/20261030T014012158951Z/` và `reports/recency_bias/20261030T022440928507Z/`. Notebook chỉ đọc các kết quả này, không gọi source provider, train/reload weights hoặc thay serving/API/Streamlit. Không commit/push.
 

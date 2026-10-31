@@ -58,7 +58,7 @@ flowchart LR
     A --> U[Streamlit]
 ```
 
-Xem [kiến trúc và khái niệm ML](docs/ARCHITECTURE.md) để phân biệt supervised, classification, clustering, split, leakage và drift.
+Xem [kiến trúc và khái niệm ML](ARCHITECTURE.md) để phân biệt supervised, classification, clustering, split, leakage và drift.
 
 ## Nguồn dataset
 
@@ -86,15 +86,15 @@ Nguồn: [recency/bias metrics](reports/recency_bias/20261030T022440928507Z/metr
 
 ![Đối chiếu trên cùng tập 2026](docs/assets/training/01_recency_bias.png)
 
-[Nhật ký training có biểu đồ](docs/TRAINING_HISTORY.md) ghi cả lượt tốt hơn, kém hơn và lỗi export, cùng bằng chứng. Không so trực tiếp điểm khác nguồn/tập ngày, không gọi các năm đã xem là holdout mới.
+[Nhật ký training có biểu đồ](TRAINING_HISTORY.md) ghi cả lượt tốt hơn, kém hơn và lỗi export, cùng bằng chứng. Không so trực tiếp điểm khác nguồn/tập ngày, không gọi các năm đã xem là holdout mới.
 
 ## Dashboard và API local
 
-Dashboard **FPT Forecast Studio** có 6 trang: tổng quan OHLCV, dự báo, đối chứng, hành trình model, dữ liệu/phương pháp và lộ trình. Có tải JSON/CSV. LSTM xuất hiện trong cohort chung 104 cặp tháng 6–10, dùng forecast đã lưu; không âm thầm train/load lại LSTM khi mở dashboard.
+Dashboard **FPT Forecast Studio** có 4 mục: tổng quan OHLCV, dự báo, đối chứng và hành trình model. Phương pháp/lộ trình nằm trong ba tài liệu gốc. Có tải JSON/CSV. LSTM xuất hiện trong cohort chung 104 cặp tháng 6–10, dùng forecast đã lưu; không âm thầm train/load lại LSTM khi mở dashboard.
 
 Trang dự báo chọn **hôm nay, ngày mai, 1 tuần hoặc 1 tháng**. Model vẫn chỉ được train cho h=1. Từ bước thứ hai, API cập nhật 6 feature từ chính Close dự báo và chạy Ridge tiếp: đây là **mô phỏng recursive chưa kiểm định riêng**, không phải model tháng đã train. Ngày chỉ bỏ cuối tuần, chưa trừ nghỉ lễ HOSE. Chọn hôm nay/ngày mai rơi cuối tuần sẽ dời sang ngày làm việc dự kiến kế tiếp; tuần/tháng lấy các weekday trong khung lịch. Giới hạn 23 bước từ origin, từ chối khi snapshot quá cũ.
 
-Vùng P10–P90 là residual block-bootstrap mô tả (512 đường, block5, seed cố định), không bảo đảm coverage80%. Zero Return không được gắn vùng sai số của Ridge. Bấm “hôm nay” không chứng minh forecast phát trước phiên. Chi tiết và tiêu chí chốt1–2model: [FORECAST_STUDIO.md](docs/FORECAST_STUDIO.md).
+Vùng P10–P90 là residual block-bootstrap mô tả (512 đường, block5, seed cố định), không bảo đảm coverage80%. Zero Return không được gắn vùng sai số của Ridge. Bấm “hôm nay” không chứng minh forecast phát trước phiên. Chi tiết và tiêu chí chốt1–2model: [ARCHITECTURE.md, mục Forecast Studio](ARCHITECTURE.md#forecast-studio).
 
 | Endpoint | Chức năng |
 | --- | --- |
@@ -129,30 +129,38 @@ models/experiments/      Artifact reference cũ
 models/research/         Artifact nghiên cứu, gitignored
 models/local_demo/       Bundle Ridge tự chứa cho local
 reports/                 Evidence từng study; không xóa kết quả âm
-docs/                   README chuyên đề, kiến trúc, nhật ký có ảnh
+docs/assets/             Ảnh flow và biểu đồ được ba tài liệu sử dụng
 tests/                  Kiểm tra dữ liệu, thời gian, model, API
 ```
 
-## Notebook nên đọc
+## Bốn notebook cần dùng
 
-1. `01_eda_fpt.ipynb`: khám phá dữ liệu gốc.
-2. `02_train_deep_learning_fpt.ipynb`, `03_evaluate_fpt_benchmark.ipynb`: tái lập benchmark v2 lịch sử, không phải lệnh promote Ridge mới.
-3. `05_training_journey_fpt.ipynb`: các giai đoạn phát triển đến recency/bias.
-4. `06_compare_predictions_jun_oct_2026.ipynb`: giá thực tế và dự báo cùng ngày.
-5. `07_direction_and_insufficient_signal_fpt.ipynb`: phân loại và selective.
-6. `08_gap_body_feature_comparison_fpt.ipynb`: A/B gap/thân nến.
+| Notebook | Mục đích |
+| --- | --- |
+| [01 · EDA](notebooks/01_eda_fpt.ipynb) | Chất lượng và khám phá snapshot dữ liệu gốc |
+| [02 · Training](notebooks/02_train_deep_learning_fpt.ipynb) | Huấn luyện baseline/LSTM v2, phục vụ phần xây model của môn học; không tự promote sang API |
+| [05 · Hành trình](notebooks/05_training_journey_fpt.ipynb) | Toàn bộ quá trình, CPU/Colab, đối chứng nguồn/window/Ridge, classifier/selective và gap/body |
+| [06 · Dự báo và giá thật](notebooks/06_compare_predictions_jun_oct_2026.ipynb) | So model lịch sử trên cùng ngày đích, phóng to theo tháng |
 
-Các notebook lịch sử giữ đúng mục đích tại lúc tạo. Không chạy lại toàn bộ notebook để tự thay bundle local. Notebook 04 là demo của benchmark cũ; dùng Streamlit ở trên cho bản Ridge local hiện tại.
+Giữ số notebook cũ để ổn định tham chiếu. Đánh giá v2 và demo UI cũ đã được thay bằng hành trình/đối chứng và Streamlit; hai notebook classifier/gap riêng được gom vào phần 11–12 của notebook05. CSV/JSON và source snapshot của mọi nghiên cứu vẫn giữ để tái lập, không giữ thêm bản notebook trùng chức năng.
 
 ## Kiểm chứng và kế hoạch tiếp
 
-Đã chạy **119 unit tests**, kiểm tra cả6trang,4khung dự báo, đổi model/cohort/tháng với API thật. [Bằng chứng Studio](reports/verification/forecast_studio_20261030/VERIFICATION.md), [lượt tích hợp local trước](reports/verification/local_ridge_demo/VERIFICATION.md). Bộ kiểm thử nghiên cứu đầy đủ cần `requirements.txt`; `requirements-local.txt` dành cho chạy inference/UI.
+Đã chạy **124 unit tests** sau dọn tài liệu; Studio đã được kiểm tra 4 mục, 4 khung dự báo và đổi model/cohort/tháng với API thật. [Bằng chứng Studio](reports/verification/forecast_studio_20261030/checks.json), [lượt tích hợp local trước](reports/verification/local_ridge_demo/checks.json). Bộ kiểm thử nghiên cứu đầy đủ cần `requirements.txt`; `requirements-local.txt` dành cho chạy inference/UI.
 
 ```powershell
 .\venv\Scripts\python.exe -m unittest discover -s tests -v
 .\venv\Scripts\python.exe -m src.models.training_review
 ```
 
-Lệnh thứ hai chỉ dựng biểu đồ/timeline từ evidence đã lưu, không retrain. Hướng dẫn forward ledger: [FORWARD_SHADOW.md](docs/FORWARD_SHADOW.md). Dự báo bấm trên dashboard **không tự ghi thành bằng chứng forward**.
+Lệnh thứ hai chỉ dựng biểu đồ/timeline từ evidence đã lưu, không retrain. Hướng dẫn forward ledger: [ARCHITECTURE.md, mục Forward ledger](ARCHITECTURE.md#forward-ledger). Dự báo bấm trên dashboard **không tự ghi thành bằng chứng forward**.
 
-Kế hoạch tương lai: thu forecast trước target và chấm khi có nhãn; xem xét drift, acceptance gate và rollback; sau khi local ổn mới chọn host, đóng gói dependencies và deploy API/UI. `h=5`, regime clustering, xác suất/selective tốt hơn chỉ là các thí nghiệm đề xuất, chưa có trong bản chính. Lượt bàn giao GitHub ngày 31/10/2026 đưa code, bundle phục vụ và báo cáo lên nhánh `codex/fpt-source-audit`; chưa deploy public. Các nhật ký ghi “không commit/push” phản ánh trạng thái tại thời điểm nghiên cứu trước yêu cầu bàn giao này.
+Kế hoạch tương lai: thu forecast trước target và chấm khi có nhãn; xem xét drift, acceptance gate và rollback; sau khi local ổn mới chọn host, đóng gói dependencies và deploy API/UI. `h=5`, regime clustering, xác suất/selective tốt hơn chỉ là các thí nghiệm đề xuất, chưa có trong bản chính. Lượt bàn giao GitHub ngày 31/10/2026 đưa code, bundle phục vụ và báo cáo lên GitHub và đã merge vào main; nhánh local làm việc hiện tại là `feature/train-model`. Chưa deploy public. Các nhật ký ghi “không commit/push” phản ánh trạng thái tại thời điểm nghiên cứu trước yêu cầu bàn giao này.
+
+## Ba tài liệu duy nhất
+
+- [README.md](README.md): cách chạy, nguồn và hiện trạng sản phẩm.
+- [TRAINING_HISTORY.md](TRAINING_HISTORY.md): quá trình train, đối chứng và các kết luận có biểu đồ.
+- [ARCHITECTURE.md](ARCHITECTURE.md): khái niệm ML, data/feature contract, recursive forecast và forward ledger.
+
+Chi tiết báo cáo cũ được gom thành [research_notes.json](reports/training_history/research_notes.json); giữ nguyên hash/nội dung gốc. File CSV/JSON, input/source ZIP và outputs notebook là evidence, không phải dữ liệu rác. Các Markdown cũ có thể xem lại từ Git history, không giữ thêm thư mục tài liệu archive.

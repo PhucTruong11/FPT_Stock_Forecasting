@@ -1,8 +1,9 @@
 [
   {
     "study_id": "20261029T131205702813Z",
-    "report": "reports/robustness/20261029T131205702813Z/REPORT.md",
+    "report": "reports/training_history/research_notes.json",
     "automatic_promotion": false,
-    "promotion_decision": "keep_incumbent_pending_unseen_forward_evaluation_and_source_verification"
+    "promotion_decision": "keep_incumbent_pending_unseen_forward_evaluation_and_source_verification",
+    "note_key": "reports/robustness/20261029T131205702813Z/REPORT.md"
   }
 ]

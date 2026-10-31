@@ -1,6 +1,6 @@
 # Kiến trúc và các khái niệm ML của dự án FPT
 
-Cập nhật 30/10/2026. Phạm vi đã làm: nghiên cứu offline, API và dashboard local. Deploy public, tự cập nhật data/retrain và auto-promotion vẫn là kế hoạch.
+Cập nhật 31/10/2026. Phạm vi đã làm: nghiên cứu offline, API và dashboard local. Deploy public, tự cập nhật data/retrain và auto-promotion vẫn là kế hoạch.
 
 ## 1. Học có giám sát và hồi quy
 
@@ -130,10 +130,56 @@ Ledger shadow hiện có một forecast pending; không sửa thời điểm ho�
 
 Mỗi lượt mới cần protocol/config, nguồn có hash, ngày origin/target, scaler/model version, predictions, metrics, decision và cả failure log. Đóng gói phục vụ là một sự kiện khác training: lượt local này có **0 fit mới**. Không dùng thời gian tạo file thay thời gian model được train.
 
-Xem [TRAINING_HISTORY.md](TRAINING_HISTORY.md), [README](../README.md), [forward ledger](FORWARD_SHADOW.md). Các notebook và báo cáo cũ giữ nguyên giá trị lịch sử; tài liệu current này quyết định cách hiểu bản local hiện tại.
+Xem [TRAINING_HISTORY.md](TRAINING_HISTORY.md), [README](reports/training_history/research_notes.json), [forward ledger](ARCHITECTURE.md#forward-ledger). Các kết quả và source snapshot cũ giữ nguyên giá trị lịch sử; tài liệu current này quyết định cách hiểu bản local hiện tại.
 
 ## 9. Bổ sung Forecast Studio — vẫn chỉ model h=1 đã train
 
 `src/models/forecast_path.py` thêm recursive scenario cho hôm nay/ngày mai/tuần/tháng từ Close, không sinh futureOHLCV. Tối đa23bướcweekday, không chứng nhận lịchHOSE, không fit hoặc ghiledger. VùngP10–P90 từ512circularblockbootstrap paths chỉ là vùng kịch bản, không guaranteecoverage. `/api/v1/forecast` tách khỏi `/predict` để giữ hợp đồng một bước cũ.
 
-Ridge raw/bias là hai cấu hình cùng model. Tương lai chỉ giữ thêm LSTM/XGBoost làm challenger nếu có lợi ích kiểm chứng ngoài mẫu; chưa chọn model thứhai hoặc ensemble. [Định nghĩa đầy đủ và cách kiểm chứng](FORECAST_STUDIO.md).
+Ridge raw/bias là hai cấu hình cùng model. Tương lai chỉ giữ thêm LSTM/XGBoost làm challenger nếu có lợi ích kiểm chứng ngoài mẫu; chưa chọn model thứhai hoặc ensemble. [Định nghĩa đầy đủ và cách kiểm chứng](ARCHITECTURE.md#forecast-studio).
+
+## Forecast Studio
+
+D1 là dữ liệu một ngày giao dịch (gộp sáng và chiều). h=1 là một quan sát kế tiếp; trên D1 tương ứng một phiên ngày, không phải nến H1 một giờ.
+
+| Lựa chọn trên UI | Ngày yêu cầu |
+| --- | --- |
+| Hôm nay | Ngày local hiện tại; cuối tuần dời sang weekday kế tiếp |
+| Ngày mai | Ngày local +1; cuối tuần dời sang weekday kế tiếp |
+| Tuần | 7 ngày lịch tính cả hôm nay; ngày cuối lấy weekday trong khung |
+| Tháng | Đến trước cùng ngày tháng sau; ngày cuối lấy weekday trong khung |
+
+Tính toàn bộ bước từ origin thực tế đến target, tối đa 23 weekday; quá giới hạn thì từ chối để cập nhật nguồn. Lịch chưa trừ ngày lễ HOSE. Model chỉ học h=1: bước sau tính lại Log_Return, lag1/2/5, return5/20 từ 21 Close cuối, gồm các Close dự báo. Không sinh OHLCV giả, không dùng nhãn tương lai, không fit lại.
+
+Vùng P10–P90: 512 đường residual circular block-bootstrap, block5, seed20261030. Raw Ridge dùng raw errors, Ridge+bias dùng corrected errors đã biết; calibration đóng băng. Band từng bước không đảm bảo coverage80% hoặc coverage cho cả đường. Zero Return giữ giá gốc, không mượn band của Ridge. Ước tính cùng ngày không được xem là forecast đã phát trước phiên.
+
+Chỉ một Ridge chính là đủ nếu model thứ hai chưa thêm giá trị. Raw/bias là hai cấu hình của cùng model. LSTM/XGBoost chỉ làm challenger nếu tốt hơn ổn định hoặc bổ sung lỗi trên dữ liệu phù hợp; ensemble chọn trọng số bằng validation, không sửa theo test.
+
+## Forward ledger
+
+Công cụ chạy thủ công, không nối tự động với nút dự báo UI. Giữ bundle cố định, dùng CSV Vietcap full-history đã đóng cửa và cùng basis adjusted. Lưu forecast trước khi biết target; không backdate hoặc ghi đè.
+
+```powershell
+$bundle = 'reports/recency_bias/20261030T022440928507Z/shadow_bundle.json'
+$ledger = 'reports/forward_shadow/forecasts.jsonl'
+$inputCsv = '.cache/forward/vietcap_full_history.csv'
+.\venv\Scripts\python.exe -m src.models.forward_ledger issue --bundle $bundle --input $inputCsv --ledger $ledger
+.\venv\Scripts\python.exe -m src.models.forward_ledger score --input $inputCsv --ledger $ledger
+.\venv\Scripts\python.exe -m src.models.forward_ledger verify --ledger $ledger
+```
+
+CSV trong ví dụ phải được chuẩn bị riêng; CLI không download. `issue` cùng ngày origin chặn trước16:00 giờ Việt Nam theo quy ước bảo thủ của project, không phải chứng nhận source final. `score` chỉ xử lý target có thật trước ngày đang chạy; chỉ `issued_local_date < actual_target_date` mới đủ điều kiện full-session. Dùng cả origin/target cùng snapshot mới khi nguồn back-adjust giá, giữ prediction return đã phát và adjustment ratio. Hash-chain không phải chứng nhận thời gian bên thứ ba; chỉ dùng một writer.
+
+Bundle shadow và calibration cố định đến khi chủ động rebuild. `python -m src.models.recency_bias` với config cũ chỉ tái lập nghiên cứu, không tự tải data tới hôm chạy. Ledger hiện có một forecast pending ngày30/10; nếu target cũng30/10 thì không đủ điều kiện full-session. Chưa có dữ liệu forward đủ để kết luận model tốt hơn.
+
+## Quy ước repo sau dọn
+
+Chỉ ba Markdown gốc là tài liệu current. `docs/assets/` chỉ giữ ảnh được dùng. Evidence nghiên cứu có protocol/hash, CSV/JSON, source/input ZIP và notebook outputs. Diễn giải chi tiết gốc ở `reports/training_history/research_notes.json`; `src.models.research_notes` đọc/ghi và kiểm tra hash, tương thích diagnostic hash của study cũ. Không tạo thêm REPORT/DECISION Markdown khi chạy report generator.
+
+Các artifact nguồn/model có manifest byte-hash vẫn giữ nguyên, không đổi kiến trúc/scaler/feature hoặc fit model trong lượt cleanup. Các report script và notebook nghiên cứu vẫn được giữ để tái lập; chúng không được import khi chạy API nhẹ. Deploy public, nguồn cập nhật, direct h=5/h=21 và auto-retrain là việc tương lai.
+
+## Phạm vi giao diện và notebook hiện hành
+
+Streamlit chỉ render bốn mục phân tích/dự báo: Tổng quan, Dự báo, Đối chứng, Hành trình model. Phương pháp và lộ trình chỉ nằm trong tài liệu gốc, không lặp thành trang UI. API data-quality vẫn giữ làm hợp đồng kiểm tra dữ liệu, không cần một tab riêng.
+
+Notebook01 cho EDA,02 cho training baseline/LSTM lịch sử,05 cho toàn bộ hành trình và các nhánh không được chọn,06 cho giá thực tế so forecast. Phần classifier/gap ở05 chỉ đọc kết quả đã lưu. Generator tập trung `training_journey_notebook.py` thay hai generator notebook riêng; train script mới đưa generator chung vào source snapshot. Snapshot cũ giữ nguyên nội dung/hashes.
