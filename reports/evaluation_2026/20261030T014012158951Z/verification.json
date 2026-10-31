@@ -1,0 +1,101 @@
+{
+  "immutable_model_input_source_archives_verified": true,
+  "metric_groups": 15,
+  "all_metric_fields_verified": true,
+  "prediction_groups_reloaded": 15,
+  "refits": 0,
+  "model_choices_fixed_before_2026_download": true,
+  "canonical_files_unchanged": true,
+  "checks": [
+    {
+      "model": "LSTM_serving",
+      "cohort": "common",
+      "n": 200,
+      "metrics_verified": true
+    },
+    {
+      "model": "XGBoost_serving",
+      "cohort": "common",
+      "n": 200,
+      "metrics_verified": true
+    },
+    {
+      "model": "Ridge_serving",
+      "cohort": "common",
+      "n": 200,
+      "metrics_verified": true
+    },
+    {
+      "model": "Ridge_research_new",
+      "cohort": "common",
+      "n": 200,
+      "metrics_verified": true
+    },
+    {
+      "model": "Ridge_research_new",
+      "cohort": "vci_full",
+      "n": 202,
+      "metrics_verified": true
+    },
+    {
+      "model": "Ridge_research_old",
+      "cohort": "common",
+      "n": 200,
+      "metrics_verified": true
+    },
+    {
+      "model": "Ridge_research_old",
+      "cohort": "vci_full",
+      "n": 202,
+      "metrics_verified": true
+    },
+    {
+      "model": "Zero-Return",
+      "cohort": "common",
+      "n": 200,
+      "metrics_verified": true
+    },
+    {
+      "model": "Zero-Return",
+      "cohort": "vci_full",
+      "n": 202,
+      "metrics_verified": true
+    },
+    {
+      "model": "TrainMean_serving",
+      "cohort": "common",
+      "n": 200,
+      "metrics_verified": true
+    },
+    {
+      "model": "TrainMean_serving",
+      "cohort": "vci_full",
+      "n": 202,
+      "metrics_verified": true
+    },
+    {
+      "model": "TrainMean_research",
+      "cohort": "common",
+      "n": 200,
+      "metrics_verified": true
+    },
+    {
+      "model": "TrainMean_research",
+      "cohort": "vci_full",
+      "n": 202,
+      "metrics_verified": true
+    },
+    {
+      "model": "TrainMean_same_window",
+      "cohort": "common",
+      "n": 200,
+      "metrics_verified": true
+    },
+    {
+      "model": "TrainMean_same_window",
+      "cohort": "vci_full",
+      "n": 202,
+      "metrics_verified": true
+    }
+  ]
+}

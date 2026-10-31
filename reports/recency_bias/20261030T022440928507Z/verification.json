@@ -1,0 +1,224 @@
+{
+  "verified_at_utc": "2026-10-30T02:24:48.954730+00:00",
+  "metric_groups": [
+    {
+      "strategy": "RollingMean60",
+      "cohort": "previous_common",
+      "n": 200,
+      "verified": true
+    },
+    {
+      "strategy": "RollingMean60",
+      "cohort": "vci_full",
+      "n": 202,
+      "verified": true
+    },
+    {
+      "strategy": "TrainMean_2025",
+      "cohort": "previous_common",
+      "n": 200,
+      "verified": true
+    },
+    {
+      "strategy": "TrainMean_2025",
+      "cohort": "vci_full",
+      "n": 202,
+      "verified": true
+    },
+    {
+      "strategy": "Zero-Return",
+      "cohort": "previous_common",
+      "n": 200,
+      "verified": true
+    },
+    {
+      "strategy": "Zero-Return",
+      "cohort": "vci_full",
+      "n": 202,
+      "verified": true
+    },
+    {
+      "strategy": "frozen_2023",
+      "cohort": "previous_common",
+      "n": 200,
+      "verified": true
+    },
+    {
+      "strategy": "frozen_2023",
+      "cohort": "vci_full",
+      "n": 202,
+      "verified": true
+    },
+    {
+      "strategy": "frozen_2023_bias60",
+      "cohort": "previous_common",
+      "n": 200,
+      "verified": true
+    },
+    {
+      "strategy": "frozen_2023_bias60",
+      "cohort": "vci_full",
+      "n": 202,
+      "verified": true
+    },
+    {
+      "strategy": "monthly_refit_native",
+      "cohort": "previous_common",
+      "n": 200,
+      "verified": true
+    },
+    {
+      "strategy": "monthly_refit_native",
+      "cohort": "vci_full",
+      "n": 202,
+      "verified": true
+    },
+    {
+      "strategy": "monthly_refit_native_bias60",
+      "cohort": "previous_common",
+      "n": 200,
+      "verified": true
+    },
+    {
+      "strategy": "monthly_refit_native_bias60",
+      "cohort": "vci_full",
+      "n": 202,
+      "verified": true
+    },
+    {
+      "strategy": "rebuilt_2023_same_rows",
+      "cohort": "previous_common",
+      "n": 200,
+      "verified": true
+    },
+    {
+      "strategy": "rebuilt_2023_same_rows",
+      "cohort": "vci_full",
+      "n": 202,
+      "verified": true
+    },
+    {
+      "strategy": "refit_2023_native",
+      "cohort": "previous_common",
+      "n": 200,
+      "verified": true
+    },
+    {
+      "strategy": "refit_2023_native",
+      "cohort": "vci_full",
+      "n": 202,
+      "verified": true
+    },
+    {
+      "strategy": "refit_2025_native",
+      "cohort": "previous_common",
+      "n": 200,
+      "verified": true
+    },
+    {
+      "strategy": "refit_2025_native",
+      "cohort": "vci_full",
+      "n": 202,
+      "verified": true
+    },
+    {
+      "strategy": "refit_2025_native_bias60",
+      "cohort": "previous_common",
+      "n": 200,
+      "verified": true
+    },
+    {
+      "strategy": "refit_2025_native_bias60",
+      "cohort": "vci_full",
+      "n": 202,
+      "verified": true
+    }
+  ],
+  "new_training_checks": [
+    {
+      "id": "rebuilt_2023_same_rows",
+      "train_n": 693,
+      "target_cutoff_verified": true,
+      "normal_equations_verified": true
+    },
+    {
+      "id": "refit_2023_native",
+      "train_n": 747,
+      "target_cutoff_verified": true,
+      "normal_equations_verified": true
+    },
+    {
+      "id": "refit_2025_native",
+      "train_n": 747,
+      "target_cutoff_verified": true,
+      "normal_equations_verified": true
+    },
+    {
+      "id": "monthly_2026-02",
+      "train_n": 751,
+      "target_cutoff_verified": true,
+      "normal_equations_verified": true
+    },
+    {
+      "id": "monthly_2026-03",
+      "train_n": 746,
+      "target_cutoff_verified": true,
+      "normal_equations_verified": true
+    },
+    {
+      "id": "monthly_2026-04",
+      "train_n": 745,
+      "target_cutoff_verified": true,
+      "normal_equations_verified": true
+    },
+    {
+      "id": "monthly_2026-05",
+      "train_n": 745,
+      "target_cutoff_verified": true,
+      "normal_equations_verified": true
+    },
+    {
+      "id": "monthly_2026-06",
+      "train_n": 745,
+      "target_cutoff_verified": true,
+      "normal_equations_verified": true
+    },
+    {
+      "id": "monthly_2026-07",
+      "train_n": 745,
+      "target_cutoff_verified": true,
+      "normal_equations_verified": true
+    },
+    {
+      "id": "monthly_2026-08",
+      "train_n": 747,
+      "target_cutoff_verified": true,
+      "normal_equations_verified": true
+    },
+    {
+      "id": "monthly_2026-09",
+      "train_n": 744,
+      "target_cutoff_verified": true,
+      "normal_equations_verified": true
+    },
+    {
+      "id": "monthly_2026-10",
+      "train_n": 745,
+      "target_cutoff_verified": true,
+      "normal_equations_verified": true
+    },
+    {
+      "id": "shadow_asof_2026-10-29",
+      "train_n": 746,
+      "target_cutoff_verified": true,
+      "normal_equations_verified": true
+    }
+  ],
+  "prediction_groups_reloaded": 5,
+  "calibration_groups_recomputed": 3,
+  "frozen_control_matches_previous_evaluation": true,
+  "source_and_artifact_hashes_verified": true,
+  "all_metric_fields_verified": true,
+  "canonical_files_unchanged": true,
+  "verification_refits": 0
+}

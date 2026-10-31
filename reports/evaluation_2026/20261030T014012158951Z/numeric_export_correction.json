@@ -1,0 +1,13 @@
+{
+  "corrected_at_utc": "2026-10-30T01:42:48.873964+00:00",
+  "reason": "LSTM np.exp(float32) price export differed from float64 metric arithmetic by at most ~0.011 adjusted VND.",
+  "method": "normalize derived prices and all scores from unchanged persisted return forecasts using float64",
+  "no_download_or_refit_or_model_selection": true,
+  "saved_return_and_reference_values_unchanged_before_reserialization": true,
+  "original_export_zip_sha256": "bfbdadd1b55f045f48b02c6d8c5e8d3cf3fa6de8ff675a3c2c6e42e228978ef7",
+  "script_sha256": "9e8946b66f1d3976ebbe7d88dcee4db9856848d994e32d2c95a4c76ac065740c",
+  "scoring_source_sha256": {
+    "src/models/evaluation_2026.py": "946e33c92c9fdcfbe88133eacca6f9f0b9a57850d745fb5c14d25b58598f8b0b",
+    "src/models/evaluation_2026_report.py": "67f86b8e781a7135f0f057dc4a562600bf44e6d413da6f6cf177e788a8035e8b"
+  }
+}

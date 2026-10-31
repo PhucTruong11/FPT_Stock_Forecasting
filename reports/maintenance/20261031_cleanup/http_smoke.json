@@ -1,0 +1,9 @@
+{
+  "model_version": "ridge6_20261029",
+  "date": "2026-10-31",
+  "source_as_of": "2026-10-29",
+  "forecast_steps": 2,
+  "method_version": "recursive-ridge6-v1",
+  "streamlit_status": 200,
+  "api_status": "ready"
+}

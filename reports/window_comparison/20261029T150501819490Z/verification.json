@@ -1,0 +1,8 @@
+{
+  "all_metric_fields_verified": true,
+  "metric_rows": 320,
+  "same_fixed_evaluation_cohort": true,
+  "training_only_baselines": true,
+  "protected_files_unchanged": true,
+  "protocol_input_and_source_hashes_verified": true
+}

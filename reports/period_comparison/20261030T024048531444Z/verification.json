@@ -1,0 +1,9 @@
+{
+  "same_pairs_per_strategy": 104,
+  "strategies": 17,
+  "monthly_groups": 85,
+  "source_close_truth_anchors_verified": true,
+  "monthly_to_pooled_reconciled": true,
+  "refits": 0,
+  "canonical_unchanged": true
+}

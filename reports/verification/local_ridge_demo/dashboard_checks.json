@@ -1,0 +1,7 @@
+{
+  "no_exceptions": true,
+  "zero_return_selector_updates_cards": true,
+  "jun_oct_cohort_has_lstm": true,
+  "october_same_pairs_per_model": 21,
+  "all_tabs_executed": true
+}

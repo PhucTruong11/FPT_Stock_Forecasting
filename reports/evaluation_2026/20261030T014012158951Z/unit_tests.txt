@@ -1,0 +1,91 @@
+D:\Dev\Subject_Uni\Machine_Learning\Stock_Prediction_Project\venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+test_health_and_model_roles (test_api.ApiTests.test_health_and_model_roles) ... ok
+test_history_limit_is_enforced (test_api.ApiTests.test_history_limit_is_enforced) ... ok
+test_na_direction_metric_is_json_null (test_api.ApiTests.test_na_direction_metric_is_json_null) ... ok
+test_openapi_exposes_prediction_endpoint (test_api.ApiTests.test_openapi_exposes_prediction_endpoint) ... ok
+test_other_ticker_and_price_basis_are_rejected (test_api.ApiTests.test_other_ticker_and_price_basis_are_rejected) ... ok
+test_sample_predict_returns_json (test_api.ApiTests.test_sample_predict_returns_json) ... ok
+test_unknown_model_is_422 (test_api.ApiTests.test_unknown_model_is_422) ... ok
+test_constant_prices_and_volume_stay_finite (test_data_pipeline.FeatureTests.test_constant_prices_and_volume_stay_finite) ... ok
+test_features_do_not_change_when_future_is_modified (test_data_pipeline.FeatureTests.test_features_do_not_change_when_future_is_modified) ... ok
+test_invalid_candle_is_quarantined_without_bridging_target (test_data_pipeline.FeatureTests.test_invalid_candle_is_quarantined_without_bridging_target) ... ok
+test_model_allowlist_excludes_context_and_targets (test_data_pipeline.FeatureTests.test_model_allowlist_excludes_context_and_targets) ... ok
+test_reject_too_short_history (test_data_pipeline.FeatureTests.test_reject_too_short_history) ... ok
+test_target_uses_next_eligible_close_and_keeps_latest_inference_row (test_data_pipeline.FeatureTests.test_target_uses_next_eligible_close_and_keeps_latest_inference_row) ... ok
+test_pipeline_manifest_hashes_and_tampering_rejection (test_data_pipeline.SnapshotTests.test_pipeline_manifest_hashes_and_tampering_rejection) ... ok
+test_replacement_preserves_previous_snapshot (test_data_pipeline.SnapshotTests.test_replacement_preserves_previous_snapshot) ... ok
+test_source_failure_preserves_existing_raw (test_data_pipeline.SnapshotTests.test_source_failure_preserves_existing_raw) ... ok
+test_preserve_untraded_missing_candle_without_imputation (test_data_pipeline.ValidationTests.test_preserve_untraded_missing_candle_without_imputation) ... ok
+test_reject_conflicting_duplicate_dates (test_data_pipeline.ValidationTests.test_reject_conflicting_duplicate_dates) ... ok
+test_reject_invalid_candle_negative_volume_and_multiple_tickers (test_data_pipeline.ValidationTests.test_reject_invalid_candle_negative_volume_and_multiple_tickers) ... ok
+test_reject_missing_price_on_traded_row (test_data_pipeline.ValidationTests.test_reject_missing_price_on_traded_row) ... ok
+test_sort_deduplicate_and_yfinance_multiindex (test_data_pipeline.ValidationTests.test_sort_deduplicate_and_yfinance_multiindex) ... ok
+test_bootstrap_is_reproducible (test_evaluation_2026.Frozen2026Tests.test_bootstrap_is_reproducible) ... ok
+test_bootstrap_zero_matches_zero_benchmark_exactly (test_evaluation_2026.Frozen2026Tests.test_bootstrap_zero_matches_zero_benchmark_exactly) ... ok
+test_common_cohort_matches_both_origin_and_target_and_cutoff (test_evaluation_2026.Frozen2026Tests.test_common_cohort_matches_both_origin_and_target_and_cutoff) ... ok
+test_price_scores_share_reference_anchor (test_evaluation_2026.Frozen2026Tests.test_price_scores_share_reference_anchor) ... ok
+test_psi_identical_distribution_is_zero (test_evaluation_2026.Frozen2026Tests.test_psi_identical_distribution_is_zero) ... ok
+test_historical_origin_before_configuration_lock_is_rejected (test_inference_contract.InferenceContractTests.test_historical_origin_before_configuration_lock_is_rejected) ... ok
+test_nonfinite_price_is_rejected_before_json (test_inference_contract.InferenceContractTests.test_nonfinite_price_is_rejected_before_json) ... ok
+test_unknown_model_never_falls_back_to_an_alias (test_inference_contract.InferenceContractTests.test_unknown_model_never_falls_back_to_an_alias) ... ok
+test_zero_return_keeps_price_without_inventing_target_date (test_inference_contract.InferenceContractTests.test_zero_return_keeps_price_without_inventing_target_date) ... ok
+test_abstentions_do_not_inflate_direction_score (test_modeling.ModelingTests.test_abstentions_do_not_inflate_direction_score) ... ok
+test_incorrect_prediction_has_negative_skill (test_modeling.ModelingTests.test_incorrect_prediction_has_negative_skill) ... ok
+test_labels_crossing_partition_boundary_are_excluded (test_modeling.ModelingTests.test_labels_crossing_partition_boundary_are_excluded) ... ok
+test_native_xgboost_artifact_reloads_with_identical_predictions (test_modeling.ModelingTests.test_native_xgboost_artifact_reloads_with_identical_predictions) ... ok
+test_nonfinite_predictions_are_rejected (test_modeling.ModelingTests.test_nonfinite_predictions_are_rejected) ... ok
+test_sequence_includes_origin_and_retains_history_across_boundary (test_modeling.ModelingTests.test_sequence_includes_origin_and_retains_history_across_boundary) ... ok
+test_sequence_never_wraps_short_context (test_modeling.ModelingTests.test_sequence_never_wraps_short_context) ... ok
+test_zero_return_has_no_directional_accuracy (test_modeling.ModelingTests.test_zero_return_has_no_directional_accuracy) ... ok
+test_alpha_only_cannot_change_previous_window (test_ridge_refinement.RidgeRefinementTests.test_alpha_only_cannot_change_previous_window) ... ok
+test_evaluation_winner_cannot_change_validation_selection (test_ridge_refinement.RidgeRefinementTests.test_evaluation_winner_cannot_change_validation_selection) ... ok
+test_future_extremes_do_not_enter_training_thresholds (test_ridge_refinement.RidgeRefinementTests.test_future_extremes_do_not_enter_training_thresholds) ... ok
+test_prediction_export_preserves_origin_target_and_requires_matching_shape (test_ridge_refinement.RidgeRefinementTests.test_prediction_export_preserves_origin_target_and_requires_matching_shape) ... ok
+test_threshold_and_sma_band_boundaries (test_ridge_refinement.RidgeRefinementTests.test_threshold_and_sma_band_boundaries) ... ok
+test_tie_prefers_alpha10_then_declared_window (test_ridge_refinement.RidgeRefinementTests.test_tie_prefers_alpha10_then_declared_window) ... ok
+test_labels_crossing_any_fold_boundary_are_purged (test_robustness.RobustnessTests.test_labels_crossing_any_fold_boundary_are_purged) ... ok
+test_protocol_cannot_enable_automatic_promotion (test_robustness.RobustnessTests.test_protocol_cannot_enable_automatic_promotion) ... ok
+test_reused_2025_period_cannot_enter_research_folds (test_robustness.RobustnessTests.test_reused_2025_period_cannot_enter_research_folds) ... ok
+test_single_direction_has_balanced_accuracy_fifty (test_robustness.RobustnessTests.test_single_direction_has_balanced_accuracy_fifty) ... ok
+test_target_cannot_be_added_to_feature_group (test_robustness.RobustnessTests.test_target_cannot_be_added_to_feature_group) ... ok
+test_zero_return_does_not_invent_directional_accuracy (test_robustness.RobustnessTests.test_zero_return_does_not_invent_directional_accuracy) ... ok
+test_corrupt_archive_is_rejected (test_snapshot.SnapshotTests.test_corrupt_archive_is_rejected) ... ok
+test_existing_different_data_is_not_overwritten (test_snapshot.SnapshotTests.test_existing_different_data_is_not_overwritten) ... ok
+test_restore_is_exact_and_idempotent (test_snapshot.SnapshotTests.test_restore_is_exact_and_idempotent) ... ok
+test_constant_adjustment_factor_cancels_in_returns (test_source_audit.SourceAuditTests.test_constant_adjustment_factor_cancels_in_returns) ... ok
+test_duplicate_key_is_not_a_many_to_many_join (test_source_audit.SourceAuditTests.test_duplicate_key_is_not_a_many_to_many_join) ... ok
+test_gap_invalidates_return_at_gap_and_next_date (test_source_audit.SourceAuditTests.test_gap_invalidates_return_at_gap_and_next_date) ... ok
+test_kbs_seven_am_daily_label_and_reverse_order (test_source_audit.SourceAuditTests.test_kbs_seven_am_daily_label_and_reverse_order) ... ok
+test_missing_values_never_count_as_price_agreement (test_source_audit.SourceAuditTests.test_missing_values_never_count_as_price_agreement) ... ok
+test_no_automatic_thousand_vnd_rescaling (test_source_audit.SourceAuditTests.test_no_automatic_thousand_vnd_rescaling) ... ok
+test_vci_rejects_symbol_array_length_and_duplicate_date (test_source_audit.SourceAuditTests.test_vci_rejects_symbol_array_length_and_duplicate_date) ... ok
+test_vci_string_epoch_and_vnd_units (test_source_audit.SourceAuditTests.test_vci_string_epoch_and_vnd_units) ... ok
+test_zero_volume_is_not_a_verified_session (test_source_audit.SourceAuditTests.test_zero_volume_is_not_a_verified_session) ... ok
+test_archived_features_do_not_need_label_columns (test_source_comparison.SourceComparisonTests.test_archived_features_do_not_need_label_columns) ... ok
+test_boundary_labels_are_purged_from_each_partition (test_source_comparison.SourceComparisonTests.test_boundary_labels_are_purged_from_each_partition) ... ok
+test_context_requirement_applies_to_both_sources (test_source_comparison.SourceComparisonTests.test_context_requirement_applies_to_both_sources) ... ok
+test_context_union_never_adds_rows_after_origin (test_source_comparison.SourceComparisonTests.test_context_union_never_adds_rows_after_origin) ... ok
+test_duplicate_dates_rejected (test_source_comparison.SourceComparisonTests.test_duplicate_dates_rejected) ... ok
+test_native_train_labels_and_fixed_reference_remain_separate (test_source_comparison.SourceComparisonTests.test_native_train_labels_and_fixed_reference_remain_separate) ... ok
+test_protocol_refuses_promotion_and_new_2026_evaluation (test_source_comparison.SourceComparisonTests.test_protocol_refuses_promotion_and_new_2026_evaluation) ... ok
+test_same_origins_but_different_target_dates_are_not_compared (test_source_comparison.SourceComparisonTests.test_same_origins_but_different_target_dates_are_not_compared) ... ok
+test_ties_prefer_predeclared_expanding_control (test_window_comparison.WindowComparisonTests.test_ties_prefer_predeclared_expanding_control) ... ok
+test_window_changes_only_training_and_purges_boundary (test_window_comparison.WindowComparisonTests.test_window_changes_only_training_and_purges_boundary) ... ok
+test_window_is_selected_by_validation_even_when_evaluation_is_worse (test_window_comparison.WindowComparisonTests.test_window_is_selected_by_validation_even_when_evaluation_is_worse) ... ok
+
+----------------------------------------------------------------------
+Ran 73 tests in 0.677s
+
+OK
+Downloading FPT.VN [2020-01-01, 2020-07-01) attempt 1/1
+Saved 120 raw observations -> D:\Dev\Subject_Uni\Machine_Learning\Stock_Prediction_Project\.cache\pipeline-tests\tmpvmsqaado\raw\FPT.VN_raw.csv
+Zero-volume observations retained in raw: 0
+Invalid source candles retained for quarantine: 0
+Raw: 120 | excluded zero volume: 0
+Invalid candles excluded: 0
+Eligible: 120 | warm-up: 49
+Features: 71 rows x 16 inputs -> D:\Dev\Subject_Uni\Machine_Learning\Stock_Prediction_Project\.cache\pipeline-tests\tmpvmsqaado\interim\FPT.VN_features.csv
+Labeled: 70 -> D:\Dev\Subject_Uni\Machine_Learning\Stock_Prediction_Project\.cache\pipeline-tests\tmpvmsqaado\processed\FPT.VN_supervised.csv
+Previous models/scalers are incompatible with schema v2; retrain before inference.
+Downloading FPT.VN [2018-01-01, 2026-01-01) attempt 1/1

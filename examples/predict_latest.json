@@ -1,5 +1,5 @@
 {
   "ticker": "FPT.VN",
-  "model": "LSTM",
+  "model": "Ridge+bias60",
   "price_basis": "provider_adjusted_ohlc"
 }

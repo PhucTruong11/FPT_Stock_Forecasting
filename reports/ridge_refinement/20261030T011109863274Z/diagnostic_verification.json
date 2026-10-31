@@ -1,0 +1,7 @@
+{
+  "fixed_previous_validation_selection_verified": true,
+  "thresholds_recomputed_from_training_only": true,
+  "no_seed_duplication_in_loss_shares": true,
+  "source_forecast_rows": 9770,
+  "all_loss_shares_sum_to_100": true
+}

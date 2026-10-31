@@ -1,0 +1,10 @@
+{
+  "postfit_presentation_refresh": true,
+  "source_notebook": "notebooks/05_training_journey_fpt.ipynb",
+  "notebook_sha256": "15991a2cfaf0feabe426bda554003a713c9fca1df0255d40fa12eb33f35bc366",
+  "exported_cells": {
+    "error_regimes.png": "10_error_regimes",
+    "validation_grid.png": "12_ridge_validation_grid"
+  },
+  "no_metrics_or_selection_changed": true
+}

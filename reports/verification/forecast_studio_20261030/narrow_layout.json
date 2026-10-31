@@ -1,0 +1,21 @@
+{
+  "metrics": [
+    {
+      "content": 145,
+      "text": "10",
+      "width": 145
+    },
+    {
+      "content": 145,
+      "text": "0",
+      "width": 145
+    },
+    {
+      "content": 145,
+      "text": "FPT",
+      "width": 145
+    }
+  ],
+  "rootOverflow": false,
+  "width": 600
+}

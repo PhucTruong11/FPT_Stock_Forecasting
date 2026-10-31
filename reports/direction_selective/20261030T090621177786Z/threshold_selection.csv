@@ -1,0 +1,11 @@
+fold,model,margin,lower_threshold,upper_threshold,reason,validation_n,calibration_target_end,validation_target_end
+eval_2022,Logistic,0.0,0.5,0.5,validation_balanced_accuracy_with_coverage_constraints,65,2021-09-30,2021-12-31
+eval_2022,XGBoost,0.025,0.475,0.525,validation_balanced_accuracy_with_coverage_constraints,65,2021-09-30,2021-12-31
+eval_2023,Logistic,0.0,0.5,0.5,validation_balanced_accuracy_with_coverage_constraints,64,2022-09-30,2022-12-30
+eval_2023,XGBoost,0.0,0.5,0.5,validation_balanced_accuracy_with_coverage_constraints,64,2022-09-30,2022-12-30
+eval_2024,Logistic,0.0,0.5,0.5,validation_balanced_accuracy_with_coverage_constraints,64,2023-09-29,2023-12-29
+eval_2024,XGBoost,0.0,0.5,0.5,validation_balanced_accuracy_with_coverage_constraints,64,2023-09-29,2023-12-29
+eval_2025,Logistic,0.0,0.5,0.5,validation_balanced_accuracy_with_coverage_constraints,65,2024-09-30,2024-12-31
+eval_2025,XGBoost,0.0,0.5,0.5,validation_balanced_accuracy_with_coverage_constraints,65,2024-09-30,2024-12-31
+eval_2026,Logistic,0.0,0.5,0.5,validation_balanced_accuracy_with_coverage_constraints,65,2025-09-30,2025-12-31
+eval_2026,XGBoost,0.0,0.5,0.5,validation_balanced_accuracy_with_coverage_constraints,65,2025-09-30,2025-12-31

@@ -1,0 +1,12 @@
+{
+  "notebook": "notebooks/05_training_journey_fpt.ipynb",
+  "sha256": "085680c77d2b9dc0ca01a5a4bf017d26b156248b1bb11563e66f633b2cbac587",
+  "nbformat_valid": true,
+  "code_cells_executed": 10,
+  "saved_figures": 8,
+  "error_outputs": 0,
+  "all_eight_figures_visually_inspected": true,
+  "git_HEAD_unchanged": "2cc04f2dfc4643d3de22a6b04b52e25a4aecb922",
+  "no_staged_changes": true,
+  "canonical_data_and_models_unchanged": true
+}

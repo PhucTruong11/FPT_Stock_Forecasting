@@ -1,0 +1,7 @@
+{
+  "study_id": "20261030T010848752516Z",
+  "status": "failed_before_completed_comparison",
+  "partial_fit_count": 1,
+  "conditions_completed": 0,
+  "reason": "NameError TARGET_DATE_COLUMN at first forecast export; import fixed; same grid retained; no selected outcome produced"
+}

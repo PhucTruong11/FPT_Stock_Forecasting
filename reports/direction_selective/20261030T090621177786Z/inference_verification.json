@@ -1,0 +1,16 @@
+{
+  "checks": [
+    {
+      "model": "Logistic",
+      "rows": 202,
+      "probability_direction_status_verified": true
+    },
+    {
+      "model": "XGBoost",
+      "rows": 202,
+      "probability_direction_status_verified": true
+    }
+  ],
+  "refits": 0,
+  "scope": "offline inference parity, not live forward forecast"
+}

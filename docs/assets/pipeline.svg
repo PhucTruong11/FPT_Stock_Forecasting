@@ -1,74 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="740" viewBox="0 0 1280 740" role="img" aria-labelledby="title desc">
-  <title id="title">FPT data and application pipeline</title>
-  <desc id="desc">Working v2 project: exact FPT snapshot, quality checks, 16 causal features, explicit labels, versioned models, FastAPI JSON inference and a Streamlit HTTP application.</desc>
-  <defs>
-    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0b1220"/><stop offset="1" stop-color="#142238"/></linearGradient>
-    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 8 4 0 8" fill="none" stroke="#5eead4" stroke-width="1.5"/></marker>
-    <marker id="future" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 8 4 0 8" fill="none" stroke="#94a3b8" stroke-width="1.5"/></marker>
-    <style>
-      text{font-family:'Segoe UI',Arial,sans-serif}.title{fill:#f8fafc;font-size:32px;font-weight:700}.sub{fill:#a9bbd0;font-size:16px}.card{fill:#14253b;stroke:#31526b;stroke-width:1.3}.label{fill:#f1f5f9;font-size:20px;font-weight:650}.body{fill:#b7c9dd;font-size:15px}.meta{fill:#5eead4;font-size:13px;font-weight:700;letter-spacing:1px}.code{fill:#a9bbd0;font-size:13px;font-family:Consolas,monospace}
-    </style>
-  </defs>
-  <rect width="1280" height="740" rx="24" fill="url(#bg)"/>
-  <text x="36" y="55" class="title">FPT · From market data to an ML application</text>
-  <text x="36" y="87" class="sub">One ticker. One forecast horizon. Explicit data quality and model status.</text>
-  <rect x="36" y="118" width="142" height="25" rx="12" fill="#123f3e"/>
-  <text x="51" y="135" class="meta">DATA · WORKING</text>
-  <g class="card">
-    <rect x="32" y="166" width="224" height="192" rx="16"/>
-    <rect x="280" y="166" width="224" height="192" rx="16"/>
-    <rect x="528" y="166" width="224" height="192" rx="16"/>
-    <rect x="776" y="166" width="224" height="192" rx="16"/>
-    <rect x="1024" y="166" width="224" height="192" rx="16"/>
-  </g>
-  <g class="meta">
-    <text x="52" y="196">01 / ACQUIRE</text><text x="300" y="196">02 / PRESERVE</text>
-    <text x="548" y="196">03 / VALIDATE</text><text x="796" y="196">04 / TRANSFORM</text>
-    <text x="1044" y="196">05 / LABEL</text>
-  </g>
-  <g class="label">
-    <text x="52" y="231">Yahoo Finance</text><text x="300" y="231">Raw snapshot</text>
-    <text x="548" y="231">Quality checks</text><text x="796" y="231">Causal features</text>
-    <text x="1044" y="231">Supervised data</text>
-  </g>
-  <g class="body">
-    <text x="52" y="265">FPT.VN · daily OHLCV</text><text x="52" y="290">2018–2025 · adjusted</text>
-    <text x="52" y="329" class="code">yfinance / retries</text>
-    <text x="300" y="265">2,088 source rows</text><text x="300" y="290">Hash + source metadata</text>
-    <text x="300" y="329" class="code">No price imputation</text>
-    <text x="548" y="265">148 rows quarantined</text><text x="548" y="290">Zero volume / bad OHLC</text>
-    <text x="548" y="329" class="code">Calendar unverified</text>
-    <text x="796" y="265">1,891 rows · 16 inputs</text><text x="796" y="290">49-row warm-up</text>
-    <text x="796" y="329" class="code">No scaler fit here</text>
-    <text x="1044" y="265">1,889 labeled samples</text><text x="1044" y="290">Origin + target date</text>
-    <text x="1044" y="329" class="code">Keep latest for inference</text>
-  </g>
-  <g fill="none" stroke="#5eead4" stroke-width="2" marker-end="url(#arrow)">
-    <path d="M257 259H276"/><path d="M505 259H524"/><path d="M753 259H772"/><path d="M1001 259H1020"/>
-  </g>
-  <path d="M1136 359V392H212V458" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="7 6" marker-end="url(#future)"/>
-  <rect x="450" y="380" width="382" height="25" rx="10" fill="#142238"/>
-  <text x="469" y="398" class="sub" font-size="14">TRAIN · VALIDATE · HISTORICAL TEST</text>
-  <rect x="32" y="464" width="360" height="180" rx="16" fill="#29271f" stroke="#a7803c"/>
-  <rect x="440" y="464" width="360" height="180" rx="16" fill="#14253b" stroke="#31526b"/>
-  <rect x="848" y="464" width="400" height="180" rx="16" fill="#14253b" stroke="#31526b"/>
-  <text x="54" y="496" class="meta" style="fill:#fbbf24">MODEL · TRAINED ON CPU</text>
-  <text x="462" y="496" class="meta">BACKEND · WORKING</text>
-  <text x="870" y="496" class="meta">APPLICATION · WORKING</text>
-  <text x="54" y="534" class="label">Train → evaluate → artifact</text>
-  <text x="462" y="534" class="label">FastAPI · JSON inference</text>
-  <text x="870" y="534" class="label">Streamlit · analysis &amp; forecast</text>
-  <text x="54" y="568" class="body">Baselines · XGBoost · LSTM</text>
-  <text x="54" y="594" class="body">1,087 train / 493 val / 248 test</text>
-  <text x="462" y="568" class="body">Load a versioned model once</text>
-  <text x="462" y="594" class="body">Validate sample → return prediction</text>
-  <text x="870" y="568" class="body">Call the backend over HTTP</text>
-  <text x="870" y="594" class="body">Show as-of date and test performance</text>
-  <g fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#future)">
-    <path d="M394 554H434"/><path d="M802 554H842"/>
-  </g>
-  <circle cx="43" cy="695" r="5" fill="#5eead4"/><text x="57" y="700" class="body">Working data pipeline</text>
-  <circle cx="320" cy="695" r="5" fill="#fbbf24"/><text x="334" y="700" class="body">Versioned models and scalers</text>
-  <circle cx="650" cy="695" r="5" fill="#5eead4"/><text x="664" y="700" class="body">HTTP application integration</text>
-  <text x="1017" y="700" class="code">Snapshot · 2026-10-25</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="260" viewBox="0 0 1200 260" role="img" aria-labelledby="title desc">
+<title id="title">FPT research and local inference pipeline</title>
+<desc id="desc">Versioned FPT data is validated, used for causal features and temporal evaluation. A selected Ridge bundle feeds FastAPI and Streamlit. Historical evidence stays separate.</desc>
+<rect width="1200" height="260" rx="20" fill="#0f172a"/>
+<g font-family="Arial,sans-serif" fill="#e2e8f0"><text x="35" y="40" font-size="23" font-weight="bold">FPT · Research → local prediction</text><text x="35" y="68" font-size="14" fill="#94a3b8">One ticker · supervised regression · next eligible observation · no automatic retraining</text></g>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#94a3b8"/></marker></defs>
+<g fill="#1e293b" stroke="#475569"><rect x="30" y="105" width="175" height="83" rx="12"/><rect x="230" y="105" width="175" height="83" rx="12"/><rect x="430" y="105" width="175" height="83" rx="12"/><rect x="630" y="105" width="175" height="83" rx="12"/><rect x="830" y="105" width="145" height="83" rx="12"/><rect x="1000" y="105" width="170" height="83" rx="12"/></g>
+<g stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"><path d="M205 146 H224"/><path d="M405 146 H424"/><path d="M605 146 H624"/><path d="M805 146 H824"/><path d="M975 146 H994"/></g>
+<g fill="#f8fafc" font-family="Arial,sans-serif" font-size="17" text-anchor="middle"><text x="117" y="138">FPT OHLCV</text><text x="317" y="138">Validate / features</text><text x="517" y="138">Temporal research</text><text x="717" y="138">Ridge6 bundle</text><text x="902" y="138">FastAPI</text><text x="1085" y="138">Streamlit</text></g>
+<g fill="#94a3b8" font-family="Arial,sans-serif" font-size="12" text-anchor="middle"><text x="117" y="164">Vietcap snapshot + hash</text><text x="317" y="164">No future information</text><text x="517" y="164">Baselines + evidence</text><text x="717" y="164">Scaler + fixed bias</text><text x="902" y="164">JSON · local</text><text x="1085" y="164">Forecast / backtest</text></g>
+<text x="35" y="228" font-family="Arial,sans-serif" font-size="14" fill="#5eead4">Historical scores ≠ performance of the newly updated bundle. Public deployment remains a future plan.</text>
 </svg>

@@ -1,0 +1,194 @@
+{
+  "verified_at_utc": "2026-10-30T09:06:27.820768+00:00",
+  "artifact_checks": [
+    {
+      "fold": "eval_2022",
+      "name": "Ridge_shared",
+      "train_n": 701,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2022",
+      "name": "Ridge_recent",
+      "train_n": 751,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2022",
+      "name": "Logistic",
+      "train_n": 701,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2022",
+      "name": "Logistic_sigmoid",
+      "train_n": 60,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2022",
+      "name": "XGBoost",
+      "train_n": 701,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2022",
+      "name": "XGBoost_sigmoid",
+      "train_n": 60,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2023",
+      "name": "Ridge_shared",
+      "train_n": 708,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2023",
+      "name": "Ridge_recent",
+      "train_n": 750,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2023",
+      "name": "Logistic",
+      "train_n": 708,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2023",
+      "name": "Logistic_sigmoid",
+      "train_n": 58,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2023",
+      "name": "XGBoost",
+      "train_n": 708,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2023",
+      "name": "XGBoost_sigmoid",
+      "train_n": 58,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2024",
+      "name": "Ridge_shared",
+      "train_n": 693,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2024",
+      "name": "Ridge_recent",
+      "train_n": 747,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2024",
+      "name": "Logistic",
+      "train_n": 693,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2024",
+      "name": "Logistic_sigmoid",
+      "train_n": 59,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2024",
+      "name": "XGBoost",
+      "train_n": 693,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2024",
+      "name": "XGBoost_sigmoid",
+      "train_n": 59,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2025",
+      "name": "Ridge_shared",
+      "train_n": 697,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2025",
+      "name": "Ridge_recent",
+      "train_n": 747,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2025",
+      "name": "Logistic",
+      "train_n": 697,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2025",
+      "name": "Logistic_sigmoid",
+      "train_n": 63,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2025",
+      "name": "XGBoost",
+      "train_n": 697,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2025",
+      "name": "XGBoost_sigmoid",
+      "train_n": 63,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2026",
+      "name": "Ridge_shared",
+      "train_n": 702,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2026",
+      "name": "Ridge_recent",
+      "train_n": 747,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2026",
+      "name": "Logistic",
+      "train_n": 702,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2026",
+      "name": "Logistic_sigmoid",
+      "train_n": 62,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2026",
+      "name": "XGBoost",
+      "train_n": 702,
+      "dates_cutoff_scaler_hash_verified": true
+    },
+    {
+      "fold": "eval_2026",
+      "name": "XGBoost_sigmoid",
+      "train_n": 62,
+      "dates_cutoff_scaler_hash_verified": true
+    }
+  ],
+  "artifacts_reloaded": 30,
+  "metric_groups": 55,
+  "threshold_choices_recomputed": 10,
+  "validation_curve_groups": 70,
+  "matched_control_groups": 60,
+  "frozen_2026_ridge_control_parity_n": 202,
+  "source_archives_and_hashes_verified": true,
+  "canonical_unchanged": true,
+  "verification_refits": 0
+}

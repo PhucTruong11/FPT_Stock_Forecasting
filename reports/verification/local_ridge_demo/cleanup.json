@@ -1,0 +1,74 @@
+[
+  {
+    "path": ".cache\\pip",
+    "files": 105,
+    "bytes": 57168267,
+    "reason": "rebuildable cache, no model/data/evidence"
+  },
+  {
+    "path": ".cache\\notebook-preview",
+    "files": 5,
+    "bytes": 1391779,
+    "reason": "rebuildable cache, no model/data/evidence"
+  },
+  {
+    "path": ".cache\\pipeline-tests",
+    "files": 0,
+    "bytes": 0,
+    "reason": "rebuildable cache, no model/data/evidence"
+  },
+  {
+    "path": ".cache\\snapshot-tests",
+    "files": 0,
+    "bytes": 0,
+    "reason": "rebuildable cache, no model/data/evidence"
+  },
+  {
+    "path": ".cache\\source-comparison-tests",
+    "files": 0,
+    "bytes": 0,
+    "reason": "rebuildable cache, no model/data/evidence"
+  },
+  {
+    "path": ".cache\\jupyter-runtime",
+    "files": 0,
+    "bytes": 0,
+    "reason": "rebuildable cache, no model/data/evidence"
+  },
+  {
+    "path": "src\\__pycache__",
+    "files": 1,
+    "bytes": 173,
+    "reason": "rebuildable cache, no model/data/evidence"
+  },
+  {
+    "path": "src\\api\\__pycache__",
+    "files": 1,
+    "bytes": 8066,
+    "reason": "rebuildable cache, no model/data/evidence"
+  },
+  {
+    "path": "src\\data\\__pycache__",
+    "files": 4,
+    "bytes": 57806,
+    "reason": "rebuildable cache, no model/data/evidence"
+  },
+  {
+    "path": "src\\features\\__pycache__",
+    "files": 2,
+    "bytes": 16851,
+    "reason": "rebuildable cache, no model/data/evidence"
+  },
+  {
+    "path": "src\\models\\__pycache__",
+    "files": 25,
+    "bytes": 610040,
+    "reason": "rebuildable cache, no model/data/evidence"
+  },
+  {
+    "path": "tests\\__pycache__",
+    "files": 15,
+    "bytes": 125311,
+    "reason": "rebuildable cache, no model/data/evidence"
+  }
+]

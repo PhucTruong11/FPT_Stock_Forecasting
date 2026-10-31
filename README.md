@@ -1,230 +1,158 @@
 # FPT Stock Forecasting
 
-**Đồ án Máy học · Phân tích FPT và dự báo một quan sát kế tiếp**
+**Phân tích và dự báo lợi suất, giá đóng cửa quan sát kế tiếp của cổ phiếu FPT bằng học máy.** Đồ án gồm notebook nghiên cứu, REST API FastAPI và dashboard Streamlit gọi API.
 
-Một pipeline v2 dùng chung trên local và Google Colab: **snapshot có hash → EDA/features → training/benchmark → artifact theo manifest → FastAPI → Streamlit**.
+Hiện chốt **Ridge với 6 feature lợi suất, alpha 100, cửa sổ train 3 năm** làm hướng chính. Demo local mặc định `Ridge+bias60`; giữ Ridge chưa hiệu chỉnh và Zero Return để đối chứng. LSTM được giữ trong thực nghiệm lịch sử. Chưa chứng minh lợi thế dự báo tương lai ổn định.
 
-![Flow dự án](docs/assets/pipeline.svg)
+![Luồng dự án](docs/assets/pipeline.svg)
 
-## 1. Phạm vi và kết quả
+## Chạy demo trên máy
 
-- Chỉ dự báo **FPT.VN**, dữ liệu điều chỉnh giai đoạn 2018–2025.
-- Mục tiêu: `log(Close[t+1] / Close[t])`; quy đổi giá bằng `Close[t] * exp(predicted_return)`.
-- LSTM lookback 30 là model ML dùng demo. **Train Mean** có RMSE validation thấp nhất toàn bộ nhóm; hai vai trò được hiển thị riêng.
-- Không dùng Hit Rate lịch sử như xác suất đúng của từng dự báo. LSTM chỉ cải thiện RMSE test nhẹ và có MAE cao hơn zero-return.
-- Năm 2025 đã được xem trong các lần thử, nên ghi là test lịch sử sử dụng lại; chưa chứng minh lợi thế tổng quát hay lợi nhuận giao dịch.
+Mở hai terminal tại thư mục repo, dùng môi trường đã cài dependencies:
 
-[Kết quả và giới hạn](docs/TRAINING_RESULTS.md)
+```powershell
+# Terminal 1: API, chỉ lắng nghe trên máy local
+.\venv\Scripts\python.exe -m uvicorn src.api.main:app --host 127.0.0.1 --port 8000
+```
 
-**Audit nguồn 29/10/2026:** Yahoo có 56 ngày volume=0 nhưng Vietcap và KBS cùng ghi nhận giao dịch; riêng 2025 có nhiều bất đồng giá theo ngày. [Báo cáo và bằng chứng](reports/data_audits/20261029T135735663765Z/REPORT.md) đề xuất Vietcap cho snapshot nghiên cứu v3. Đã train đối chứng nghiên cứu ở mục 13; snapshot/model phục vụ v2 hiện vẫn giữ nguyên, chưa có bằng chứng accuracy ngoài mẫu tăng.
+```powershell
+# Terminal 2: dashboard gọi API
+.\venv\Scripts\python.exe -m streamlit run src/app/streamlit_app.py --server.address 127.0.0.1 --server.port 8501
+```
 
-## 2. Chạy trên máy local
+- Dashboard: [http://127.0.0.1:8501](http://127.0.0.1:8501)
+- Swagger / thử JSON: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+- Dữ liệu bundle local dừng ở **29/10/2026**, nguồn Vietcap. Không tự download khi mở app.
+- Bundle train nhãn đến 29/10/2026 chỉ dùng cho quan sát tiếp theo; không dùng nó chấm lại quá khứ rồi gọi là ngoài mẫu.
+- Chưa deploy công khai, chưa tự retrain hoặc tự thay model.
+
+Đổi địa chỉ backend nếu cần bằng biến môi trường `FPT_API_URL`. UI không load weights hoặc tự tính prediction. Môi trường mới có thể cài `requirements-local.txt` để chạy demo nhẹ, hoặc `requirements.txt` để nghiên cứu đầy đủ, gồm TensorFlow/XGBoost.
 
 ```powershell
 python -m venv venv
-.\venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-
-# Phục hồi đúng snapshot đã chốt, không tải lại Yahoo.
-python -m src.data.snapshot
-
-# Backend: load model/scaler một lần, Swagger tại /docs.
-python -m uvicorn src.api.main:app --host 127.0.0.1 --port 8000
+.\venv\Scripts\python.exe -m pip install -r requirements-local.txt
 ```
 
-Trong terminal thứ hai:
+Bundle phục vụ local được lưu cùng code: `models/local_demo.json` và toàn bộ `models/local_demo/ridge6_20261029/`, gồm Ridge weights nhỏ, scaler trong Pipeline, calibration và snapshot. Các file bundle được giữ nguyên bytes để kiểm tra SHA256 sau clone. `models/research/` vẫn gitignored; muốn tái chạy kiểm chứng cần những weights nghiên cứu cũ thì chuyển chúng riêng. `src.models.local_demo` có thể đóng gói lại từ artifact research đã có; lệnh không train/download và từ chối ghi đè một version.
 
-```powershell
-.\venv\Scripts\Activate.ps1
-python -m streamlit run src/app/streamlit_app.py
-```
+## Bài toán và input/output
 
-- API/Swagger: `http://127.0.0.1:8000/docs`.
-- UI: `http://127.0.0.1:8501`. Giao diện lấy dữ liệu và gọi dự báo qua HTTP, không tự load model.
-- Model/scaler canonical nhỏ được version cùng repo để clone xong có thể demo. Không dùng alias `best_lstm_model.keras` cũ.
-- UI hiển thị ngày dữ liệu cuối; snapshot đến 31/12/2025, **không phải giá trực tiếp**.
+Đây là **học có giám sát, cụ thể là hồi quy**:
 
-## 3. API mẫu
+- Input Ridge tại origin `t`: `Log_Return`, `Return_Lag_1`, `Return_Lag_2`, `Return_Lag_5`, `Return_5`, `Return_20`, đều chỉ dùng dữ liệu đến sau đóng cửa `t`.
+- Nhãn: `y_t = log(Close_next / Close_t)` của quan sát hợp lệ kế tiếp.
+- Output: log return, phần trăm lợi suất và `Close_t × exp(predicted_log_return)`.
+- Giá là giá điều chỉnh của nhà cung cấp, không phải giá khớp lệnh live.
 
-```json
-{"ticker":"FPT.VN","model":"LSTM","price_basis":"provider_adjusted_ohlc"}
-```
-
-```powershell
-Invoke-RestMethod -Method Post -Uri http://127.0.0.1:8000/api/v1/predict -ContentType application/json -Body (Get-Content -Raw examples/predict_latest.json)
-```
-
-| Endpoint | Chức năng |
-| --- | --- |
-| `GET /health` | Sẵn sàng, phiên bản, ngày dữ liệu |
-| `GET /api/v1/models` | Model demo và model thắng validation |
-| `GET /api/v1/fpt/history` | Lịch sử giá điều chỉnh |
-| `GET /api/v1/metrics` | Benchmark, split và giới hạn |
-| `POST /api/v1/predict` | Nhận sample/tham số, trả JSON dự báo |
-
-`observations` tùy chọn nhận các dòng `date/open/high/low/close/volume` của giá đã điều chỉnh. LSTM 30 cần ít nhất 79 quan sát hợp lệ; lịch sử dài hơn giúp các chỉ báo đệ quy như RSI/ATR ổn định hơn. Muốn lặp lại chính xác prediction snapshot thì dùng toàn bộ lịch sử hợp lệ, hoặc bỏ `observations` để dùng feature store chuẩn.
-
-Input sai ticker, thiếu lịch sử, volume/giá không hợp lệ hoặc origin trước thời kỳ chốt cấu hình bị từ chối. Không fit scaler khi inference; không cần biết giá tương lai. Chưa xác minh lịch HOSE nên API không tự gán ngày đích giả.
-
-## 4. Dữ liệu và thứ tự xử lý
-
-```mermaid
-flowchart TD
-    A["Raw snapshot + source metadata"] --> B["Kiểm tra ngày, schema, OHLCV"]
-    B --> C["Trục quan sát Volume dương và ngày đích"]
-    C --> D["Cách ly nến lỗi và nhãn liên quan"]
-    D --> E["16 causal features; bỏ 49 warm-up rows"]
-    E --> F["Features đầy đủ, giữ dòng cuối"]
-    E --> G["Supervised có Date và Target_Date"]
-```
-
-| Phần | Số lượng |
-| --- | ---: |
-| Raw | 2.088 dòng |
-| Volume = 0 / nến OHLC lỗi | 147 / 1 dòng |
-| Quan sát hợp lệ | 1.940 dòng |
-| Features | 1.891 dòng, 16 đầu vào |
-| Supervised | 1.889 mẫu |
-
-Raw giữ nguyên bất thường; không ffill/bfill giá. `excluded_rows.csv` ghi dòng và lý do. Chưa đối soát độc lập lịch HOSE/corporate actions; T+1 là quan sát khối lượng dương kế tiếp trong nguồn. Giá điều chỉnh tải năm 2026 chưa phải snapshot point-in-time được kiểm chứng.
-
-Chỉ `FEATURE_COLUMNS` là X; không dùng Date/Close/Target_Date/Target_Return làm đầu vào. Nhóm features gồm return và lag, momentum, volatility, SMA distance, RSI, ATR/range theo tỷ lệ và volume. Tỷ lệ không bảo đảm tính dừng.
-
-Không cần tải thêm rổ mã; market proxy cũ đã loại. Nếu nghiên cứu market context về sau, chỉ thêm khi có nguồn rõ ràng và ablation trên development.
-
-## 5. Training và lựa chọn
+Ridge nhận **vector 6 feature**, không phải chuỗi 60 phiên. LSTM đối chứng v2 dùng **30 quan sát × 16 feature**; 60 là một lookback từng thử và là context chung để đối chiếu một số benchmark. Ridge tối ưu squared error có phạt L2; LSTM v2 dùng Huber, không mặc định mọi model đều train bằng MSE.
 
 ```mermaid
 flowchart LR
-    A["Dataset v2"] --> B["Chia theo origin + target date"]
-    B --> C["Train tới 2022: fit scaler/model"]
-    B --> D["Validation 2023-2024"]
-    C --> E["So sánh cấu hình trên validation"]
-    D --> E
-    E --> F["Khóa model, ghi selection.json"]
-    F --> G["Test lịch sử 2025; không tuning lại"]
+    S[Snapshot FPT OHLCV có hash] --> Q[Kiểm tra ngày, giá, volume và nến]
+    Q --> F[Feature nhân quả và nhãn next observation]
+    F --> T[Temporal train / validation / evaluation]
+    T --> B[Baseline + Ridge + model đối chứng]
+    B --> E[Metric cùng ngày + dự báo từng origin + decision]
+    E --> P[Bundle local đã chọn, không train trong request]
+    P --> A[FastAPI JSON]
+    A --> U[Streamlit]
 ```
 
-Mọi model dùng cùng 1.087 mẫu train, 493 validation, 248 test và tối thiểu 60 quan sát context. Cửa sổ LSTM bao gồm ngày dự báo; scaler chỉ fit trên train. Zero-return không phát hướng nên Hit Rate N/A, không gán 50%.
+Xem [kiến trúc và khái niệm ML](docs/ARCHITECTURE.md) để phân biệt supervised, classification, clustering, split, leakage và drift.
 
-```powershell
-python -m src.models.experiment --epochs 40 --seed 42
-python -m unittest discover -s tests -v
-```
+## Nguồn dataset
 
-Mỗi lượt có `models/experiments/<run_id>/manifest.json`, model/scaler và báo cáo riêng. `models/latest_experiment.json` trỏ lượt đang dùng; `models/reference_experiment.json` khóa CPU reference để so với Colab. Không ghép weights và scaler giữa các lượt. XGBoost lưu bằng native JSON (`save_model`/`load_model`) để chuyển giữa Windows và Colab; không dùng pickle cho XGBoost.
-
-## 6. Colab: đúng code GitHub, đúng snapshot
-
-[Mở notebook training trên Colab](https://colab.research.google.com/github/PhucTruong11/FPT_Stock_Forecasting/blob/feature/train-model/notebooks/02_train_deep_learning_fpt.ipynb)
-
-1. Mở notebook mới từ link GitHub, không chạy bản cũ trong Drive.
-2. Setup clone vào `/content/FPT_Stock_Forecasting_portable_v2`, cài `requirements-colab.txt` và phục hồi ZIP snapshot có hash. Nếu thư viện đã load đổi phiên bản, restart session rồi Run all lại.
-3. Có thể dùng GPU Pro; nguồn dữ liệu và công thức giữ nguyên. **Không tải Yahoo lại để so với CPU**.
-4. Cuối notebook tự so với CPU reference: hash, code, config, split, seed, phiên bản và sai số. Cùng phiên bản chưa bảo đảm bitwise giống trên CPU/GPU.
-5. Ngưỡng RMSE lệch tương đối 5% là kiểm tra kỹ thuật, không phải kiểm định thống kê. Phần LSTM so đúng lookback 30 của reference, kể cả GPU chọn lookback khác trên validation.
-6. Kết quả/weights Colab được nén tại `/content/fpt-colab-<run_id>.zip`; tải xuống để lưu. Không ghi đè CPU reference hoặc chọn lại theo test.
-
-```powershell
-python -m src.models.compare_runs --candidate models/experiments/<colab_run_id> --output reports/colab_comparison.json
-```
-
-## 7. Notebook và kiến trúc ứng dụng
-
-| Notebook | Nội dung |
+| Nguồn | Vai trò |
 | --- | --- |
-| `01_eda_fpt.ipynb` | Chất lượng nguồn, giá/return, phân phối và tương quan train |
-| `02_train_deep_learning_fpt.ipynb` | Baseline/LSTM, validation selection, artifact và Colab comparison |
-| `03_evaluate_fpt_benchmark.ipynb` | Nạp lại artifact, kiểm tra hash/metrics, phân tích lỗi |
-| `04_demo_fpt_dashboard.ipynb` | Demo offline từ manifest; UI chính là Streamlit |
+| [Yahoo Finance — FPT.VN](https://finance.yahoo.com/quote/FPT.VN/history/) | Pipeline gốc tải bằng yfinance, `auto_adjust=True`; giữ làm reference |
+| [Vietcap — FPT](https://trading.vietcap.com.vn/iq/company?ticker=FPT&tab=overview&isIndex=false) | Nguồn nghiên cứu mới, bundle Ridge local và nhãn đánh giá 2026 |
+| KBS | Kiểm tra chéo nguồn trong audit; không thêm mã khác làm feature |
 
-```mermaid
-sequenceDiagram
-    actor User as Người dùng
-    participant UI as Streamlit
-    participant API as FastAPI
-    participant M as ModelService + manifest
-    User->>UI: Chọn model, bấm dự báo
-    UI->>API: POST /api/v1/predict
-    API->>M: Validate sample và inference
-    M-->>API: Return và giá quy đổi
-    API-->>UI: JSON có as_of và model_version
-    UI-->>User: Giá dự báo và benchmark đối chứng
+Vietcap được lấy bằng POST `https://trading.vietcap.com.vn/api/chart/OHLCChart/gap-chart`, body gồm `timeFrame`, `symbols:["FPT"]`, `to`, `countBack`. Snapshot gốc, request, response và hash ở [evaluation 2026](reports/evaluation_2026/20261030T014012158951Z/acquisition.json). Không coi việc mở endpoint bằng GET là cách tải dataset.
+
+Không forward-fill ngày lễ, không điền giá giả, không loại biến động thật chỉ để tăng điểm. Audit nguồn không chứng nhận lịch HOSE hoặc lịch sử point-in-time. `data/raw/` và hai pointer experiment cũ vẫn giữ để tái lập; demo local dùng bundle riêng, tránh ghi đè reference.
+
+## Kết quả và cách đọc
+
+Cùng **202 cặp Vietcap năm 2026 đến 29/10**, 197 actual khác 0:
+
+| Model lịch sử | RMSE log return ↓ | Hit (%) | Balanced (%) |
+| --- | ---: | ---: | ---: |
+| Ridge train đến cuối 2025 | 0,0201191 | 50,76 | 54,20 |
+| Ridge đó + bias nhân quả | 0,0201116 | 60,91 | 56,62 |
+| Zero Return | 0,0201157 | N/A | N/A |
+
+Nguồn: [recency/bias metrics](reports/recency_bias/20261030T022440928507Z/metrics.csv). Đây là **backtest hồi cứu của model lịch sử**, không phải điểm của bundle cập nhật đến 29/10. Bias trong backtest cập nhật từ nhãn đã biết; bias của bundle demo được đóng băng. Lợi thế RMSE so Zero Return rất nhỏ; CI mô tả chưa chứng minh edge ổn định. Luôn đoán giảm cũng đạt 59,39% Hit và 50% balanced trên cùng tập.
+
+![Đối chiếu trên cùng tập 2026](docs/assets/training/01_recency_bias.png)
+
+[Nhật ký training có biểu đồ](docs/TRAINING_HISTORY.md) ghi cả lượt tốt hơn, kém hơn và lỗi export, cùng bằng chứng. Không so trực tiếp điểm khác nguồn/tập ngày, không gọi các năm đã xem là holdout mới.
+
+## Dashboard và API local
+
+Dashboard **FPT Forecast Studio** có 6 trang: tổng quan OHLCV, dự báo, đối chứng, hành trình model, dữ liệu/phương pháp và lộ trình. Có tải JSON/CSV. LSTM xuất hiện trong cohort chung 104 cặp tháng 6–10, dùng forecast đã lưu; không âm thầm train/load lại LSTM khi mở dashboard.
+
+Trang dự báo chọn **hôm nay, ngày mai, 1 tuần hoặc 1 tháng**. Model vẫn chỉ được train cho h=1. Từ bước thứ hai, API cập nhật 6 feature từ chính Close dự báo và chạy Ridge tiếp: đây là **mô phỏng recursive chưa kiểm định riêng**, không phải model tháng đã train. Ngày chỉ bỏ cuối tuần, chưa trừ nghỉ lễ HOSE. Chọn hôm nay/ngày mai rơi cuối tuần sẽ dời sang ngày làm việc dự kiến kế tiếp; tuần/tháng lấy các weekday trong khung lịch. Giới hạn 23 bước từ origin, từ chối khi snapshot quá cũ.
+
+Vùng P10–P90 là residual block-bootstrap mô tả (512 đường, block5, seed cố định), không bảo đảm coverage80%. Zero Return không được gắn vùng sai số của Ridge. Bấm “hôm nay” không chứng minh forecast phát trước phiên. Chi tiết và tiêu chí chốt1–2model: [FORECAST_STUDIO.md](docs/FORECAST_STUDIO.md).
+
+| Endpoint | Chức năng |
+| --- | --- |
+| `GET /health` | Version, default model, cutoff train và ngày snapshot |
+| `GET /api/v1/models` | Các model local có thể gọi |
+| `POST /api/v1/predict` | `{}` dùng snapshot; hoặc gửi OHLCV điều chỉnh đầy đủ |
+| `POST /api/v1/forecast` | `horizon: today/tomorrow/week/month`, trả đường giá, kịch bản và metadata giới hạn |
+| `GET /api/v1/fpt/history` | Lịch sử snapshot |
+| `GET /api/v1/fpt/ohlcv` | OHLCV thật cho biểu đồ nến và khối lượng |
+| `GET /api/v1/data-quality` | Chất lượng snapshot, feature allowlist và caveats |
+| `GET /api/v1/backtest?scope=full_2026` | Metric và forecast cùng 202 cặp |
+| `GET /api/v1/backtest?scope=jun_oct_2026&month=2026-10` | Cùng ngày trong tháng, có LSTM reference |
+| `GET /api/v1/training-history` | Các giai đoạn và evidence |
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:8000/api/v1/predict -Method Post -ContentType 'application/json' -Body '{"model":"Ridge+bias60"}'
 ```
 
-## 8. Cấu trúc
+Input custom cần ít nhất 51 OHLCV hợp lệ để vượt warm-up builder hiện tại, đơn vị VND, cùng basis điều chỉnh xuyên suốt chuỗi. Chỉ nhận ngày đã qua, không nhận nến ngày hiện tại/tương lai. Origin phải từ cutoff train/calibration trở đi. API không xác nhận được nguồn hoặc basis do caller khai báo; không tự suy ra ngày đích theo lịch sàn.
+
+## Cấu trúc
 
 ```text
-data/{raw,interim,processed}/       # Working CSV/metadata
-data/snapshots/                    # ZIP snapshot chuẩn được version trong Git
-docs/                             # Review và kết quả thực nghiệm
-examples/predict_latest.json
-src/data/                         # Download, validation, snapshot, feature inputs
-src/features/build_features.py
-src/models/                       # Experiment, comparison, inference
-src/api/main.py
-src/app/streamlit_app.py
-notebooks/                        # 01 -> 04
-models/experiments/<run_id>/       # Model/scaler/manifest
-models/{latest,reference}_experiment.json
-reports/experiments/<run_id>/      # Metrics, predictions, plots, environment
-reports/verification/             # Kiểm tra API/UI thật
-tests/                            # Data, modeling, snapshot và HTTP contracts
+configs/                 Giao thức thí nghiệm có version
+src/data/                Tải, hợp đồng dữ liệu, snapshot và audit nguồn
+src/features/            Builder canonical và ablation nghiên cứu
+src/models/              Training, evaluation, evidence và inference local
+src/api/main.py          Backend FastAPI
+src/app/streamlit_app.py Dashboard gọi HTTP API
+notebooks/               EDA, training, benchmark và quan sát nghiên cứu
+models/experiments/      Artifact reference cũ
+models/research/         Artifact nghiên cứu, gitignored
+models/local_demo/       Bundle Ridge tự chứa cho local
+reports/                 Evidence từng study; không xóa kết quả âm
+docs/                   README chuyên đề, kiến trúc, nhật ký có ảnh
+tests/                  Kiểm tra dữ liệu, thời gian, model, API
 ```
 
-Muốn thu thập snapshot mới, chạy downloader/build như một nghiên cứu riêng; snapshot v2 không tự bị thay khi clone/train. Các file model/biểu đồ alias cũ và notebook Top10 đã được dọn khỏi luồng làm việc.
+## Notebook nên đọc
 
-## 9. Kiểm chứng và giới hạn
+1. `01_eda_fpt.ipynb`: khám phá dữ liệu gốc.
+2. `02_train_deep_learning_fpt.ipynb`, `03_evaluate_fpt_benchmark.ipynb`: tái lập benchmark v2 lịch sử, không phải lệnh promote Ridge mới.
+3. `05_training_journey_fpt.ipynb`: các giai đoạn phát triển đến recency/bias.
+4. `06_compare_predictions_jun_oct_2026.ipynb`: giá thực tế và dự báo cùng ngày.
+5. `07_direction_and_insufficient_signal_fpt.ipynb`: phân loại và selective.
+6. `08_gap_body_feature_comparison_fpt.ipynb`: A/B gap/thân nến.
 
-59 unit test đã qua, gồm 9 test audit nguồn và 8 test căn cohort/nhãn/context cho đối chứng training. Bốn notebook đã chạy từ đầu trong đợt v2; API model thật khớp inference offline; sample OHLCV đầy đủ khớp snapshot prediction; Streamlit đã thử dự báo LSTM và Train Mean qua HTTP. Các kiểm chứng model/UI đó dùng manifest v2.
+Các notebook lịch sử giữ đúng mục đích tại lúc tạo. Không chạy lại toàn bộ notebook để tự thay bundle local. Notebook 04 là demo của benchmark cũ; dùng Streamlit ở trên cho bản Ridge local hiện tại.
 
-Đã có rolling-origin/feature-group ablation hồi cứu ở mục 11 và đối chiếu ba nguồn ở mục 12. Lịch HOSE/corporate actions chưa được chứng nhận; chưa có backtest thực thi giao dịch. Đây là demo nghiên cứu về luồng; kết quả v2 cần đọc cùng các bất đồng dữ liệu đã phát hiện.
+## Kiểm chứng và kế hoạch tiếp
 
-Tham khảo: [review ban đầu](docs/PROJECT_REVIEW.md), [kết quả CPU và giới hạn](docs/TRAINING_RESULTS.md), [TensorFlow determinism](https://www.tensorflow.org/api_docs/python/tf/config/experimental/enable_op_determinism).
-
-## 10. Nhật ký train và bằng chứng
-
-Xem [TRAINING_HISTORY.md](docs/TRAINING_HISTORY.md) để đọc quá trình thay đổi, cấu hình, chỉ số, kết quả Colab và giới hạn của so sánh. Mỗi run giữ manifest, predictions và metrics riêng. Cập nhật nhật ký sau lượt train bằng `python -m src.models.training_history`; lệnh này không train lại hoặc chọn model theo test.
-
-Lượt Colab T4 đã chạy đủ 8 cell và model JSON/Keras đã nạp lại trên Windows. LSTM gần như trùng CPU; XGBoost RMSE lệch nhỏ nên báo cáo giữ trạng thái `protocol_match_numeric_difference`.
-
-## 11. Nghiên cứu độ ổn định và retraining
-
-Đợt 29/10/2026 chạy 3 fold thời gian, 3 seed cho XGBoost/LSTM và 3 nhóm feature: 63 model train, 156 hàng metrics. Xem [báo cáo đối chứng](reports/robustness/20261029T131205702813Z/REPORT.md) và [chỉ mục các đợt nghiên cứu](reports/robustness/studies.json).
-
-LSTM returns-only có mean-fold RMSE thấp hơn full 16 features khoảng 0,66%, nhưng vẫn chưa vượt Zero-Return nhất quán; chưa promote model mới. Đây là kiểm tra hồi cứu, không phải holdout chưa từng xem. Model và pointer dùng cho API/UI giữ nguyên.
+Đã chạy **119 unit tests**, kiểm tra cả6trang,4khung dự báo, đổi model/cohort/tháng với API thật. [Bằng chứng Studio](reports/verification/forecast_studio_20261030/VERIFICATION.md), [lượt tích hợp local trước](reports/verification/local_ridge_demo/VERIFICATION.md). Bộ kiểm thử nghiên cứu đầy đủ cần `requirements.txt`; `requirements-local.txt` dành cho chạy inference/UI.
 
 ```powershell
-python -m src.models.robustness --config configs/robustness_v1.json
-python -m src.models.robustness_report --reload-artifacts
+.\venv\Scripts\python.exe -m unittest discover -s tests -v
+.\venv\Scripts\python.exe -m src.models.training_review
 ```
 
-Mỗi study có protocol đăng ký trước train, source snapshot, hashes, metrics/predictions, seed stability và quyết định giữ/thay. Research weights nằm local trong `models/research/` và được Git ignore; báo cáo, predictions và bằng chứng kiểm tra được lưu trong repository. Lệnh trên tạo một study và weights mới theo cùng protocol; không tái tạo nguyên byte hoặc ID cũ. Muốn nạp lại đúng checkpoint cũ cần giữ thư mục weights tương ứng; bản clone GitHub chỉ có báo cáo và bằng chứng đã lưu. Không dùng weights nghiên cứu trực tiếp cho API.
+Lệnh thứ hai chỉ dựng biểu đồ/timeline từ evidence đã lưu, không retrain. Hướng dẫn forward ledger: [FORWARD_SHADOW.md](docs/FORWARD_SHADOW.md). Dự báo bấm trên dashboard **không tự ghi thành bằng chứng forward**.
 
-Xem [bài toán supervised regression, vòng lặp drift/retrain và các lựa chọn deploy](docs/ML_WORKFLOW_AND_DEPLOYMENT.md). Tài liệu cloud được kiểm tra ngày 29/10/2026; chưa tạo hoặc deploy dịch vụ cloud. API/Streamlit tiếp tục do thành viên phụ trách cập nhật.
-
-## 12. Đối chiếu nguồn trước training v3
-
-[Audit Yahoo cũ/mới – Vietcap – KBS](reports/data_audits/20261029T135735663765Z/REPORT.md) lưu request, response, hash, chênh lệch từng ngày và quyết định dữ liệu. Yahoo tải lại chưa giải quyết các vấn đề cũ. Vietcap tạo được 1.947 mẫu supervised bằng cùng feature builder, so với 1.889 của v2; 39 origin chung đổi ngày đích, nên không so trực tiếp metric trên hai bộ nhãn khác nhau.
-
-```powershell
-# Tái tạo từ bằng chứng đã lưu, không tải đè dữ liệu hiện tại.
-python -m src.data.source_audit --analyze reports/data_audits/20261029T135735663765Z
-```
-
-Ứng viên v3 chưa thay snapshot/model phục vụ. Đối chứng sau audit đã được triển khai ở mục 13, với nguồn, cohort, nhãn đánh giá và cấu hình khóa trước khi fit; chưa mở dữ liệu 2026.
-
-## 13. Đã train đối chứng Yahoo–Vietcap
-
-[Kết luận và quyết định](reports/source_comparison/20261029T142732805710Z/DECISION.md), [báo cáo đầy đủ](reports/source_comparison/20261029T142732805710Z/REPORT.md): đã train 112 model, kiểm tra 264 hàng metrics và nạp lại toàn bộ 112 model/224 bộ prediction. Hai nguồn dùng cùng origin/target pairs và cùng nhãn đánh giá Vietcap; không cho v3 thêm labeled training rows. Protocol, nguồn code và dữ liệu được khóa trước training.
-
-Trên ba fold 2022–2024, Vietcap giảm RMSE của XGBoost returns khoảng 0,99%, LSTM returns khoảng 0,13%; LSTM full tăng sai số khoảng 0,16%. Các model học chưa vượt baseline nhất quán. Năm 2025 báo cáo riêng và không cải thiện đồng loạt. Chọn Vietcap làm hướng nghiên cứu dữ liệu, returns-only làm hướng thử tiếp; **chưa promote model** hoặc sửa API/Streamlit.
-
-```powershell
-# Lượt train mới luôn có ID riêng; không thay model serving.
-python -m src.models.source_comparison --config configs/source_comparison_v1.json
-# Kiểm tra lại báo cáo đã lưu; thêm --reload-artifacts khi có weights local.
-python -m src.models.source_comparison_report --study reports/source_comparison/20261029T142732805710Z
-```
-
-Các chỉ số v2 cũ dùng nhãn Yahoo; không ghép trực tiếp với điểm mới thành một đường accuracy tăng theo thời gian. Xem [chỉ mục studies](reports/source_comparison/studies.json) và [nhật ký training](docs/TRAINING_HISTORY.md).
+Kế hoạch tương lai: thu forecast trước target và chấm khi có nhãn; xem xét drift, acceptance gate và rollback; sau khi local ổn mới chọn host, đóng gói dependencies và deploy API/UI. `h=5`, regime clustering, xác suất/selective tốt hơn chỉ là các thí nghiệm đề xuất, chưa có trong bản chính. Lượt bàn giao GitHub ngày 31/10/2026 đưa code, bundle phục vụ và báo cáo lên nhánh `codex/fpt-source-audit`; chưa deploy public. Các nhật ký ghi “không commit/push” phản ánh trạng thái tại thời điểm nghiên cứu trước yêu cầu bàn giao này.

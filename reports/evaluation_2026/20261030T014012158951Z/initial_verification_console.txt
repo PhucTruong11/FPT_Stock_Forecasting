@@ -1,0 +1,23 @@
+Frozen before inspecting 2026: D:\Dev\Subject_Uni\Machine_Learning\Stock_Prediction_Project\reports\evaluation_2026\20261030T014012158951Z
+Downloading FPT.VN [2018-01-01, 2026-10-30) attempt 1/3
+Saved 2304 raw observations -> D:\Dev\Subject_Uni\Machine_Learning\Stock_Prediction_Project\.cache\evaluation-2026\20261030T014012158951Z\yahoo\FPT.VN_raw.csv
+Zero-volume observations retained in raw: 161
+Invalid source candles retained for quarantine: 1
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1793324414.978629   31460 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1793324417.907565   31460 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\Dev\Subject_Uni\Machine_Learning\Stock_Prediction_Project\src\models\evaluation_2026.py", line 193, in <module>
+    run(freeze(args.config))
+    ~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\Subject_Uni\Machine_Learning\Stock_Prediction_Project\src\models\evaluation_2026.py", line 187, in run
+    report(study)
+    ~~~~~~^^^^^^^
+  File "D:\Dev\Subject_Uni\Machine_Learning\Stock_Prediction_Project\src\models\evaluation_2026_report.py", line 62, in report
+    for field,value in computed.items():assert (pd.isna(value) and pd.isna(saved[field])) or np.isclose(value,saved[field],atol=1e-9,rtol=1e-10),(name,field)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('LSTM_serving', 'price_rmse_adjusted_vnd')

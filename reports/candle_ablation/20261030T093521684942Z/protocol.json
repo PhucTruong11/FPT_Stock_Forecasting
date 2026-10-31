@@ -1,0 +1,234 @@
+{
+  "study_id": "20261030T093521684942Z",
+  "registered_before_fit_utc": "2026-10-30T09:35:21.685626+00:00",
+  "config": {
+    "schema": "fpt-candle-ablation-v1",
+    "control_study": "20261030T090621177786Z",
+    "feature_cases": {
+      "A_returns6": [
+        "Log_Return",
+        "Return_Lag_1",
+        "Return_Lag_2",
+        "Return_Lag_5",
+        "Return_5",
+        "Return_20"
+      ],
+      "B_gap_body7": [
+        "Gap_Log",
+        "Body_Log",
+        "Return_Lag_1",
+        "Return_Lag_2",
+        "Return_Lag_5",
+        "Return_5",
+        "Return_20"
+      ]
+    },
+    "gap_definition": "log(Open_t / Close_previous_eligible); previous eligible uses the SAME positive-volume, valid-candle sequence as the existing feature builder",
+    "body_definition": "log(Close_t / Open_t); available only after origin close, used to predict next observation",
+    "identity": "Gap_Log + Body_Log = Log_Return; do not keep Log_Return as an input in B",
+    "models": [
+      "Ridge_shared",
+      "Ridge_recent",
+      "Logistic"
+    ],
+    "reuse_A": "verified existing artifacts; exact dates, features, targets, versions and parameters required",
+    "training_and_thresholds": "exact folds, hyperparameters, nonzero policy, calibration/validation and margin grid from control study",
+    "feature_selection": {
+      "Ridge_shared": "minimum validation return RMSE; exact ties prefer A",
+      "Logistic_raw": "maximum validation balanced nonzero forced direction; exact ties prefer A"
+    },
+    "Ridge_recent_selection": "A/B are fixed retrospective diagnostic contrasts; never select features from in-sample validation predictions of this model trained through December",
+    "primary_years": [
+      2022,
+      2023,
+      2024
+    ],
+    "diagnostic_years": [
+      2025,
+      2026
+    ],
+    "paired_bootstrap": {
+      "seed": 20261030,
+      "block_length": 10,
+      "resamples": 2000
+    },
+    "automatic_promotion": false,
+    "network_download": false,
+    "scope": "FPT OHLCV only; no other stock, index, news or new target/horizon",
+    "role": "adaptive retrospective feature experiment on already inspected 2022-2026; no fresh independent holdout or live-forward improvement claim"
+  },
+  "direction_config": {
+    "schema": "fpt-direction-selective-v1",
+    "evaluation_snapshot": "20261030T014012158951Z",
+    "reference": "Vietcap adjusted OHLCV, locked through 2026-10-29",
+    "features": [
+      "Log_Return",
+      "Return_Lag_1",
+      "Return_Lag_2",
+      "Return_Lag_5",
+      "Return_5",
+      "Return_20"
+    ],
+    "evaluation_years": [
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "primary_years": [
+      2022,
+      2023,
+      2024
+    ],
+    "diagnostic_years": [
+      2025,
+      2026
+    ],
+    "training_years": 3,
+    "base_train_cutoff": "June 30 of previous year; rolling three calendar years",
+    "calibration": {
+      "period": "July-September of previous year",
+      "method": "regularized sigmoid on raw probability log-odds",
+      "C": 1.0
+    },
+    "validation": "October-December of previous year; no model refit after threshold selection",
+    "target": "sign(next positive-volume observation adjusted log-return)",
+    "neutral_policy": "exact-zero training/calibration labels excluded for binary direction; ALL evaluation origins retained. A call on a neutral actual is incorrect; abstention is not a neutral-class prediction.",
+    "logistic": {
+      "C": 1.0,
+      "max_iter": 2000,
+      "solver": "lbfgs"
+    },
+    "xgboost": {
+      "n_estimators": 150,
+      "max_depth": 2,
+      "learning_rate": 0.03,
+      "min_child_weight": 10,
+      "subsample": 0.8,
+      "colsample_bytree": 1.0,
+      "reg_lambda": 10,
+      "objective": "binary:logistic",
+      "eval_metric": "logloss",
+      "tree_method": "hist",
+      "random_state": 42,
+      "n_jobs": 2
+    },
+    "ridge_alpha": 100.0,
+    "ridge_shared_rows": "same nonzero train dates and six features as classifiers",
+    "ridge_recent_control": "all labels in three-year window through previous December 31; matches existing refit_2025_native in 2026, extra recent training information disclosed",
+    "selection": {
+      "margins": [
+        0.0,
+        0.025,
+        0.05,
+        0.075,
+        0.1,
+        0.15,
+        0.2
+      ],
+      "minimum_coverage_pct": 60.0,
+      "minimum_nonzero_calls": 30,
+      "minimum_calls_per_actual_direction": 10,
+      "objective": "maximum validation balanced accuracy on called nonzero labels; ties prefer coverage, then smaller margin; fallback full coverage when no eligible candidate"
+    },
+    "forced_threshold": 0.5,
+    "bootstrap": {
+      "seed": 20261030,
+      "block_length": 10,
+      "resamples": 1000
+    },
+    "automatic_promotion": false,
+    "network_download": false,
+    "role": "adaptive retrospective diagnosis: ALL 2022-2026 periods previously inspected; not a new independent holdout or live forward evidence; no market-context features in this study"
+  },
+  "folds": [
+    {
+      "id": "eval_2022",
+      "year": 2022,
+      "train_end": "2021-06-30",
+      "calibration_start": "2021-07-01",
+      "calibration_end": "2021-09-30",
+      "validation_start": "2021-10-01",
+      "validation_end": "2021-12-31",
+      "evaluation_start": "2022-01-01",
+      "evaluation_end": "2022-12-31"
+    },
+    {
+      "id": "eval_2023",
+      "year": 2023,
+      "train_end": "2022-06-30",
+      "calibration_start": "2022-07-01",
+      "calibration_end": "2022-09-30",
+      "validation_start": "2022-10-01",
+      "validation_end": "2022-12-31",
+      "evaluation_start": "2023-01-01",
+      "evaluation_end": "2023-12-31"
+    },
+    {
+      "id": "eval_2024",
+      "year": 2024,
+      "train_end": "2023-06-30",
+      "calibration_start": "2023-07-01",
+      "calibration_end": "2023-09-30",
+      "validation_start": "2023-10-01",
+      "validation_end": "2023-12-31",
+      "evaluation_start": "2024-01-01",
+      "evaluation_end": "2024-12-31"
+    },
+    {
+      "id": "eval_2025",
+      "year": 2025,
+      "train_end": "2024-06-30",
+      "calibration_start": "2024-07-01",
+      "calibration_end": "2024-09-30",
+      "validation_start": "2024-10-01",
+      "validation_end": "2024-12-31",
+      "evaluation_start": "2025-01-01",
+      "evaluation_end": "2025-12-31"
+    },
+    {
+      "id": "eval_2026",
+      "year": 2026,
+      "train_end": "2025-06-30",
+      "calibration_start": "2025-07-01",
+      "calibration_end": "2025-09-30",
+      "validation_start": "2025-10-01",
+      "validation_end": "2025-12-31",
+      "evaluation_start": "2026-01-01",
+      "evaluation_end": "2026-10-29"
+    }
+  ],
+  "python": "3.13.15 (tags/v3.13.15:4061bc4, Aug  5 2026, 13:05:39) [MSC v.1944 64 bit (AMD64)]",
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "xgboost": "3.4.1",
+    "joblib": "1.6.0"
+  },
+  "protected_before": {
+    "data/raw/FPT.VN_raw.csv": "501d6a8e0c511dca824994bdd8e91c58e222506eef667780eb15433c2070c8ea",
+    "data/raw/FPT.VN_raw.metadata.json": "9a06daeb0d862e171367105296573fd1f41b6cb11d9f3c185c4e667c87bc51d9",
+    "data/interim/FPT.VN_features.csv": "9d81786aa94fec6530714c661eeb2543594ac0ceaba908c0bb5545f693e61ef4",
+    "data/interim/FPT.VN_features.metadata.json": "2d5770e96310d5c2358538f235f5281f58e22c6fcbd917ac77ef7d830b5e6e68",
+    "data/processed/FPT.VN_supervised.csv": "41a849f26749bf789b712466b3c707d48315f2954375c7bbfc88f3f5ea77b44d",
+    "data/processed/FPT.VN_excluded_rows.csv": "a0c259f6ffb7abd165b5f8716077a4a9e457b8b58ba02b276b370140de7650c1",
+    "models/latest_experiment.json": "c396911638afb1564cda73c16c8d659b6f9d1c9f23b46d159a270cae7af11d2f",
+    "models/reference_experiment.json": "c396911638afb1564cda73c16c8d659b6f9d1c9f23b46d159a270cae7af11d2f"
+  },
+  "input_zip_sha256": "b6a0008a5c5fcc52308dfa4c0e846013ad7c2fe3296b76a9333c3ba4ae94cb81",
+  "control_protocol_sha256": "4c1bc89c7a80b1f4241cd92b95ec80aa1c6a33d6eda73d2f56c29ef0eaea45cf",
+  "control_manifest_sha256": "c374d9f2abd2c2db6c96d1631cd083c99d871cc8da4f6121a4d711b3d5799910",
+  "source_sha256": {
+    "src/features/candle_features.py": "af49aeea8b2da22598c67e9ae1e88ad5692b054e8c79d6496aa905bb6a49c94c",
+    "src/features/build_features.py": "29935bd688c01e570c40bcfa127f2ef61e9b108d4a7a80ce6fa72c6d1f6621db",
+    "src/models/candle_ablation.py": "9ae90f4a1310880835e03ffd919c814087738da527fc8357112287583798a11d",
+    "src/models/candle_ablation_report.py": "bde708320df01d21ba559ad56ba0cb23b75da0b947e620ccf7b3c8dad2f854c5",
+    "src/models/candle_ablation_notebook.py": "3cf294dee6d61bcdc73b9e7d7e1c1778c3845452cfee1b64340c1112e72ccef5",
+    "src/models/direction_selective.py": "13a75199f50c41e843eb5d9075475a496b91fe5049e93d55b9efe72825d645b3",
+    "src/models/recency_bias.py": "6f0462f30d2fd3d15a888ae0fcaec00a58c648de37db4fe95b314ba0ada4aafa",
+    "src/data/contracts.py": "38a0c2202e38b262a42a3fc3ac974447ad1d1e3e109fc8a1eb3664f758fde468"
+  },
+  "config_sha256": "e18d418753ccea74a63d23995edc4d3629e7999e02392b99d94f0137fa6edf8a"
+}
