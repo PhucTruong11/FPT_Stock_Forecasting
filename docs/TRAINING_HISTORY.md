@@ -1,167 +1,107 @@
-# Nhật ký retraining và bằng chứng phát triển model FPT
+# Nhật ký training và quyết định chọn model FPT
 
-Ngày ghi nhận: **25/10/2026**, múi giờ **UTC+7 (Bangkok/Việt Nam)**. Dữ liệu thị trường cố định: 2018–2025. Báo cáo này ghi quá trình phát triển trên cùng một snapshot; không phải chuỗi đánh giá hiệu quả đầu tư qua nhiều tháng.
+Cập nhật **30/10/2026, UTC+7**. Dữ liệu nghiên cứu mới nhất dừng ở **29/10/2026**. Tài liệu tổng hợp bằng chứng đã lưu; không train lại để viết báo cáo.
 
-## Kết luận để team trình bày
+## Kết luận hiện tại
 
-- Quy trình hiện có bằng chứng tái lập: snapshot và artifact có hash, các model dùng cùng tập mẫu, scaler chỉ fit train, cấu hình được chọn trên validation, API/UI dùng chung inference.
-- LSTM lookback **30** được chọn trong nhóm LSTM theo RMSE validation. **Train Mean** thắng khi so tất cả model trên validation; LSTM là model ML phục vụ demo.
-- Colab T4 đã chạy đủ **8 cell**, cùng code/data/config/split với CPU. Model JSON/Keras từ Colab đã nạp lại được trên Windows và khớp **16 hàng model/split metrics** của chính lượt Colab.
-- Các lượt v2 có RMSE LSTM gần như bằng nhau. Đây là bằng chứng tái lập, **chưa phải bằng chứng độ dự báo tăng dần sau mỗi lần train**. XGBoost còn lệch nhỏ giữa môi trường và được báo công khai.
+**Chọn Ridge6, alpha100, training window3 năm làm hướng chính.** Demo local dùng `Ridge+bias60` với calibration cố định; giữ Ridge raw và Zero Return. LSTM được giữ để đối chứng lịch sử. Đây là lựa chọn phục vụ hoàn thiện đồ án và tính đơn giản khi chạy local, **chưa phải chứng minh Ridge thắng ổn định ngoài tương lai**.
 
-## 1. Bản trước review: chỉ dùng làm lịch sử tham khảo
+Refit Ridge đến cuối2025 giảm RMSE năm2026 từ0,0207058 xuống0,0201191 (−2,83%) so Ridge cũ. Thêm bias nhân quả cho0,0201116, gần Zero Return0,0201157; chênh lệch rất nhỏ. Nhánh phân loại/selective và gap/thân nến chưa có cải thiện đủ ổn định để thay bộ6 feature. [1]
 
-Bản backup trước review có LSTM hai tầng 64/32, Dense 16, MinMaxScaler, lookback 60, tối đa 75 epoch, early stopping patience 12. Metadata ghi 1.087 train, 493 validation, 248 test; thực tế chạy 17 epoch.
+Đóng gói API/UI local là sự kiện **0 fit mới**, dùng lại weights đã train đến29/10. Không gán điểm backtest của model train đến2025 cho bundle cập nhật này. Lưu cả kết quả âm, model cũ và lượt lỗi để team biết vì sao lựa chọn thay đổi.
 
-| Chỉ số được lưu trong metadata cũ | Validation | Test lịch sử 2025 |
-| --- | ---: | ---: |
-| RMSE log return | 0.014085049 | 0.020040139 |
-| MAE log return | 0.010166675 | 0.013511785 |
-| Hit rate theo công thức cũ | 52.59% | 47.39% |
+## 1. Nhật ký các giai đoạn
 
-Nguồn: [metadata cũ trích nguyên từ backup](../reports/training_history/evidence/legacy_metadata.json), kèm hash ZIP và member. Không khôi phục weights cũ vào pipeline đang dùng.
+Ngày lấy từ ID/protocol của study, đổi cách hiển thị theo UTC+7 khi cần. Đây là ngày chạy nghiên cứu, không phải ngày forecast được phát hành trên thị trường.
 
-**Giới hạn so sánh:** metadata cũ thiếu hash snapshot và dự báo theo từng origin. Hàm hit rate cũ loại cả actual 0 lẫn prediction 0 và dùng 50% khi không có tín hiệu; v2 giữ prediction 0 là abstention và trả N/A khi không có tín hiệu hướng. Scaler, kiến trúc, callbacks và quy trình so mẫu cũng thay đổi. Vì vậy không tuyên bố chênh lệch với bảng v2 là mức cải thiện có kiểm soát hay do riêng một thay đổi gây ra. Không dùng số trong ảnh chụp nếu không đối chiếu được artifact tương ứng.
+| Ngày | Thử gì / đối chứng | Kết luận | Bằng chứng |
+| --- | --- | --- | --- |
+| 25/10 | Legacy LSTM64→32/lookback60 → pipelinev2; CPU/Colab cùng config | Sửa nhãn, scaler, common dates và tính tái lập; không thể quy toàn bộ chênh lệch thành một cải tiến model | [Archive chi tiết](archive/TRAINING_HISTORY_before_local_20261030.md), [runs](../reports/training_history/runs.json) |
+| 25/10 | 4 run v2; lookback10/30/60 | Chọn LSTM30 trong nhóm; Train Mean thắng validation toàn bộ | [CPU manifest](../models/experiments/20261025T124951351761Z/manifest.json) |
+| 29/10 | Robustness:63 candidate, các nhóm feature và seed | Chưa vượt baseline nhất quán; cần model đơn giản và nhiều giai đoạn | [Report](../reports/robustness/20261029T131205702813Z/REPORT.md) |
+| 29/10 | Audit Yahoo/Vietcap/KBS;112 candidate so nguồn | Chọn Vietcap làm nguồn nghiên cứu; chưa chứng nhận lịch sàn/PIT | [Audit](../reports/data_audits/20261029T135735663765Z/REPORT.md), [source comparison](../reports/source_comparison/20261029T142732805710Z/REPORT.md) |
+| 29/10 | Training window:56 fit mới/112 điều kiện | Thu hẹp về Ridge returns-only, kiểm tra recency | [Report](../reports/window_comparison/20261029T150501819490Z/REPORT.md) |
+| 30/10 | Ridge refinement:48 fit mới/80 điều kiện | Window3y/alpha100 cho fold mới nhất; giữ cả lượt export lỗi trước đó | [Report hoàn tất](../reports/ridge_refinement/20261030T011109863274Z/REPORT.md), [failure status](../reports/ridge_refinement/20261030T010848752516Z/status.json) |
+| 30/10 | Frozen2026:0fit,200 cặp chung/202native | LSTM và Ridge cũ chưa vượt Zero Return | [Decision](../reports/evaluation_2026/20261030T014012158951Z/DECISION.md) |
+| 30/10 | Recency/bias:13fit mới | Refit cải thiện so Ridge cũ, edge vs zero rất nhỏ | [Decision](../reports/recency_bias/20261030T022440928507Z/DECISION.md) |
+| 30/10 | Logistic/XGB classifier:20base+10calibrator | Sau sigmoid thiên về luôn giảm; chưa bật selective trong bản chính | [Decision](../reports/direction_selective/20261030T090621177786Z/DECISION.md) |
+| 30/10 | Gap/body:20fitB+20artifactA tái dùng | Chưa cải thiện ổn định; giữ6 return features | [Decision](../reports/candle_ablation/20261030T093521684942Z/DECISION.md) |
+| 30/10 | Đóng gói Ridge/API/UI local,0fit | User đồng ý hướng chính; reference cũ và ledger giữ nguyên | [Manifest local](../models/local_demo/ridge6_20261029/manifest.json), [pointer riêng](../models/local_demo.json) |
 
-## 2. Các thay đổi đã thực hiện và bằng chứng
+Không cộng số `candidate`, `condition`, `base fit`, `calibrator` như cùng một đơn vị. Không nối RMSE khác source/cohort thành một đường chất lượng tăng theo thời gian. [Timeline cho dashboard](../reports/training_history/study_timeline.json).
 
-| Vấn đề | Xử lý | Bằng chứng kiểm chứng |
-| --- | --- | --- |
-| Dễ chạy dữ liệu/code khác nhau giữa máy và Colab | ZIP public snapshot 6 file; kiểm tra SHA256; clone code GitHub đã push | [Snapshot manifest](../data/snapshots/manifest.json), `protocol_checks` trong comparison |
-| So sánh model khác tập ngày hoặc lookback gây sai khác mẫu | Giữ common context 60; cùng origin/target dates cho mọi model | Split trong experiment manifest; kiểm thử boundary/sequence |
-| Dễ chọn theo test hoặc chỉ xem hit rate | Chọn RMSE validation; thêm baseline zero/mean/persistence; báo MAE, coverage và neutral | `selection.json`, `validation_trials.csv`, `metrics.csv` |
-| Alias weights/scaler có thể trỏ nhầm lượt | Artifact theo run ID, manifest, feature order và hash; một pointer dùng demo | [CPU manifest](../models/experiments/20261025T124951351761Z/manifest.json) |
-| XGBoost pickle từ Colab không nạp được trên Windows | Đổi sang native JSON `save_model`/`load_model` | [Kiểm chứng chuyển model](../reports/verification/colab_portability.json) |
-| Backend và UI có thể dùng logic khác notebook | ModelService dùng builder/scaler chung; Streamlit gọi HTTP API | [API/UI smoke check](../reports/verification/api_ui_smoke.json), 36 unit test |
+## 2. Bằng chứng tái lập CPU ↔ Colab, không phải tăng accuracy
 
-Nguồn kỹ thuật cho XGBoost: [Model IO chính thức](https://xgboost.readthedocs.io/en/stable/tutorials/saving_model.html). Tài liệu phân biệt native model IO với pickle memory snapshot; không bảo đảm pickle ổn định/portable. Đổi định dạng lưu **không làm model chính xác hơn**.
+Bốn run25/10: `20261025T121448987851Z`, `20261025T124129642764Z`, `20261025T124951351761Z`, `20261025T132243824425Z`. LSTM30 đều có validationRMSE0,014032665, test2025RMSE0,019858318 và MAE0,013441519. XGBoost chuyển pickle→nativeJSON để nạp chéo môi trường; đổi định dạng lưu không phải thuật toán chính xác hơn.
 
-## 3. Nhật ký các lượt v2 có manifest
+![Loss CPU reference theo epoch](../reports/experiments/20261025T124951351761Z/learning_curves.png)
 
-Tất cả thời gian bên dưới là **lúc bắt đầu run**, lấy từ run ID UTC rồi đổi sang UTC+7. Không dùng thời gian sửa file để giả làm thời gian training. Giá trị là log return; cột chỉ số là LSTM được chọn trong nhóm trên validation.
+Nguồn: [lstm_history.json](../reports/experiments/20261025T124951351761Z/lstm_history.json), [64 hàng metric toàn bộ run](../reports/training_history/metrics_over_runs.csv). Loss theo epoch khác với chất lượng dự báo qua các giai đoạn thị trường. Legacy thiếu snapshot/prediction tương đương và có công thức Hit khác nên chỉ dùng tham khảo lịch sử. Chi tiết cũ được giữ trong archive, không xóa.
 
-| Giờ 25/10/2026 | Run ID | Môi trường | XGBoost format | Lookback LSTM | Val RMSE | Test RMSE | Test MAE | Test hit rate |
-| --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| 19:14:48 | `20261025T121448987851Z` | CPU | .pkl | 30 | 0.014032665 | 0.019858318 | 0.013441519 | 54.98% |
-| 19:41:29 | `20261025T124129642764Z` | GPU | .pkl | 30 | 0.014032665 | 0.019858318 | 0.013441519 | 54.98% |
-| 19:49:51 | `20261025T124951351761Z` | CPU | .json | 30 | 0.014032665 | 0.019858318 | 0.013441519 | 54.98% |
-| 20:22:43 | `20261025T132243824425Z` | GPU | .json | 30 | 0.014032665 | 0.019858318 | 0.013441519 | 54.98% |
+## 3. Đối chứng recency và bias trên cùng202 cặp2026
 
-- **19:14:** bộ v2 cùng benchmark, thiết lập CPU reference ban đầu; XGBoost vẫn lưu pickle.
-- **19:41:** Colab kiểm tra cùng code. LSTM tái lập; phát hiện pickle XGBoost không nạp được khi mang về Windows. Kết quả đã lưu trước khi giải phóng session cũ.
-- **19:49:** train lại CPU sau sửa JSON. Các metric CPU giữ nguyên, chứng minh thay định dạng lưu không làm thay kết quả dự báo. Khóa reference hiện tại `20261025T124951351761Z`.
-- **20:22:** train bản JSON trên Colab T4 từ commit `5eddc45`; tải artifact về Windows và nạp lại thành công. Giữ thành lượt kiểm chứng riêng, không thay pointer phục vụ demo bằng kết quả test tốt hơn.
+![RMSE và balanced accuracy cùng cohort](assets/training/01_recency_bias.png)
 
-Các manifest trước sửa được giữ trong [evidence](../reports/training_history/evidence), thay vì giữ alias weights cũ. [runs.json](../reports/training_history/runs.json) chứa hash manifest sau chuẩn hóa LF theo Git attributes, config, split, seed, versions và đường dẫn từng nguồn; [metrics_over_runs.csv](../reports/training_history/metrics_over_runs.csv) chứa toàn bộ 64 hàng model/split, không chỉ kết quả LSTM được chọn.
+| Strategy lịch sử | RMSE return ↓ | MAE giá adjusted (VND) ↓ | Hit /197nonzero | Balanced |
+| --- | ---: | ---: | ---: | ---: |
+| Ridge frozen train≤2023 | 0,0207058 | 1.114,18 | 43,15% | 49,96% |
+| Ridge refit train≤2025 | 0,0201191 | 1.080,94 | 50,76% | 54,20% |
+| Ridge refit≤2025+bias60 | 0,0201116 | 1.064,12 | 60,91% | 56,62% |
+| Ridge monthly refit | 0,0201124 | 1.074,00 | 52,79% | 54,52% |
+| Zero Return | 0,0201157 | 1.081,70 | N/A | N/A |
 
-## 4. Giao thức và cấu hình được khóa
+[1] Nguồn: [metrics.csv](../reports/recency_bias/20261030T022440928507Z/metrics.csv), cohort`vci_full`, target đến29/10/2026,202pairs gồm197nonzero+5neutral. Số chính xác trong CSV là chuẩn nếu làm tròn bảng. Biểu đồ không có balanced của Zero Return vì không phát tín hiệu hướng.
 
-| Thành phần | Thiết lập |
-| --- | --- |
-| Dữ liệu sau quarantine | 1.940 quan sát hợp lệ; 1.891 feature rows; 16 inputs |
-| Chia mẫu chung | Train 1.087, validation 493, test lịch sử 248 |
-| Train | Origin 2018-06-19 đến 2022-12-29; target cuối 2022-12-30 |
-| Validation | Origin 2023-01-03 đến 2024-12-30; target cuối 2024-12-31 |
-| Test | Origin 2025-01-02 đến 2025-12-30; target cuối 2025-12-31 |
-| Nhãn | Log return của quan sát hợp lệ kế tiếp; không tự suy ra lịch HOSE |
-| Scaler | StandardScaler feature và target; fit trên train |
-| LSTM | 32 units, dropout 0.2, Dense 8, Huber, Adam lr 0.001, clipnorm 1 |
-| Huấn luyện | Batch 32, shuffle=False, tối đa 40 epoch, early stopping patience 7, seed 42 |
-| Chọn cấu hình | Lookback 10/30/60 theo RMSE validation; test không dùng chọn |
+Refit có lợi hơn model cũ trong giai đoạn này; so baselinezero còn yếu. Static+bias MSEskill chỉ khoảng+0,041%, CI mô tả chứa0. Monthly+bias có thể giảm MAE nhưng tăng RMSE; không nói bias cải thiện mọi mặt. Luôn giảm đạt59,39%Hit, balanced50%; hơn50%Hit không tự chứng minh edge.
 
-Dữ liệu không được forward/back-fill để tạo giá giả. Ngữ cảnh quá khứ có thể đi qua ranh giới train/validation để dự báo tại thời điểm hiện tại; nhãn tương lai đi qua ranh giới tập bị loại. Raw/source/outputs được đối chiếu hash trong manifest.
+Bias backtest dùng sai số có target đã xuất hiện trước origin hiện tại; không lấy mean của cả năm rồi cộng ngược cho mọi ngày. Các khoảng này đã xem và nghiên cứu tiếp dựa trên chúng: đây là **đối chứng hồi cứu thích nghi**, không phải holdout mới.
 
-## 5. Bằng chứng chọn lookback bằng validation
+## 4. So giá thật với forecast đã lưu
 
-CPU reference `20261025T124951351761Z`:
+![Giá thật và forecast cùng104 ngày](assets/training/03_actual_predictions.png)
 
-| Candidate | Validation RMSE | Validation MAE | Validation hit rate |
-| --- | ---: | ---: | ---: |
-| LSTM/10 | 0.014055344 | 0.010011078 | 55.17% |
-| LSTM/30 | 0.014032665 | 0.009997314 | 54.74% |
-| LSTM/60 | 0.014078786 | 0.010037336 | 53.45% |
+[2] Nguồn: [predictions](../reports/period_comparison/20261030T024048531444Z/predictions.csv.gz), [summary](../reports/period_comparison/20261030T024048531444Z/summary.csv). Cùng104 cặp target01/06–29/10/2026,99actualnonzero. LSTM:RMSE0,0168315,Hit47,47%,balanced50,83%. Ridge≤2025+bias:Hit62,63%,balanced57,95%; ZeroReturn cũng là đối chứng bắt buộc.
 
-Lookback 30 có RMSE validation thấp nhất trong nhóm LSTM. Chênh lệch nhỏ, chỉ có một seed; chưa đủ để kết luận lookback 30 luôn tốt hơn trong thị trường khác. Chỉ tiêu chọn là RMSE nên không chuyển sang candidate có hit rate cao hơn sau khi xem test.
+Giá dự báo mỗi điểm được neo vào giá origin thực tế, là **dự báo một bước**, không phải tự chạy từ tháng6 rồi biết trước cả5tháng. LSTM có context Yahoo và model training khác Ridge; cùng target/nhãn không biến so sánh này thành ablation chỉ khác architecture. Không lấy104 hoặc200cặp so với202cặp mà bỏ qua mẫu số.
 
-![Training và validation loss của CPU reference](../reports/experiments/20261025T124951351761Z/learning_curves.png)
+Notebook quan sát: [06_compare_predictions_jun_oct_2026.ipynb](../notebooks/06_compare_predictions_jun_oct_2026.ipynb). Dashboard local có lọc tháng, đường actual và model, metric tính lại theo đúng subset.
 
-Nguồn: [lstm_history.json](../reports/experiments/20261025T124951351761Z/lstm_history.json). Loss theo epoch phản ánh tối ưu trong một lượt; không đồng nghĩa chất lượng ngoài mẫu tăng theo thời gian thị trường.
+## 5. Các nhánh chưa được chọn
 
-## 6. Đối chiếu CPU và Colab sau sửa JSON
+### Phân loại và “chưa đủ tín hiệu”
 
-CPU `20261025T124951351761Z`; Colab `20261025T132243824425Z`. Cùng phiên bản numpy/pandas/sklearn/xgboost/joblib và TensorFlow 2.21.0. Python CPU 3.13.15, Colab 3.13.16; môi trường/hardware khác nhau.
+Mean-foldbalanced2022–2024: Ridge_shared53,36%,Logisticraw51,83%,XGBraw49,82%. Sau sigmoid ở2026, cảhai dự đoán giảm202/202:Hit117/197=59,39% nhưngbalanced50%, đúng baselinealways-down. Margin2026 chọn0; không ép ngưỡng sau khi nhìn kết quả. Brier cải thiện không đồng nghĩa phân biệt hướng tốt hơn. [3]
 
-| Model | CPU test RMSE | Colab test RMSE | Chênh lệch tương đối tuyệt đối |
-| --- | ---: | ---: | ---: |
-| Zero-Return | 0.019917213 | 0.019917213 | 0.000000% |
-| Return Persistence | 0.027995444 | 0.027995444 | 0.000000% |
-| Train Mean | 0.020021735 | 0.020021735 | 0.000000% |
-| Always Up | 0.024133456 | 0.024133456 | 0.000000% |
-| Linear Regression | 0.020079600 | 0.020079600 | 0.000000% |
-| Ridge | 0.020055121 | 0.020055121 | 0.000000% |
-| XGBoost | 0.020017319 | 0.019938554 | 0.393487% |
-| LSTM | 0.019858318 | 0.019858318 | 0.000000% |
+[3] [Decision và probability diagnostics](../reports/direction_selective/20261030T090621177786Z/DECISION.md), [Notebook07](../notebooks/07_direction_and_insufficient_signal_fpt.ipynb). Giữ code/artifact làm nghiên cứu, không bật trong API chính.
 
-Hash raw, data, feature order, splits, seed, training config và source code đều khớp. Cùng Train Mean thắng validation và cùng LSTM lookback 30.
+### Gap mở cửa và thân nến
 
-**Trạng thái chính thức: `protocol_match_numeric_difference`.** Các baseline tuyến tính/hằng và LSTM gần như khớp; XGBoost không qua ngưỡng so sánh rất chặt của nhóm baseline. Tất cả RMSE nằm trong tolerance kỹ thuật **5% định trước**. Không đổi ngưỡng sau khi xem kết quả, không gọi hai model tương đương thống kê. Chưa cô lập nguyên nhân chênh XGBoost giữa môi trường; không quy cho GPU vì XGBoost không được cấu hình train GPU.
+![A/B gap/body theo từng năm](assets/training/02_gap_body.png)
 
-- [Comparison sinh trực tiếp trên Colab](../reports/experiments/20261025T132243824425Z/reference_comparison.json)
-- [Comparison sau nạp lại trên Windows](../reports/verification/colab_reloaded_comparison.json)
-- [Notebook Colab đã thực thi](../reports/experiments/20261025T132243824425Z/executed_colab.ipynb): đủ 8 code cells, không có code error. Lỗi trình duyệt hiển thị iframe output được tách khỏi trạng thái thực thi Python.
-- [Kết quả kiểm tra portability](../reports/verification/colab_portability.json): toàn bộ 16 hàng metrics nạp lại khớp báo cáo Colab.
+A dùng6feature. B thayLog_Return bằng`log(Open_t/Close_previous_eligible)` và`log(Close_t/Open_t)`; không thêm cảba cột phụ thuộc tuyến tính. Hai thành phần đều đã biết sau đóng cửa origin, không dùng Open tương lai.
 
-## 7. Hiện đã cải thiện điều gì?
+[4] [Metrics từng năm](../reports/candle_ablation/20261030T093521684942Z/metrics.csv), [Decision](../reports/candle_ablation/20261030T093521684942Z/DECISION.md), [Notebook08](../notebooks/08_gap_body_feature_comparison_fpt.ipynb). Primary2022–2024 Ridge_recent meanRMSE0,0162190→0,0162930 (B cao hơn0,46%); Logistic balanced chỉ+0,09điểm%. Full2026 Ridge_recentRMSE0,0201191→0,0204083,Hit50,76%→44,67%. B tốt hơn một số năm nhưng chưa ổn định; giữA.
 
-**Đã chứng minh:** khả năng tái lập, tính nhất quán mẫu/metric, truy vết artifact, chọn model trên validation và khả năng chuyển model Colab → Windows.
+Các năm là các population khác nhau, không coi chênh lệch độ cao cột giữa2022 và2026 là riêng tác động cải tiến feature. CI đi kèm trong study; phần lớn chưa phân biệt chắc chắn.
 
-**Chỉ quan sát được trên test lịch sử:** LSTM RMSE 0.019858 thấp hơn Zero-Return 0.019917 một lượng nhỏ, nhưng MAE LSTM 0.013442 cao hơn Zero-Return 0.013146. LSTM hit rate 54,98% trên 211 actual khác 0; always-down hậu nghiệm cũng đạt 54,98%. Không coi đây là bằng chứng lợi nhuận.
+## 6. Model local hiện tại và bằng chứng forward
 
-**Chưa chứng minh:** giảm sai số qua nhiều đợt cập nhật dữ liệu, tốt hơn bền vững qua nhiều seed, vượt baseline trên nhiều cửa sổ walk-forward hoặc có lợi nhuận sau chi phí. Năm 2025 đã được xem trong thử nghiệm trước; không gọi nó là pristine holdout. Giá điều chỉnh không phải giá khớp lệnh lịch sử; chưa xác minh lịch HOSE/corporate actions/point-in-time độc lập.
+Bundle`ridge6_20261029`: StandardScaler→Ridge(alpha100),6features,train3năm, nhãn cuối29/10/2026. `Ridge+bias60` cộng bias và khoảng residual **đóng băng lúc tạo bundle**. Không retrain khi khởi động hoặc gửi request. Lượt đóng gói dùng lại đúng modelSHA`3f048d815cc36e507bfdea97b3d4a65a3d69c601a92af4e2a4a9ee4f9e75e916` từ [shadow_bundle](../reports/recency_bias/20261030T022440928507Z/shadow_bundle.json).
 
-## 8. Cách lưu bằng chứng cho những lần tiếp theo
+Model này chưa có bộ nhãn tương lai đủ để kết luận performance. Ledger có1forecastpending phát09:25UTC+7ngày30/10; nếu target cũng30/10 thì không đủ điều kiện full-session. BấmAPI/UI không tự ghi ledger. Không sửa timestamp hoặc ghi prediction mới cho quá khứ rồi gọi là forward. Xem [FORWARD_SHADOW.md](FORWARD_SHADOW.md).
 
-1. Trước thử nghiệm ghi hypothesis, thay đổi dự kiến, snapshot, khoảng train/validation/evaluation và metric chính. Không dùng kết quả test để chọn thay đổi.
-2. Giữ nhóm đối chứng cùng snapshot/ngày đánh giá; mỗi ablation đổi một yếu tố. Nếu thêm dữ liệu, dùng walk-forward và so trên cùng khoảng ngoài mẫu.
-3. Gọi pipeline chung; giữ toàn bộ run directory, model/scaler, manifest, prediction và learning history. Ghi cả lượt không cải thiện.
-4. Chạy `python -m src.models.training_history` để tái tạo ledger và kiểm tra tính toán; lệnh này không train hoặc chọn model. CSV và JSON cập nhật từ manifest đã lưu, không từ ảnh chụp.
-5. Viết kết luận kèm chênh RMSE/MAE, directional denominator, biến động nhiều seed, giới hạn và quyết định giữ/thay. Chỉ promote theo tiêu chí khóa trước, tách khỏi báo cáo test.
+## 7. Quy tắc ghi lượt training sau
 
-```powershell
-python -m src.models.training_history
-python -m src.models.compare_runs --candidate models/experiments/<run_id> --output reports/colab_comparison.json
-```
+Lượt tích hợp local đã đạt **108 unit tests**, kiểm tra HTTP thật khớp offline và AppTest đổi model/cohort/tháng. [Biên bản kiểm chứng và cleanup](../reports/verification/local_ridge_demo/VERIFICATION.md). Đây là kiểm chứng phần mềm và artifact, không phải 108 phép thử chứng minh model chính xác hơn.
 
-[calculation_checks.json](../reports/training_history/calculation_checks.json) tính độc lập lại RMSE/MAE/hit rate từ prediction export của reference và kiểm tra khớp manifest. Bản Markdown này là biên bản ngày 25/10/2026; ledger có thể cập nhật về sau mà không sửa ngược kết luận lịch sử này.
+Mỗi study mới ghi ID/thời gian UTC và source/config hashes; nêu câu hỏi, biến thay đổi, baseline và cohort; khóa train/calibration/validation/evaluation trước fit; lưu ngày origin/target, prediction, scaler/model, metric và decision. Tách rõ sốfitmới/táisửdụng, failed/completed, đánhgiáhồicứu/forward. Ghi cả không cải thiện.
 
+Chỉ so model trên cùng ngày và cùng nhãn; đọc RMSE/MAE, direction/coverage, baseline và CI. Data2026 đã được mở nằm trong [holdout_exposures](../reports/holdout_exposures.json). Khi có đủ forecast phát trước target và nhãn mới, mới quyết định thay version; không tự promote vì một tháng tốt.
 
-## 9. Cập nhật nghiên cứu ngày 29/10/2026
+Biểu đồ dựng lại bằng `python -m src.models.training_review`, source/hash ở [assets/training/sources.json](assets/training/sources.json); không train trong lệnh này. Các notebook05–08 giữ output để team quan sát chi tiết. Cleanup chỉ xóa cache tái tạo được; evidence/source ZIP/negative results/reference cũ được giữ. Không commit/push trong lượt này.
 
-Đã thực hiện [đợt rolling-origin/feature ablation](../reports/robustness/20261029T131205702813Z/REPORT.md): 63 model train, 156 hàng metrics, 3 fold và 3 seed cho từng model stochastic. Mọi forecast origin được đối chiếu; 63 model đã nạp lại và qua 126 kiểm tra validation/evaluation prediction. Bộ kiểm thử hiện tại có 42 test qua.
+## 8. Bổ sung dự báo nhiều bước và giao diện Studio — 30/10/2026
 
-Các kết quả này thuộc protocol/window khác với test 2025 bên trên, nên không vẽ chúng nối thành một đường tăng accuracy theo ngày train. LSTM returns-only giảm mean-fold RMSE khoảng 0,66% so với full features, nhưng chưa vượt baseline nhất quán và seed variation không cải thiện đồng thời. Quyết định giữ model phục vụ hiện tại. Chỉ mục study và toàn bộ kết quả tốt/xấu nằm trong [studies.json](../reports/robustness/studies.json).
+**0 fit mới, weights/scaler/bias không đổi.** API mới lặp modelh=1 trên contextClose tự dự báo, tối đa23bước. Hôm nay/ngàymai/tuần/tháng có ngày requested/effective rõ; chỉ loại cuối tuần, chưa phải lịchsàn xác minh. 512path residualblockbootstrap tạo vùngkịchbảnP10–P90, không chứng minhcoverage80%.
 
-[Vòng lặp monitoring/retraining và giải thích supervised regression/deploy](ML_WORKFLOW_AND_DEPLOYMENT.md) là thiết kế cho bước tiếp theo; chưa có live monitor hoặc auto-promotion.
-
-## 10. Audit dữ liệu trước vòng train tiếp theo — 29/10/2026
-
-[Báo cáo đối chiếu Yahoo cũ/mới, Vietcap và KBS](../reports/data_audits/20261029T135735663765Z/REPORT.md) phát hiện 56 ngày Yahoo volume=0 được cả hai nguồn kia ghi nhận giao dịch, cùng bất đồng lợi suất tập trung năm 2025. Tải lại Yahoo không tự sửa được. Dry-run cùng feature builder tạo 1.947 mẫu Vietcap so với 1.889 mẫu Yahoo, với 39 origin chung đổi ngày target.
-
-Lượt này **không có training mới**, không ghi thêm accuracy giả vào lịch sử model. Giữ hash cả snapshot và pointer v2. Đề xuất Vietcap làm nguồn nghiên cứu v3, KBS đối chiếu; cần khóa bộ nhãn/cohort chung trước thử nghiệm so sánh nguồn. Metric cũ giữ nguyên, được hiểu là kết quả lịch sử trên snapshot Yahoo chưa hòa giải nguồn.
-
-## 11. Đã train đối chứng nguồn — 29/10/2026
-
-Study **20261029T142732805710Z**: [quyết định](../reports/source_comparison/20261029T142732805710Z/DECISION.md), [protocol/bảng/biểu đồ](../reports/source_comparison/20261029T142732805710Z/REPORT.md). 112 model gồm 48 LSTM, 48 XGBoost, 16 Ridge; hai nguồn, hai feature groups, bốn fold và ba seed cho model stochastic. Khóa source/data/config trước training. 1.791 origin–target pairs chung; native train labels nhưng cùng nhãn Vietcap cho validation/early stopping/evaluation. Hai nguồn có cùng số labeled training rows; lịch sử context native có thể khác.
-
-| Thay đổi trong cùng study, mean-fold 2022–2024 | Kết quả |
-| --- | --- |
-| XGBoost returns: Yahoo → Vietcap | RMSE 0,0166373 → 0,0164722, giảm khoảng 0,99% |
-| LSTM returns: Yahoo → Vietcap | RMSE 0,0164172 → 0,0163951, giảm khoảng 0,13%; mean seed SD giảm khoảng 30,1% |
-| LSTM full: Yahoo → Vietcap | RMSE 0,0164958 → 0,0165224, tăng khoảng 0,16% |
-| Baseline trên cùng nhãn/cohort | Train Mean/Vietcap 0,0162915; Zero Return 0,0163497 |
-
-LSTM returns/Vietcap vẫn kém Zero Return khoảng 0,28% và Train Mean khoảng 0,64% về RMSE. Năm 2025 được tách riêng: không cải thiện đồng loạt; trung bình seed của cả sáu nhóm Vietcap vẫn kém Zero Return. Không chọn một seed thắng để thay kết quả cả nhóm.
-
-Đã tính độc lập lại 264 hàng metrics, nạp lại 112 model với 224 đối chiếu prediction/scaler; 59/59 unit tests qua. Không có model train thất bại trong study; một lỗi parser ở giai đoạn chuẩn bị trước training đã được sửa và thêm test. Canonical data/model pointers giữ nguyên. Lượt này chạy CPU local, không phải một lượt kiểm chứng Colab mới.
-
-**Quyết định:** tiếp tục dùng Vietcap làm nguồn ứng viên nghiên cứu, ưu tiên returns-only cho thử nghiệm tiếp, chưa promote serving. Tác động đổi nguồn/nhãn được ghi riêng; không nối metric này với các lượt chấm theo nhãn Yahoo cũ để tuyên bố accuracy tăng. Chỉ mục [source_comparison/studies.json](../reports/source_comparison/studies.json) giữ các lượt đối chứng về sau.
+Đây là mở rộng inference/UI, **không có điểm test mới hoặc bằng chứng accuracy tăng**. Không dùng bảngh=1 để gán thành tích tuần/tháng. Giao diện6trang bổ sungOHLCV, dựbáo, đốichứng, evidence, phươngpháp và roadmap1–2model. 119unit tests và UIchecks đạt; [chi tiết phương pháp](FORECAST_STUDIO.md), [biên bản kiểm chứng](../reports/verification/forecast_studio_20261030/VERIFICATION.md). Không thayreference hoặc ghi thêmforecastledger; không commit/push/deploy.

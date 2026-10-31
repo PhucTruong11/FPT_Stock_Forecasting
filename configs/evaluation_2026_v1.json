@@ -1,0 +1,23 @@
+{
+  "protocol_version": "fpt-frozen-2026-evaluation-v1",
+  "history_start": "2018-01-01",
+  "origin_start": "2026-01-01",
+  "end_exclusive": "2026-10-30",
+  "client_as_of_date": "2026-10-30",
+  "reference_source": "Vietcap adjusted daily OHLCV",
+  "primary_cohort": "common Yahoo/Vietcap positive-volume origin AND target date pairs",
+  "secondary_cohort": "all eligible Vietcap origins for research Ridge and reference baselines",
+  "serving_run": "20261025T124951351761Z",
+  "research_study": "20261030T011109863274Z",
+  "research_selection_fold": "eval_2025",
+  "research_window": "3y",
+  "research_alpha": 100.0,
+  "research_control_alpha": 10.0,
+  "bootstrap": {"block_length": 10, "resamples": 2000, "seed": 20261030},
+  "price_metrics": "all predictions anchored to SAME Vietcap Close at origin; adjusted VND, not execution prices",
+  "forecast_horizon": "one next positive-volume observation with observed causal OHLCV context; not autonomous multi-step year forecast",
+  "refit_or_select_on_2026": false,
+  "automatic_promotion": false,
+  "evaluation_role": "newly inspected temporal 2026 retrospective holdout; weights trained/selected before opening it in this workflow, but forecasts were NOT issued live before events",
+  "limitations": "Current adjusted source history is not independently point-in-time certified; 2026 becomes inspected after this run. Different training cutoffs/sources confound cross-family comparisons."
+}

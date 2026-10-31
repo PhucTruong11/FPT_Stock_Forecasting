@@ -1,0 +1,21 @@
+{
+  "notebook": "notebooks/06_compare_predictions_jun_oct_2026.ipynb",
+  "sha256": "36046d79c3d20cd1bb0b9d984226726ad95a981eb3038a62ac98c806e372c913",
+  "cells": 29,
+  "executed_code_cells": 13,
+  "saved_plots": 9,
+  "errors": 0,
+  "input_hashes_and_104_pairs_verified": true,
+  "monthly_metric_groups_checked": 85,
+  "training_or_download_calls": 0,
+  "canonical_unchanged": true,
+  "overlay_models": [
+    "LSTM_serving",
+    "XGBoost_serving",
+    "Ridge_serving",
+    "refit_2025_native"
+  ],
+  "overlay_same_target_dates_verified": true,
+  "new_overlay_visually_inspected": true,
+  "all_9_figures_visually_inspected": true
+}

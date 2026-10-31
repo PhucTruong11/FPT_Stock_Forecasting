@@ -1,0 +1,35 @@
+{
+  "Hôm nay": {
+    "steps": 1,
+    "ok": true
+  },
+  "Ngày mai": {
+    "steps": 2,
+    "ok": true
+  },
+  "1 tuần": {
+    "steps": 5,
+    "ok": true
+  },
+  "1 tháng": {
+    "steps": 21,
+    "ok": true
+  },
+  "zero_return_keeps_origin_price": true,
+  "Tổng quan": {
+    "ok": true
+  },
+  "Đối chứng": {
+    "ok": true
+  },
+  "same_dates_october": 21,
+  "Hành trình model": {
+    "ok": true
+  },
+  "Dữ liệu & phương pháp": {
+    "ok": true
+  },
+  "Lộ trình": {
+    "ok": true
+  }
+}

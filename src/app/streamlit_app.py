@@ -1,67 +1,73 @@
-"""Streamlit frontend. All predictions and data come from the HTTP backend."""
-
+"""FPT Forecast Studio: Streamlit views consuming the local FastAPI backend."""
 import os
-
+from html import escape
 import pandas as pd
 import requests
 import streamlit as st
+from src.app.theme import inject_theme
+from src.app.dashboard_views import (forecast_view, overview_view, benchmark_view,
+    journey_view, methodology_view, roadmap_view)
 
-st.set_page_config(page_title="FPT | ML Research", page_icon="📈", layout="wide")
-API_URL = os.environ.get("FPT_API_URL", "http://127.0.0.1:8000").rstrip("/")
+st.set_page_config(page_title='FPT Forecast Studio',page_icon='📈',layout='wide')
+inject_theme()
+API_URL=os.environ.get('FPT_API_URL','http://127.0.0.1:8000').rstrip('/')
 
 
+@st.cache_data(ttl=30,show_spinner=False)
 def api_get(path):
-    response = requests.get(API_URL + path, timeout=30)
-    response.raise_for_status()
+    response=requests.get(API_URL+path,timeout=30)
+    if not response.ok:
+        raise ValueError(f'API {response.status_code}: {response.json().get("detail",response.text[:300])}')
     return response.json()
 
 
-st.title("FPT · Phân tích và dự báo")
-st.caption("Đồ án Máy học · Giá điều chỉnh · Dự báo một quan sát hợp lệ kế tiếp")
+def api(path,payload=None):
+    if payload is None:
+        return api_get(path)
+    response=requests.post(API_URL+path,json=payload,timeout=30)
+    if not response.ok:
+        detail=response.json().get('detail',response.text[:300])
+        raise ValueError(str(detail))
+    return response.json()
+
+
 try:
-    health = api_get("/health")
-    model_info = api_get("/api/v1/models")
-    historical = api_get("/api/v1/fpt/history?limit=1000")
-    benchmark = api_get("/api/v1/metrics")
-except (requests.RequestException, ValueError) as exc:
-    st.error("Chưa kết nối được backend. Khởi động: python -m uvicorn src.api.main:app --port 8000")
-    st.caption(str(exc))
-    st.stop()
+    health=api('/health');registry=api('/api/v1/models')
+except (requests.RequestException,ValueError) as exc:
+    st.error('Chưa kết nối API local. Chạy: python -m uvicorn src.api.main:app --port 8000')
+    st.caption(str(exc));st.stop()
 
 with st.sidebar:
-    st.header("Mô hình")
-    names = model_info["models"]
-    default = model_info["default_demo_model"]
-    chosen = st.selectbox("Chọn mô hình để so sánh", names, index=names.index(default))
-    st.caption(f"Model được chọn theo validation: {model_info['validation_selected_model']}")
-    st.caption(f"Phiên bản: {health['model_version']}")
-    st.caption(f"Dữ liệu đến: {health['data_as_of']}")
+    st.markdown('<div class="brand"><div class="brand-icon">F</div><div><div class="brand-name">FPT Forecast</div><div class="eyebrow" style="margin:3px 0 0;font-size:9px">Research studio</div></div></div>',unsafe_allow_html=True)
+    st.markdown('### FPT Corporation')
+    st.caption('FPT · HOSE / Việt Nam\n\nGiá điều chỉnh theo nhà cung cấp')
+    st.divider()
+    st.markdown('**Model đang chạy**')
+    st.write('Ridge · 6 return features')
+    st.caption(f"Version {health['model_version']}\n\nTrain nhãn đến {health['training_target_end']}")
+    st.divider()
+    st.markdown('**Nguồn dữ liệu**')
+    st.write(health['source'])
+    st.caption(f"Snapshot đến {health['data_as_of']}\n\nKhông tự tải giá hoặc cập nhật weights.")
+    if st.button('Nạp lại dữ liệu API',width='stretch'):
+        api_get.clear();st.rerun()
+    st.caption('Chỉ làm mới dữ liệu từ backend đang chạy, không download từ thị trường.')
+    st.link_button('Khám phá API',API_URL+'/docs',width='stretch')
 
-history = pd.DataFrame(historical["observations"]).set_index("Date")
-st.subheader("Lịch sử giá đóng cửa điều chỉnh")
-st.line_chart(history[["Close"]])
-st.info("LSTM là mô hình ML dùng demo. Train Mean thắng theo RMSE validation; giao diện không gọi LSTM là model tốt nhất toàn bộ.")
-if st.button("Dự báo quan sát kế tiếp", type="primary"):
-    try:
-        response = requests.post(API_URL + "/api/v1/predict", json={"model": chosen}, timeout=60)
-        response.raise_for_status()
-        st.session_state["prediction"] = response.json()
-    except requests.RequestException as exc:
-        st.error(f"Dự báo thất bại: {exc}")
-prediction = st.session_state.get("prediction")
-if prediction and prediction["model"] == chosen:
-    a, b, c = st.columns(3)
-    a.metric("Giá điều chỉnh tại ngày dữ liệu cuối", f"{prediction['latest_close_adjusted']:,.0f} VND")
-    b.metric("Giá điều chỉnh dự báo", f"{prediction['predicted_close_adjusted']:,.0f} VND")
-    c.metric("Lợi suất dự báo", f"{prediction['predicted_simple_return_pct']:+.3f}%")
-    st.caption(f"Dự báo sau {prediction['as_of']}; chưa xác minh lịch HOSE, không gán một ngày đích giả. Đây không phải giá thị trường trực tiếp.")
-    with st.expander("Xem JSON từ API"):
-        st.json(prediction)
+st.markdown(f'<div class="status-strip"><span class="pill pill-mint">● LOCAL STUDIO</span><span class="pill">FPT · MỘT MÃ</span><span class="pill">DATA {escape(health["data_as_of"])}</span><span class="pill">HỌC CÓ GIÁM SÁT</span></div>',unsafe_allow_html=True)
+page=st.radio('Không gian phân tích',['Tổng quan','Dự báo','Đối chứng','Hành trình model','Dữ liệu & phương pháp','Lộ trình'],index=1,horizontal=True,label_visibility='collapsed')
+st.caption(f"Snapshot {health['data_as_of']} · Không phải giá realtime. Khung tuần/tháng là mô phỏng từ model h=1; ngày dự kiến chưa trừ lịch nghỉ lễ.")
+try:
+    if page in {'Tổng quan','Dự báo'}:
+        history=pd.DataFrame(api('/api/v1/fpt/history?limit=1000')['observations'])
+    if page=='Dự báo':forecast_view(api,history,health,registry)
+    elif page=='Tổng quan':overview_view(api,history,health)
+    elif page=='Đối chứng':benchmark_view(api)
+    elif page=='Hành trình model':journey_view(api)
+    elif page=='Dữ liệu & phương pháp':methodology_view(api,health)
+    else:roadmap_view(api)
+except (requests.RequestException,ValueError) as exc:
+    st.error(f'Không thể hiển thị kết quả: {exc}')
+    st.caption('Kiểm tra API, ngày snapshot và version. Không dùng dữ liệu giả hoặc forecast cũ thay cho kết quả không có.')
 
-st.subheader("Kết quả ngoài mẫu lịch sử")
-table = pd.DataFrame(benchmark["metrics"])
-st.dataframe(table[["model", "split", "n", "rmse", "mae", "hit_rate_pct", "direction_coverage_pct"]], hide_index=True)
-st.caption("Hit Rate bỏ ngày actual đứng giá, không bỏ dự báo 0 để tăng điểm. Zero-return không phát tín hiệu hướng nên là N/A.")
-with st.expander("Giới hạn và cách chọn mô hình"):
-    st.write("Năm 2025 đã được xem trong các lần thử. Cải thiện RMSE của LSTM nhỏ, MAE vẫn cao hơn zero-return; chưa chứng minh lợi nhuận giao dịch.")
-    st.json(benchmark["selection"])
+st.markdown('<div class="footer">FPT FORECAST STUDIO / ĐỒ ÁN MÁY HỌC · LOCAL RESEARCH · CHƯA DEPLOY PUBLIC</div>',unsafe_allow_html=True)

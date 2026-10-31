@@ -1,0 +1,14 @@
+{
+  "inputs": {
+    "reports/recency_bias/20261030T022440928507Z/metrics.csv": "cf0aa8c5670f3cefa594041f0423e95c4313d9384aa39bce51454a658d854aae",
+    "reports/candle_ablation/20261030T093521684942Z/metrics.csv": "ebe8b82625887132ed5ec4b53062072278d2b4a314dcc11ad5ed7c0a77129bbd",
+    "reports/period_comparison/20261030T024048531444Z/predictions.csv.gz": "768f7a3981b576092373cc63a3c3cdc70ca71938b766409870bbe40263a7ecd6"
+  },
+  "figures": {
+    "01_recency_bias.png": "8d6f00c2331095959d6502a6a909dd0dc0f7e3777fd0cd779db7c0b9198d40fb",
+    "02_gap_body.png": "f88466555378ca3b7bdc33c993d3ebc3de42c3233852b41d241f0d95190d3192",
+    "03_actual_predictions.png": "19bfaa246fca151a8b6b2cab54b680705899f9d25fc943ce5001683e170a4666"
+  },
+  "training_fits": 0,
+  "note": "Different research stages are not comparable points on an accuracy-over-time curve."
+}

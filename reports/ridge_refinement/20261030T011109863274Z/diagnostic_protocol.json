@@ -1,0 +1,127 @@
+{
+  "schema": "fpt-ridge-refinement-v1",
+  "study_id": "20261030T011109863274Z",
+  "registered_before_diagnostics_utc": "2026-10-30T01:11:09.873050+00:00",
+  "config": {
+    "protocol_version": "fpt-ridge-refinement-v1",
+    "source_study": "20261029T142732805710Z",
+    "window_study": "20261029T150501819490Z",
+    "source": "vietcap_v3_candidate",
+    "feature_group": "returns",
+    "alphas": [
+      0.1,
+      1.0,
+      10.0,
+      100.0,
+      1000.0
+    ],
+    "windows": {
+      "expanding": null,
+      "2y": 2,
+      "3y": 3,
+      "5y": 5
+    },
+    "selection": "minimum_validation_rmse; ties prefer alpha10 then declared window order then declared alpha order",
+    "diagnostics": {
+      "models": [
+        "Zero-Return",
+        "Train Mean",
+        "Return Persistence",
+        "Ridge",
+        "XGBoost",
+        "LSTM"
+      ],
+      "volatility_feature": "Volatility_20",
+      "training_quantiles": [
+        0.3333333333333333,
+        0.6666666666666666
+      ],
+      "trend_feature": "SMA_Distance_50",
+      "near_sma_band": 0.01,
+      "minimum_segment_n_for_interpretation": 20,
+      "threshold_population": "expanding common training origins within each fold",
+      "selection_source": "previous window study validation selection, fixed before this diagnosis"
+    },
+    "primary_folds": [
+      "eval_2022",
+      "eval_2023",
+      "eval_2024"
+    ],
+    "stress_fold": "eval_2025",
+    "no_new_features_or_labels": true,
+    "no_2026_prices_or_evaluation": true,
+    "automatic_promotion": false,
+    "role": "Adaptive retrospective research after earlier diagnostics; not an untouched holdout or proof of future accuracy."
+  },
+  "config_sha256": "bbe15a5c8043c1b7d9decc4d4549ecc8f1d0a78d68aeeeb1f25fc926ed4aa6c6",
+  "python": "3.13.15",
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "xgboost": "3.4.1",
+    "tensorflow": "2.21.0",
+    "joblib": "1.6.0"
+  },
+  "source_sha256": {
+    "src/models/ridge_refinement.py": "ec7860a4649358cdaabbfe9220e555ae354855592a9b37096f93e35a8e5664ca",
+    "src/models/ridge_refinement_report.py": "55b5a10c957744e2c5c9430e7f1ae616359e2c9633772a7e29baf685e898a008",
+    "src/models/window_comparison.py": "2b9f84a45251c5a393fa46981f9f47a341a2a622f73098dd84c999ecd6708f37",
+    "src/models/source_comparison.py": "d758cb92f382e18510ef12e0e54f55ea376e2cebe8bc3fa6fc0cdd0069648445",
+    "src/models/robustness.py": "dac1f356b579a177cd8cb55364efe65dc33f99f55d6d6c40a1d76656590c5ea6",
+    "src/data/contracts.py": "38a0c2202e38b262a42a3fc3ac974447ad1d1e3e109fc8a1eb3664f758fde468"
+  },
+  "protected_before": {
+    "data/raw/FPT.VN_raw.csv": "501d6a8e0c511dca824994bdd8e91c58e222506eef667780eb15433c2070c8ea",
+    "data/raw/FPT.VN_raw.metadata.json": "9a06daeb0d862e171367105296573fd1f41b6cb11d9f3c185c4e667c87bc51d9",
+    "data/interim/FPT.VN_features.csv": "9d81786aa94fec6530714c661eeb2543594ac0ceaba908c0bb5545f693e61ef4",
+    "data/interim/FPT.VN_features.metadata.json": "2d5770e96310d5c2358538f235f5281f58e22c6fcbd917ac77ef7d830b5e6e68",
+    "data/processed/FPT.VN_supervised.csv": "41a849f26749bf789b712466b3c707d48315f2954375c7bbfc88f3f5ea77b44d",
+    "data/processed/FPT.VN_excluded_rows.csv": "a0c259f6ffb7abd165b5f8716077a4a9e457b8b58ba02b276b370140de7650c1",
+    "models/latest_experiment.json": "c396911638afb1564cda73c16c8d659b6f9d1c9f23b46d159a270cae7af11d2f",
+    "models/reference_experiment.json": "c396911638afb1564cda73c16c8d659b6f9d1c9f23b46d159a270cae7af11d2f"
+  },
+  "source_study_protocol_sha256": "fe956cd2c9ecd458dd2c2fbd3603f5a3f4459dc7b3ddf50e98c39c8096cf510a",
+  "window_study_protocol_sha256": "f284c2f3b0f65d3b784756c5932a7ef4ed58e9591bc730820972f880b6234fa0",
+  "window_predictions_sha256": "18f090f087342c17d67315235e449fafa446c7073966896fee0768d4b9776a99",
+  "window_selection_sha256": "9c0821134990c9638337f3bccdbe0328d95dffc225ca06ae634ec5a8a4fbeb51",
+  "input_zip_sha256": "c678388369d4b62303746dbbac96cbb5c83431076ac24b7ff49b5b952f6839b6",
+  "fixed_folds": [
+    {
+      "id": "eval_2022",
+      "train_end": "2020-12-31",
+      "validation_end": "2021-12-31",
+      "evaluation_end": "2022-12-31",
+      "role": "primary_retrospective"
+    },
+    {
+      "id": "eval_2023",
+      "train_end": "2021-12-31",
+      "validation_end": "2022-12-31",
+      "evaluation_end": "2023-12-31",
+      "role": "primary_retrospective"
+    },
+    {
+      "id": "eval_2024",
+      "train_end": "2022-12-31",
+      "validation_end": "2023-12-31",
+      "evaluation_end": "2024-12-31",
+      "role": "primary_retrospective"
+    },
+    {
+      "id": "eval_2025",
+      "train_end": "2023-12-31",
+      "validation_end": "2024-12-31",
+      "evaluation_end": "2025-12-31",
+      "role": "previously_inspected_stress_diagnostic"
+    }
+  ],
+  "feature_columns": [
+    "Log_Return",
+    "Return_Lag_1",
+    "Return_Lag_2",
+    "Return_Lag_5",
+    "Return_5",
+    "Return_20"
+  ]
+}

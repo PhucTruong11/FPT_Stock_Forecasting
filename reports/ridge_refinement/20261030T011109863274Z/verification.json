@@ -1,0 +1,812 @@
+{
+  "all_metric_fields_verified": true,
+  "grid_metric_rows": 160,
+  "unique_models_reloaded": 60,
+  "condition_prediction_checks": 160,
+  "train_only_scalers_verified": true,
+  "alpha10_matches_previous_control": true,
+  "selection_uses_validation_only": true,
+  "canonical_files_unchanged": true,
+  "checks": [
+    {
+      "candidate": "eval_2022_expanding_a0.1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_expanding_a0.1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_expanding_a1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_expanding_a1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_expanding_a10",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_expanding_a10",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_expanding_a100",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_expanding_a100",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_expanding_a1000",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_expanding_a1000",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_2y_a0.1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_2y_a0.1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_2y_a1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_2y_a1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_2y_a10",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_2y_a10",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_2y_a100",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_2y_a100",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_2y_a1000",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_2y_a1000",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_3y_a0.1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_3y_a0.1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_3y_a1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_3y_a1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_3y_a10",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_3y_a10",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_3y_a100",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_3y_a100",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_3y_a1000",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_3y_a1000",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_5y_a0.1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_5y_a0.1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_5y_a1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_5y_a1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_5y_a10",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_5y_a10",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_5y_a100",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_5y_a100",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_5y_a1000",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2022_5y_a1000",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_expanding_a0.1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_expanding_a0.1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_expanding_a1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_expanding_a1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_expanding_a10",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_expanding_a10",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_expanding_a100",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_expanding_a100",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_expanding_a1000",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_expanding_a1000",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_2y_a0.1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_2y_a0.1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_2y_a1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_2y_a1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_2y_a10",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_2y_a10",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_2y_a100",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_2y_a100",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_2y_a1000",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_2y_a1000",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_3y_a0.1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_3y_a0.1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_3y_a1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_3y_a1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_3y_a10",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_3y_a10",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_3y_a100",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_3y_a100",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_3y_a1000",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_3y_a1000",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_5y_a0.1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_5y_a0.1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_5y_a1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_5y_a1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_5y_a10",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_5y_a10",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_5y_a100",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_5y_a100",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_5y_a1000",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2023_5y_a1000",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_expanding_a0.1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_expanding_a0.1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_expanding_a1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_expanding_a1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_expanding_a10",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_expanding_a10",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_expanding_a100",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_expanding_a100",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_expanding_a1000",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_expanding_a1000",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_2y_a0.1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_2y_a0.1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_2y_a1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_2y_a1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_2y_a10",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_2y_a10",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_2y_a100",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_2y_a100",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_2y_a1000",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_2y_a1000",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_3y_a0.1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_3y_a0.1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_3y_a1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_3y_a1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_3y_a10",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_3y_a10",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_3y_a100",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_3y_a100",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_3y_a1000",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_3y_a1000",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_5y_a0.1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_5y_a0.1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_5y_a1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_5y_a1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_5y_a10",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_5y_a10",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_5y_a100",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_5y_a100",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_5y_a1000",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2024_5y_a1000",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_expanding_a0.1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_expanding_a0.1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_expanding_a1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_expanding_a1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_expanding_a10",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_expanding_a10",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_expanding_a100",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_expanding_a100",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_expanding_a1000",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_expanding_a1000",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_2y_a0.1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_2y_a0.1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_2y_a1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_2y_a1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_2y_a10",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_2y_a10",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_2y_a100",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_2y_a100",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_2y_a1000",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_2y_a1000",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_3y_a0.1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_3y_a0.1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_3y_a1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_3y_a1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_3y_a10",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_3y_a10",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_3y_a100",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_3y_a100",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_3y_a1000",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_3y_a1000",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_5y_a0.1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_5y_a0.1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_5y_a1",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_5y_a1",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_5y_a10",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_5y_a10",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_5y_a100",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_5y_a100",
+      "phase": "evaluation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_5y_a1000",
+      "phase": "validation",
+      "verified": true
+    },
+    {
+      "candidate": "eval_2025_5y_a1000",
+      "phase": "evaluation",
+      "verified": true
+    }
+  ]
+}

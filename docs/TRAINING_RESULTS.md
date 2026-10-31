@@ -1,3 +1,5 @@
+> **Reference lịch sử v2, không phải model local hiện tại.** Xem [quyết định hiện hành và biểu đồ](TRAINING_HISTORY.md), [chạy Ridge local](../README.md).
+
 # Kết quả FPT v2 đã chốt
 
 CPU reference: `20261025T124951351761Z`; seed 42; TensorFlow 2.21.0.

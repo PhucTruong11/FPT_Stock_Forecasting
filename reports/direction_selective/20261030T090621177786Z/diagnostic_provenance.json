@@ -1,0 +1,6 @@
+{
+  "role": "post-result descriptive comparison only; no refit, threshold/model selection or promotion",
+  "existing_reference_file": "reports/period_comparison/20261030T024048531444Z/predictions.csv.gz",
+  "existing_reference_sha256": "768f7a3981b576092373cc63a3c3cdc70ca71938b766409870bbe40263a7ecd6",
+  "script_sha256": "34dea178170ffa723ef35de2269b62c909005975371f5b398531996f9ee3d547"
+}

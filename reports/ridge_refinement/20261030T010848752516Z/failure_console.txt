@@ -1,0 +1,11 @@
+Diagnosis complete and grid registered: D:\Dev\Subject_Uni\Machine_Learning\Stock_Prediction_Project\reports\ridge_refinement\20261030T010848752516Z
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\Dev\Subject_Uni\Machine_Learning\Stock_Prediction_Project\src\models\ridge_refinement.py", line 182, in <module>
+    run(parser.parse_args().config)
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\Subject_Uni\Machine_Learning\Stock_Prediction_Project\src\models\ridge_refinement.py", line 161, in run
+    output=part[['Date',TARGET_DATE_COLUMN,REFERENCE]].copy();output['predicted_log_return']=pred
+                        ^^^^^^^^^^^^^^^^^^
+NameError: name 'TARGET_DATE_COLUMN' is not defined

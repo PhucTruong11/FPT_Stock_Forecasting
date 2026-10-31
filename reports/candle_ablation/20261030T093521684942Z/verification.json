@@ -1,0 +1,334 @@
+{
+  "artifacts_reloaded": 40,
+  "artifact_checks": [
+    {
+      "fold": "eval_2022",
+      "case": "A_returns6",
+      "model": "Ridge_shared",
+      "n": 701,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2022",
+      "case": "A_returns6",
+      "model": "Ridge_recent",
+      "n": 751,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2022",
+      "case": "A_returns6",
+      "model": "Logistic",
+      "n": 701,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2022",
+      "case": "A_returns6",
+      "model": "Logistic_sigmoid",
+      "n": 60,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2022",
+      "case": "B_gap_body7",
+      "model": "Ridge_shared",
+      "n": 701,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2022",
+      "case": "B_gap_body7",
+      "model": "Ridge_recent",
+      "n": 751,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2022",
+      "case": "B_gap_body7",
+      "model": "Logistic",
+      "n": 701,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2022",
+      "case": "B_gap_body7",
+      "model": "Logistic_sigmoid",
+      "n": 60,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2023",
+      "case": "A_returns6",
+      "model": "Ridge_shared",
+      "n": 708,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2023",
+      "case": "A_returns6",
+      "model": "Ridge_recent",
+      "n": 750,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2023",
+      "case": "A_returns6",
+      "model": "Logistic",
+      "n": 708,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2023",
+      "case": "A_returns6",
+      "model": "Logistic_sigmoid",
+      "n": 58,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2023",
+      "case": "B_gap_body7",
+      "model": "Ridge_shared",
+      "n": 708,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2023",
+      "case": "B_gap_body7",
+      "model": "Ridge_recent",
+      "n": 750,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2023",
+      "case": "B_gap_body7",
+      "model": "Logistic",
+      "n": 708,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2023",
+      "case": "B_gap_body7",
+      "model": "Logistic_sigmoid",
+      "n": 58,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2024",
+      "case": "A_returns6",
+      "model": "Ridge_shared",
+      "n": 693,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2024",
+      "case": "A_returns6",
+      "model": "Ridge_recent",
+      "n": 747,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2024",
+      "case": "A_returns6",
+      "model": "Logistic",
+      "n": 693,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2024",
+      "case": "A_returns6",
+      "model": "Logistic_sigmoid",
+      "n": 59,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2024",
+      "case": "B_gap_body7",
+      "model": "Ridge_shared",
+      "n": 693,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2024",
+      "case": "B_gap_body7",
+      "model": "Ridge_recent",
+      "n": 747,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2024",
+      "case": "B_gap_body7",
+      "model": "Logistic",
+      "n": 693,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2024",
+      "case": "B_gap_body7",
+      "model": "Logistic_sigmoid",
+      "n": 59,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2025",
+      "case": "A_returns6",
+      "model": "Ridge_shared",
+      "n": 697,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2025",
+      "case": "A_returns6",
+      "model": "Ridge_recent",
+      "n": 747,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2025",
+      "case": "A_returns6",
+      "model": "Logistic",
+      "n": 697,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2025",
+      "case": "A_returns6",
+      "model": "Logistic_sigmoid",
+      "n": 63,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2025",
+      "case": "B_gap_body7",
+      "model": "Ridge_shared",
+      "n": 697,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2025",
+      "case": "B_gap_body7",
+      "model": "Ridge_recent",
+      "n": 747,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2025",
+      "case": "B_gap_body7",
+      "model": "Logistic",
+      "n": 697,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2025",
+      "case": "B_gap_body7",
+      "model": "Logistic_sigmoid",
+      "n": 63,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2026",
+      "case": "A_returns6",
+      "model": "Ridge_shared",
+      "n": 702,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2026",
+      "case": "A_returns6",
+      "model": "Ridge_recent",
+      "n": 747,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2026",
+      "case": "A_returns6",
+      "model": "Logistic",
+      "n": 702,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2026",
+      "case": "A_returns6",
+      "model": "Logistic_sigmoid",
+      "n": 62,
+      "reused": true,
+      "verified": true
+    },
+    {
+      "fold": "eval_2026",
+      "case": "B_gap_body7",
+      "model": "Ridge_shared",
+      "n": 702,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2026",
+      "case": "B_gap_body7",
+      "model": "Ridge_recent",
+      "n": 747,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2026",
+      "case": "B_gap_body7",
+      "model": "Logistic",
+      "n": 702,
+      "reused": false,
+      "verified": true
+    },
+    {
+      "fold": "eval_2026",
+      "case": "B_gap_body7",
+      "model": "Logistic_sigmoid",
+      "n": 62,
+      "reused": false,
+      "verified": true
+    }
+  ],
+  "prediction_groups_reloaded": 100,
+  "A_control_prediction_rows_matched": 5975,
+  "evaluation_metric_groups": 50,
+  "feature_choices_verified": 10,
+  "threshold_choices_verified": 10,
+  "gap_body_identity_verified": true,
+  "source_zip_and_feature_snapshot_verified": true,
+  "canonical_unchanged": true,
+  "verification_refits": 0
+}

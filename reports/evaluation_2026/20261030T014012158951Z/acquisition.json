@@ -1,0 +1,28 @@
+{
+  "retrieved_at_utc": "2026-10-30T01:40:14.108412+00:00",
+  "vci_url": "https://trading.vietcap.com.vn/api/chart/OHLCChart/gap-chart",
+  "vci_request": {
+    "timeFrame": "ONE_DAY",
+    "symbols": [
+      "FPT"
+    ],
+    "to": 1793318400,
+    "countBack": 2320
+  },
+  "kbs_url": "https://kbbuddywts.kbsec.com.vn/iis-server/investment/stocks/FPT/data_day",
+  "kbs_params": {
+    "sdate": "01-01-2018",
+    "edate": "29-10-2026"
+  },
+  "price_currency": "VND",
+  "price_basis": "provider_adjusted_as_of_retrieval_not_point_in_time_certified",
+  "files": {
+    "kbs.csv": "c160dec0c72487325a5411d09d79f6bc71e27b76b3169205e809ca94d1308112",
+    "kbs_response.json": "39ff0cce8481d22b64598c62bacbd57bc00134209d480dcc40315de1bf4add29",
+    "vci.csv": "5471112c7d103c6da7b09c5ce4eacc029c111e644a2521f3ec37a328fab16a54",
+    "vci_response.json": "531ff40568866c4425173751cde4a4c03ff8898286057511813a18eeaf9226ca",
+    "yahoo/FPT.VN_raw.csv": "5d5d2674bd8d0b8fb4bf87b33bf3b76d9d604bacf13bd72a694aa9b5a0de9907",
+    "yahoo/FPT.VN_raw.metadata.json": "59de6b5aabface011cff5ac18405867f7c3c872bb252e98682dc1c9904d7093a"
+  },
+  "zip_sha256": "b6a0008a5c5fcc52308dfa4c0e846013ad7c2fe3296b76a9333c3ba4ae94cb81"
+}

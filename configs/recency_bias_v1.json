@@ -1,0 +1,20 @@
+{
+  "protocol_version": "fpt-recency-bias-v1",
+  "evaluation_study": "20261030T014012158951Z",
+  "reference_source": "Vietcap adjusted daily OHLCV",
+  "alpha": 100.0,
+  "training_window_years": 3,
+  "old_train_end": "2023-12-31",
+  "static_refresh_end": "2025-12-31",
+  "monthly_policy": "train labels ending at or before previous calendar month-end; model assigned by forecast origin month",
+  "bias": {"window": 60, "minimum_matured": 20},
+  "interval": {"window": 60, "minimum_matured": 60, "quantiles": [0.1, 0.9], "nominal_coverage": 0.8},
+  "primary_cohort": "all 2026 eligible Vietcap origin/target pairs; frozen control re-scored on same cohort",
+  "secondary_cohort": "same 200 common Yahoo/Vietcap pairs as previous evaluation",
+  "feature_group": "returns",
+  "selection_on_2026": false,
+  "automatic_promotion": false,
+  "forward_bundle": "shadow only; refit through latest matured target, frozen calibration snapshot until manually rebuilt",
+  "full_session_forward_rule": "issued local calendar date strictly before realized next positive-volume target date",
+  "role": "adaptive retrospective diagnosis on already inspected 2026; monthly time-order simulation is not fresh independent out-of-sample evidence; adjusted source not point-in-time certified"
+}

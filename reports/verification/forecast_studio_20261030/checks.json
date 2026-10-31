@@ -1,0 +1,75 @@
+{
+  "checked_at_utc": "2026-10-30T14:53:38.195760+00:00",
+  "unit_tests": 119,
+  "unit_tests_passed": true,
+  "new_training_fits": 0,
+  "protected_8_unchanged": true,
+  "legacy_artifacts_unchanged": 10,
+  "forward_ledger_events": 1,
+  "forecast_method_version": "recursive-ridge6-v1",
+  "weights_version": "ridge6_20261029",
+  "multi_step_accuracy_evaluated": false,
+  "calendar_verified": false,
+  "no_commit_or_staging": true,
+  "git_head": "2cc04f2dfc4643d3de22a6b04b52e25a4aecb922",
+  "cloud_deployed": false,
+  "ui_checks": {
+    "Hôm nay": {
+      "steps": 1,
+      "ok": true
+    },
+    "Ngày mai": {
+      "steps": 2,
+      "ok": true
+    },
+    "1 tuần": {
+      "steps": 5,
+      "ok": true
+    },
+    "1 tháng": {
+      "steps": 21,
+      "ok": true
+    },
+    "zero_return_keeps_origin_price": true,
+    "Tổng quan": {
+      "ok": true
+    },
+    "Đối chứng": {
+      "ok": true
+    },
+    "same_dates_october": 21,
+    "Hành trình model": {
+      "ok": true
+    },
+    "Dữ liệu & phương pháp": {
+      "ok": true
+    },
+    "Lộ trình": {
+      "ok": true
+    }
+  },
+  "source_sha256": {
+    "src/models/forecast_path.py": "fb90bb9439aa499ac03fc5773a79174ad6118b48225f4da50bf3f3f6d237d3bd",
+    "src/api/main.py": "3d80bef9d0f56d5b6205f23d7f3b34a8be10ee2934370f0f5b286c7d276d028b",
+    "src/app/streamlit_app.py": "8ed24fcc0a08fb4c66ee7cf887e7bf3bd1bb748487cb99bfacdf36c598677f0c",
+    "src/app/dashboard_views.py": "ca20644d6f7a719b5cc294448666b489594d7eaa323f9f27d80b87d1c0404a16",
+    "src/app/theme.py": "8c9beb790c4abf753175203f15aa42835b2f9c3a7dd85fa0c46f2d919bb70e05",
+    "src/app/check_studio.py": "3cc180eab4b0b085d7d4f6efdac6f5480cfa4e5eee894e144f694aa054a5ef14"
+  },
+  "test_log_sha256": "8c6ecc27b55d1f93851090087378bb76265ca2ff04a2eef4d5689fe80f48912a",
+  "example_steps": {
+    "today": 1,
+    "tomorrow": 2,
+    "week": 5,
+    "month": 21
+  },
+  "responsive_600px_no_horizontal_overflow": true,
+  "responsive_metric_values_not_clipped": true,
+  "temporary_viewport_reset": true,
+  "qa_tab_closed": true,
+  "proof_images": [
+    "studio.png",
+    "forecast_month.png",
+    "narrow.png"
+  ]
+}

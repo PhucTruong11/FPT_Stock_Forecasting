@@ -1,0 +1,13 @@
+{
+  "protocol_version": "fpt-training-window-v1",
+  "control_study": "20261029T142732805710Z",
+  "feature_group": "returns",
+  "windows": {"expanding": null, "2y": 2, "3y": 3, "5y": 5},
+  "validation_selection": "lowest_seed_mean_validation_rmse_then_window_config_order",
+  "automatic_promotion": false,
+  "reference_source": "vietcap_v3_candidate",
+  "same_validation_and_evaluation_as_control": true,
+  "context_policy": "training origins restricted to window; causal warmup and scaler context may precede window start",
+  "duplicate_policy": "reuse verified expanding control when training cohort is identical",
+  "evaluation_role": "retrospective diagnostics; 2025 reported separately; no 2026 data"
+}

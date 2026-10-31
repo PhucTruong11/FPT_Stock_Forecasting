@@ -1,0 +1,17 @@
+{
+  "canonical_hashes_unchanged": 8,
+  "old_model_files_unchanged": 6,
+  "new_model_hashes_verified": 13,
+  "registered_source_matches_current": true,
+  "notebook_cells": 42,
+  "executed_code_cells": 20,
+  "embedded_plots": 18,
+  "notebook_errors": 0,
+  "ledger_events_verified": 1,
+  "matured_outcomes": 0,
+  "full_session_outcomes": 0,
+  "unit_tests_passed": 82,
+  "unit_test_log_sha256": "ce8ca45fd8d39be287514d93285a0d501a3a281e29607bcb0ca90903f4a3615c",
+  "head_unchanged": "2cc04f2dfc4643d3de22a6b04b52e25a4aecb922",
+  "no_commit_or_push": true
+}

@@ -26,6 +26,9 @@ models/**/*.pkl
 models/**/*.keras
 models/research/
 
+# Small, hash-verified serving model required by the local dashboard.
+!models/local_demo/ridge6_20261029/ridge.pkl
+
 # IDE settings
 .vscode/
 .idea/

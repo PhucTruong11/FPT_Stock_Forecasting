@@ -1,0 +1,11 @@
+fold,model,selected_case
+eval_2022,Ridge_shared,A_returns6
+eval_2022,Logistic_raw,B_gap_body7
+eval_2023,Ridge_shared,A_returns6
+eval_2023,Logistic_raw,B_gap_body7
+eval_2024,Ridge_shared,B_gap_body7
+eval_2024,Logistic_raw,B_gap_body7
+eval_2025,Ridge_shared,A_returns6
+eval_2025,Logistic_raw,A_returns6
+eval_2026,Ridge_shared,B_gap_body7
+eval_2026,Logistic_raw,A_returns6

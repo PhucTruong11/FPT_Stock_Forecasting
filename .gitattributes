@@ -9,3 +9,17 @@
 *.keras binary
 *.pkl binary
 *.gz binary
+
+# Preserve exact bytes for new frozen artifacts: their manifests use SHA256.
+models/local_demo/** -text
+reports/window_comparison/** -text
+reports/ridge_refinement/** -text
+reports/evaluation_2026/** -text
+reports/recency_bias/** -text
+reports/period_comparison/** -text
+reports/direction_selective/** -text
+reports/candle_ablation/** -text
+reports/forward_shadow/** -text
+reports/maintenance/** -text
+reports/verification/forecast_studio_20261030/** -text
+reports/verification/local_ridge_demo/** -text

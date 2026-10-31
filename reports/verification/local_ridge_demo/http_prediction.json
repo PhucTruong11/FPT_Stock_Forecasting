@@ -1,0 +1,37 @@
+{
+  "ticker": "FPT.VN",
+  "model": "Ridge+bias60",
+  "model_version": "ridge6_20261029",
+  "as_of": "2026-10-29",
+  "training_target_end": "2026-10-29",
+  "horizon_observations": 1,
+  "target_date": null,
+  "calendar_verified": false,
+  "latest_close_adjusted": 52700.0,
+  "predicted_close_adjusted": 52471.2993351233,
+  "predicted_log_return": -0.0043491147643509405,
+  "predicted_simple_return_pct": -0.433967106027885,
+  "direction": "giam",
+  "bias_offset": -0.003520756969710557,
+  "interval": {
+    "nominal_coverage": 0.8,
+    "lower_close_adjusted": 51347.20560953371,
+    "upper_close_adjusted": 53224.52215086199,
+    "calibration_n": 60,
+    "meaning": "Historical residual quantiles; coverage is not guaranteed."
+  },
+  "price_basis": "provider_adjusted_ohlc",
+  "source": "Vietcap FPT",
+  "issued_at_utc": "2026-10-30T14:15:27.153780+00:00",
+  "excluded_input_rows": 2,
+  "model_role": "local research demonstration",
+  "calibration_policy": "frozen until explicit rebuild",
+  "input_role": "frozen_snapshot",
+  "forward_ledger_recorded": false,
+  "caveats": [
+    "Fixed snapshot, not live market data.",
+    "Historical backtest scores do not evaluate this October-trained bundle.",
+    "Bias and residual intervals are frozen; no automatic update or guaranteed coverage.",
+    "2026 was inspected during research; no demonstrated stable future edge."
+  ]
+}

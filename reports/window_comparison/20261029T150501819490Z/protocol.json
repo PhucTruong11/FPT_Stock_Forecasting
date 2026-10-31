@@ -1,0 +1,167 @@
+{
+  "schema": "fpt-window-comparison-v1",
+  "study_id": "20261029T150501819490Z",
+  "registered_before_fit_utc": "2026-10-29T15:05:01.822567+00:00",
+  "config": {
+    "protocol_version": "fpt-training-window-v1",
+    "control_study": "20261029T142732805710Z",
+    "feature_group": "returns",
+    "windows": {
+      "expanding": null,
+      "2y": 2,
+      "3y": 3,
+      "5y": 5
+    },
+    "validation_selection": "lowest_seed_mean_validation_rmse_then_window_config_order",
+    "automatic_promotion": false,
+    "reference_source": "vietcap_v3_candidate",
+    "same_validation_and_evaluation_as_control": true,
+    "context_policy": "training origins restricted to window; causal warmup and scaler context may precede window start",
+    "duplicate_policy": "reuse verified expanding control when training cohort is identical",
+    "evaluation_role": "retrospective diagnostics; 2025 reported separately; no 2026 data"
+  },
+  "config_sha256": "83febb83192c64d08d48c4467afafe65da95d07aa58812d94da7cde9ff0c290f",
+  "python": "3.13.15",
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "xgboost": "3.4.1",
+    "tensorflow": "2.21.0",
+    "joblib": "1.6.0"
+  },
+  "fixed_model_and_fold_config": {
+    "protocol_version": "fpt-source-comparison-v1",
+    "audit_id": "20261029T135735663765Z",
+    "sources": [
+      "yahoo_v2",
+      "vietcap_v3_candidate"
+    ],
+    "reference_source": "vietcap_v3_candidate",
+    "training_cohort": "same_origin_and_target_date_with_60_observation_context_in_both_sources",
+    "training_labels": "native_to_each_source",
+    "validation_and_evaluation_labels": "one_fixed_vietcap_reference_for_all_candidates",
+    "automatic_promotion": false,
+    "seeds": [
+      42,
+      123,
+      2026
+    ],
+    "lookback": 30,
+    "common_context": 60,
+    "folds": [
+      {
+        "id": "eval_2022",
+        "train_end": "2020-12-31",
+        "validation_end": "2021-12-31",
+        "evaluation_end": "2022-12-31",
+        "role": "primary_retrospective"
+      },
+      {
+        "id": "eval_2023",
+        "train_end": "2021-12-31",
+        "validation_end": "2022-12-31",
+        "evaluation_end": "2023-12-31",
+        "role": "primary_retrospective"
+      },
+      {
+        "id": "eval_2024",
+        "train_end": "2022-12-31",
+        "validation_end": "2023-12-31",
+        "evaluation_end": "2024-12-31",
+        "role": "primary_retrospective"
+      },
+      {
+        "id": "eval_2025",
+        "train_end": "2023-12-31",
+        "validation_end": "2024-12-31",
+        "evaluation_end": "2025-12-31",
+        "role": "previously_inspected_stress_diagnostic"
+      }
+    ],
+    "feature_groups": {
+      "returns": [
+        "Log_Return",
+        "Return_Lag_1",
+        "Return_Lag_2",
+        "Return_Lag_5",
+        "Return_5",
+        "Return_20"
+      ],
+      "full": [
+        "Log_Return",
+        "Return_Lag_1",
+        "Return_Lag_2",
+        "Return_Lag_5",
+        "Return_5",
+        "Return_20",
+        "Volatility_5",
+        "Volatility_20",
+        "SMA_Distance_20",
+        "SMA_Distance_50",
+        "RSI_14",
+        "ATR_Ratio",
+        "Intraday_Range",
+        "Volume_Ratio_20",
+        "Volume_Log_Change",
+        "Volume_ZScore_20"
+      ]
+    },
+    "models": {
+      "Ridge": {
+        "alpha": 10.0
+      },
+      "XGBoost": {
+        "max_depth": 2,
+        "n_estimators": 150,
+        "learning_rate": 0.03,
+        "min_child_weight": 5,
+        "subsample": 0.9,
+        "colsample_bytree": 0.9,
+        "objective": "reg:squarederror",
+        "n_jobs": 2
+      },
+      "LSTM": {
+        "units": 32,
+        "dense_units": 8,
+        "dropout": 0.2,
+        "learning_rate": 0.001,
+        "clipnorm": 1.0,
+        "loss": "huber",
+        "epochs": 40,
+        "batch_size": 32,
+        "early_stopping_patience": 7,
+        "reduce_lr_patience": 3
+      }
+    },
+    "interpretation": {
+      "primary": "paired source differences within the same fold, feature group and seed; three primary folds summarized separately from 2025",
+      "reference_is_exchange_certified": false,
+      "no_2026_prices_or_evaluation": true,
+      "no_more_training_rows_for_v3": true,
+      "native_context_calendars_may_differ": true,
+      "limitations": "Retrospective, not a pristine holdout. The source contrast includes native-label quality and context-history availability. Known provider flags are retained; adjusted prices are not point-in-time certified."
+    }
+  },
+  "base_protocol_sha256": "fe956cd2c9ecd458dd2c2fbd3603f5a3f4459dc7b3ddf50e98c39c8096cf510a",
+  "input_zip_sha256": "c678388369d4b62303746dbbac96cbb5c83431076ac24b7ff49b5b952f6839b6",
+  "protected_before": {
+    "data/raw/FPT.VN_raw.csv": "501d6a8e0c511dca824994bdd8e91c58e222506eef667780eb15433c2070c8ea",
+    "data/raw/FPT.VN_raw.metadata.json": "9a06daeb0d862e171367105296573fd1f41b6cb11d9f3c185c4e667c87bc51d9",
+    "data/interim/FPT.VN_features.csv": "9d81786aa94fec6530714c661eeb2543594ac0ceaba908c0bb5545f693e61ef4",
+    "data/interim/FPT.VN_features.metadata.json": "2d5770e96310d5c2358538f235f5281f58e22c6fcbd917ac77ef7d830b5e6e68",
+    "data/processed/FPT.VN_supervised.csv": "41a849f26749bf789b712466b3c707d48315f2954375c7bbfc88f3f5ea77b44d",
+    "data/processed/FPT.VN_excluded_rows.csv": "a0c259f6ffb7abd165b5f8716077a4a9e457b8b58ba02b276b370140de7650c1",
+    "models/latest_experiment.json": "c396911638afb1564cda73c16c8d659b6f9d1c9f23b46d159a270cae7af11d2f",
+    "models/reference_experiment.json": "c396911638afb1564cda73c16c8d659b6f9d1c9f23b46d159a270cae7af11d2f"
+  },
+  "source_sha256": {
+    "src/models/window_comparison.py": "2b9f84a45251c5a393fa46981f9f47a341a2a622f73098dd84c999ecd6708f37",
+    "src/models/window_comparison_report.py": "e54d712427b1274b276d14ce60b93e5e4445f4e767363754a8aa599dbcd05217",
+    "src/models/source_comparison.py": "d758cb92f382e18510ef12e0e54f55ea376e2cebe8bc3fa6fc0cdd0069648445",
+    "src/models/robustness.py": "dac1f356b579a177cd8cb55364efe65dc33f99f55d6d6c40a1d76656590c5ea6",
+    "src/models/experiment.py": "24bbc95e82d8ebf981c031b3418be7e0f18bf05b693d0ff71f7afc8efb00e5b1"
+  },
+  "models_selected_on": "validation mean RMSE over seeds, never evaluation",
+  "serving_promotion": false
+}

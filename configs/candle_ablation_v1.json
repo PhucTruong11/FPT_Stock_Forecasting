@@ -1,0 +1,23 @@
+{
+  "schema": "fpt-candle-ablation-v1",
+  "control_study": "20261030T090621177786Z",
+  "feature_cases": {
+    "A_returns6": ["Log_Return", "Return_Lag_1", "Return_Lag_2", "Return_Lag_5", "Return_5", "Return_20"],
+    "B_gap_body7": ["Gap_Log", "Body_Log", "Return_Lag_1", "Return_Lag_2", "Return_Lag_5", "Return_5", "Return_20"]
+  },
+  "gap_definition": "log(Open_t / Close_previous_eligible); previous eligible uses the SAME positive-volume, valid-candle sequence as the existing feature builder",
+  "body_definition": "log(Close_t / Open_t); available only after origin close, used to predict next observation",
+  "identity": "Gap_Log + Body_Log = Log_Return; do not keep Log_Return as an input in B",
+  "models": ["Ridge_shared", "Ridge_recent", "Logistic"],
+  "reuse_A": "verified existing artifacts; exact dates, features, targets, versions and parameters required",
+  "training_and_thresholds": "exact folds, hyperparameters, nonzero policy, calibration/validation and margin grid from control study",
+  "feature_selection": {"Ridge_shared": "minimum validation return RMSE; exact ties prefer A", "Logistic_raw": "maximum validation balanced nonzero forced direction; exact ties prefer A"},
+  "Ridge_recent_selection": "A/B are fixed retrospective diagnostic contrasts; never select features from in-sample validation predictions of this model trained through December",
+  "primary_years": [2022, 2023, 2024],
+  "diagnostic_years": [2025, 2026],
+  "paired_bootstrap": {"seed": 20261030, "block_length": 10, "resamples": 2000},
+  "automatic_promotion": false,
+  "network_download": false,
+  "scope": "FPT OHLCV only; no other stock, index, news or new target/horizon",
+  "role": "adaptive retrospective feature experiment on already inspected 2022-2026; no fresh independent holdout or live-forward improvement claim"
+}

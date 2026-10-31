@@ -1,0 +1,26 @@
+{
+  "protocol_version": "fpt-ridge-refinement-v1",
+  "source_study": "20261029T142732805710Z",
+  "window_study": "20261029T150501819490Z",
+  "source": "vietcap_v3_candidate",
+  "feature_group": "returns",
+  "alphas": [0.1, 1.0, 10.0, 100.0, 1000.0],
+  "windows": {"expanding": null, "2y": 2, "3y": 3, "5y": 5},
+  "selection": "minimum_validation_rmse; ties prefer alpha10 then declared window order then declared alpha order",
+  "diagnostics": {
+    "models": ["Zero-Return", "Train Mean", "Return Persistence", "Ridge", "XGBoost", "LSTM"],
+    "volatility_feature": "Volatility_20",
+    "training_quantiles": [0.3333333333333333, 0.6666666666666666],
+    "trend_feature": "SMA_Distance_50",
+    "near_sma_band": 0.01,
+    "minimum_segment_n_for_interpretation": 20,
+    "threshold_population": "expanding common training origins within each fold",
+    "selection_source": "previous window study validation selection, fixed before this diagnosis"
+  },
+  "primary_folds": ["eval_2022", "eval_2023", "eval_2024"],
+  "stress_fold": "eval_2025",
+  "no_new_features_or_labels": true,
+  "no_2026_prices_or_evaluation": true,
+  "automatic_promotion": false,
+  "role": "Adaptive retrospective research after earlier diagnostics; not an untouched holdout or proof of future accuracy."
+}

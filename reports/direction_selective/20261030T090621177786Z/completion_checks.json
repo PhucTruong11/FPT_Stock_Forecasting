@@ -1,0 +1,21 @@
+{
+  "checked_at_utc": "2026-10-30T09:16:55.645849+00:00",
+  "base_fits": 20,
+  "sigmoid_fits": 10,
+  "artifacts_reloaded": 30,
+  "metric_groups_verified": 55,
+  "canonical_hashes_unchanged": 8,
+  "old_model_files_unchanged": 6,
+  "tests_passed": 93,
+  "test_log_sha256": "df31ed06284563fc4951d9c48b6c879ad67d06d48f40398af82b29b5e628fc33",
+  "notebook_cells": 19,
+  "notebook_code_cells_executed": 8,
+  "notebook_plots": 6,
+  "notebook_errors": 0,
+  "all_6_plots_visually_inspected": true,
+  "presentation_updated_after_fit": true,
+  "notebook_sha256": "2ae0c135b2f328ba33a5b247138866615b80e2a7d595beda92bd8758891873ff",
+  "notebook_generator_current_sha256": "70b2100143a0c5e21829419071403154c803833f9c3fa13595408092993b1f0b",
+  "archived_original_fit_sources_verified": true,
+  "no_promotion_or_commit": true
+}

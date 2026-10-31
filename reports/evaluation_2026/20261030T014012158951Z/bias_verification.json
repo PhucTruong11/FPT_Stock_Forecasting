@@ -1,0 +1,8 @@
+{
+  "no_refit_or_selection": true,
+  "ridge_prediction_equals_intercept_plus_contributions": true,
+  "intercept": 0.0013630015870438725,
+  "mean_feature_contribution": 0.0008248401885626375,
+  "common_origins": 200,
+  "interpretation": "algebraic contribution, not causal attribution"
+}

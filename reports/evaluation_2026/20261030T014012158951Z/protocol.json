@@ -1,0 +1,222 @@
+{
+  "schema": "fpt-frozen-2026-v1",
+  "study_id": "20261030T014012158951Z",
+  "frozen_before_2026_download_utc": "2026-10-30T01:40:12.159695+00:00",
+  "config": {
+    "protocol_version": "fpt-frozen-2026-evaluation-v1",
+    "history_start": "2018-01-01",
+    "origin_start": "2026-01-01",
+    "end_exclusive": "2026-10-30",
+    "client_as_of_date": "2026-10-30",
+    "reference_source": "Vietcap adjusted daily OHLCV",
+    "primary_cohort": "common Yahoo/Vietcap positive-volume origin AND target date pairs",
+    "secondary_cohort": "all eligible Vietcap origins for research Ridge and reference baselines",
+    "serving_run": "20261025T124951351761Z",
+    "research_study": "20261030T011109863274Z",
+    "research_selection_fold": "eval_2025",
+    "research_window": "3y",
+    "research_alpha": 100.0,
+    "research_control_alpha": 10.0,
+    "bootstrap": {
+      "block_length": 10,
+      "resamples": 2000,
+      "seed": 20261030
+    },
+    "price_metrics": "all predictions anchored to SAME Vietcap Close at origin; adjusted VND, not execution prices",
+    "forecast_horizon": "one next positive-volume observation with observed causal OHLCV context; not autonomous multi-step year forecast",
+    "refit_or_select_on_2026": false,
+    "automatic_promotion": false,
+    "evaluation_role": "newly inspected temporal 2026 retrospective holdout; weights trained/selected before opening it in this workflow, but forecasts were NOT issued live before events",
+    "limitations": "Current adjusted source history is not independently point-in-time certified; 2026 becomes inspected after this run. Different training cutoffs/sources confound cross-family comparisons."
+  },
+  "config_sha256": "3bf9a20c490dab2f91ec6341f1064e21cd37f55aa9ebc0aa0fd4488972fe54db",
+  "models": [
+    {
+      "name": "LSTM_serving",
+      "source": "yahoo",
+      "kind": "lstm",
+      "file": "models/experiments/20261025T124951351761Z/lstm_lb30.keras",
+      "scalers": "models/experiments/20261025T124951351761Z/lstm_scalers.pkl",
+      "lookback": 30,
+      "columns": [
+        "Log_Return",
+        "Return_Lag_1",
+        "Return_Lag_2",
+        "Return_Lag_5",
+        "Return_5",
+        "Return_20",
+        "Volatility_5",
+        "Volatility_20",
+        "SMA_Distance_20",
+        "SMA_Distance_50",
+        "RSI_14",
+        "ATR_Ratio",
+        "Intraday_Range",
+        "Volume_Ratio_20",
+        "Volume_Log_Change",
+        "Volume_ZScore_20"
+      ],
+      "train_end": "2022-12-31",
+      "validation_end": "2024-12-31"
+    },
+    {
+      "name": "XGBoost_serving",
+      "source": "yahoo",
+      "kind": "xgboost",
+      "file": "models/experiments/20261025T124951351761Z/xgboost_0.json",
+      "scalers": null,
+      "lookback": null,
+      "columns": [
+        "Log_Return",
+        "Return_Lag_1",
+        "Return_Lag_2",
+        "Return_Lag_5",
+        "Return_5",
+        "Return_20",
+        "Volatility_5",
+        "Volatility_20",
+        "SMA_Distance_20",
+        "SMA_Distance_50",
+        "RSI_14",
+        "ATR_Ratio",
+        "Intraday_Range",
+        "Volume_Ratio_20",
+        "Volume_Log_Change",
+        "Volume_ZScore_20"
+      ],
+      "train_end": "2022-12-31",
+      "validation_end": "2024-12-31"
+    },
+    {
+      "name": "Ridge_serving",
+      "source": "yahoo",
+      "kind": "sklearn",
+      "file": "models/experiments/20261025T124951351761Z/ridge_2.pkl",
+      "scalers": null,
+      "lookback": null,
+      "columns": [
+        "Log_Return",
+        "Return_Lag_1",
+        "Return_Lag_2",
+        "Return_Lag_5",
+        "Return_5",
+        "Return_20",
+        "Volatility_5",
+        "Volatility_20",
+        "SMA_Distance_20",
+        "SMA_Distance_50",
+        "RSI_14",
+        "ATR_Ratio",
+        "Intraday_Range",
+        "Volume_Ratio_20",
+        "Volume_Log_Change",
+        "Volume_ZScore_20"
+      ],
+      "train_end": "2022-12-31",
+      "validation_end": "2024-12-31"
+    },
+    {
+      "name": "Ridge_research_new",
+      "source": "vci",
+      "kind": "sklearn",
+      "file": "models/research/ridge-refinement_20261030T011109863274Z/eval_2025_3y_a100.pkl",
+      "scalers": null,
+      "columns": [
+        "Log_Return",
+        "Return_Lag_1",
+        "Return_Lag_2",
+        "Return_Lag_5",
+        "Return_5",
+        "Return_20"
+      ],
+      "alpha": 100.0,
+      "window": "3y",
+      "train_end": "2023-12-31",
+      "validation_end": "2024-12-31"
+    },
+    {
+      "name": "Ridge_research_old",
+      "source": "vci",
+      "kind": "sklearn",
+      "file": "models/research/window-comparison_20261029T150501819490Z/eval_2025_3y_Ridge_sNone.pkl",
+      "scalers": null,
+      "columns": [
+        "Log_Return",
+        "Return_Lag_1",
+        "Return_Lag_2",
+        "Return_Lag_5",
+        "Return_5",
+        "Return_20"
+      ],
+      "alpha": 10.0,
+      "window": "3y",
+      "train_end": "2023-12-31",
+      "validation_end": "2024-12-31"
+    },
+    {
+      "name": "Zero-Return",
+      "source": "vci",
+      "kind": "constant",
+      "value": 0.0,
+      "train_end": null,
+      "validation_end": null
+    },
+    {
+      "name": "TrainMean_serving",
+      "source": "vci",
+      "kind": "constant",
+      "value": 0.0011591656680351383,
+      "train_end": "2022-12-31",
+      "validation_end": null
+    },
+    {
+      "name": "TrainMean_research",
+      "source": "vci",
+      "kind": "constant",
+      "value": 0.0011900307015132216,
+      "train_end": "2023-12-31",
+      "validation_end": null
+    },
+    {
+      "name": "TrainMean_same_window",
+      "source": "vci",
+      "kind": "constant",
+      "value": 0.0013630015870438725,
+      "train_end": "2023-12-31",
+      "validation_end": null
+    }
+  ],
+  "model_sha256": {
+    "models/experiments/20261025T124951351761Z/ridge_2.pkl": "76d11d185a2803fed1e8bca919c799d144b27f5e7e7d38f92dcd534bad4ceccc",
+    "models/experiments/20261025T124951351761Z/lstm_scalers.pkl": "c1e9ab1a1ff571476976443afb3b93ffb2643c7d413f4ef6180eef25c4bb78d6",
+    "models/experiments/20261025T124951351761Z/xgboost_0.json": "79dff489d79888bc81d660dbaf4e64a7b81a854e3517266966b0540613f5016c",
+    "models/research/ridge-refinement_20261030T011109863274Z/eval_2025_3y_a100.pkl": "8a87f39e7fd1ebd08b4cd7e1db936949e880997a91496103f1c6a74ffa13b266",
+    "models/research/window-comparison_20261029T150501819490Z/eval_2025_3y_Ridge_sNone.pkl": "cfed32457310849fc660b3ef4ae3e52aba923558b4920fab464251ed86fcfa4a",
+    "models/experiments/20261025T124951351761Z/lstm_lb30.keras": "bf5ad380d68c9c87fba251ec69fea7b919a9b084b89c4dc7475f2d15e652027c"
+  },
+  "protected_before": {
+    "data/raw/FPT.VN_raw.csv": "501d6a8e0c511dca824994bdd8e91c58e222506eef667780eb15433c2070c8ea",
+    "data/raw/FPT.VN_raw.metadata.json": "9a06daeb0d862e171367105296573fd1f41b6cb11d9f3c185c4e667c87bc51d9",
+    "data/interim/FPT.VN_features.csv": "9d81786aa94fec6530714c661eeb2543594ac0ceaba908c0bb5545f693e61ef4",
+    "data/interim/FPT.VN_features.metadata.json": "2d5770e96310d5c2358538f235f5281f58e22c6fcbd917ac77ef7d830b5e6e68",
+    "data/processed/FPT.VN_supervised.csv": "41a849f26749bf789b712466b3c707d48315f2954375c7bbfc88f3f5ea77b44d",
+    "data/processed/FPT.VN_excluded_rows.csv": "a0c259f6ffb7abd165b5f8716077a4a9e457b8b58ba02b276b370140de7650c1",
+    "models/latest_experiment.json": "c396911638afb1564cda73c16c8d659b6f9d1c9f23b46d159a270cae7af11d2f",
+    "models/reference_experiment.json": "c396911638afb1564cda73c16c8d659b6f9d1c9f23b46d159a270cae7af11d2f"
+  },
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "tensorflow": "2.21.0",
+    "xgboost": "3.4.1",
+    "yfinance": "1.7.0"
+  },
+  "source_sha256": {
+    "src/models/evaluation_2026.py": "00db9e566b9e2468f41134a508e41d8edea6e4990e4e6547e18ca95cbb939624",
+    "src/models/evaluation_2026_report.py": "3d3d0e872b4761a81ac623b6cd8f0ed7e10ba41c6625ba400c45f20e072c8f3b",
+    "src/features/build_features.py": "29935bd688c01e570c40bcfa127f2ef61e9b108d4a7a80ce6fa72c6d1f6621db",
+    "src/data/contracts.py": "38a0c2202e38b262a42a3fc3ac974447ad1d1e3e109fc8a1eb3664f758fde468",
+    "src/data/source_audit.py": "2b6558c46692f7e902b7e06c26584ea68e98a123a8f0a7ed93218f97b28f3a21"
+  }
+}

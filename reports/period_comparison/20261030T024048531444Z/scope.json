@@ -1,0 +1,33 @@
+{
+  "created_at_utc": "2026-10-30T02:40:48.532738+00:00",
+  "target_start_inclusive": "2026-06-01",
+  "target_end_exclusive": "2026-11-01",
+  "actual_data_end": "2026-10-29",
+  "grain": "same observed origin AND next-observation target pairs for every strategy",
+  "selection": "user-requested retrospective slice of an already inspected period; not a new holdout",
+  "refits": 0,
+  "source_sha256": {
+    "reports/evaluation_2026/20261030T014012158951Z/predictions.csv.gz": "b49b718ba40598c409493e27396e5b1900e39943b3fe2b5a734e2dc299758cb5",
+    "reports/evaluation_2026/20261030T014012158951Z/protocol.json": "54ea323ffe6d60ac77e59f8fd60160c6085d1402dadefdb6db85ea3884a3925b",
+    "reports/evaluation_2026/20261030T014012158951Z/data_snapshot.zip": "b6a0008a5c5fcc52308dfa4c0e846013ad7c2fe3296b76a9333c3ba4ae94cb81",
+    "reports/recency_bias/20261030T022440928507Z/predictions.csv.gz": "8f7784bc84bc2f4c88b47e3a4240772157f0bd45c4ed5fb6251d7bb9bdb3242f",
+    "reports/recency_bias/20261030T022440928507Z/protocol.json": "71397fa566361ea72c8e9b352a84f1dfc96e787f413d6ac1fbc2c095a47a6077",
+    "reports/recency_bias/20261030T022440928507Z/manifest.json": "40e8a5ecb1f7b42ba62ba6d3fe534fdde284855fa84e6349fc2407e85325c88c"
+  },
+  "excluded": "Oct29 shadow model trained after Jun-Sep targets; duplicate rebuilt/frozen research controls",
+  "bootstrap": {
+    "seed": 20261030,
+    "block_length": 10,
+    "resamples": 2000
+  },
+  "protected_before": {
+    "data/raw/FPT.VN_raw.csv": "501d6a8e0c511dca824994bdd8e91c58e222506eef667780eb15433c2070c8ea",
+    "data/raw/FPT.VN_raw.metadata.json": "9a06daeb0d862e171367105296573fd1f41b6cb11d9f3c185c4e667c87bc51d9",
+    "data/interim/FPT.VN_features.csv": "9d81786aa94fec6530714c661eeb2543594ac0ceaba908c0bb5545f693e61ef4",
+    "data/interim/FPT.VN_features.metadata.json": "2d5770e96310d5c2358538f235f5281f58e22c6fcbd917ac77ef7d830b5e6e68",
+    "data/processed/FPT.VN_supervised.csv": "41a849f26749bf789b712466b3c707d48315f2954375c7bbfc88f3f5ea77b44d",
+    "data/processed/FPT.VN_excluded_rows.csv": "a0c259f6ffb7abd165b5f8716077a4a9e457b8b58ba02b276b370140de7650c1",
+    "models/latest_experiment.json": "c396911638afb1564cda73c16c8d659b6f9d1c9f23b46d159a270cae7af11d2f",
+    "models/reference_experiment.json": "c396911638afb1564cda73c16c8d659b6f9d1c9f23b46d159a270cae7af11d2f"
+  }
+}

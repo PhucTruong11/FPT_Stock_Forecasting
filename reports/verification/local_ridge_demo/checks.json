@@ -1,0 +1,30 @@
+{
+  "checked_at_utc": "2026-10-30T14:21:28.650317+00:00",
+  "unit_tests": 108,
+  "unit_tests_passed": true,
+  "new_training_fits": 0,
+  "protected_8_unchanged": true,
+  "legacy_artifacts_unchanged": 10,
+  "local_weight_matches_shadow": true,
+  "local_default_model": "Ridge+bias60",
+  "data_as_of": "2026-10-29",
+  "backtest_is_historical_not_new_bundle_evaluation": true,
+  "ledger_events_unchanged": 1,
+  "deleted_rebuildable_cache_bytes": 59378293,
+  "git_head": "2cc04f2dfc4643d3de22a6b04b52e25a4aecb922",
+  "staged_files": 0,
+  "cloud_deployment": false,
+  "requirements_local_sha256": "4ceee1acd4a0cada68d8cc9956178ce546da17f21b3138bfabe7b72c3301db4a",
+  "test_log_sha256": "a4cfeb1120a459179f66334af9bc38242bb9978fb20c5d2ecfa764acc30c236e",
+  "ui_checks": {
+    "no_exceptions": true,
+    "zero_return_selector_updates_cards": true,
+    "jun_oct_cohort_has_lstm": true,
+    "october_same_pairs_per_model": 21,
+    "all_tabs_executed": true
+  },
+  "proof_images": [
+    "dashboard.png",
+    "prediction.png"
+  ]
+}
