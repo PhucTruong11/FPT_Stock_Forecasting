@@ -54,6 +54,11 @@ class LocalDemoTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.service.predict(observations=raw)
 
+    def test_overflowing_model_output_is_rejected_before_json(self):
+        with patch.object(self.service.loaded, 'predict', return_value=np.array([1000.])):
+            with self.assertRaisesRegex(ValueError, 'finite numeric'):
+                self.service.predict('Ridge')
+
     def test_pretraining_origin_and_invalid_latest_bar_rejected(self):
         with self.assertRaisesRegex(ValueError, 'cutoff'):
             self.service.predict(observations=self.service.raw.iloc[:-2])

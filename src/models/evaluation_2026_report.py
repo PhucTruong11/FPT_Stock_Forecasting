@@ -7,6 +7,7 @@ import zipfile
 from pathlib import Path
 import numpy as np
 import pandas as pd
+from src.models.research_notes import write_note
 from src.data.contracts import BASE_DIR,file_sha256
 from src.data.source_audit import save_json,guarded_hashes
 from src.models.evaluation_2026 import aligned_cohort,price_metrics,block_bootstrap
@@ -156,7 +157,7 @@ input_shift.csv so phân bố sáu inputs Ridge với training gốc bằng quan
 ## Bằng chứng
 protocol.json, model_snapshot.zip, source_snapshot.zip khóa trước data; acquisition.json/data_snapshot.zip lưu raw sources và hash; predictions.csv.gz, metrics.csv, monthly_metrics.csv và verification.json giữ forecast/metric có thể kiểm tra lại. ../holdout_exposures.json (tại reports/) ghi khoảng thời gian đã mở. Xem DECISION.md cho diễn giải ưu/nhược và hướng cải thiện.
 '''
-    (study/'REPORT.md').write_text(text,encoding='utf-8',newline='\n')
+    write_note(study / 'REPORT.md', text)
     index=BASE_DIR/'reports/evaluation_2026/studies.json';items=json.loads(index.read_text()) if index.exists() else []
     items=[s for s in items if s['study_id']!=study.name]+[{'study_id':study.name,'status':'complete','common_n':len(cohort),'refits':0,'automatic_promotion':False}]
     save_json(index,items)

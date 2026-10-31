@@ -12,6 +12,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from src.models.research_notes import write_note
 from src.data.contracts import BASE_DIR, file_sha256
 from src.data.source_audit import guarded_hashes, save_json
 from src.features.build_features import TARGET_COLUMN, TARGET_DATE_COLUMN
@@ -304,7 +305,7 @@ python -m src.models.source_comparison_report --study reports/source_comparison/
 
 Lệnh train mới tạo ID riêng. Report/metrics có thể kiểm tra từ file Git; kiểm tra nạp lại cần weights local hoặc tái train. Mỗi lần thử tiếp phải giữ protocol, source snapshot, nhãn đánh giá và cohort để biết thay đổi đến từ đâu.
 """
-    (study / "REPORT.md").write_text(text, encoding="utf-8", newline="\n")
+    write_note(study / 'REPORT.md', text)
 
 
 if __name__ == "__main__":

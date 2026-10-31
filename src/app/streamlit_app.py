@@ -6,7 +6,7 @@ import requests
 import streamlit as st
 from src.app.theme import inject_theme
 from src.app.dashboard_views import (forecast_view, overview_view, benchmark_view,
-    journey_view, methodology_view, roadmap_view)
+    journey_view)
 
 st.set_page_config(page_title='FPT Forecast Studio',page_icon='📈',layout='wide')
 inject_theme()
@@ -55,7 +55,7 @@ with st.sidebar:
     st.link_button('Khám phá API',API_URL+'/docs',width='stretch')
 
 st.markdown(f'<div class="status-strip"><span class="pill pill-mint">● LOCAL STUDIO</span><span class="pill">FPT · MỘT MÃ</span><span class="pill">DATA {escape(health["data_as_of"])}</span><span class="pill">HỌC CÓ GIÁM SÁT</span></div>',unsafe_allow_html=True)
-page=st.radio('Không gian phân tích',['Tổng quan','Dự báo','Đối chứng','Hành trình model','Dữ liệu & phương pháp','Lộ trình'],index=1,horizontal=True,label_visibility='collapsed')
+page=st.radio('Không gian phân tích',['Tổng quan','Dự báo','Đối chứng','Hành trình model'],index=1,horizontal=True,label_visibility='collapsed')
 st.caption(f"Snapshot {health['data_as_of']} · Không phải giá realtime. Khung tuần/tháng là mô phỏng từ model h=1; ngày dự kiến chưa trừ lịch nghỉ lễ.")
 try:
     if page in {'Tổng quan','Dự báo'}:
@@ -64,8 +64,6 @@ try:
     elif page=='Tổng quan':overview_view(api,history,health)
     elif page=='Đối chứng':benchmark_view(api)
     elif page=='Hành trình model':journey_view(api)
-    elif page=='Dữ liệu & phương pháp':methodology_view(api,health)
-    else:roadmap_view(api)
 except (requests.RequestException,ValueError) as exc:
     st.error(f'Không thể hiển thị kết quả: {exc}')
     st.caption('Kiểm tra API, ngày snapshot và version. Không dùng dữ liệu giả hoặc forecast cũ thay cho kết quả không có.')

@@ -13,6 +13,7 @@ import pandas as pd
 from sklearn.linear_model import Ridge
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
+from src.models.research_notes import note_sha256
 from src.data.contracts import BASE_DIR,file_sha256,utc_now
 from src.data.source_audit import save_json,guarded_hashes
 from src.models.source_comparison import load_inputs,source_part,REFERENCE
@@ -124,7 +125,7 @@ def run(config_path):
     study=BASE_DIR/'reports/ridge_refinement'/pd.Timestamp.now(tz='UTC').strftime('%Y%m%dT%H%M%S%fZ');study.mkdir(parents=True)
     artifacts=BASE_DIR/'models/research'/('ridge-refinement_'+study.name);artifacts.mkdir(parents=True)
     before=guarded_hashes()
-    code=['src/models/ridge_refinement.py','src/models/ridge_refinement_report.py','src/models/window_comparison.py',
+    code=['src/models/ridge_refinement.py','src/models/ridge_refinement_report.py', 'src/models/research_notes.py','src/models/window_comparison.py',
           'src/models/source_comparison.py','src/models/robustness.py','src/data/contracts.py']
     frozen={'schema':'fpt-ridge-refinement-v1','study_id':study.name,'registered_before_diagnostics_utc':utc_now(),
         'config':config,'config_sha256':file_sha256(config_path),'python':platform.python_version(),'versions':versions,
@@ -139,7 +140,7 @@ def run(config_path):
     save_json(study/'status.json',{'status':'diagnosing','new_fits':0})
     diagnose(study,config,cfg,features,cohort,previous)
     protocol={**frozen,'registered_before_fit_utc':utc_now(),'diagnostic_protocol_sha256':file_sha256(study/'diagnostic_protocol.json'),
-        'diagnostic_report_sha256':file_sha256(study/'ERROR_ANALYSIS.md')}
+        'diagnostic_report_sha256':note_sha256(study/'ERROR_ANALYSIS.md')}
     save_json(study/'protocol.json',protocol)
     print(f'Diagnosis complete and grid registered: {study}',flush=True)
     columns=cfg['feature_groups']['returns'];specs=[];records=[];exports=[];counts=[];new_fits=0

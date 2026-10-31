@@ -7,6 +7,7 @@ from pathlib import Path
 import joblib
 import numpy as np
 import pandas as pd
+from src.models.research_notes import write_note, note_sha256
 from src.data.contracts import BASE_DIR,file_sha256
 from src.data.source_audit import save_json,guarded_hashes
 from src.models.robustness import fold_masks,score_direction
@@ -100,7 +101,7 @@ RMSE trong bảng nhóm lấy mean qua các seed sau khi tính trong từng nhó
 
 `error_segments.csv`, `error_by_fold_seed.csv`, `regime_thresholds.json`, `diagnostic_predictions.csv.gz` giữ số liệu gốc; `diagnostic_verification.json` kiểm tra threshold train-only, forecast nguồn và loss shares. Grid alpha/window trong config đã định trước khi tính các nhóm lỗi; không thêm feature hoặc nới grid theo điểm evaluation.
 '''
-    (study/'ERROR_ANALYSIS.md').write_text(text,encoding='utf-8',newline='\n')
+    write_note(study / 'ERROR_ANALYSIS.md', text)
 
 
 def report(study):
@@ -108,7 +109,7 @@ def report(study):
     assert json.loads((study/'status.json').read_text())['status']=='complete'
     assert file_sha256(study/'protocol.json')==manifest['protocol_sha256']
     assert file_sha256(study/'diagnostic_protocol.json')==proto['diagnostic_protocol_sha256']
-    assert file_sha256(study/'ERROR_ANALYSIS.md')==proto['diagnostic_report_sha256']
+    assert note_sha256(study/'ERROR_ANALYSIS.md')==proto['diagnostic_report_sha256']
     with zipfile.ZipFile(study/'source_snapshot.zip') as archive:
         for name,sha in proto['source_sha256'].items():assert hashlib.sha256(archive.read(name)).hexdigest()==sha
         assert hashlib.sha256(archive.read('config.json')).hexdigest()==proto['config_sha256']
@@ -222,7 +223,7 @@ python -m src.models.ridge_refinement_report --study reports/ridge_refinement/{s
 ```
 Mỗi lượt fit mới tạo ID mới; không ghi đè nghiên cứu cũ. Notebook 05 tổng hợp các giai đoạn riêng theo đúng nhãn và cohort.
 '''
-    (study/'REPORT.md').write_text(text,encoding='utf-8',newline='\n')
+    write_note(study / 'REPORT.md', text)
     index=BASE_DIR/'reports/ridge_refinement/studies.json';items=json.loads(index.read_text()) if index.exists() else []
     items=[s for s in items if s['study_id']!=study.name]+[{'study_id':study.name,'status':'complete','new_fits':manifest['new_fits'],'conditions':80,'automatic_promotion':False}]
     save_json(index,items)

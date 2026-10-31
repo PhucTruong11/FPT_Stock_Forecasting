@@ -130,7 +130,7 @@ def prepare(config_path: Path, root: Path = BASE_DIR) -> Path:
     with zipfile.ZipFile(study / "input_snapshot.zip", "w", zipfile.ZIP_DEFLATED) as archive:
         for name, content in frames.items():
             archive.writestr(name, content)
-    code = ["src/models/source_comparison.py", "src/models/source_comparison_report.py", "src/models/robustness.py",
+    code = ["src/models/source_comparison.py", "src/models/source_comparison_report.py", 'src/models/research_notes.py', "src/models/robustness.py",
             "src/models/experiment.py", "src/features/build_features.py", "src/data/contracts.py", "src/data/source_audit.py"]
     protocol = {
         "schema": "fpt-source-comparison-v1", "study_id": study.name, "registered_before_training_utc": utc_now(),

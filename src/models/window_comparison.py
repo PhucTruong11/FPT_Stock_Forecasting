@@ -102,7 +102,7 @@ def run(config_path):
         'config_sha256':file_sha256(config_path),'python':platform.python_version(),'versions':versions,
         'fixed_model_and_fold_config':cfg,'base_protocol_sha256':file_sha256(base/'protocol.json'),
         'input_zip_sha256':file_sha256(base/'input_snapshot.zip'),'protected_before':before,
-        'source_sha256':{name:file_sha256(BASE_DIR/name) for name in ['src/models/window_comparison.py','src/models/window_comparison_report.py',
+        'source_sha256':{name:file_sha256(BASE_DIR/name) for name in ['src/models/window_comparison.py','src/models/window_comparison_report.py', 'src/models/research_notes.py',
             'src/models/source_comparison.py','src/models/robustness.py','src/models/experiment.py']},
         'models_selected_on':'validation mean RMSE over seeds, never evaluation','serving_promotion':False}
     save_json(study/'protocol.json',protocol)

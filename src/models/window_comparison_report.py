@@ -6,6 +6,7 @@ import zipfile
 from pathlib import Path
 import numpy as np
 import pandas as pd
+from src.models.research_notes import write_note
 from src.data.contracts import BASE_DIR,file_sha256
 from src.data.source_audit import save_json,guarded_hashes
 from src.models.source_comparison import REFERENCE,load_inputs,source_part,context_positions
@@ -121,7 +122,7 @@ python -m src.models.window_comparison_report --study reports/window_comparison/
 ```
 Lần train mới luôn có ID mới. Không chạy lại để ghi đè metric của lượt hiện tại.
 '''
-    (study/'REPORT.md').write_text(text,encoding='utf-8',newline='\n')
+    write_note(study / 'REPORT.md', text)
     index=BASE_DIR/'reports/window_comparison/studies.json';studies=json.loads(index.read_text()) if index.exists() else []
     studies=[s for s in studies if s['study_id']!=study.name]+[{'study_id':study.name,'status':'complete','new_fits':manifest['new_fits'],'conditions':112,'automatic_promotion':False}]
     save_json(index,studies);print(f'Verified/report: {study}',flush=True)

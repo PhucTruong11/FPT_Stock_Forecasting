@@ -62,16 +62,16 @@ def build(root=BASE_DIR):
 
     stages = [
         ("25/10/2026", "Legacy → v2", "Sửa nhãn/split/scaler; 4 run CPU/Colab", "LSTM30 tái lập, không phải accuracy tăng dần", "reports/training_history/runs.json"),
-        ("29/10/2026", "Robustness", "63 candidate; feature/seed/fold controls", "Chưa vượt baseline ổn định", "reports/robustness/20261029T131205702813Z/REPORT.md"),
-        ("29/10/2026", "Đối chiếu nguồn", "Audit Yahoo/Vietcap/KBS; 112 candidate", "Vietcap làm ứng viên nguồn nghiên cứu", "reports/source_comparison/20261029T142732805710Z/REPORT.md"),
-        ("29/10/2026", "Training window", "56 fit mới / 112 điều kiện", "Ưu tiên kiểm tra Ridge returns-only", "reports/window_comparison/20261029T150501819490Z/REPORT.md"),
-        ("30/10/2026", "Ridge refinement", "48 fit mới / 80 điều kiện; giữ lượt export lỗi", "Window 3y, alpha100 cho fold mới nhất", "reports/ridge_refinement/20261030T011109863274Z/REPORT.md"),
-        ("30/10/2026", "Frozen 2026", "0 fit; 200 cặp chung / 202 native", "LSTM/Ridge chưa vượt Zero Return", "reports/evaluation_2026/20261030T014012158951Z/REPORT.md"),
-        ("30/10/2026", "Recency + bias", "13 fit mới; cùng 202 cặp", "Refit cải thiện so Ridge cũ; edge vs zero rất nhỏ", RECENCY + "/REPORT.md"),
-        ("30/10/2026", "Phân loại/selective", "20 base + 10 calibrator", "Chưa thay regression; all-down sau calibration", "reports/direction_selective/20261030T090621177786Z/REPORT.md"),
-        ("30/10/2026", "Gap/thân nến", "20 fit B + 20 artifact A tái dùng", "Chưa cải thiện ổn định; giữ A 6 feature", "reports/candle_ablation/20261030T093521684942Z/REPORT.md"),
+        ("29/10/2026", "Robustness", "63 candidate; feature/seed/fold controls", "Chưa vượt baseline ổn định", "reports/robustness/20261029T131205702813Z/verification.json"),
+        ("29/10/2026", "Đối chiếu nguồn", "Audit Yahoo/Vietcap/KBS; 112 candidate", "Vietcap làm ứng viên nguồn nghiên cứu", "reports/source_comparison/20261029T142732805710Z/verification.json"),
+        ("29/10/2026", "Training window", "56 fit mới / 112 điều kiện", "Ưu tiên kiểm tra Ridge returns-only", "reports/window_comparison/20261029T150501819490Z/verification.json"),
+        ("30/10/2026", "Ridge refinement", "48 fit mới / 80 điều kiện; giữ lượt export lỗi", "Window 3y, alpha100 cho fold mới nhất", "reports/ridge_refinement/20261030T011109863274Z/verification.json"),
+        ("30/10/2026", "Frozen 2026", "0 fit; 200 cặp chung / 202 native", "LSTM/Ridge chưa vượt Zero Return", "reports/evaluation_2026/20261030T014012158951Z/verification.json"),
+        ("30/10/2026", "Recency + bias", "13 fit mới; cùng 202 cặp", "Refit cải thiện so Ridge cũ; edge vs zero rất nhỏ", RECENCY + "/verification.json"),
+        ("30/10/2026", "Phân loại/selective", "20 base + 10 calibrator", "Chưa thay regression; all-down sau calibration", "reports/direction_selective/20261030T090621177786Z/verification.json"),
+        ("30/10/2026", "Gap/thân nến", "20 fit B + 20 artifact A tái dùng", "Chưa cải thiện ổn định; giữ A 6 feature", "reports/candle_ablation/20261030T093521684942Z/verification.json"),
         ("30/10/2026", "API/UI local", "0 fit; đóng gói Ridge đến 29/10", "User chọn hướng chính; chưa chứng minh forward edge", "models/local_demo/ridge6_20261029/manifest.json"),
-        ("30/10/2026", "Forecast Studio", "0 fit; 6 trang, ngày/tuần/tháng recursive", "h=1 đã train; nhiều bước chưa kiểm định riêng", "docs/FORECAST_STUDIO.md")]
+        ("30/10/2026", "Forecast Studio", "0 fit; 4 mục UI, ngày/tuần/tháng recursive", "h=1 đã train; nhiều bước chưa kiểm định riêng", "ARCHITECTURE.md#forecast-studio")]
     save_json(root / "reports/training_history/study_timeline.json", [dict(zip(
         ["Ngày", "Giai đoạn", "Công việc", "Kết luận", "Evidence"], row)) for row in stages])
     save_json(out / "sources.json", {"inputs": {p.relative_to(root).as_posix(): file_sha256(p) for p in [metrics_path, candle_path, predictions_path]},

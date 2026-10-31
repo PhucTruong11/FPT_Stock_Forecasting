@@ -102,7 +102,8 @@ def run_study(config_path: Path, root: Path = BASE_DIR) -> Path:
         "study_id": run_id, "registered_before_training_utc": datetime.now(timezone.utc).isoformat(),
         "config": config, "config_sha256": file_sha256(Path(config_path)),
         "source_sha256": {str(p.relative_to(root)).replace("\\", "/"): file_sha256(p) for p in
-                          (Path(__file__), root / "src/models/experiment.py", root / "src/features/build_features.py")},
+                          (Path(__file__), root / "src/models/experiment.py", root / "src/features/build_features.py",
+                           root / "src/models/robustness_report.py", root / "src/models/research_notes.py")},
         "data_sha256": meta["output_sha256"], "raw_sha256": meta["source_raw_sha256"],
         "incumbent": json.loads(pointers["latest_experiment.json"]),
         "common_context": 60, "schema": "fpt-robustness-v1",

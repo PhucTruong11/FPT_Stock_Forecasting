@@ -110,7 +110,7 @@ def run(config_path):
     parent,raw,labels=load_snapshot(cfg);columns=cfg['features']
     study=BASE_DIR/'reports/direction_selective'/pd.Timestamp.now(tz='UTC').strftime('%Y%m%dT%H%M%S%fZ');study.mkdir(parents=True)
     directory=BASE_DIR/'models/research'/('direction-selective_'+study.name);directory.mkdir(parents=True)
-    code=['src/models/direction_selective.py','src/models/direction_selective_report.py','src/models/direction_selective_notebook.py',
+    code=['src/models/direction_selective.py','src/models/direction_selective_report.py', 'src/models/research_notes.py','src/models/training_journey_notebook.py',
           'src/models/recency_bias.py','src/features/build_features.py','src/data/contracts.py']
     folds=[]
     for year in cfg['evaluation_years']:

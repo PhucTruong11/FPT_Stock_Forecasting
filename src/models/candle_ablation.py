@@ -57,7 +57,7 @@ def run(config_path):
     study=BASE_DIR/'reports/candle_ablation'/pd.Timestamp.now(tz='UTC').strftime('%Y%m%dT%H%M%S%fZ');study.mkdir(parents=True)
     artifacts=BASE_DIR/'models/research'/('candle-ablation_'+study.name);artifacts.mkdir(parents=True)
     code=['src/features/candle_features.py','src/features/build_features.py','src/models/candle_ablation.py',
-          'src/models/candle_ablation_report.py','src/models/candle_ablation_notebook.py','src/models/direction_selective.py',
+          'src/models/candle_ablation_report.py', 'src/models/research_notes.py','src/models/training_journey_notebook.py','src/models/direction_selective.py',
           'src/models/recency_bias.py','src/data/contracts.py']
     protocol={'study_id':study.name,'registered_before_fit_utc':utc_now(),'config':cfg,'direction_config':dcfg,'folds':cp['folds'],
         'python':sys.version,'versions':versions,'protected_before':guarded_hashes(),'input_zip_sha256':cp['input_zip_sha256'],
