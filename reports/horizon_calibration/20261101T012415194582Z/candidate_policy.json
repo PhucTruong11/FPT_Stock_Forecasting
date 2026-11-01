@@ -1,0 +1,36 @@
+{
+  "schema": "fpt-recursive-band-calibration-v1",
+  "study": "reports/horizon_calibration/20261101T012415194582Z",
+  "calibration_target_end": "2026-06-30",
+  "allowed_model_versions": [
+    "refit_2025_native",
+    "ridge6_20261029"
+  ],
+  "evaluated_horizons_observations": [
+    5,
+    22
+  ],
+  "source_model": "refit_2025_native",
+  "scope": "historical scale applied to October bundle only as a disclosed demo policy; no validation of that bundle",
+  "coverage_guaranteed": false,
+  "factors": {
+    "Ridge": {
+      "5": 1.0,
+      "22": 1.0
+    },
+    "Ridge+bias60": {
+      "5": 1.0,
+      "22": 1.0
+    }
+  },
+  "calibration_n": {
+    "Ridge": {
+      "5": 54,
+      "22": 37
+    },
+    "Ridge+bias60": {
+      "5": 54,
+      "22": 37
+    }
+  }
+}

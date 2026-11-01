@@ -1,0 +1,97 @@
+{
+  "schema": "fpt-recursive-band-calibration-v1",
+  "study": "reports/horizon_calibration/20261101T012415194582Z",
+  "calibration_target_end": "2026-06-30",
+  "allowed_model_versions": [
+    "refit_2025_native",
+    "ridge6_20261029"
+  ],
+  "evaluated_horizons_observations": [
+    5,
+    22
+  ],
+  "source_model": "refit_2025_native",
+  "scope": "historical scale applied to October bundle only as a disclosed demo policy; no validation of that bundle",
+  "coverage_guaranteed": false,
+  "factors": {
+    "Ridge": {
+      "5": 1.0,
+      "22": 1.0
+    },
+    "Ridge+bias60": {
+      "5": 1.0,
+      "22": 1.0
+    }
+  },
+  "calibration_n": {
+    "Ridge": {
+      "5": 54,
+      "22": 37
+    },
+    "Ridge+bias60": {
+      "5": 54,
+      "22": 37
+    }
+  },
+  "candidate_factors": {
+    "Ridge": {
+      "5": 1.0,
+      "22": 1.0
+    },
+    "Ridge+bias60": {
+      "5": 1.0,
+      "22": 1.0
+    }
+  },
+  "activation_decisions": [
+    {
+      "model": "Ridge",
+      "horizon": 5,
+      "candidate_factor": 1.0,
+      "active_factor": 1.0,
+      "passed_gate": true,
+      "coverage_before": 72.58064516129032,
+      "coverage_after": 72.58064516129032,
+      "interval_score_before": 0.1726310943282662,
+      "interval_score_after": 0.1726310943282662,
+      "reason": "no widening needed on calibration"
+    },
+    {
+      "model": "Ridge",
+      "horizon": 22,
+      "candidate_factor": 1.0,
+      "active_factor": 1.0,
+      "passed_gate": true,
+      "coverage_before": 64.51612903225806,
+      "coverage_after": 64.51612903225806,
+      "interval_score_before": 0.37758140374066124,
+      "interval_score_after": 0.37758140374066124,
+      "reason": "no widening needed on calibration"
+    },
+    {
+      "model": "Ridge+bias60",
+      "horizon": 5,
+      "candidate_factor": 1.0,
+      "active_factor": 1.0,
+      "passed_gate": true,
+      "coverage_before": 74.19354838709677,
+      "coverage_after": 74.19354838709677,
+      "interval_score_before": 0.17169704962880497,
+      "interval_score_after": 0.17169704962880497,
+      "reason": "no widening needed on calibration"
+    },
+    {
+      "model": "Ridge+bias60",
+      "horizon": 22,
+      "candidate_factor": 1.0,
+      "active_factor": 1.0,
+      "passed_gate": true,
+      "coverage_before": 67.74193548387096,
+      "coverage_after": 67.74193548387096,
+      "interval_score_before": 0.38564146258803755,
+      "interval_score_after": 0.38564146258803755,
+      "reason": "no widening needed on calibration"
+    }
+  ],
+  "activation_gate": "candidate fixed on calibration only; activate per model/h if evaluation coverage distance to 80% and mean interval score do not worsen; at least 30 evaluation origins"
+}

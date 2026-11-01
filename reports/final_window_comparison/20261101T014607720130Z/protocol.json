@@ -1,0 +1,140 @@
+{
+  "registered_before_training_utc": "2026-11-01T01:46:07.721060+00:00",
+  "config": {
+    "schema": "fpt-final-window-comparison-v1",
+    "windows": {
+      "3y": 3,
+      "5y": 5,
+      "all_2018": null
+    },
+    "history_start": "2018-01-01",
+    "source": "frozen Vietcap adjusted OHLCV through 2026-10-29",
+    "features": [
+      "Log_Return",
+      "Return_Lag_1",
+      "Return_Lag_2",
+      "Return_Lag_5",
+      "Return_5",
+      "Return_20"
+    ],
+    "alpha": 100.0,
+    "validation_years": [
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "selection": "lowest equal-year mean h1 raw Ridge validation RMSE; exact ties prefer 3y, then5y, thenall_2018",
+    "diagnostic_year": 2026,
+    "multistep_diagnostic_horizons": [
+      5,
+      22
+    ],
+    "multistep_policy": "exact forecast replay; bias step1 only; centered block5 bootstrap512paths; all width factors1",
+    "bias": {
+      "window": 60,
+      "minimum_matured": 20
+    },
+    "interval": {
+      "window": 60,
+      "minimum_matured": 60,
+      "quantiles": [
+        0.1,
+        0.9
+      ]
+    },
+    "paired_ci": {
+      "block_origins": 20,
+      "resamples": 2000,
+      "seed": 20261101
+    },
+    "asof_candidate_cutoff": "2026-10-29",
+    "model_fits_maximum": 18,
+    "reuse": "only byte-identical training rows/values within this study; log duplicates, do not invent missing early history",
+    "automatic_promotion": false,
+    "role": "final bounded window contrast requested by user; adaptive retrospective research on already inspected history; no fresh holdout claim or hyperparameter expansion"
+  },
+  "config_sha256": "218001fb35bd302b5c1148ff976d2800f419474799d0667918ee6b4adc54f09c",
+  "input_zip_sha256": "b6a0008a5c5fcc52308dfa4c0e846013ad7c2fe3296b76a9333c3ba4ae94cb81",
+  "input_vci_sha256": "5471112c7d103c6da7b09c5ce4eacc029c111e644a2521f3ec37a328fab16a54",
+  "python": "3.13.15",
+  "packages": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "joblib": "1.6.0"
+  },
+  "source_sha256": {
+    "src/models/final_window_comparison.py": "530dbe92fc4e3d7e600c7a515003208f398aa19e81c1fefe10aa3fba18340689",
+    "src/models/recency_bias.py": "d4132c7d91e8e9a77c7f34174e16bd5901c19d95fa33b442081f60204673eb8a",
+    "src/models/recursive_horizon_calibration.py": "f7563664a79d9884bd33f9f9d6c715472e41b7b96b60b43a10af245369527890",
+    "src/models/recursive_bootstrap_evaluation.py": "e8e8a5cfc3de3912c656aa7d0e901ca75fd50e59cb99628f1522e187227e194c",
+    "src/models/forecast_path.py": "25f927d890aec78bc6e035383be88c5d898a4a6c5effb397f3c6212d1d11a185",
+    "src/models/local_demo.py": "da0cd94c5c2ba94b12b1b02fa1fd3469b462c5f3c3da2c3bb216b4b97115c84f",
+    "src/features/build_features.py": "7473560fb8b42761ddb7ef474c7d897363d304c11dd892e0c174b42e95c7181d",
+    "src/data/contracts.py": "38a0c2202e38b262a42a3fc3ac974447ad1d1e3e109fc8a1eb3664f758fde468",
+    "tests/test_final_window_comparison.py": "484c005b2dcd432b7b18e1d388dc8fb8fee436431c5afedadcef39502d50299c"
+  },
+  "data_quality": {
+    "schema_version": "fpt-features-v2",
+    "ticker": "FPT.VN",
+    "created_at_utc": "2026-11-01T01:46:07.716669+00:00",
+    "raw_rows": 2202,
+    "zero_volume_excluded": 2,
+    "invalid_candle_excluded": 0,
+    "excluded_rows": 2,
+    "eligible_rows": 2200,
+    "warmup_rows": 49,
+    "feature_rows": 2151,
+    "labeled_rows": 2150,
+    "feature_count": 16,
+    "feature_columns": [
+      "Log_Return",
+      "Return_Lag_1",
+      "Return_Lag_2",
+      "Return_Lag_5",
+      "Return_5",
+      "Return_20",
+      "Volatility_5",
+      "Volatility_20",
+      "SMA_Distance_20",
+      "SMA_Distance_50",
+      "RSI_14",
+      "ATR_Ratio",
+      "Intraday_Range",
+      "Volume_Ratio_20",
+      "Volume_Log_Change",
+      "Volume_ZScore_20"
+    ],
+    "context_columns": [
+      "Date",
+      "Close"
+    ],
+    "target_column": "Target_Return_1d",
+    "target_date_column": "Target_Date_1d",
+    "horizon_observations": 1,
+    "target_definition": "log(next_positive_volume_close/current_close); reject labels touching invalid candles",
+    "unlabeled_feature_rows": 1,
+    "session_basis": "positive_volume_source_observations",
+    "calendar_verified": false,
+    "imputation": "none",
+    "scaler_fitted": false,
+    "market_context": "disabled; legacy market_index.csv is not consumed",
+    "first_feature_date": "2018-03-21",
+    "last_feature_date": "2026-10-29",
+    "last_labeled_origin": "2026-10-28",
+    "last_target_date": "2026-10-29",
+    "target_calendar_gap_days": {
+      "1": 1698,
+      "2": 7,
+      "3": 410,
+      "4": 10,
+      "5": 12,
+      "6": 5,
+      "8": 4,
+      "10": 4
+    },
+    "model_compatibility": "Existing v1 model/scaler artifacts require retraining."
+  },
+  "selection_role": "historical validation2022-25 already inspected; 2026 never chooses window; no untouched holdout claim"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "fpt-final-window-comparison-v1",
+  "windows": {"3y": 3, "5y": 5, "all_2018": null},
+  "history_start": "2018-01-01",
+  "source": "frozen Vietcap adjusted OHLCV through 2026-10-29",
+  "features": ["Log_Return", "Return_Lag_1", "Return_Lag_2", "Return_Lag_5", "Return_5", "Return_20"],
+  "alpha": 100.0,
+  "validation_years": [2022, 2023, 2024, 2025],
+  "selection": "lowest equal-year mean h1 raw Ridge validation RMSE; exact ties prefer 3y, then5y, thenall_2018",
+  "diagnostic_year": 2026,
+  "multistep_diagnostic_horizons": [5, 22],
+  "multistep_policy": "exact forecast replay; bias step1 only; centered block5 bootstrap512paths; all width factors1",
+  "bias": {"window": 60, "minimum_matured": 20},
+  "interval": {"window": 60, "minimum_matured": 60, "quantiles": [0.1, 0.9]},
+  "paired_ci": {"block_origins": 20, "resamples": 2000, "seed": 20261101},
+  "asof_candidate_cutoff": "2026-10-29",
+  "model_fits_maximum": 18,
+  "reuse": "only byte-identical training rows/values within this study; log duplicates, do not invent missing early history",
+  "automatic_promotion": false,
+  "role": "final bounded window contrast requested by user; adaptive retrospective research on already inspected history; no fresh holdout claim or hyperparameter expansion"
+}

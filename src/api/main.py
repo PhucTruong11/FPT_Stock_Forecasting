@@ -7,7 +7,7 @@ from typing import Literal
 
 import pandas as pd
 from fastapi import FastAPI, HTTPException, Query
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from src.data.contracts import BASE_DIR
 from src.models.local_demo import LocalRidgeService
@@ -34,7 +34,14 @@ class PredictRequest(BaseModel):
 class ForecastRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     model: str | None = None
-    horizon: Literal["today", "tomorrow", "week", "month"] = "today"
+    horizon: Literal["today", "tomorrow", "week", "month", "custom"] = "today"
+    target_date: date | None = None
+
+    @model_validator(mode='after')
+    def validate_target(self):
+        if (self.horizon=='custom') != (self.target_date is not None):
+            raise ValueError('Provide target_date exactly when horizon is custom.')
+        return self
 
 
 def create_app(root: Path = BASE_DIR, service_factory=LocalRidgeService) -> FastAPI:
@@ -48,13 +55,15 @@ def create_app(root: Path = BASE_DIR, service_factory=LocalRidgeService) -> Fast
 
     @app.get("/health")
     def health():
+        from src.models.forecast_path import forecast_date_limits
         service = app.state.service
         return {"status": "ready", "model_version": service.manifest["run_id"],
                 "data_as_of": str(service.features["Date"].iloc[-1].date()),
                 "default_demo_model": service.default_model,
                 "mode": "local_frozen_snapshot", "automatic_retraining": False,
                 "source": service.manifest.get("source", "legacy snapshot"),
-                "training_target_end": service.manifest.get("training_target_end")}
+                "training_target_end": service.manifest.get("training_target_end"),
+                "forecast_date_limits": forecast_date_limits(service.features['Date'].iloc[-1])}
 
     @app.get("/api/v1/models")
     def models():
@@ -107,7 +116,7 @@ def create_app(root: Path = BASE_DIR, service_factory=LocalRidgeService) -> Fast
     def forecast_path(request: ForecastRequest):
         from src.models.forecast_path import forecast
         try:
-            return forecast(app.state.service, request.horizon, request.model)
+            return forecast(app.state.service, request.horizon, request.model, target_date=request.target_date)
         except (ValueError, KeyError) as exc:
             raise HTTPException(status_code=422, detail=str(exc)) from exc
 

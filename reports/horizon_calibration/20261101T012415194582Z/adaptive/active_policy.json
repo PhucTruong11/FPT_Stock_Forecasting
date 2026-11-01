@@ -1,0 +1,94 @@
+{
+  "schema": "fpt-recursive-band-calibration-v1",
+  "study": "reports/horizon_calibration/20261101T012415194582Z/adaptive",
+  "calibration_target_end": "2026-10-29",
+  "allowed_model_versions": [
+    "refit_2025_native",
+    "ridge6_20261029"
+  ],
+  "evaluated_horizons_observations": [
+    5,
+    22
+  ],
+  "source_model": "refit_2025_native",
+  "scope": "freeze the latest available causal scale; model-specific transfer to current October bundle remains unvalidated",
+  "coverage_guaranteed": false,
+  "factors": {
+    "Ridge": {
+      "5": 1.0,
+      "22": 1.443833022389854
+    },
+    "Ridge+bias60": {
+      "5": 1.0,
+      "22": 1.4719368206860919
+    }
+  },
+  "candidate_factors": {
+    "Ridge": {
+      "5": 1.214995911546176,
+      "22": 1.443833022389854
+    },
+    "Ridge+bias60": {
+      "5": 1.127815368510103,
+      "22": 1.4719368206860919
+    }
+  },
+  "activation_decisions": [
+    {
+      "model": "Ridge",
+      "horizon": 5,
+      "passed_gate": false,
+      "latest_candidate_factor": 1.214995911546176,
+      "active_frozen_factor": 1.0,
+      "coverage_before": 72.58064516129032,
+      "coverage_rolling": 79.03225806451613,
+      "interval_score_before": 0.17263109432826607,
+      "interval_score_rolling": 0.18254498214121292,
+      "score_calibration_n": 60,
+      "last_score_target": "2026-10-06",
+      "scope": "Gate evaluates rolling policy on historical model; does not validate this frozen factor on current model."
+    },
+    {
+      "model": "Ridge",
+      "horizon": 22,
+      "passed_gate": true,
+      "latest_candidate_factor": 1.443833022389854,
+      "active_frozen_factor": 1.443833022389854,
+      "coverage_before": 64.51612903225806,
+      "coverage_rolling": 64.51612903225806,
+      "interval_score_before": 0.3775814037406612,
+      "interval_score_rolling": 0.37758140374066124,
+      "score_calibration_n": 60,
+      "last_score_target": "2026-10-29",
+      "scope": "Gate evaluates rolling policy on historical model; does not validate this frozen factor on current model."
+    },
+    {
+      "model": "Ridge+bias60",
+      "horizon": 5,
+      "passed_gate": false,
+      "latest_candidate_factor": 1.127815368510103,
+      "active_frozen_factor": 1.0,
+      "coverage_before": 74.19354838709677,
+      "coverage_rolling": 79.03225806451613,
+      "interval_score_before": 0.1716970496288049,
+      "interval_score_rolling": 0.17880364944827967,
+      "score_calibration_n": 60,
+      "last_score_target": "2026-10-06",
+      "scope": "Gate evaluates rolling policy on historical model; does not validate this frozen factor on current model."
+    },
+    {
+      "model": "Ridge+bias60",
+      "horizon": 22,
+      "passed_gate": true,
+      "latest_candidate_factor": 1.4719368206860919,
+      "active_frozen_factor": 1.4719368206860919,
+      "coverage_before": 67.74193548387096,
+      "coverage_rolling": 67.74193548387096,
+      "interval_score_before": 0.3856414625880375,
+      "interval_score_rolling": 0.38564146258803755,
+      "score_calibration_n": 60,
+      "last_score_target": "2026-10-29",
+      "scope": "Gate evaluates rolling policy on historical model; does not validate this frozen factor on current model."
+    }
+  ]
+}

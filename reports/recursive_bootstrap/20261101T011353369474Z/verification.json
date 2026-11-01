@@ -1,0 +1,31 @@
+{
+  "completed_at_utc": "2026-11-01T01:14:22.513335+00:00",
+  "new_fits": 0,
+  "downloads": 0,
+  "automatic_promotion": false,
+  "protected_files_unchanged": 741,
+  "protected_tree_sha256": "d9d95aa171285dc63661815874fe3de721587dceb01c2d947e74d7608c29cfe0",
+  "common_origins": 122,
+  "horizons": [
+    5,
+    21
+  ],
+  "v2_v3_point_forecasts_identical": true,
+  "calibration_targets_never_after_origin": true,
+  "historical_model_train_target_end": "2025-12-31",
+  "serving_model_used_for_historical_scoring": false,
+  "protocol_sha256": "a8f4de9199b671066ba32dc36e6320e26b935dd75e2f4ac3dd7c87026984f6f7",
+  "outputs_sha256": {
+    "comparison.png": "0fb16101c597b332b4325291675ca42d00b9399a0e5b26953339098e9eacee34",
+    "metrics.csv": "58aac408ea6148ed1f096d4bd29376f3d3c4f6c6dc09d48d8dc91a92d9baf2b1",
+    "paired_comparison.csv": "42b0f22e44aa4db12a316feb5767eb7cb53b3f9a81799a8bfab4400a79971d66",
+    "predictions.csv.gz": "bea27f89509bb25df87c10e7670eb8d2404989b1d73cd4087dd8b8aa0b8c38f1",
+    "serving_before_after.json": "6ca12149a1a9c2baa22efb3844276947b337fc76733206b0bae578ee0a53b19d",
+    "source_snapshot.zip": "5902e1cf4cc9191fc9a81dd22d896e7681c3e9a9f163221325cc1ec7b27ba29b",
+    "http_ui_check.json": "16e34de4c9b2001a94bf89ee46a252002436b557fd11d8866c8c278440cf0ece"
+  },
+  "live_http_forecasts_matched_offline": 12,
+  "unit_tests_passed": 130,
+  "legacy_v2_snapshots_reproduced": 6,
+  "streamlit_four_pages_and_horizons_passed": true
+}

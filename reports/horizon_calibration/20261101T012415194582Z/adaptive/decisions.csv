@@ -1,0 +1,5 @@
+model,horizon,passed_gate,latest_candidate_factor,active_frozen_factor,coverage_before,coverage_rolling,interval_score_before,interval_score_rolling,score_calibration_n,last_score_target,scope
+Ridge,5,False,1.214995911546176,1.0,72.58064516129032,79.03225806451613,0.17263109432826607,0.18254498214121292,60,2026-10-06,Gate evaluates rolling policy on historical model; does not validate this frozen factor on current model.
+Ridge,22,True,1.443833022389854,1.443833022389854,64.51612903225806,64.51612903225806,0.3775814037406612,0.37758140374066124,60,2026-10-29,Gate evaluates rolling policy on historical model; does not validate this frozen factor on current model.
+Ridge+bias60,5,False,1.127815368510103,1.0,74.19354838709677,79.03225806451613,0.1716970496288049,0.17880364944827967,60,2026-10-06,Gate evaluates rolling policy on historical model; does not validate this frozen factor on current model.
+Ridge+bias60,22,True,1.4719368206860919,1.4719368206860919,67.74193548387096,67.74193548387096,0.3856414625880375,0.38564146258803755,60,2026-10-29,Gate evaluates rolling policy on historical model; does not validate this frozen factor on current model.

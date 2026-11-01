@@ -4,6 +4,8 @@
 
 Hiện chốt **Ridge với 6 feature lợi suất, alpha 100, cửa sổ train 3 năm** làm hướng chính. Demo local mặc định `Ridge+bias60`; giữ Ridge chưa hiệu chỉnh và Zero Return để đối chứng. LSTM được giữ trong thực nghiệm lịch sử. Chưa chứng minh lợi thế dự báo tương lai ổn định.
 
+Đối chứng train cuối01/11 đã so3năm/5năm/toàn bộ từ2018 trên cùng ngày: validation walk-forward2022–2025 chọn3năm, nhưng lợi thế RMSE chỉ0,10–0,17% và CI chứa0. Năm2026 đã xem chỉ dùng chẩn đoán; toàn bộ lịch sử có lợi ở vài chỉ số nhiều phiên nhưng chưa vượt baseline. Ba candidate tới29/10 được lưu riêng, không thay API; tái fit3y khớp đúng SHA của weights đang chạy. Bảng/biểu đồ và kết luận ở [TRAINING_HISTORY.md](TRAINING_HISTORY.md).
+
 ![Luồng dự án](docs/assets/pipeline.svg)
 
 ## Chạy demo trên máy
@@ -33,7 +35,64 @@ python -m venv venv
 .\venv\Scripts\python.exe -m pip install -r requirements-local.txt
 ```
 
-Bundle phục vụ local được lưu cùng code: `models/local_demo.json` và toàn bộ `models/local_demo/ridge6_20261029/`, gồm Ridge weights nhỏ, scaler trong Pipeline, calibration và snapshot. Các file bundle được giữ nguyên bytes để kiểm tra SHA256 sau clone. `models/research/` vẫn gitignored; muốn tái chạy kiểm chứng cần những weights nghiên cứu cũ thì chuyển chúng riêng. `src.models.local_demo` có thể đóng gói lại từ artifact research đã có; lệnh không train/download và từ chối ghi đè một version.
+Bundle phục vụ local được lưu cùng code, giữ nguyên bytes để kiểm tra SHA256 sau clone. Xem [model đang dùng và model nghiên cứu](#model-đang-dùng-và-model-nghiên-cứu) trước khi thay artifact hoặc bàn giao cho thành viên khác.
+
+## Model đang dùng và model nghiên cứu
+
+### Bộ đang phục vụ API/dashboard
+
+**API hiện nạp bộ `ridge6_20261029` tại `models/local_demo/ridge6_20261029/`, mặc định dùng `Ridge+bias60`.** Cấu hình chính là Ridge alpha 100, 6 feature lợi suất, cửa sổ train 3 năm; nhãn train và snapshot Vietcap đến **29/10/2026**.
+
+Luồng nạp model hiện tại:
+
+```text
+src/api/main.py
+  → LocalRidgeService trong src/models/local_demo.py
+  → models/local_demo.json
+  → models/local_demo/ridge6_20261029/manifest.json
+  → kiểm tra hash và nạp ridge.pkl, calibration.json, raw.csv, backtest.csv.gz
+```
+
+| Thành phần trong bundle | Vai trò |
+| --- | --- |
+| `ridge.pkl` | Pipeline **StandardScaler → Ridge** đã fit; chứa cả scaler và weights |
+| `calibration.json` | Bias và các residual đã có nhãn, dùng hiệu chỉnh dự báo và mô phỏng band |
+| `raw.csv` | Snapshot OHLCV Vietcap FPT để dựng feature/context; không phải giá realtime |
+| `backtest.csv.gz` | Forecast của **model lịch sử** cho trang Đối chứng; không dùng bundle cuối tháng 10 chấm ngược quá khứ |
+| `manifest.json` | Version, cấu hình, cutoff và SHA256 các artifact; được kiểm tra khi khởi động API |
+
+Ba lựa chọn ở trang Dự báo có quan hệ như sau:
+
+| Lựa chọn | Cách sử dụng | Vai trò |
+| --- | --- | --- |
+| **Ridge+bias60** | Dùng `ridge.pkl` và hiệu chỉnh bias từ calibration; khi recursive, bias chỉ cộng bước đầu | Mặc định của demo hiện tại |
+| Ridge | Dùng **cùng file weights/scaler**, bỏ hiệu chỉnh bias | Đối chứng với bản hiệu chỉnh |
+| Zero Return | Giả định return bằng 0, giữ giá origin; không có weights riêng hoặc band residual của Ridge | Baseline so sánh |
+
+Vì vậy, đây **không phải ba model được train độc lập**. LSTM/XGBoost không được nạp để dự báo tương lai trong API hiện tại; LSTM ở trang Đối chứng dùng forecast lịch sử đã lưu. Cấu hình band recursive nằm riêng tại `configs/recursive_band_calibration.json`.
+
+### Các bộ giữ để nghiên cứu và tái lập
+
+| Vị trí | Nội dung / mục đích | API có dùng để dự báo hiện tại? |
+| --- | --- | --- |
+| `models/experiments/20261025T124951351761Z/` | CPU reference v2: baseline, Linear Regression, Ridge, XGBoost và LSTM; kèm manifest, scaler và các cấu hình đã thử | Không |
+| `models/experiments/20261025T132243824425Z/` | Lượt Colab/GPU đối chiếu với CPU reference trên cùng dữ liệu, split và cấu hình | Không |
+| `models/research/` | Weights của các study sau đó: robustness, nguồn dữ liệu, window train, Ridge refinement, bias/recency, classifier/selective và gap/thân nến | Không nạp trực tiếp; bộ được chọn đã đóng gói riêng vào `local_demo/` |
+| `models/research/final-window_20261101T014607720130Z/` | Đối chứng train cuối: 3 năm, 5 năm và toàn bộ từ 2018; giữ candidate riêng, không tự thay bundle đang chạy | Không |
+
+`experiments/` và `research/` được giữ để tái lập, so sánh và giải thích quyết định chọn model, kể cả những lượt không cải thiện. Các study dùng model, nguồn và cohort khác nhau; không lấy metric của chúng gắn cho bundle serving hiện tại.
+
+### Ba file trỏ model cần phân biệt
+
+| File trỏ | Đích hiện tại | Ai sử dụng? |
+| --- | --- | --- |
+| `models/local_demo.json` | `models/local_demo/ridge6_20261029/` | **API/dashboard đang chạy** |
+| `models/latest_experiment.json` | `models/experiments/20261025T124951351761Z/` | Pipeline v2 cũ và công cụ nghiên cứu/tái lập |
+| `models/reference_experiment.json` | Cùng CPU reference `20261025T124951351761Z` | Đối chứng với bản reference đã khóa |
+
+Tên `latest_experiment.json` thuộc pipeline cũ: **không có nghĩa đó là model mới nhất đang phục vụ**, và sửa file này không thay model của API hiện tại. Khi team làm API/UI, dùng bundle `local_demo/` và các endpoint hiện có; khi nghiên cứu, đọc manifest/protocol của study tương ứng.
+
+`models/research/` được gitignore nên clone repo không tự có toàn bộ weights nghiên cứu trên máy tác giả. Nếu cần tái chạy một study, phải bàn giao đúng artifact và kiểm tra hash của study đó. `src.models.local_demo` có thể đóng gói từ artifact research đã có; lệnh không train/download và từ chối ghi đè một version.
 
 ## Bài toán và input/output
 
@@ -92,16 +151,24 @@ Nguồn: [recency/bias metrics](reports/recency_bias/20261030T022440928507Z/metr
 
 Dashboard **FPT Forecast Studio** có 4 mục: tổng quan OHLCV, dự báo, đối chứng và hành trình model. Phương pháp/lộ trình nằm trong ba tài liệu gốc. Có tải JSON/CSV. LSTM xuất hiện trong cohort chung 104 cặp tháng 6–10, dùng forecast đã lưu; không âm thầm train/load lại LSTM khi mở dashboard.
 
+**Chọn ngày đích:** vào Dự báo → Chọn ngày, chọn một ngày từ hôm nay tới một tháng sau. Lịch bị giới hạn thêm bởi tối đa 23 bước ngày làm việc từ snapshot; dữ liệu quá cũ sẽ rút ngắn khoảng hoặc từ chối. Cuối tuần chuyển sang weekday kế tiếp, ngày chọn và ngày đích thực hiện được hiển thị riêng; chưa xác minh nghỉ lễ HOSE. Đường xám nối snapshot tới trước khoảng yêu cầu cũng là mô phỏng, không phải giá hôm nay đã quan sát. Đường xanh kéo tới ngày đích, có bảng từng bước và xuất CSV/JSON.
+
+**Phân tích đường dự báo:** thêm cột tăng/giảm từng bước, biểu đồ thay đổi tích lũy so origin kèm band, các thẻ biên tại ngày đích và đồ thị độ rộng band theo thời gian. Dữ liệu lấy từ cùng response dự báo; có công tắc ẩn/hiện. Return từng bước được đổi từ log return bằng `exp(r) − 1`; band không phải xác suất tăng/giảm hoặc giới hạn lỗ.
+
+**Giải thích dự báo:** dưới biểu đồ giá có mục “Hiểu cách model dự báo”, gồm 3 sơ đồ: lịch sử → 6 feature → scaler/Ridge → giá; vòng lặp nhiều bước; residual bootstrap → vùng kịch bản. Ví dụ tính giá lấy trực tiếp từ kết quả đang xem; nội dung đổi theo Ridge hiệu chỉnh, Ridge thô hoặc Zero Return. Có thể thu gọn cả mục.
+
+**Tổng quan/phân tích:** chọn khung 1 tháng / 3 tháng / 6 tháng / 1 năm / 3 năm / toàn bộ, đồ thị nến hoặc Close, bật/tắt SMA20/50/200 và Bollinger20. Có khối lượng, RSI14, MACD12–26/Signal9, gap/thân nến, ATR14, drawdown, phân bố return và heatmap tháng; công thức/cỡ mẫu được chú thích. Chỉ báo tính trên toàn bộ lịch sử rồi mới thu khung để không mất warm-up. Có công tắc ẩn phân tích chi tiết và tải bảng chỉ báo. Đây là phân tích mô tả snapshot, không thêm feature hoặc train lại Ridge, không gán tỷ lệ phiên tăng thành accuracy và không dùng Bollinger thay band dự báo.
+
 Trang dự báo chọn **hôm nay, ngày mai, 1 tuần hoặc 1 tháng**. Model vẫn chỉ được train cho h=1. Từ bước thứ hai, API cập nhật 6 feature từ chính Close dự báo và chạy Ridge tiếp: đây là **mô phỏng recursive chưa kiểm định riêng**, không phải model tháng đã train. Ngày chỉ bỏ cuối tuần, chưa trừ nghỉ lễ HOSE. Chọn hôm nay/ngày mai rơi cuối tuần sẽ dời sang ngày làm việc dự kiến kế tiếp; tuần/tháng lấy các weekday trong khung lịch. Giới hạn 23 bước từ origin, từ chối khi snapshot quá cũ.
 
-Vùng P10–P90 là residual block-bootstrap mô tả (512 đường, block5, seed cố định), không bảo đảm coverage80%. Zero Return không được gắn vùng sai số của Ridge. Bấm “hôm nay” không chứng minh forecast phát trước phiên. Chi tiết và tiêu chí chốt1–2model: [ARCHITECTURE.md, mục Forecast Studio](ARCHITECTURE.md#forecast-studio).
+Vùng P10–P90 là residual block-bootstrap mô tả (512 đường, block5, seed cố định). Bản `recursive-ridge6-v4` giữ bias ở bước 1, từ bước 2 dùng Ridge thô; center residual như v3 và bổ sung cấu hình độ rộng cho h5/h22. **Hệ số active hiện là1×**: calibration cố định/rolling đã thử nhưng chưa đạt điều kiện để nới band. Không thay dự báo điểm hoặc bảo đảm coverage80%. Đã backtest chính hàm forecast trên121origin lịch sử, tách62origin đến sau để chấm calibration: Ridge+bias coverage h5=74,19%, h22=67,74%; chưa hơn baseline về RMSE. Xem [TRAINING_HISTORY.md](TRAINING_HISTORY.md), gồm cả thử nghiệm5/21 cũ và5/22 mới, khác cohort nên không so trực tiếp. Đây không phải điểm của bundle đang phục vụ;5/22quan sát cũng khác tuần/tháng theo lịch. Zero Return không được gắn vùng sai số của Ridge. Bấm “hôm nay” không chứng minh forecast phát trước phiên. Chi tiết và tiêu chí chốt1–2model: [ARCHITECTURE.md, mục Forecast Studio](ARCHITECTURE.md#forecast-studio).
 
 | Endpoint | Chức năng |
 | --- | --- |
 | `GET /health` | Version, default model, cutoff train và ngày snapshot |
 | `GET /api/v1/models` | Các model local có thể gọi |
 | `POST /api/v1/predict` | `{}` dùng snapshot; hoặc gửi OHLCV điều chỉnh đầy đủ |
-| `POST /api/v1/forecast` | `horizon: today/tomorrow/week/month`, trả đường giá, kịch bản và metadata giới hạn |
+| `POST /api/v1/forecast` | `horizon: today/tomorrow/week/month/custom`; custom cần `target_date: YYYY-MM-DD`, trả đường giá và giới hạn |
 | `GET /api/v1/fpt/history` | Lịch sử snapshot |
 | `GET /api/v1/fpt/ohlcv` | OHLCV thật cho biểu đồ nến và khối lượng |
 | `GET /api/v1/data-quality` | Chất lượng snapshot, feature allowlist và caveats |
@@ -115,23 +182,66 @@ Invoke-RestMethod http://127.0.0.1:8000/api/v1/predict -Method Post -ContentType
 
 Input custom cần ít nhất 51 OHLCV hợp lệ để vượt warm-up builder hiện tại, đơn vị VND, cùng basis điều chỉnh xuyên suốt chuỗi. Chỉ nhận ngày đã qua, không nhận nến ngày hiện tại/tương lai. Origin phải từ cutoff train/calibration trở đi. API không xác nhận được nguồn hoặc basis do caller khai báo; không tự suy ra ngày đích theo lịch sàn.
 
-## Cấu trúc
+## Cấu trúc thư mục và vai trò
+
+Cây dưới đây mô tả cấu trúc hiện tại; các thư mục study trong `research/` và `reports/` được rút gọn. Không đổi tên hoặc di chuyển artifact đã có manifest/hash.
 
 ```text
-configs/                 Giao thức thí nghiệm có version
-src/data/                Tải, hợp đồng dữ liệu, snapshot và audit nguồn
-src/features/            Builder canonical và ablation nghiên cứu
-src/models/              Training, evaluation, evidence và inference local
-src/api/main.py          Backend FastAPI
-src/app/streamlit_app.py Dashboard gọi HTTP API
-notebooks/               EDA, training, benchmark và quan sát nghiên cứu
-models/experiments/      Artifact reference cũ
-models/research/         Artifact nghiên cứu, gitignored
-models/local_demo/       Bundle Ridge tự chứa cho local
-reports/                 Evidence từng study; không xóa kết quả âm
-docs/assets/             Ảnh flow và biểu đồ được ba tài liệu sử dụng
-tests/                  Kiểm tra dữ liệu, thời gian, model, API
+Stock_Prediction_Project/
+├── README.md                          Hướng dẫn chạy, model đang dùng và bản đồ project
+├── TRAINING_HISTORY.md                Nhật ký train/đối chứng, kết quả và biểu đồ
+├── ARCHITECTURE.md                    Khái niệm ML, contract và luồng hệ thống
+├── requirements-local.txt            Dependencies chạy API/dashboard nhẹ
+├── requirements-colab.txt            Môi trường tái lập training trên Colab
+├── requirements.txt                  Dependencies nghiên cứu đầy đủ
+├── .streamlit/config.toml            Cấu hình giao diện Streamlit
+├── configs/                          Giao thức nghiên cứu + chính sách band đang dùng
+├── data/
+│   ├── raw/                          Dữ liệu nguồn của pipeline Yahoo v2
+│   ├── interim/                      Feature và metadata trước ghép nhãn
+│   ├── processed/                    Mẫu có nhãn và các hàng bị loại
+│   ├── snapshots/                    Snapshot v2 công khai dạng ZIP + manifest/hash
+│   └── backups/                      Phiên bản cũ có giá trị nghiên cứu; gitignored
+├── src/
+│   ├── data/                         Download, kiểm tra dữ liệu, snapshot và audit nguồn
+│   ├── features/                     Feature/nhãn nhân quả và ablation gap/thân nến
+│   ├── models/
+│   │   ├── local_demo.py             Đóng gói/nạp bundle Ridge đang phục vụ
+│   │   ├── forecast_path.py          Inference recursive và residual bootstrap
+│   │   └── ...                       Training, evaluation, nghiên cứu và dựng báo cáo
+│   ├── api/main.py                   FastAPI; nạp LocalRidgeService, trả JSON
+│   └── app/
+│       ├── streamlit_app.py          Entry point dashboard; gọi HTTP API
+│       ├── dashboard_views.py        Bốn trang chính
+│       ├── analysis_view.py          Giao diện phân tích lịch sử FPT
+│       ├── market_analysis.py        Tính chỉ báo mô tả từ OHLCV
+│       ├── forecast_analytics.py     Biểu đồ phân tích response dự báo
+│       ├── forecast_explainer.py     Sơ đồ giải thích cách dự báo
+│       ├── theme.py                  Style và biểu đồ dùng chung
+│       └── check_studio.py           Kiểm tra UI với API local đang chạy
+├── models/
+│   ├── local_demo.json               Pointer được API hiện tại sử dụng
+│   ├── local_demo/ridge6_20261029/    BUNDLE ĐANG CHẠY: weights/scaler + data + calibration
+│   ├── experiments/                  REFERENCE CŨ: CPU và lượt Colab đối chứng
+│   │   ├── 20261025T124951351761Z/
+│   │   └── 20261025T132243824425Z/
+│   ├── research/                     WEIGHTS NGHIÊN CỨU theo study/run; gitignored
+│   ├── latest_experiment.json        Pointer pipeline v2 cũ; không chọn model API hiện tại
+│   └── reference_experiment.json     Pointer CPU reference để tái lập
+├── notebooks/                        Bốn notebook EDA, training và đối chứng; xem bảng dưới
+├── reports/
+│   ├── training_history/             Timeline, metric tổng hợp và ghi chú nghiên cứu
+│   ├── verification/                 Bằng chứng kiểm tra artifact, API/UI và portability
+│   ├── maintenance/                  Nhật ký dọn dẹp và archive hỗ trợ cũ
+│   └── ...                           Evidence theo study: protocol, metric, forecast,
+│                                     biểu đồ, input/source snapshot và quyết định
+├── docs/assets/                      Ảnh flow và biểu đồ dùng trong ba tài liệu gốc
+├── examples/predict_latest.json      Ví dụ input JSON cho API hiện tại
+├── tests/                            Kiểm tra dữ liệu, thời gian, model và API
+└── venv/                             Môi trường Python local; gitignored
 ```
+
+**Phân biệt ba nhóm:** `src/models/` là **code**, `models/` là **artifact đã train/đóng gói**, còn `reports/` là **kết quả và bằng chứng nghiên cứu**. Dữ liệu phục vụ demo nằm trong bundle `models/local_demo/.../raw.csv`; các CSV ở `data/` chủ yếu phục vụ pipeline/reference nghiên cứu. Team chạy demo chỉ cần môi trường local, code API/UI, bundle serving và những báo cáo mà dashboard đọc; tái lập training cần thêm dữ liệu/config/artifact của đúng study.
 
 ## Bốn notebook cần dùng
 
@@ -146,7 +256,9 @@ Giữ số notebook cũ để ổn định tham chiếu. Đánh giá v2 và demo
 
 ## Kiểm chứng và kế hoạch tiếp
 
-Đã chạy **124 unit tests** sau dọn tài liệu; Studio đã được kiểm tra 4 mục, 4 khung dự báo và đổi model/cohort/tháng với API thật. [Bằng chứng Studio](reports/verification/forecast_studio_20261030/checks.json), [lượt tích hợp local trước](reports/verification/local_ridge_demo/checks.json). Bộ kiểm thử nghiên cứu đầy đủ cần `requirements.txt`; `requirements-local.txt` dành cho chạy inference/UI.
+Đã chạy **141 unit tests** sau đối chứng train cuối;16fit mới/18điều kiện đều có reload/hash kiểm tra. API/UI vẫn giữ bundle trước đó; Studio đã được kiểm tra4mục/4khung ở lượt tích hợp gần nhất. [Kiểm chứng đối chứng window cuối](reports/final_window_comparison/20261101T014607720130Z/verification.json), [backtest/calibration](reports/horizon_calibration/20261101T012415194582Z/adaptive/verification.json), [kiểm chứng v3 trước](reports/recursive_bootstrap/20261101T011353369474Z/verification.json). Bộ kiểm thử nghiên cứu đầy đủ cần `requirements.txt`; `requirements-local.txt` dành cho chạy inference/UI.
+
+Sau mở rộng lịch chọn ngày/phân tích: **149 unit tests đạt**, UI kiểm tra 4 preset, ngày tự chọn min/max/rỗng, khung phân tích ngắn/toàn bộ và lớp chỉ báo bật/tắt. Lượt này 0 fit, giữ nguyên bundle đã chốt; [biên bản dashboard](reports/verification/dashboard_custom_date_20261101.json).
 
 ```powershell
 .\venv\Scripts\python.exe -m unittest discover -s tests -v

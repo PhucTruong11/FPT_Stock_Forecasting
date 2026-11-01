@@ -1,0 +1,5 @@
+model,horizon,candidate_factor,active_factor,passed_gate,coverage_before,coverage_after,interval_score_before,interval_score_after,reason
+Ridge,5,1.0,1.0,True,72.58064516129032,72.58064516129032,0.1726310943282662,0.1726310943282662,no widening needed on calibration
+Ridge,22,1.0,1.0,True,64.51612903225806,64.51612903225806,0.37758140374066124,0.37758140374066124,no widening needed on calibration
+Ridge+bias60,5,1.0,1.0,True,74.19354838709677,74.19354838709677,0.17169704962880497,0.17169704962880497,no widening needed on calibration
+Ridge+bias60,22,1.0,1.0,True,67.74193548387096,67.74193548387096,0.38564146258803755,0.38564146258803755,no widening needed on calibration

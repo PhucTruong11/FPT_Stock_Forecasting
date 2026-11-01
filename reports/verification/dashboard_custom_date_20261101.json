@@ -1,0 +1,320 @@
+{
+  "completed_at_utc": "2026-11-01T07:55:24.864227+00:00",
+  "scope": "Dashboard custom date and descriptive FPT snapshot analysis; no accuracy or training claim",
+  "new_model_fits": 0,
+  "downloads": 0,
+  "commit_or_push": false,
+  "unit_tests_passed": 149,
+  "health": {
+    "status": "ready",
+    "model_version": "ridge6_20261029",
+    "data_as_of": "2026-10-29",
+    "default_demo_model": "Ridge+bias60",
+    "mode": "local_frozen_snapshot",
+    "automatic_retraining": false,
+    "source": "Vietcap FPT",
+    "training_target_end": "2026-10-29",
+    "forecast_date_limits": {
+      "local_today": "2026-11-01",
+      "calendar_max_date": "2026-12-01",
+      "selectable_min_date": "2026-11-01",
+      "selectable_max_date": "2026-12-01",
+      "max_effective_date_from_snapshot": "2026-12-01",
+      "custom_available": true,
+      "max_steps": 23,
+      "calendar_verified": false,
+      "weekend_policy": "roll forward to next weekday; exchange holidays unverified"
+    }
+  },
+  "http_checks": [
+    {
+      "request": {
+        "horizon": "today"
+      },
+      "status": 200,
+      "effective_target": "2026-11-02",
+      "steps": 2,
+      "bridge_steps": 1,
+      "http_path_identical_to_offline": true
+    },
+    {
+      "request": {
+        "horizon": "tomorrow"
+      },
+      "status": 200,
+      "effective_target": "2026-11-02",
+      "steps": 2,
+      "bridge_steps": 1,
+      "http_path_identical_to_offline": true
+    },
+    {
+      "request": {
+        "horizon": "week"
+      },
+      "status": 200,
+      "effective_target": "2026-11-06",
+      "steps": 6,
+      "bridge_steps": 1,
+      "http_path_identical_to_offline": true
+    },
+    {
+      "request": {
+        "horizon": "month"
+      },
+      "status": 200,
+      "effective_target": "2026-11-30",
+      "steps": 22,
+      "bridge_steps": 1,
+      "http_path_identical_to_offline": true
+    },
+    {
+      "request": {
+        "horizon": "custom",
+        "target_date": "2026-11-01"
+      },
+      "status": 200,
+      "effective_target": "2026-11-02",
+      "steps": 2,
+      "bridge_steps": 1,
+      "http_path_identical_to_offline": true
+    },
+    {
+      "request": {
+        "horizon": "custom",
+        "target_date": "2026-11-13"
+      },
+      "status": 200,
+      "effective_target": "2026-11-13",
+      "steps": 11,
+      "bridge_steps": 1,
+      "http_path_identical_to_offline": true
+    },
+    {
+      "request": {
+        "horizon": "custom",
+        "target_date": "2026-11-14"
+      },
+      "status": 200,
+      "effective_target": "2026-11-16",
+      "steps": 12,
+      "bridge_steps": 1,
+      "http_path_identical_to_offline": true
+    },
+    {
+      "request": {
+        "horizon": "custom",
+        "target_date": "2026-12-01"
+      },
+      "status": 200,
+      "effective_target": "2026-12-01",
+      "steps": 23,
+      "bridge_steps": 1,
+      "http_path_identical_to_offline": true
+    }
+  ],
+  "http_invalid_requests": [
+    {
+      "request": {
+        "horizon": "custom"
+      },
+      "status": 422
+    },
+    {
+      "request": {
+        "horizon": "custom",
+        "target_date": "2026-10-31"
+      },
+      "status": 422
+    },
+    {
+      "request": {
+        "horizon": "custom",
+        "target_date": "2026-12-02"
+      },
+      "status": 422
+    },
+    {
+      "request": {
+        "horizon": "today",
+        "target_date": "2026-11-13"
+      },
+      "status": 422
+    }
+  ],
+  "ui_checks": {
+    "Hôm nay": {
+      "steps": 2,
+      "ok": true
+    },
+    "Ngày mai": {
+      "steps": 2,
+      "ok": true
+    },
+    "1 tuần": {
+      "steps": 6,
+      "ok": true
+    },
+    "1 tháng": {
+      "steps": 22,
+      "ok": true
+    },
+    "custom_min_max_dates": {
+      "ok": true,
+      "max_date": "2026-12-01"
+    },
+    "zero_return_keeps_origin_price": true,
+    "Tổng quan": {
+      "ok": true
+    },
+    "analysis_controls": {
+      "ok": true,
+      "short_and_full_history": true,
+      "indicators_optional": true
+    },
+    "Đối chứng": {
+      "ok": true
+    },
+    "same_dates_october": 21,
+    "Hành trình model": {
+      "ok": true
+    }
+  },
+  "analysis_quality": {
+    "source_rows": 2202,
+    "untraded_rows": 2,
+    "invalid_traded_rows": 0,
+    "eligible_rows": 2200
+  },
+  "analysis_6month_statistics": {
+    "observations": 126,
+    "return_pct": -20.25959963963997,
+    "max_drawdown_pct": -24.364645078585422,
+    "up_pct": 39.2,
+    "down_pct": 56.8,
+    "flat_pct": 4.0,
+    "best_day_pct": 6.85543964232489,
+    "worst_day_pct": -4.97866287339972,
+    "annual_volatility_pct": 27.580588137021607,
+    "daily_return_count": 125
+  },
+  "protected_files_unchanged": 770,
+  "protected_tree_sha256": "dcb4c68d3408c35d04b125f63e913da37fabcd983ebd31936bc61e1df4481203",
+  "last_training_study_outputs_and_weights_unchanged": true,
+  "serving_artifact_hashes": {
+    "ridge.pkl": "3f048d815cc36e507bfdea97b3d4a65a3d69c601a92af4e2a4a9ee4f9e75e916",
+    "raw.csv": "5471112c7d103c6da7b09c5ce4eacc029c111e644a2521f3ec37a328fab16a54",
+    "calibration.json": "88bde34d643590fd478c434e50d867afe3e3ec37c812f6648ea448bf3da4cca9",
+    "backtest.csv.gz": "58f3b160701bae56124c822ba42d04dbe50bdc6a819bb6861933ab791a177658"
+  },
+  "source_sha256": {
+    "src/api/main.py": "415c6f37b85d2e3e598ad27f2a6952db342fd0a2d44e2038a2a69255d261c9f2",
+    "src/models/forecast_path.py": "5f5d34107702eb50f2d55d732054eaf0dcd04bb73c15e5c8bfd21648a2aa5ce5",
+    "src/app/dashboard_views.py": "fc0fb87211725481c997522d9af365e94847cc4082b8c1c60ea0676c4668b269",
+    "src/app/theme.py": "b5a4600338e90ef7226ae58c88c8cd8870b90692389143a37af306bdb956851a",
+    "src/app/market_analysis.py": "00228c58e31a964237afa9df4598e52b5383cf3ac7fbebe08737b8305cb3e887",
+    "src/app/analysis_view.py": "ab0fa4f5a4c6603be42c94046a8d5aff6852b493f5a69b35508bafd24b4fd55e",
+    "src/app/check_studio.py": "b9adc526985c406660e8b545a5dcbde8deeb8d7c83c57fdf980c6ccd411769ce",
+    "tests/test_forecast_path.py": "58453dc056a5eddb895cd5210286b255ccba2dcf04b0fef38f47aea5b36cf25b",
+    "tests/test_market_analysis.py": "d6e6fcd92ddb6acd452947051749d46df34ac1672b8a92447dc9191962535e9f",
+    "src/app/forecast_explainer.py": "5b29e913b264bece6f5d36f7bce58e9b8604a758cf715564e307c90c12a14197",
+    "src/app/forecast_analytics.py": "2844293a56e50e0a1499f45d9af682cd48a1f1a70bb8b26676ddbcf3d3655e86"
+  },
+  "forecast_explainer": {
+    "verified_at_utc": "2026-11-01T08:01:26.713352+00:00",
+    "ui_checks": {
+      "three_diagrams": true,
+      "ridge_bias_raw_and_zero_return": true,
+      "uses_returned_forecast_numbers": true
+    },
+    "prediction_logic_changed": false,
+    "new_model_fits": 0,
+    "browser_verified": true,
+    "responsive_vertical_flow_verified": true
+  },
+  "forecast_analytics": {
+    "verified_at_utc": "2026-11-01T08:05:32.106554+00:00",
+    "ui_checks": {
+      "plots_match_price_ratios": true,
+      "band_width_matches_api": true,
+      "visibility_toggle": true
+    },
+    "browser_verified": true,
+    "new_fits": 0,
+    "prediction_logic_changed": false
+  },
+  "project_cleanup": {
+    "completed_at_utc": "2026-11-01T08:10:34.484420+00:00",
+    "removed_placeholders": [
+      "models/.gitkeep",
+      "data/processed/.gitkeep",
+      "reports/.gitkeep"
+    ],
+    "removed_empty_backup_directories": 4,
+    "protected_research_runtime_files_unchanged": 818,
+    "protected_tree_sha256": "a8c7e0fe8c3290dedf245f929627abb7b8e8c52fa91d4842142520126e3317df",
+    "retained_notebooks": [
+      "01_eda_fpt.ipynb",
+      "02_train_deep_learning_fpt.ipynb",
+      "05_training_journey_fpt.ipynb",
+      "06_compare_predictions_jun_oct_2026.ipynb"
+    ],
+    "preserved_legacy_backups": "Contain unique historical datasets/code/model artifacts; intentionally retained for research.",
+    "unit_tests_passed": 149,
+    "ui_checks": {
+      "Hôm nay": {
+        "steps": 2,
+        "ok": true
+      },
+      "Ngày mai": {
+        "steps": 2,
+        "ok": true
+      },
+      "1 tuần": {
+        "steps": 6,
+        "ok": true
+      },
+      "1 tháng": {
+        "steps": 22,
+        "ok": true
+      },
+      "forecast_analytics": {
+        "plots_match_price_ratios": true,
+        "band_width_matches_api": true,
+        "visibility_toggle": true
+      },
+      "custom_min_max_dates": {
+        "ok": true,
+        "max_date": "2026-12-01"
+      },
+      "zero_return_keeps_origin_price": true,
+      "forecast_explanations": {
+        "three_diagrams": true,
+        "ridge_bias_raw_and_zero_return": true,
+        "uses_returned_forecast_numbers": true
+      },
+      "Tổng quan": {
+        "ok": true
+      },
+      "analysis_controls": {
+        "ok": true,
+        "short_and_full_history": true,
+        "indicators_optional": true
+      },
+      "Đối chứng": {
+        "ok": true
+      },
+      "same_dates_october": 21,
+      "Hành trình model": {
+        "ok": true
+      }
+    },
+    "fresh_service_load": true,
+    "model": "Ridge+bias60",
+    "api_status": "ready",
+    "streamlit_status": 200,
+    "new_fits": 0,
+    "downloads": 0,
+    "commit_or_push": false,
+    "cleanup_scope": "Empty placeholders/directories and disposable cache; original research files unchanged. This verification record is the only evidence file updated."
+  }
+}
