@@ -1,0 +1,31 @@
+{
+  "completed_at_utc": "2026-11-01T01:27:48.012273+00:00",
+  "new_model_fits": 0,
+  "downloads": 0,
+  "protected_files_unchanged": 759,
+  "later_period_origins": 62,
+  "same_forecast_function": true,
+  "points_unchanged": true,
+  "score_labels_matured_before_each_origin": true,
+  "fresh_holdout": false,
+  "activation_is_post_evaluation_demo_decision": true,
+  "policy_path": "configs/recursive_band_calibration.json",
+  "protocol_sha256": "e6782794b034e42dd383a0eb1d479e511c8b787dc931a1802805a7574edc68f9",
+  "outputs_sha256": {
+    "active_policy.json": "8979ac9d5a7b56607aa2980bfe1008fbfae74d8478d5c8f5ac60151ab41746c1",
+    "comparison.png": "854450ea5bf9c6da48dd242af210705a6dd47d50f52cd32a9a1d802e95a74e8d",
+    "decisions.csv": "6986daab72e2c4877bb33f2d7eaf51a929488f5e2a8587e2db8599df6c52a990",
+    "metrics.csv": "4195c67b5d7fecba041d9e82d3ad626041e92d1487b03b8917644eae51fc0267",
+    "predictions.csv.gz": "f55abe6fd0fed62016bd231008aa471aa06c52c36f18562d4ab9fa2eb7cbe7ac",
+    "source_snapshot.zip": "49283db6de5154b0a449b11fa162d0abeaeaa0ab43bfb7f107cf511abf440522",
+    "reviewed_policy.json": "691c3b7e9bf5825c79f6d5bb046780e1653818179bb83128676cdbe95ad0b356",
+    "http_ui_check.json": "db49be7bff942f6ea74c5dc43696615a03298bf0e563dfc493d93a71be855d94",
+    "review_source_snapshot.zip": "f4975c02668178d335e66dc8cb385707b20609c574d38bd3c3e53aea173300bb"
+  },
+  "initial_policy_sha256": "8979ac9d5a7b56607aa2980bfe1008fbfae74d8478d5c8f5ac60151ab41746c1",
+  "policy_sha256": "691c3b7e9bf5825c79f6d5bb046780e1653818179bb83128676cdbe95ad0b356",
+  "post_evaluation_support_review": true,
+  "unit_tests_passed": 137,
+  "live_http_forecasts_matched_offline": 12,
+  "serving_points_and_bands_unchanged_from_v3": true
+}

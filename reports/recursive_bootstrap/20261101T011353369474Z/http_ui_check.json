@@ -1,0 +1,464 @@
+{
+  "checked_at_utc": "2026-11-01T01:17:08.060960+00:00",
+  "health": {
+    "status": "ready",
+    "model_version": "ridge6_20261029",
+    "data_as_of": "2026-10-29",
+    "default_demo_model": "Ridge+bias60",
+    "mode": "local_frozen_snapshot",
+    "automatic_retraining": false,
+    "source": "Vietcap FPT",
+    "training_target_end": "2026-10-29"
+  },
+  "forecast_checks": [
+    {
+      "model": "Ridge+bias60",
+      "horizon": "today",
+      "steps": 2,
+      "origin_date": "2026-10-29",
+      "target_date": "2026-11-02",
+      "version": "recursive-ridge6-v3",
+      "http_matches_offline": true,
+      "final": {
+        "step": 2,
+        "estimated_date": "2026-11-02",
+        "predicted_close_adjusted": 52510.242202854664,
+        "step_log_return": 0.0007418993652981565,
+        "change_from_origin_pct": -0.36007172133839527,
+        "scenario_lower": 51320.68631802317,
+        "scenario_upper": 53857.00304599957,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 512,
+        "seed": 20261030,
+        "residual_centering": "subtract calibration-pool mean before block resampling",
+        "calibration_residual_mean_removed": -0.0029260812607502028,
+        "residual_pool": "corrected_errors",
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "meaning": "Descriptive scenario range; ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Ridge+bias60",
+      "horizon": "tomorrow",
+      "steps": 2,
+      "origin_date": "2026-10-29",
+      "target_date": "2026-11-02",
+      "version": "recursive-ridge6-v3",
+      "http_matches_offline": true,
+      "final": {
+        "step": 2,
+        "estimated_date": "2026-11-02",
+        "predicted_close_adjusted": 52510.242202854664,
+        "step_log_return": 0.0007418993652981565,
+        "change_from_origin_pct": -0.36007172133839527,
+        "scenario_lower": 51320.68631802317,
+        "scenario_upper": 53857.00304599957,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 512,
+        "seed": 20261030,
+        "residual_centering": "subtract calibration-pool mean before block resampling",
+        "calibration_residual_mean_removed": -0.0029260812607502028,
+        "residual_pool": "corrected_errors",
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "meaning": "Descriptive scenario range; ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Ridge+bias60",
+      "horizon": "week",
+      "steps": 6,
+      "origin_date": "2026-10-29",
+      "target_date": "2026-11-06",
+      "version": "recursive-ridge6-v3",
+      "http_matches_offline": true,
+      "final": {
+        "step": 6,
+        "estimated_date": "2026-11-06",
+        "predicted_close_adjusted": 52455.17919632845,
+        "step_log_return": 2.6029283491284895e-05,
+        "change_from_origin_pct": -0.4645556046898536,
+        "scenario_lower": 50067.909996206254,
+        "scenario_upper": 54738.83515464211,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 512,
+        "seed": 20261030,
+        "residual_centering": "subtract calibration-pool mean before block resampling",
+        "calibration_residual_mean_removed": -0.0029260812607502028,
+        "residual_pool": "corrected_errors",
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "meaning": "Descriptive scenario range; ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Ridge+bias60",
+      "horizon": "month",
+      "steps": 22,
+      "origin_date": "2026-10-29",
+      "target_date": "2026-11-30",
+      "version": "recursive-ridge6-v3",
+      "http_matches_offline": true,
+      "final": {
+        "step": 22,
+        "estimated_date": "2026-11-30",
+        "predicted_close_adjusted": 51659.709967356415,
+        "step_log_return": -0.00013019435326751873,
+        "change_from_origin_pct": -1.973984881676627,
+        "scenario_lower": 46892.97008499833,
+        "scenario_upper": 56507.679332860556,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 512,
+        "seed": 20261030,
+        "residual_centering": "subtract calibration-pool mean before block resampling",
+        "calibration_residual_mean_removed": -0.0029260812607502028,
+        "residual_pool": "corrected_errors",
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "meaning": "Descriptive scenario range; ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Ridge",
+      "horizon": "today",
+      "steps": 2,
+      "origin_date": "2026-10-29",
+      "target_date": "2026-11-02",
+      "version": "recursive-ridge6-v3",
+      "http_matches_offline": true,
+      "final": {
+        "step": 2,
+        "estimated_date": "2026-11-02",
+        "predicted_close_adjusted": 52703.557262369584,
+        "step_log_return": 0.0008958557513193813,
+        "change_from_origin_pct": 0.006750023471702171,
+        "scenario_lower": 51540.30594936291,
+        "scenario_upper": 54089.433122115435,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 512,
+        "seed": 20261030,
+        "residual_centering": "subtract calibration-pool mean before block resampling",
+        "calibration_residual_mean_removed": -0.003520756969710557,
+        "residual_pool": "raw_errors",
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "meaning": "Descriptive scenario range; ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Ridge",
+      "horizon": "tomorrow",
+      "steps": 2,
+      "origin_date": "2026-10-29",
+      "target_date": "2026-11-02",
+      "version": "recursive-ridge6-v3",
+      "http_matches_offline": true,
+      "final": {
+        "step": 2,
+        "estimated_date": "2026-11-02",
+        "predicted_close_adjusted": 52703.557262369584,
+        "step_log_return": 0.0008958557513193813,
+        "change_from_origin_pct": 0.006750023471702171,
+        "scenario_lower": 51540.30594936291,
+        "scenario_upper": 54089.433122115435,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 512,
+        "seed": 20261030,
+        "residual_centering": "subtract calibration-pool mean before block resampling",
+        "calibration_residual_mean_removed": -0.003520756969710557,
+        "residual_pool": "raw_errors",
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "meaning": "Descriptive scenario range; ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Ridge",
+      "horizon": "week",
+      "steps": 6,
+      "origin_date": "2026-10-29",
+      "target_date": "2026-11-06",
+      "version": "recursive-ridge6-v3",
+      "http_matches_offline": true,
+      "final": {
+        "step": 6,
+        "estimated_date": "2026-11-06",
+        "predicted_close_adjusted": 52638.884038522076,
+        "step_log_return": 9.310534649136976e-05,
+        "change_from_origin_pct": -0.11596956637177636,
+        "scenario_lower": 50094.49272787374,
+        "scenario_upper": 54984.98915287477,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 512,
+        "seed": 20261030,
+        "residual_centering": "subtract calibration-pool mean before block resampling",
+        "calibration_residual_mean_removed": -0.003520756969710557,
+        "residual_pool": "raw_errors",
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "meaning": "Descriptive scenario range; ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Ridge",
+      "horizon": "month",
+      "steps": 22,
+      "origin_date": "2026-10-29",
+      "target_date": "2026-11-30",
+      "version": "recursive-ridge6-v3",
+      "http_matches_offline": true,
+      "final": {
+        "step": 22,
+        "estimated_date": "2026-11-30",
+        "predicted_close_adjusted": 51861.8601348544,
+        "step_log_return": -0.00013109630513499998,
+        "change_from_origin_pct": -1.5903982260827232,
+        "scenario_lower": 46921.31817144929,
+        "scenario_upper": 56844.085777638895,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 512,
+        "seed": 20261030,
+        "residual_centering": "subtract calibration-pool mean before block resampling",
+        "calibration_residual_mean_removed": -0.003520756969710557,
+        "residual_pool": "raw_errors",
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "meaning": "Descriptive scenario range; ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Zero-Return",
+      "horizon": "today",
+      "steps": 2,
+      "origin_date": "2026-10-29",
+      "target_date": "2026-11-02",
+      "version": "recursive-ridge6-v3",
+      "http_matches_offline": true,
+      "final": {
+        "step": 2,
+        "estimated_date": "2026-11-02",
+        "predicted_close_adjusted": 52700.00000000003,
+        "step_log_return": 0.0,
+        "change_from_origin_pct": 4.440892098500626e-14,
+        "scenario_lower": null,
+        "scenario_upper": null,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 0,
+        "seed": 20261030,
+        "residual_centering": null,
+        "calibration_residual_mean_removed": null,
+        "residual_pool": null,
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "meaning": "Descriptive scenario range; ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Zero-Return",
+      "horizon": "tomorrow",
+      "steps": 2,
+      "origin_date": "2026-10-29",
+      "target_date": "2026-11-02",
+      "version": "recursive-ridge6-v3",
+      "http_matches_offline": true,
+      "final": {
+        "step": 2,
+        "estimated_date": "2026-11-02",
+        "predicted_close_adjusted": 52700.00000000003,
+        "step_log_return": 0.0,
+        "change_from_origin_pct": 4.440892098500626e-14,
+        "scenario_lower": null,
+        "scenario_upper": null,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 0,
+        "seed": 20261030,
+        "residual_centering": null,
+        "calibration_residual_mean_removed": null,
+        "residual_pool": null,
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "meaning": "Descriptive scenario range; ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Zero-Return",
+      "horizon": "week",
+      "steps": 6,
+      "origin_date": "2026-10-29",
+      "target_date": "2026-11-06",
+      "version": "recursive-ridge6-v3",
+      "http_matches_offline": true,
+      "final": {
+        "step": 6,
+        "estimated_date": "2026-11-06",
+        "predicted_close_adjusted": 52700.00000000003,
+        "step_log_return": 0.0,
+        "change_from_origin_pct": 4.440892098500626e-14,
+        "scenario_lower": null,
+        "scenario_upper": null,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 0,
+        "seed": 20261030,
+        "residual_centering": null,
+        "calibration_residual_mean_removed": null,
+        "residual_pool": null,
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "meaning": "Descriptive scenario range; ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Zero-Return",
+      "horizon": "month",
+      "steps": 22,
+      "origin_date": "2026-10-29",
+      "target_date": "2026-11-30",
+      "version": "recursive-ridge6-v3",
+      "http_matches_offline": true,
+      "final": {
+        "step": 22,
+        "estimated_date": "2026-11-30",
+        "predicted_close_adjusted": 52700.00000000003,
+        "step_log_return": 0.0,
+        "change_from_origin_pct": 4.440892098500626e-14,
+        "scenario_lower": null,
+        "scenario_upper": null,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 0,
+        "seed": 20261030,
+        "residual_centering": null,
+        "calibration_residual_mean_removed": null,
+        "residual_pool": null,
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "meaning": "Descriptive scenario range; ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    }
+  ],
+  "streamlit_checks": {
+    "Hôm nay": {
+      "steps": 2,
+      "ok": true
+    },
+    "Ngày mai": {
+      "steps": 2,
+      "ok": true
+    },
+    "1 tuần": {
+      "steps": 6,
+      "ok": true
+    },
+    "1 tháng": {
+      "steps": 22,
+      "ok": true
+    },
+    "zero_return_keeps_origin_price": true,
+    "Tổng quan": {
+      "ok": true
+    },
+    "Đối chứng": {
+      "ok": true
+    },
+    "same_dates_october": 21,
+    "Hành trình model": {
+      "ok": true
+    }
+  }
+}

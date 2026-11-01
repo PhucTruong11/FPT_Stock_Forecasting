@@ -1,0 +1,3 @@
+window,control,mean_year_mse_delta,descriptive_ci95_lower,descriptive_ci95_upper,block_origins,resamples,meaning
+5y,3y,7.993348270838598e-07,-8.523606319203173e-07,2.4755949392011072e-06,20,2000,"negative favors candidate; adaptive inspected validation, not independent evidence of future superiority"
+all_2018,3y,1.1954026396130549e-06,-8.527175414076794e-07,3.2052306695692163e-06,20,2000,"negative favors candidate; adaptive inspected validation, not independent evidence of future superiority"

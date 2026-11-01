@@ -1,0 +1,25 @@
+{
+  "completed_at_utc": "2026-11-01T01:25:37.787535+00:00",
+  "new_model_fits": 0,
+  "new_downloads": 0,
+  "protected_files_unchanged": 750,
+  "forecast_function_reused": true,
+  "historical_predict_uses_LocalRidgeService": true,
+  "later_period_points_identical": true,
+  "calibration_target_cutoff_before_evaluation_origins": true,
+  "serving_bundle_has_no_scored_future_labels": true,
+  "model_train_target_end": "2025-12-31",
+  "common_origins": 121,
+  "policy_path": "configs/recursive_band_calibration.json",
+  "policy_sha256": "8b0fce6eaa20475987270742b1b57e82df03b03c31371312f93f8c23065139f5",
+  "protocol_sha256": "a7ba541a3b7bb3055a82914459747b4182c6f5365d7ff54bd3b95eb80cdcfe74",
+  "outputs_sha256": {
+    "active_policy.json": "8b0fce6eaa20475987270742b1b57e82df03b03c31371312f93f8c23065139f5",
+    "candidate_policy.json": "079662cd09e528d51c409c70605ca6791199cb1ee6335d4ffe08afa3fed975fd",
+    "comparison.png": "aa4e310218044396176ee29953923a6a98139951d2f7fbbbb694c444f8143924",
+    "decisions.csv": "dac9f75aa60ac55868818f9fec9034cb375adfb33ca94ba4138f10f7db0a5cdc",
+    "metrics.csv": "28656966abae74cc10dbcb231c7fad05fa1116b0eeab0738d2a33e9a1f1fac70",
+    "predictions.csv.gz": "134f16697c1ed033c65ce46703f0afb7ba850c4c2cae7a6aacf3eb527616d400",
+    "source_snapshot.zip": "e3bea89ffc447a187f925b2a6ecf155f5f4c85580f31977b0bf3ccb52e25bd9e"
+  }
+}

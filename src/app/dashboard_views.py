@@ -7,8 +7,11 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 from src.app.theme import MINT, BLUE, COLORS, chart, hero, note, path_chart
+from src.app.analysis_view import render_market_analysis
+from src.app.forecast_explainer import render_forecast_explainer
+from src.app.forecast_analytics import render_forecast_analytics
 
-HORIZONS = {'Hôm nay':'today','Ngày mai':'tomorrow','1 tuần':'week','1 tháng':'month'}
+HORIZONS = {'Hôm nay':'today','Ngày mai':'tomorrow','1 tuần':'week','1 tháng':'month','Chọn ngày':'custom'}
 MODEL_LABELS = {'Ridge+bias60':'Ridge · hiệu chỉnh bias', 'Ridge':'Ridge · nguyên bản', 'Zero-Return':'Zero Return · baseline'}
 
 
@@ -20,8 +23,21 @@ def forecast_view(api, history, health, registry):
         horizon = st.segmented_control('Kỳ dự báo', list(HORIZONS), default='Hôm nay') or 'Hôm nay'
     with b:
         chosen = st.selectbox('Model dự báo', registry['models'], format_func=lambda n:MODEL_LABELS.get(n,n))
+    payload={'model':chosen,'horizon':HORIZONS[horizon]}
+    if horizon=='Chọn ngày':
+        limits=health['forecast_date_limits']
+        if not limits['custom_available']:
+            st.info('Snapshot đã quá cũ để mở khoảng dự báo mới trong giới hạn 23 bước. Cần cập nhật dữ liệu trước khi chọn ngày.');return
+        first_date=pd.Timestamp(limits['selectable_min_date']);last_date=pd.Timestamp(limits['selectable_max_date'])
+        selected_date=st.date_input('Ngày muốn dự báo',value=min(first_date+pd.Timedelta(days=7),last_date).date(),
+            min_value=first_date.date(),max_value=last_date.date(),format='DD/MM/YYYY',
+            help='Trong một tháng từ hôm nay. Cuối tuần chuyển sang weekday kế tiếp; chưa xác minh nghỉ lễ HOSE.')
+        if selected_date is None:
+            st.info('Chọn một ngày đích để xem đường dự báo.');return
+        payload['target_date']=selected_date.isoformat()
+        st.caption(f"Chọn từ {first_date:%d/%m/%Y} đến {last_date:%d/%m/%Y} · tối đa {limits['max_steps']} bước từ snapshot. Khoảng ngày có thể ngắn hơn một tháng nếu dữ liệu cũ.")
     with st.spinner('Đang tính đường dự báo…'):
-        result = api('/api/v1/forecast', {'model':chosen, 'horizon':HORIZONS[horizon]})
+        result = api('/api/v1/forecast', payload)
     final = result['path'][-1]
     day = pd.Timestamp(result['effective_target_date']).strftime('%d/%m/%Y')
     a,b,c,d = st.columns(4)
@@ -30,63 +46,41 @@ def forecast_view(api, history, health, registry):
     c.metric('Ngày đích dự kiến', day, help='Chỉ bỏ cuối tuần; chưa xác minh lịch nghỉ lễ HOSE.')
     d.metric('Số bước từ origin', str(result['steps']), help='Model học h=1; từ bước thứ 2 dùng giá do chính model dự báo.')
     st.write('')
+    if result.get('bridge_steps_before_requested_window',0):
+        st.info(f"Giá thật gần nhất dừng ở {result['origin_date']}. Đoạn xám nối snapshot tới trước {result['requested_start']} cũng là mô phỏng, không phải giá hôm nay đã quan sát. Đoạn xanh là khoảng dự báo đang chọn.")
     if result['weekend_shifted']:
         st.info(f"Ngày chọn {result['requested_end']} rơi vào cuối tuần → chuyển sang ngày làm việc dự kiến {result['effective_target_date']}. Chưa trừ lịch nghỉ lễ.")
     if result['steps'] > 1:
-        st.warning('Mô phỏng nhiều bước · model hiện chỉ được train cho h=1. Khung tuần/tháng chưa có đánh giá riêng; sai số có thể tích lũy.')
+        st.warning('Mô phỏng nhiều bước · đã có backtest h=5/h=22 trên model lịch sử. Model hiện chỉ train h=1; bundle đang phục vụ và khung lịch hiện tại chưa có kiểm chứng forward tương ứng.')
     else:
         st.caption('Ước tính từ snapshot trước phiên. Bấm dự báo trong hôm nay không đồng nghĩa forecast đã được phát trước giờ mở cửa.')
     chart(path_chart(history,result), height=460)
-    st.caption(f"Đường nét liền: dữ liệu thật đến {result['origin_date']}. Nét đứt: dự báo/mô phỏng. Vùng tô: P10–P90 của kịch bản residual bootstrap, không bảo đảm 80% kết quả thật nằm trong vùng.")
-    a,b,c = st.columns(3)
-    with a:
-        note('01 / Học từ lợi suất', 'Ridge dùng 6 feature từ giá FPT. Không tải hoặc tạo giả giá mở cửa, High/Low hay volume của các ngày tương lai.')
-    with b:
-        note('02 / Mở rộng có giới hạn', f"Khung {horizon.lower()} có {result['steps']} bước từ snapshot. Tối đa 23 bước ngày làm việc, không tự kéo dài nếu dữ liệu quá cũ.")
-    with c:
-        note('03 / Nhìn cả bất định', 'Biên mô phỏng dùng các block 5 sai số lịch sử. Không bao gồm đầy đủ bất định nguồn, tham số hoặc một regime chưa từng xuất hiện.')
+    band_label='khoảng mô phỏng đã nới từ P10–P90' if any(r.get('band_scale_factor',1.)>1. for r in result['path']) else 'P10–P90 của kịch bản residual bootstrap'
+    st.caption(f"Đường nét liền: dữ liệu thật đến {result['origin_date']}. Nét đứt: dự báo/mô phỏng. Vùng tô: {band_label}, không bảo đảm 80% kết quả thật nằm trong vùng.")
+    if chosen != 'Zero-Return':
+        band=result['uncertainty'].get('band_calibration',{})
+        st.caption(f"Hệ số band tại đích: {band.get('final_step_factor',1.):.2f}×. Backtest 5/22 quan sát giao dịch khác khung tuần/tháng theo lịch; hệ số chưa đạt điều kiện sẽ giữ 1×.")
+    render_forecast_analytics(result)
+    render_forecast_explainer(result)
     with st.expander('Bảng dự báo từng bước & tải kết quả'):
         data = pd.DataFrame(result['path']).rename(columns={'estimated_date':'Ngày dự kiến','step':'Bước',
-            'predicted_close_adjusted':'Giá dự báo','scenario_lower':'Kịch bản P10','scenario_upper':'Kịch bản P90',
+            'predicted_close_adjusted':'Giá dự báo','scenario_lower':'Biên dưới','scenario_upper':'Biên trên',
             'change_from_origin_pct':'Thay đổi từ origin (%)'})
-        st.dataframe(data[['Bước','Ngày dự kiến','Giá dự báo','Kịch bản P10','Kịch bản P90','Thay đổi từ origin (%)']],
-                     hide_index=True, width='stretch',column_config={k:st.column_config.NumberColumn(format='%.2f') for k in ['Giá dự báo','Kịch bản P10','Kịch bản P90','Thay đổi từ origin (%)']})
+        data['Phần đường']=np.where(data.in_requested_window,'Trong khoảng chọn','Nối snapshot')
+        st.dataframe(data[['Bước','Ngày dự kiến','Phần đường','Giá dự báo','Biên dưới','Biên trên','Thay đổi từ origin (%)']],
+                     hide_index=True, width='stretch',column_config={k:st.column_config.NumberColumn(format='%.2f') for k in ['Giá dự báo','Biên dưới','Biên trên','Thay đổi từ origin (%)']})
         a,b=st.columns(2)
         a.download_button('Tải CSV đường dự báo',pd.DataFrame(result['path']).to_csv(index=False),'fpt_forecast_path.csv','text/csv')
         b.download_button('Tải JSON có metadata',json.dumps(result,ensure_ascii=False,indent=2),'fpt_forecast.json','application/json')
     with st.expander('Cách tính, ngày và phiên bản'):
         st.write('Hôm nay/ngày mai: ngày lịch đã chọn, dời cuối tuần sang ngày làm việc kế. Một tuần: 7 ngày lịch tính cả hôm nay. Một tháng: đến trước cùng ngày của tháng sau. Ngày cuối khung tuần/tháng bỏ cuối tuần.')
-        st.write('Từng bước: cập nhật 6 return feature từ chuỗi Close, dùng lại Ridge/scaler và bias đã đóng băng. Không fit lại, không dùng target thực tế chưa biết. Baseline Zero Return giữ nguyên giá và không có vùng residual của Ridge.')
+        st.write('Từng bước: cập nhật 6 return feature từ chuỗi Close, dùng lại Ridge/scaler. Bias đóng băng chỉ áp dụng bước 1; bước sau dùng Ridge thô. Residual được trừ trung bình pool trước bootstrap, không trừ trung bình từng đường mô phỏng. Không fit lại hoặc dùng nhãn tương lai. Zero Return giữ giá và không mượn vùng residual của Ridge.')
+        st.write('Chọn ngày: từ hôm nay tới ngày bạn chọn trong một tháng; cuối tuần chuyển sang weekday kế tiếp. Toàn bộ phép tính bắt đầu từ snapshot thật, kể cả bước nối tới hôm nay. Không tạo giá thật cho ngày còn thiếu.')
         st.json({k:v for k,v in result.items() if k!='path'})
 
 
 def overview_view(api, history, health):
-    hero('FPT / Market overview', 'Một cổ phiếu. Nhiều góc nhìn.',
-         'Giá, biên độ và khối lượng thực tế từ snapshot FPT. Khám phá dữ liệu trước khi đọc kết quả mô hình.')
-    raw = pd.DataFrame(api('/api/v1/fpt/ohlcv?limit=500')['observations'])
-    raw['Date']=pd.to_datetime(raw.Date)
-    raw=raw.loc[raw.Volume.gt(0)].sort_values('Date')
-    last,previous = raw.iloc[-1],raw.iloc[-2]
-    change=(last.Close/previous.Close-1)*100
-    a,b,c,d=st.columns(4)
-    a.metric('Đóng cửa điều chỉnh',f'{last.Close:,.0f} VND',f'{change:+.2f}% phiên trước',delta_color='off')
-    b.metric('Khối lượng phiên cuối',f'{last.Volume/1e6:.2f} triệu')
-    c.metric('Biên độ High–Low',f'{(last.High-last.Low)/last.Close*100:.2f}%',help='Biên độ trong phiên cuối; khác lợi suất close-to-close.')
-    d.metric('Ngày dữ liệu cuối',last.Date.strftime('%d/%m/%Y'))
-    count=st.select_slider('Khoảng quan sát',options=[30,60,120,252],value=120,format_func=lambda n:f'{n} quan sát')
-    part=raw.tail(count)
-    figure=go.Figure(go.Candlestick(x=part.Date,open=part.Open,high=part.High,low=part.Low,close=part.Close,
-        increasing_line_color=MINT,decreasing_line_color='#f18c9a',name='FPT OHLC điều chỉnh'))
-    figure.update_layout(xaxis_rangeslider_visible=False,yaxis_title='VND · giá điều chỉnh')
-    chart(figure,460)
-    fig=px.bar(part,x='Date',y='Volume',labels={'Volume':'Khối lượng (cổ phiếu)','Date':''},color_discrete_sequence=[BLUE])
-    chart(fig,220)
-    a,b=st.columns(2)
-    with a:note('Snapshot, không phải bảng giá realtime',f"Nguồn {health['source']}, đến {health['data_as_of']}. Dữ liệu không tự cập nhật khi chuyển trang hoặc bấm dự báo.")
-    with b:note('Không làm phẳng ngày không giao dịch','Giá được điều chỉnh theo nhà cung cấp. Không điền ngày lễ bằng giá phiên trước; chưa xác minh lịch sàn hoặc dữ liệu point-in-time độc lập.')
-    with st.expander('OHLCV thật đang hiển thị'):
-        st.dataframe(part.sort_values('Date',ascending=False),hide_index=True,width='stretch')
-        st.download_button('Tải CSV OHLCV',part.to_csv(index=False),'fpt_actual_ohlcv.csv','text/csv')
+    render_market_analysis(api,health)
 
 
 def benchmark_view(api):

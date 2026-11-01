@@ -1,0 +1,30 @@
+{
+  "selected_window_from_validation": "3y",
+  "selection_rule": "lowest equal-year mean h1 raw Ridge validation RMSE; exact ties prefer 3y, then5y, thenall_2018",
+  "validation_scores": [
+    {
+      "window": "3y",
+      "validation_mean_rmse": 0.01707812006286321,
+      "validation_worst_rmse": 0.021044582760263743,
+      "priority": 0
+    },
+    {
+      "window": "5y",
+      "validation_mean_rmse": 0.01709505911524844,
+      "validation_worst_rmse": 0.0211119986207757,
+      "priority": 1
+    },
+    {
+      "window": "all_2018",
+      "validation_mean_rmse": 0.017107867274103673,
+      "validation_worst_rmse": 0.0211119986207757,
+      "priority": 2
+    }
+  ],
+  "diagnostic2026_not_used_for_selection": true,
+  "asof_candidates_have_no_scored_future_labels": true,
+  "current_serving_model_unchanged": true,
+  "serving_3y_refit_predictions_identical": true,
+  "future_model_choice_requires_user_review": true,
+  "no_additional_grid_or_training_after_this_study": true
+}

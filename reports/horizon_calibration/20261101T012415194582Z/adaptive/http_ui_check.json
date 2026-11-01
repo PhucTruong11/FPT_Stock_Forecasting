@@ -1,0 +1,641 @@
+{
+  "checked_at_utc": "2026-11-01T01:33:32.150842+00:00",
+  "forecast_checks": [
+    {
+      "model": "Ridge+bias60",
+      "horizon": "today",
+      "steps": 2,
+      "origin": "2026-10-29",
+      "target": "2026-11-02",
+      "http_matches_offline": true,
+      "final": {
+        "step": 2,
+        "estimated_date": "2026-11-02",
+        "predicted_close_adjusted": 52510.242202854664,
+        "step_log_return": 0.0007418993652981565,
+        "change_from_origin_pct": -0.36007172133839527,
+        "scenario_lower": 51320.68631802317,
+        "scenario_upper": 53857.00304599957,
+        "band_scale_factor": 1.0,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 512,
+        "seed": 20261030,
+        "residual_centering": "subtract calibration-pool mean before block resampling",
+        "calibration_residual_mean_removed": -0.0029260812607502028,
+        "residual_pool": "corrected_errors",
+        "base_quantiles": [
+          0.1,
+          0.9
+        ],
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "band_calibration": {
+          "study": "reports/horizon_calibration/20261101T012415194582Z/adaptive",
+          "file_sha256": "691c3b7e9bf5825c79f6d5bb046780e1653818179bb83128676cdbe95ad0b356",
+          "calibration_target_end": "2026-10-29",
+          "evaluated_horizons_observations": [
+            5,
+            22
+          ],
+          "final_step_factor": 1.0,
+          "scope": "Historical model backtest; transfer to current bundle is unvalidated. Unlisted steps stay unscaled."
+        },
+        "meaning": "Descriptive scenario range; scaled bounds are no longer literal bootstrap P10/P90. Ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Ridge+bias60",
+      "horizon": "tomorrow",
+      "steps": 2,
+      "origin": "2026-10-29",
+      "target": "2026-11-02",
+      "http_matches_offline": true,
+      "final": {
+        "step": 2,
+        "estimated_date": "2026-11-02",
+        "predicted_close_adjusted": 52510.242202854664,
+        "step_log_return": 0.0007418993652981565,
+        "change_from_origin_pct": -0.36007172133839527,
+        "scenario_lower": 51320.68631802317,
+        "scenario_upper": 53857.00304599957,
+        "band_scale_factor": 1.0,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 512,
+        "seed": 20261030,
+        "residual_centering": "subtract calibration-pool mean before block resampling",
+        "calibration_residual_mean_removed": -0.0029260812607502028,
+        "residual_pool": "corrected_errors",
+        "base_quantiles": [
+          0.1,
+          0.9
+        ],
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "band_calibration": {
+          "study": "reports/horizon_calibration/20261101T012415194582Z/adaptive",
+          "file_sha256": "691c3b7e9bf5825c79f6d5bb046780e1653818179bb83128676cdbe95ad0b356",
+          "calibration_target_end": "2026-10-29",
+          "evaluated_horizons_observations": [
+            5,
+            22
+          ],
+          "final_step_factor": 1.0,
+          "scope": "Historical model backtest; transfer to current bundle is unvalidated. Unlisted steps stay unscaled."
+        },
+        "meaning": "Descriptive scenario range; scaled bounds are no longer literal bootstrap P10/P90. Ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Ridge+bias60",
+      "horizon": "week",
+      "steps": 6,
+      "origin": "2026-10-29",
+      "target": "2026-11-06",
+      "http_matches_offline": true,
+      "final": {
+        "step": 6,
+        "estimated_date": "2026-11-06",
+        "predicted_close_adjusted": 52455.17919632845,
+        "step_log_return": 2.6029283491284895e-05,
+        "change_from_origin_pct": -0.4645556046898536,
+        "scenario_lower": 50067.909996206254,
+        "scenario_upper": 54738.83515464211,
+        "band_scale_factor": 1.0,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 512,
+        "seed": 20261030,
+        "residual_centering": "subtract calibration-pool mean before block resampling",
+        "calibration_residual_mean_removed": -0.0029260812607502028,
+        "residual_pool": "corrected_errors",
+        "base_quantiles": [
+          0.1,
+          0.9
+        ],
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "band_calibration": {
+          "study": "reports/horizon_calibration/20261101T012415194582Z/adaptive",
+          "file_sha256": "691c3b7e9bf5825c79f6d5bb046780e1653818179bb83128676cdbe95ad0b356",
+          "calibration_target_end": "2026-10-29",
+          "evaluated_horizons_observations": [
+            5,
+            22
+          ],
+          "final_step_factor": 1.0,
+          "scope": "Historical model backtest; transfer to current bundle is unvalidated. Unlisted steps stay unscaled."
+        },
+        "meaning": "Descriptive scenario range; scaled bounds are no longer literal bootstrap P10/P90. Ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Ridge+bias60",
+      "horizon": "month",
+      "steps": 22,
+      "origin": "2026-10-29",
+      "target": "2026-11-30",
+      "http_matches_offline": true,
+      "final": {
+        "step": 22,
+        "estimated_date": "2026-11-30",
+        "predicted_close_adjusted": 51659.709967356415,
+        "step_log_return": -0.00013019435326751873,
+        "change_from_origin_pct": -1.973984881676627,
+        "scenario_lower": 46892.97008499833,
+        "scenario_upper": 56507.679332860556,
+        "band_scale_factor": 1.0,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 512,
+        "seed": 20261030,
+        "residual_centering": "subtract calibration-pool mean before block resampling",
+        "calibration_residual_mean_removed": -0.0029260812607502028,
+        "residual_pool": "corrected_errors",
+        "base_quantiles": [
+          0.1,
+          0.9
+        ],
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "band_calibration": {
+          "study": "reports/horizon_calibration/20261101T012415194582Z/adaptive",
+          "file_sha256": "691c3b7e9bf5825c79f6d5bb046780e1653818179bb83128676cdbe95ad0b356",
+          "calibration_target_end": "2026-10-29",
+          "evaluated_horizons_observations": [
+            5,
+            22
+          ],
+          "final_step_factor": 1.0,
+          "scope": "Historical model backtest; transfer to current bundle is unvalidated. Unlisted steps stay unscaled."
+        },
+        "meaning": "Descriptive scenario range; scaled bounds are no longer literal bootstrap P10/P90. Ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Ridge",
+      "horizon": "today",
+      "steps": 2,
+      "origin": "2026-10-29",
+      "target": "2026-11-02",
+      "http_matches_offline": true,
+      "final": {
+        "step": 2,
+        "estimated_date": "2026-11-02",
+        "predicted_close_adjusted": 52703.557262369584,
+        "step_log_return": 0.0008958557513193813,
+        "change_from_origin_pct": 0.006750023471702171,
+        "scenario_lower": 51540.30594936291,
+        "scenario_upper": 54089.433122115435,
+        "band_scale_factor": 1.0,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 512,
+        "seed": 20261030,
+        "residual_centering": "subtract calibration-pool mean before block resampling",
+        "calibration_residual_mean_removed": -0.003520756969710557,
+        "residual_pool": "raw_errors",
+        "base_quantiles": [
+          0.1,
+          0.9
+        ],
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "band_calibration": {
+          "study": "reports/horizon_calibration/20261101T012415194582Z/adaptive",
+          "file_sha256": "691c3b7e9bf5825c79f6d5bb046780e1653818179bb83128676cdbe95ad0b356",
+          "calibration_target_end": "2026-10-29",
+          "evaluated_horizons_observations": [
+            5,
+            22
+          ],
+          "final_step_factor": 1.0,
+          "scope": "Historical model backtest; transfer to current bundle is unvalidated. Unlisted steps stay unscaled."
+        },
+        "meaning": "Descriptive scenario range; scaled bounds are no longer literal bootstrap P10/P90. Ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Ridge",
+      "horizon": "tomorrow",
+      "steps": 2,
+      "origin": "2026-10-29",
+      "target": "2026-11-02",
+      "http_matches_offline": true,
+      "final": {
+        "step": 2,
+        "estimated_date": "2026-11-02",
+        "predicted_close_adjusted": 52703.557262369584,
+        "step_log_return": 0.0008958557513193813,
+        "change_from_origin_pct": 0.006750023471702171,
+        "scenario_lower": 51540.30594936291,
+        "scenario_upper": 54089.433122115435,
+        "band_scale_factor": 1.0,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 512,
+        "seed": 20261030,
+        "residual_centering": "subtract calibration-pool mean before block resampling",
+        "calibration_residual_mean_removed": -0.003520756969710557,
+        "residual_pool": "raw_errors",
+        "base_quantiles": [
+          0.1,
+          0.9
+        ],
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "band_calibration": {
+          "study": "reports/horizon_calibration/20261101T012415194582Z/adaptive",
+          "file_sha256": "691c3b7e9bf5825c79f6d5bb046780e1653818179bb83128676cdbe95ad0b356",
+          "calibration_target_end": "2026-10-29",
+          "evaluated_horizons_observations": [
+            5,
+            22
+          ],
+          "final_step_factor": 1.0,
+          "scope": "Historical model backtest; transfer to current bundle is unvalidated. Unlisted steps stay unscaled."
+        },
+        "meaning": "Descriptive scenario range; scaled bounds are no longer literal bootstrap P10/P90. Ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Ridge",
+      "horizon": "week",
+      "steps": 6,
+      "origin": "2026-10-29",
+      "target": "2026-11-06",
+      "http_matches_offline": true,
+      "final": {
+        "step": 6,
+        "estimated_date": "2026-11-06",
+        "predicted_close_adjusted": 52638.884038522076,
+        "step_log_return": 9.310534649136976e-05,
+        "change_from_origin_pct": -0.11596956637177636,
+        "scenario_lower": 50094.49272787374,
+        "scenario_upper": 54984.98915287477,
+        "band_scale_factor": 1.0,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 512,
+        "seed": 20261030,
+        "residual_centering": "subtract calibration-pool mean before block resampling",
+        "calibration_residual_mean_removed": -0.003520756969710557,
+        "residual_pool": "raw_errors",
+        "base_quantiles": [
+          0.1,
+          0.9
+        ],
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "band_calibration": {
+          "study": "reports/horizon_calibration/20261101T012415194582Z/adaptive",
+          "file_sha256": "691c3b7e9bf5825c79f6d5bb046780e1653818179bb83128676cdbe95ad0b356",
+          "calibration_target_end": "2026-10-29",
+          "evaluated_horizons_observations": [
+            5,
+            22
+          ],
+          "final_step_factor": 1.0,
+          "scope": "Historical model backtest; transfer to current bundle is unvalidated. Unlisted steps stay unscaled."
+        },
+        "meaning": "Descriptive scenario range; scaled bounds are no longer literal bootstrap P10/P90. Ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Ridge",
+      "horizon": "month",
+      "steps": 22,
+      "origin": "2026-10-29",
+      "target": "2026-11-30",
+      "http_matches_offline": true,
+      "final": {
+        "step": 22,
+        "estimated_date": "2026-11-30",
+        "predicted_close_adjusted": 51861.8601348544,
+        "step_log_return": -0.00013109630513499998,
+        "change_from_origin_pct": -1.5903982260827232,
+        "scenario_lower": 46921.31817144929,
+        "scenario_upper": 56844.085777638895,
+        "band_scale_factor": 1.0,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 512,
+        "seed": 20261030,
+        "residual_centering": "subtract calibration-pool mean before block resampling",
+        "calibration_residual_mean_removed": -0.003520756969710557,
+        "residual_pool": "raw_errors",
+        "base_quantiles": [
+          0.1,
+          0.9
+        ],
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "band_calibration": {
+          "study": "reports/horizon_calibration/20261101T012415194582Z/adaptive",
+          "file_sha256": "691c3b7e9bf5825c79f6d5bb046780e1653818179bb83128676cdbe95ad0b356",
+          "calibration_target_end": "2026-10-29",
+          "evaluated_horizons_observations": [
+            5,
+            22
+          ],
+          "final_step_factor": 1.0,
+          "scope": "Historical model backtest; transfer to current bundle is unvalidated. Unlisted steps stay unscaled."
+        },
+        "meaning": "Descriptive scenario range; scaled bounds are no longer literal bootstrap P10/P90. Ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Zero-Return",
+      "horizon": "today",
+      "steps": 2,
+      "origin": "2026-10-29",
+      "target": "2026-11-02",
+      "http_matches_offline": true,
+      "final": {
+        "step": 2,
+        "estimated_date": "2026-11-02",
+        "predicted_close_adjusted": 52700.00000000003,
+        "step_log_return": 0.0,
+        "change_from_origin_pct": 4.440892098500626e-14,
+        "scenario_lower": null,
+        "scenario_upper": null,
+        "band_scale_factor": 1.0,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 0,
+        "seed": 20261030,
+        "residual_centering": null,
+        "calibration_residual_mean_removed": null,
+        "residual_pool": null,
+        "base_quantiles": [
+          0.1,
+          0.9
+        ],
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "band_calibration": {
+          "study": "reports/horizon_calibration/20261101T012415194582Z/adaptive",
+          "file_sha256": "691c3b7e9bf5825c79f6d5bb046780e1653818179bb83128676cdbe95ad0b356",
+          "calibration_target_end": "2026-10-29",
+          "evaluated_horizons_observations": [
+            5,
+            22
+          ],
+          "final_step_factor": 1.0,
+          "scope": "Historical model backtest; transfer to current bundle is unvalidated. Unlisted steps stay unscaled."
+        },
+        "meaning": "Descriptive scenario range; scaled bounds are no longer literal bootstrap P10/P90. Ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Zero-Return",
+      "horizon": "tomorrow",
+      "steps": 2,
+      "origin": "2026-10-29",
+      "target": "2026-11-02",
+      "http_matches_offline": true,
+      "final": {
+        "step": 2,
+        "estimated_date": "2026-11-02",
+        "predicted_close_adjusted": 52700.00000000003,
+        "step_log_return": 0.0,
+        "change_from_origin_pct": 4.440892098500626e-14,
+        "scenario_lower": null,
+        "scenario_upper": null,
+        "band_scale_factor": 1.0,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 0,
+        "seed": 20261030,
+        "residual_centering": null,
+        "calibration_residual_mean_removed": null,
+        "residual_pool": null,
+        "base_quantiles": [
+          0.1,
+          0.9
+        ],
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "band_calibration": {
+          "study": "reports/horizon_calibration/20261101T012415194582Z/adaptive",
+          "file_sha256": "691c3b7e9bf5825c79f6d5bb046780e1653818179bb83128676cdbe95ad0b356",
+          "calibration_target_end": "2026-10-29",
+          "evaluated_horizons_observations": [
+            5,
+            22
+          ],
+          "final_step_factor": 1.0,
+          "scope": "Historical model backtest; transfer to current bundle is unvalidated. Unlisted steps stay unscaled."
+        },
+        "meaning": "Descriptive scenario range; scaled bounds are no longer literal bootstrap P10/P90. Ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Zero-Return",
+      "horizon": "week",
+      "steps": 6,
+      "origin": "2026-10-29",
+      "target": "2026-11-06",
+      "http_matches_offline": true,
+      "final": {
+        "step": 6,
+        "estimated_date": "2026-11-06",
+        "predicted_close_adjusted": 52700.00000000003,
+        "step_log_return": 0.0,
+        "change_from_origin_pct": 4.440892098500626e-14,
+        "scenario_lower": null,
+        "scenario_upper": null,
+        "band_scale_factor": 1.0,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 0,
+        "seed": 20261030,
+        "residual_centering": null,
+        "calibration_residual_mean_removed": null,
+        "residual_pool": null,
+        "base_quantiles": [
+          0.1,
+          0.9
+        ],
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "band_calibration": {
+          "study": "reports/horizon_calibration/20261101T012415194582Z/adaptive",
+          "file_sha256": "691c3b7e9bf5825c79f6d5bb046780e1653818179bb83128676cdbe95ad0b356",
+          "calibration_target_end": "2026-10-29",
+          "evaluated_horizons_observations": [
+            5,
+            22
+          ],
+          "final_step_factor": 1.0,
+          "scope": "Historical model backtest; transfer to current bundle is unvalidated. Unlisted steps stay unscaled."
+        },
+        "meaning": "Descriptive scenario range; scaled bounds are no longer literal bootstrap P10/P90. Ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    },
+    {
+      "model": "Zero-Return",
+      "horizon": "month",
+      "steps": 22,
+      "origin": "2026-10-29",
+      "target": "2026-11-30",
+      "http_matches_offline": true,
+      "final": {
+        "step": 22,
+        "estimated_date": "2026-11-30",
+        "predicted_close_adjusted": 52700.00000000003,
+        "step_log_return": 0.0,
+        "change_from_origin_pct": 4.440892098500626e-14,
+        "scenario_lower": null,
+        "scenario_upper": null,
+        "band_scale_factor": 1.0,
+        "in_requested_window": true,
+        "uses_predicted_context": true
+      },
+      "uncertainty": {
+        "method": "circular_block_residual_bootstrap",
+        "block_observations": 5,
+        "paths": 0,
+        "seed": 20261030,
+        "residual_centering": null,
+        "calibration_residual_mean_removed": null,
+        "residual_pool": null,
+        "base_quantiles": [
+          0.1,
+          0.9
+        ],
+        "displayed_quantiles": [
+          0.1,
+          0.9
+        ],
+        "coverage_guaranteed": false,
+        "band_calibration": {
+          "study": "reports/horizon_calibration/20261101T012415194582Z/adaptive",
+          "file_sha256": "691c3b7e9bf5825c79f6d5bb046780e1653818179bb83128676cdbe95ad0b356",
+          "calibration_target_end": "2026-10-29",
+          "evaluated_horizons_observations": [
+            5,
+            22
+          ],
+          "final_step_factor": 1.0,
+          "scope": "Historical model backtest; transfer to current bundle is unvalidated. Unlisted steps stay unscaled."
+        },
+        "meaning": "Descriptive scenario range; scaled bounds are no longer literal bootstrap P10/P90. Ignores parameter/source uncertainty and unobserved future regimes."
+      }
+    }
+  ],
+  "streamlit_checks": {
+    "Hôm nay": {
+      "steps": 2,
+      "ok": true
+    },
+    "Ngày mai": {
+      "steps": 2,
+      "ok": true
+    },
+    "1 tuần": {
+      "steps": 6,
+      "ok": true
+    },
+    "1 tháng": {
+      "steps": 22,
+      "ok": true
+    },
+    "zero_return_keeps_origin_price": true,
+    "Tổng quan": {
+      "ok": true
+    },
+    "Đối chứng": {
+      "ok": true
+    },
+    "same_dates_october": 21,
+    "Hành trình model": {
+      "ok": true
+    }
+  },
+  "serving_points_and_bands_unchanged_from_v3": true,
+  "review_source_sha256": {
+    "src/models/recursive_horizon_calibration.py": "f7563664a79d9884bd33f9f9d6c715472e41b7b96b60b43a10af245369527890",
+    "src/models/forecast_path.py": "25f927d890aec78bc6e035383be88c5d898a4a6c5effb397f3c6212d1d11a185",
+    "tests/test_horizon_calibration.py": "2ea21738902b93757f86f1041aa6de4f1a82a707dfdab3bcc36d8a233b30da00",
+    "requirements-local.txt": "33b66c35563da255ebf27d4a3046db1a5e87ecf716821e01c99799b23aa1c7c4"
+  }
+}

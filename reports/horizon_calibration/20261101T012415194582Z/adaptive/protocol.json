@@ -1,0 +1,47 @@
+{
+  "registered_before_adaptive_evaluation_utc": "2026-11-01T01:27:25.035560+00:00",
+  "config": {
+    "schema": "fpt-recursive-horizon-calibration-protocol-v1",
+    "horizons": [
+      5,
+      22
+    ],
+    "calibration_target_end": "2026-06-30",
+    "evaluation_origin_start": "2026-07-01",
+    "minimum_calibration_n": 20,
+    "nominal_coverage": 0.8,
+    "scale_rule": "at each origin use up to 60 previous same-model same-horizon errors with target <= origin, minimum20, same order statistic and floor1",
+    "activation_gate": "candidate fixed on calibration only; activate per model/h if evaluation coverage distance to 80% and mean interval score do not worsen; at least 30 evaluation origins",
+    "nonoverlap": "every h-th evaluation origin anchored at first evaluation origin",
+    "origin_cohort": "2026 origins with 60 matured one-step errors and all 22 future valid observed sessions",
+    "forecast_function": "src.models.forecast_path.forecast; observation_dates supplies dates only, no future prices",
+    "historical_service": "LocalRidgeService.predict reused with frozen end-2025 estimator and raw/features truncated at origin",
+    "model_fits": 0,
+    "downloads": 0,
+    "automatic_model_promotion": false,
+    "role": "post-fixed-study adaptive retrospective analysis on the same already-inspected later period; no new holdout",
+    "serving_transfer": "historical scale applied to October bundle only as a disclosed demo policy; no validation of that bundle",
+    "references": [
+      "https://otexts.com/fpp3/tscv.html",
+      "https://statgrades.berkeley.edu/~ryantibs/statlearn-s24/lectures/conformal.pdf"
+    ],
+    "variant": "rolling normalized-score calibration",
+    "score_window": 60,
+    "minimum_matured_scores": 20,
+    "serving_policy": "freeze the latest available causal scale; model-specific transfer to current October bundle remains unvalidated"
+  },
+  "previous_predictions_sha256": "134f16697c1ed033c65ce46703f0afb7ba850c4c2cae7a6aacf3eb527616d400",
+  "inputs_sha256": {
+    "reports/recency_bias/20261030T022440928507Z/manifest.json": "40e8a5ecb1f7b42ba62ba6d3fe534fdde284855fa84e6349fc2407e85325c88c",
+    "reports/recency_bias/20261030T022440928507Z/protocol.json": "71397fa566361ea72c8e9b352a84f1dfc96e787f413d6ac1fbc2c095a47a6077",
+    "models/research/recency-bias_20261030T022440928507Z/refit_2025_native.pkl": "ae0551da21614fb45eaa040f23c379b9fd75e0535f7cf9d3c79d6757b9d2c69b",
+    "reports/recency_bias/20261030T022440928507Z/refit_2025_native_bias60_calibration.csv": "f1c5978a6da4e395308b7b1de5b94d45d0f2930a3704816a4890bb03bf53372d",
+    "reports/evaluation_2026/20261030T014012158951Z/data_snapshot.zip": "b6a0008a5c5fcc52308dfa4c0e846013ad7c2fe3296b76a9333c3ba4ae94cb81",
+    "reports/evaluation_2026/20261030T014012158951Z/acquisition.json": "c6b27af08558a17f4f9a40787a95d324a76c4e0aae2c6b4bc7b21f11dc2163b3"
+  },
+  "source_sha256": {
+    "src/models/recursive_horizon_calibration.py": "d0f9c14e1d63ba48f8238cb4ba66b878770dd296c34a90552cba30cf6ac71240",
+    "src/models/forecast_path.py": "25f927d890aec78bc6e035383be88c5d898a4a6c5effb397f3c6212d1d11a185",
+    "tests/test_horizon_calibration.py": "924b749129683a3dee4a75caf114ab1d8289ca5855af36c84b0270fa6ca4764b"
+  }
+}
