@@ -100,12 +100,12 @@ def residual_blocks(residuals, steps, *, center=True):
     return residuals[indices.reshape(PATHS, -1)[:, :steps]]
 
 
-def recursive_paths(estimator, log_history, noise, *, bias=0., zero_return=False):
+def recursive_paths(estimator, log_history, noise, *, bias=0., zero_return=False, repeat_bias=False):
     """Shared serving/backtest recursion; return log prices for points and paths.
 
     Only the initial observed context is accepted; subsequent features use the
-    corresponding predicted context. Bias is added at step 1 only, including
-    stochastic paths. Noise policy is supplied separately for paired v2/v3 tests.
+    corresponding predicted context. The serving policy adds bias at step 1.
+    The legacy option repeats it on both the point and stochastic paths.
     """
     history = np.asarray(log_history, dtype=float)
     noise = np.asarray(noise, dtype=float)
@@ -118,7 +118,7 @@ def recursive_paths(estimator, log_history, noise, *, bias=0., zero_return=False
     sampled_history = np.tile(point_history, (len(noise), 1))
     points, returns, samples = [], [], []
     for i in range(noise.shape[1]):
-        step_bias = bias if i == 0 else 0.
+        step_bias = bias if i == 0 or repeat_bias else 0.
         if zero_return:
             point_return, next_samples = 0., sampled_history[:, -1]
         else:
@@ -173,8 +173,14 @@ def widen_band(point, lower, upper, factor):
     return float(bounds[0]), float(bounds[1])
 
 
-def forecast(service, horizon="today", model_name=None, today=None, *, target_date=None, observation_dates=None, band_calibration=None):
+def forecast(service, horizon="today", model_name=None, today=None, *, target_date=None,
+             observation_dates=None, band_calibration=None, bias_mode="first_step"):
     name = model_name or service.default_model
+    if bias_mode not in {"first_step", "every_step"}:
+        raise ValueError("Unknown bias mode.")
+    repeat_bias = bias_mode == "every_step"
+    if repeat_bias and name != "Ridge+bias60":
+        raise ValueError("Bias at every step requires Ridge+bias60.")
     # Apply the existing cutoff, last-bar, source and finite prediction checks first.
     first = service.predict(name)
     today = local_today() if today is None else pd.Timestamp(today).normalize()
@@ -192,7 +198,10 @@ def forecast(service, horizon="today", model_name=None, today=None, *, target_da
                 or pd.Timestamp(first['as_of']) >= today):
             raise ValueError('Invalid historical observation dates.')
         start, end = dates[0], dates[-1]
-    policy = load_band_policy(getattr(service, 'root', BASE_DIR)) if band_calibration is None else band_calibration
+    if repeat_bias:
+        policy = {}
+    else:
+        policy = load_band_policy(getattr(service, 'root', BASE_DIR)) if band_calibration is None else band_calibration
     close = float(first["latest_close_adjusted"])
     history = np.log(service.features.Close.tail(21).to_numpy(float))
     if len(history) < 21:
@@ -202,7 +211,7 @@ def forecast(service, horizon="today", model_name=None, today=None, *, target_da
     pool = np.asarray(errors[-60:], dtype=float)
     noise = residual_blocks(pool, len(dates))
     points, returns, sampled_logs = recursive_paths(service.loaded, history, noise,
-        bias=bias, zero_return=name == "Zero-Return")
+        bias=bias, zero_return=name == "Zero-Return", repeat_bias=repeat_bias)
     rows = []
     for i, day in enumerate(dates):
         with np.errstate(over="ignore", invalid="ignore"):
@@ -220,8 +229,16 @@ def forecast(service, horizon="today", model_name=None, today=None, *, target_da
                      "scenario_upper": float(high) if high is not None else None,
                      "band_scale_factor": factor,
                      "in_requested_window": bool(day >= start), "uses_predicted_context": i > 0})
+    method = "recursive-ridge6-v4-bias-all-steps" if repeat_bias else "recursive-ridge6-v4"
+    if repeat_bias:
+        bias_note = "Legacy bias60 is applied to every step, and its frozen value compounds across the forecast. Band scaling from the first-step study is not applied."
+    elif name == "Ridge+bias60":
+        bias_note = "Bias60 is applied to step 1 only; later steps use the raw Ridge response."
+    else:
+        bias_note = "This model does not use bias60."
     return {"ticker": "FPT.VN", "model": name, "model_version": first["model_version"],
-        "horizon": horizon, "forecast_method_version": "recursive-ridge6-v4",
+        "horizon": horizon, "forecast_method_version": method,
+        "bias_mode": bias_mode if name == "Ridge+bias60" else "none",
         "issued_at_utc": utc_now(), "local_request_date": str(today.date()),
         "origin_date": first["as_of"], "origin_close_adjusted": close,
         "requested_start": str(start.date()), "requested_end": str(end.date()),
@@ -248,10 +265,11 @@ def forecast(service, horizon="today", model_name=None, today=None, *, target_da
                             'calibration_target_end': policy.get('calibration_target_end'),
                             'evaluated_horizons_observations': policy.get('evaluated_horizons_observations', []),
                             'final_step_factor': rows[-1]['band_scale_factor'],
-                            'scope': 'Historical model backtest; transfer to current bundle is unvalidated. Unlisted steps stay unscaled.'},
+                            'scope': ('Unscaled bootstrap for the legacy bias policy.' if repeat_bias else
+                                      'Historical model backtest; transfer to current bundle is unvalidated. Unlisted steps stay unscaled.')},
                         "meaning": "Descriptive scenario range; scaled bounds are no longer literal bootstrap P10/P90. Ignores parameter/source uncertainty and unobserved future regimes."},
         "limitations": ["The model was trained for h=1; historical h=5/h=22 evaluation does not validate the current serving bundle or all calendar windows.",
-            "Bias60 is applied to step 1 only; later steps use the raw Ridge response. v3 centers bootstrap innovations without changing point forecasts.",
+            bias_note,
             "Centering assumes residual mean is not a persistent future drift; pointwise bands are not simultaneous path intervals or full market risk.",
             "Dates exclude weekends only and may include exchange holidays; they are not verified trading sessions.",
             "A same-day estimate is not proof of a forecast issued before the session.",

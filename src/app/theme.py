@@ -91,7 +91,7 @@ def chart(figure, height=410):
     st.plotly_chart(figure, width='stretch', theme=None, config={'displaylogo':False,'modeBarButtonsToRemove':['lasso2d','select2d']})
 
 
-def path_chart(history, result, count=60):
+def path_chart(history, result, count=60, *, candles=None):
     history = history.tail(count)
     path = result['path']
     dates = [result['origin_date']] + [row['estimated_date'] for row in path]
@@ -104,8 +104,16 @@ def path_chart(history, result, count=60):
         band_name='Vùng kịch bản đã hiệu chỉnh' if any(r.get('band_scale_factor',1.)>1. for r in path) else 'Vùng kịch bản P10–P90'
         fig.add_trace(go.Scatter(x=dates,y=lower,fill='tonexty',fillcolor='rgba(101,230,196,.12)',
                                 line={'width':0},name=band_name,hoverinfo='skip'))
-    fig.add_trace(go.Scatter(x=history.Date,y=history.Close,name='Giá thực tế',line={'color':'#b6c5d7','width':2},
-                            hovertemplate='%{y:,.0f} VND<extra>Thực tế</extra>'))
+    if candles is None:
+        fig.add_trace(go.Scatter(x=history.Date,y=history.Close,name='Giá thực tế',line={'color':'#b6c5d7','width':2},
+                                hovertemplate='%{y:,.0f} VND<extra>Thực tế</extra>'))
+    else:
+        observed = candles.tail(count)
+        fig.add_trace(go.Candlestick(
+            x=observed.Date, open=observed.Open, high=observed.High, low=observed.Low, close=observed.Close,
+            name='Nến Nhật · giá thực tế', increasing_line_color=MINT, decreasing_line_color='#f18c9a',
+        ))
+        fig.update_xaxes(rangeslider_visible=False)
     bridge=[r for r in path if not r['in_requested_window']]
     if bridge:
         fig.add_trace(go.Scatter(x=[result['origin_date']]+[r['estimated_date'] for r in bridge],

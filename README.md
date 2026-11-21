@@ -65,7 +65,7 @@ Ba lựa chọn ở trang Dự báo có quan hệ như sau:
 
 | Lựa chọn | Cách sử dụng | Vai trò |
 | --- | --- | --- |
-| **Ridge+bias60** | Dùng `ridge.pkl` và hiệu chỉnh bias từ calibration; khi recursive, bias chỉ cộng bước đầu | Mặc định của demo hiện tại |
+| **Ridge+bias60** | Dùng `ridge.pkl` và hiệu chỉnh bias từ calibration. Dashboard cho chọn cách cộng bias khi dự báo nhiều bước | Mặc định của demo hiện tại |
 | Ridge | Dùng **cùng file weights/scaler**, bỏ hiệu chỉnh bias | Đối chứng với bản hiệu chỉnh |
 | Zero Return | Giả định return bằng 0, giữ giá origin; không có weights riêng hoặc band residual của Ridge | Baseline so sánh |
 
@@ -153,6 +153,10 @@ Dashboard **FPT Forecast Studio** có 4 mục: tổng quan OHLCV, dự báo, đ�
 
 **Chọn ngày đích:** vào Dự báo → Chọn ngày, chọn một ngày từ hôm nay tới một tháng sau. Lịch bị giới hạn thêm bởi tối đa 23 bước ngày làm việc từ snapshot; dữ liệu quá cũ sẽ rút ngắn khoảng hoặc từ chối. Cuối tuần chuyển sang weekday kế tiếp, ngày chọn và ngày đích thực hiện được hiển thị riêng; chưa xác minh nghỉ lễ HOSE. Đường xám nối snapshot tới trước khoảng yêu cầu cũng là mô phỏng, không phải giá hôm nay đã quan sát. Đường xanh kéo tới ngày đích, có bảng từng bước và xuất CSV/JSON.
 
+**Kiểu biểu đồ:** trong trang Dự báo, chọn **Đường giá** hoặc **Nến Nhật**. Nến dùng OHLC điều chỉnh của các phiên FPT đã quan sát. Sau phiên cuối trong snapshot, biểu đồ hiển thị đường giá đóng cửa dự báo và vùng kịch bản của model đã chọn.
+
+**Cách cộng bias60:** dashboard mặc định dùng **Mỗi bước · cách cũ** khi chọn Ridge+bias60. Giá dự báo sẽ phản ánh cùng mức hiệu chỉnh ở từng bước. Có thể chuyển sang **Chỉ bước đầu** để đối chiếu. Hai chế độ chia sẻ dự báo một bước. Backtest h=5/h=22 bên dưới áp dụng cho **Chỉ bước đầu**. Cách cũ dùng residual bootstrap đã căn tâm và không áp dụng hệ số nới từ backtest đó.
+
 **Phân tích đường dự báo:** thêm cột tăng/giảm từng bước, biểu đồ thay đổi tích lũy so origin kèm band, các thẻ biên tại ngày đích và đồ thị độ rộng band theo thời gian. Dữ liệu lấy từ cùng response dự báo; có công tắc ẩn/hiện. Return từng bước được đổi từ log return bằng `exp(r) − 1`; band không phải xác suất tăng/giảm hoặc giới hạn lỗ.
 
 **Giải thích dự báo:** dưới biểu đồ giá có mục “Hiểu cách model dự báo”, gồm 3 sơ đồ: lịch sử → 6 feature → scaler/Ridge → giá; vòng lặp nhiều bước; residual bootstrap → vùng kịch bản. Ví dụ tính giá lấy trực tiếp từ kết quả đang xem; nội dung đổi theo Ridge hiệu chỉnh, Ridge thô hoặc Zero Return. Có thể thu gọn cả mục.
@@ -168,7 +172,7 @@ Vùng P10–P90 là residual block-bootstrap mô tả (512 đường, block5, se
 | `GET /health` | Version, default model, cutoff train và ngày snapshot |
 | `GET /api/v1/models` | Các model local có thể gọi |
 | `POST /api/v1/predict` | `{}` dùng snapshot; hoặc gửi OHLCV điều chỉnh đầy đủ |
-| `POST /api/v1/forecast` | `horizon: today/tomorrow/week/month/custom`; custom cần `target_date: YYYY-MM-DD`, trả đường giá và giới hạn |
+| `POST /api/v1/forecast` | `horizon: today/tomorrow/week/month/custom`, custom cần `target_date: YYYY-MM-DD`. Mặc định API là `bias_mode: first_step`; Ridge+bias60 có thể yêu cầu `every_step`. |
 | `GET /api/v1/fpt/history` | Lịch sử snapshot |
 | `GET /api/v1/fpt/ohlcv` | OHLCV thật cho biểu đồ nến và khối lượng |
 | `GET /api/v1/data-quality` | Chất lượng snapshot, feature allowlist và caveats |
@@ -228,7 +232,7 @@ Stock_Prediction_Project/
 │   ├── research/                     WEIGHTS NGHIÊN CỨU theo study/run; gitignored
 │   ├── latest_experiment.json        Pointer pipeline v2 cũ; không chọn model API hiện tại
 │   └── reference_experiment.json     Pointer CPU reference để tái lập
-├── notebooks/                        Bốn notebook EDA, training và đối chứng; xem bảng dưới
+├── notebooks/                        Notebook EDA, training và đối chứng lưu tại máy local
 ├── reports/
 │   ├── training_history/             Timeline, metric tổng hợp và ghi chú nghiên cứu
 │   ├── verification/                 Bằng chứng kiểm tra artifact, API/UI và portability
@@ -243,14 +247,16 @@ Stock_Prediction_Project/
 
 **Phân biệt ba nhóm:** `src/models/` là **code**, `models/` là **artifact đã train/đóng gói**, còn `reports/` là **kết quả và bằng chứng nghiên cứu**. Dữ liệu phục vụ demo nằm trong bundle `models/local_demo/.../raw.csv`; các CSV ở `data/` chủ yếu phục vụ pipeline/reference nghiên cứu. Team chạy demo chỉ cần môi trường local, code API/UI, bundle serving và những báo cáo mà dashboard đọc; tái lập training cần thêm dữ liệu/config/artifact của đúng study.
 
-## Bốn notebook cần dùng
+## Notebook nghiên cứu tại máy local
+
+Các file `.ipynb` và notebook đầu ra Colab được giữ ở máy local. Trong thư mục `notebooks/`, nhóm dùng các file sau:
 
 | Notebook | Mục đích |
 | --- | --- |
-| [01 · EDA](notebooks/01_eda_fpt.ipynb) | Chất lượng và khám phá snapshot dữ liệu gốc |
-| [02 · Training](notebooks/02_train_deep_learning_fpt.ipynb) | Huấn luyện baseline/LSTM v2, phục vụ phần xây model của môn học; không tự promote sang API |
-| [05 · Hành trình](notebooks/05_training_journey_fpt.ipynb) | Toàn bộ quá trình, CPU/Colab, đối chứng nguồn/window/Ridge, classifier/selective và gap/body |
-| [06 · Dự báo và giá thật](notebooks/06_compare_predictions_jun_oct_2026.ipynb) | So model lịch sử trên cùng ngày đích, phóng to theo tháng |
+| `01_eda_fpt.ipynb` | Chất lượng và khám phá snapshot dữ liệu gốc |
+| `02_train_deep_learning_fpt.ipynb` | Huấn luyện baseline/LSTM v2, phục vụ phần xây model của môn học; không tự promote sang API |
+| `05_training_journey_fpt.ipynb` | Toàn bộ quá trình, CPU/Colab, đối chứng nguồn/window/Ridge, classifier/selective và gap/body |
+| `06_compare_predictions_jun_oct_2026.ipynb` | So model lịch sử trên cùng ngày đích, phóng to theo tháng |
 
 Giữ số notebook cũ để ổn định tham chiếu. Đánh giá v2 và demo UI cũ đã được thay bằng hành trình/đối chứng và Streamlit; hai notebook classifier/gap riêng được gom vào phần 11–12 của notebook05. CSV/JSON và source snapshot của mọi nghiên cứu vẫn giữ để tái lập, không giữ thêm bản notebook trùng chức năng.
 

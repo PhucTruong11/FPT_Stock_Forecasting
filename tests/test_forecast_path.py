@@ -192,6 +192,26 @@ class ForecastPathTests(unittest.TestCase):
             self.assertEqual(client.get('/api/v1/fpt/ohlcv?limit=0').status_code,422)
             self.assertEqual(len(client.get('/api/v1/data-quality').json()['feature_columns']),6)
 
+    def test_http_legacy_bias_repeats_without_changing_api_default(self):
+        with patch('src.models.forecast_path.local_today', return_value=pd.Timestamp('2026-11-21')), TestClient(create_app()) as client:
+            payload = {'model': 'Ridge+bias60', 'horizon': 'week'}
+            current = client.post('/api/v1/forecast', json=payload)
+            legacy = client.post('/api/v1/forecast', json={**payload, 'bias_mode': 'every_step'})
+            self.assertEqual(current.status_code, 200, current.text)
+            self.assertEqual(legacy.status_code, 200, legacy.text)
+            current, legacy = current.json(), legacy.json()
+            self.assertEqual(current['bias_mode'], 'first_step')
+            self.assertEqual(legacy['bias_mode'], 'every_step')
+            self.assertEqual(legacy['effective_target_date'], current['effective_target_date'])
+            self.assertEqual(legacy['path'][0], current['path'][0])
+            self.assertAlmostEqual(legacy['path'][-1]['predicted_close_adjusted'], 48120.27, places=2)
+            self.assertAlmostEqual(current['path'][-1]['predicted_close_adjusted'], 51666.44, places=2)
+            self.assertLess(legacy['path'][-1]['scenario_lower'], current['path'][-1]['scenario_lower'])
+            self.assertIsNone(legacy['uncertainty']['band_calibration']['study'])
+            for model in ['Ridge', 'Zero-Return']:
+                invalid = client.post('/api/v1/forecast', json={**payload, 'model': model, 'bias_mode': 'every_step'})
+                self.assertEqual(invalid.status_code, 422)
+
     def test_custom_http_contract_requires_matching_date_and_horizon(self):
         with patch('src.models.forecast_path.local_today',return_value=pd.Timestamp('2026-11-01')),TestClient(create_app()) as client:
             response=client.post('/api/v1/forecast',json={'horizon':'custom','target_date':'2026-11-14'})

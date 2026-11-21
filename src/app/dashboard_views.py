@@ -5,14 +5,18 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import requests
 import streamlit as st
 from src.app.theme import MINT, BLUE, COLORS, chart, hero, note, path_chart
 from src.app.analysis_view import render_market_analysis
 from src.app.forecast_explainer import render_forecast_explainer
 from src.app.forecast_analytics import render_forecast_analytics
+from src.app.market_analysis import prepare_market_frame
 
 HORIZONS = {'Hôm nay':'today','Ngày mai':'tomorrow','1 tuần':'week','1 tháng':'month','Chọn ngày':'custom'}
 MODEL_LABELS = {'Ridge+bias60':'Ridge · hiệu chỉnh bias', 'Ridge':'Ridge · nguyên bản', 'Zero-Return':'Zero Return · baseline'}
+BIAS_MODE_LABELS = {'every_step': 'Mỗi bước · cách cũ', 'first_step': 'Chỉ bước đầu'}
+FORECAST_HISTORY_POINTS = 60
 
 
 def forecast_view(api, history, health, registry):
@@ -24,6 +28,12 @@ def forecast_view(api, history, health, registry):
     with b:
         chosen = st.selectbox('Model dự báo', registry['models'], format_func=lambda n:MODEL_LABELS.get(n,n))
     payload={'model':chosen,'horizon':HORIZONS[horizon]}
+    if chosen == 'Ridge+bias60':
+        payload['bias_mode'] = st.selectbox(
+            'Cách cộng bias60', list(BIAS_MODE_LABELS),
+            format_func=BIAS_MODE_LABELS.__getitem__,
+            help='Cách cũ cộng cùng mức hiệu chỉnh ở mọi bước. Chọn “Chỉ bước đầu” để xem cách tính trước lần cập nhật này.',
+        )
     if horizon=='Chọn ngày':
         limits=health['forecast_date_limits']
         if not limits['custom_available']:
@@ -38,6 +48,7 @@ def forecast_view(api, history, health, registry):
         st.caption(f"Chọn từ {first_date:%d/%m/%Y} đến {last_date:%d/%m/%Y} · tối đa {limits['max_steps']} bước từ snapshot. Khoảng ngày có thể ngắn hơn một tháng nếu dữ liệu cũ.")
     with st.spinner('Đang tính đường dự báo…'):
         result = api('/api/v1/forecast', payload)
+    repeat_bias = result.get('bias_mode') == 'every_step'
     final = result['path'][-1]
     day = pd.Timestamp(result['effective_target_date']).strftime('%d/%m/%Y')
     a,b,c,d = st.columns(4)
@@ -51,13 +62,32 @@ def forecast_view(api, history, health, registry):
     if result['weekend_shifted']:
         st.info(f"Ngày chọn {result['requested_end']} rơi vào cuối tuần → chuyển sang ngày làm việc dự kiến {result['effective_target_date']}. Chưa trừ lịch nghỉ lễ.")
     if result['steps'] > 1:
-        st.warning('Mô phỏng nhiều bước · đã có backtest h=5/h=22 trên model lịch sử. Model hiện chỉ train h=1; bundle đang phục vụ và khung lịch hiện tại chưa có kiểm chứng forward tương ứng.')
+        if repeat_bias:
+            st.warning('Mô phỏng nhiều bước · cách cũ cộng cùng một bias60 vào từng bước. Tác động tích lũy theo kỳ hạn. Chế độ này chưa có kiểm chứng riêng ở h=5/h=22.')
+        else:
+            st.warning('Mô phỏng nhiều bước · đã có backtest h=5/h=22 trên model lịch sử. Model hiện chỉ train h=1; bundle đang phục vụ và khung lịch hiện tại chưa có kiểm chứng forward tương ứng.')
     else:
         st.caption('Ước tính từ snapshot trước phiên. Bấm dự báo trong hôm nay không đồng nghĩa forecast đã được phát trước giờ mở cửa.')
-    chart(path_chart(history,result), height=460)
+    style = st.segmented_control('Biểu đồ giá', ['Đường giá', 'Nến Nhật'], default='Nến Nhật')
+    candles = None
+    if style == 'Nến Nhật':
+        try:
+            # Request a few extra rows in case the OHLCV snapshot contains nontrading rows.
+            observations = api(f'/api/v1/fpt/ohlcv?limit={FORECAST_HISTORY_POINTS + 20}')['observations']
+            observed, _ = prepare_market_frame(observations)
+            observed = observed.loc[observed.Date <= pd.Timestamp(result['origin_date'])].copy()
+            if observed.empty:
+                raise ValueError('No OHLCV observations through the forecast origin.')
+            observed['Date'] = observed.Date.dt.strftime('%Y-%m-%d')
+            candles = observed
+        except (requests.RequestException, ValueError, KeyError):
+            st.warning('Dữ liệu nến chưa khả dụng. Biểu đồ đang hiển thị đường giá đóng cửa.')
+    chart(path_chart(history, result, count=FORECAST_HISTORY_POINTS, candles=candles), height=460)
     band_label='khoảng mô phỏng đã nới từ P10–P90' if any(r.get('band_scale_factor',1.)>1. for r in result['path']) else 'P10–P90 của kịch bản residual bootstrap'
-    st.caption(f"Đường nét liền: dữ liệu thật đến {result['origin_date']}. Nét đứt: dự báo/mô phỏng. Vùng tô: {band_label}, không bảo đảm 80% kết quả thật nằm trong vùng.")
-    if chosen != 'Zero-Return':
+    observed_label = 'Nến Nhật từ OHLC' if candles is not None else 'Đường đóng cửa nét liền'
+    band_note = f' Vùng tô: {band_label}, không bảo đảm 80% kết quả thật nằm trong vùng.' if final['scenario_lower'] is not None else ''
+    st.caption(f"{observed_label}: dữ liệu thật đến {result['origin_date']}. Nét đứt: giá đóng cửa dự báo/mô phỏng.{band_note}")
+    if chosen != 'Zero-Return' and not repeat_bias:
         band=result['uncertainty'].get('band_calibration',{})
         st.caption(f"Hệ số band tại đích: {band.get('final_step_factor',1.):.2f}×. Backtest 5/22 quan sát giao dịch khác khung tuần/tháng theo lịch; hệ số chưa đạt điều kiện sẽ giữ 1×.")
     render_forecast_analytics(result)
@@ -74,7 +104,9 @@ def forecast_view(api, history, health, registry):
         b.download_button('Tải JSON có metadata',json.dumps(result,ensure_ascii=False,indent=2),'fpt_forecast.json','application/json')
     with st.expander('Cách tính, ngày và phiên bản'):
         st.write('Hôm nay/ngày mai: ngày lịch đã chọn, dời cuối tuần sang ngày làm việc kế. Một tuần: 7 ngày lịch tính cả hôm nay. Một tháng: đến trước cùng ngày của tháng sau. Ngày cuối khung tuần/tháng bỏ cuối tuần.')
-        st.write('Từng bước: cập nhật 6 return feature từ chuỗi Close, dùng lại Ridge/scaler. Bias đóng băng chỉ áp dụng bước 1; bước sau dùng Ridge thô. Residual được trừ trung bình pool trước bootstrap, không trừ trung bình từng đường mô phỏng. Không fit lại hoặc dùng nhãn tương lai. Zero Return giữ giá và không mượn vùng residual của Ridge.')
+        st.write('Từng bước: cập nhật 6 return feature từ chuỗi Close, dùng lại Ridge/scaler. '
+                 'Với Ridge+bias60, ô “Cách cộng bias60” chọn cộng ở mọi bước hoặc chỉ bước đầu. '
+                 'Residual được trừ trung bình pool trước bootstrap. Zero Return giữ nguyên giá.')
         st.write('Chọn ngày: từ hôm nay tới ngày bạn chọn trong một tháng; cuối tuần chuyển sang weekday kế tiếp. Toàn bộ phép tính bắt đầu từ snapshot thật, kể cả bước nối tới hôm nay. Không tạo giá thật cho ngày còn thiếu.')
         st.json({k:v for k,v in result.items() if k!='path'})
 
