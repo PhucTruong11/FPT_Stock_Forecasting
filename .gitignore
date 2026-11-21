@@ -10,7 +10,8 @@ __pycache__/
 .pytest_cache/
 .cache/
 
-# Jupyter Notebook Caches
+# Notebook nghiên cứu và bản chạy Colab chỉ giữ ở máy local.
+*.ipynb
 .ipynb_checkpoints/
 
 # CSV sinh ra được bỏ qua; snapshot công khai có hash được lưu trong data/snapshots/.

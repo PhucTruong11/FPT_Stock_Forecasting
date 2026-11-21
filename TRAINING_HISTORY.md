@@ -64,7 +64,7 @@ Bias backtest dùng sai số có target đã xuất hiện trước origin hiệ
 
 Giá dự báo mỗi điểm được neo vào giá origin thực tế, là **dự báo một bước**, không phải tự chạy từ tháng6 rồi biết trước cả5tháng. LSTM có context Yahoo và model training khác Ridge; cùng target/nhãn không biến so sánh này thành ablation chỉ khác architecture. Không lấy104 hoặc200cặp so với202cặp mà bỏ qua mẫu số.
 
-Notebook quan sát: [06_compare_predictions_jun_oct_2026.ipynb](notebooks/06_compare_predictions_jun_oct_2026.ipynb). Dashboard local có lọc tháng, đường actual và model, metric tính lại theo đúng subset.
+Notebook quan sát lưu tại máy local: `notebooks/06_compare_predictions_jun_oct_2026.ipynb`. Dashboard local có lọc tháng, đường actual và model, metric tính lại theo đúng subset.
 
 ## 5. Các nhánh chưa được chọn
 
@@ -72,7 +72,7 @@ Notebook quan sát: [06_compare_predictions_jun_oct_2026.ipynb](notebooks/06_com
 
 Mean-foldbalanced2022–2024: Ridge_shared53,36%,Logisticraw51,83%,XGBraw49,82%. Sau sigmoid ở2026, cảhai dự đoán giảm202/202:Hit117/197=59,39% nhưngbalanced50%, đúng baselinealways-down. Margin2026 chọn0; không ép ngưỡng sau khi nhìn kết quả. Brier cải thiện không đồng nghĩa phân biệt hướng tốt hơn. [3]
 
-[3] [Decision và probability diagnostics](reports/direction_selective/20261030T090621177786Z/metrics.csv), [Notebook05, phần 11](notebooks/05_training_journey_fpt.ipynb). Giữ code/artifact làm nghiên cứu, không bật trong API chính.
+[3] [Decision và probability diagnostics](reports/direction_selective/20261030T090621177786Z/metrics.csv), notebook 05 lưu tại máy local, phần 11. Giữ code/artifact làm nghiên cứu, không bật trong API chính.
 
 ### Gap mở cửa và thân nến
 
@@ -80,7 +80,7 @@ Mean-foldbalanced2022–2024: Ridge_shared53,36%,Logisticraw51,83%,XGBraw49,82%.
 
 A dùng6feature. B thayLog_Return bằng`log(Open_t/Close_previous_eligible)` và`log(Close_t/Open_t)`; không thêm cảba cột phụ thuộc tuyến tính. Hai thành phần đều đã biết sau đóng cửa origin, không dùng Open tương lai.
 
-[4] [Metrics từng năm](reports/candle_ablation/20261030T093521684942Z/metrics.csv), [Notebook05, phần 12](notebooks/05_training_journey_fpt.ipynb). Primary2022–2024 Ridge_recent meanRMSE0,0162190→0,0162930 (B cao hơn0,46%); Logistic balanced chỉ+0,09điểm%. Full2026 Ridge_recentRMSE0,0201191→0,0204083,Hit50,76%→44,67%. B tốt hơn một số năm nhưng chưa ổn định; giữA.
+[4] [Metrics từng năm](reports/candle_ablation/20261030T093521684942Z/metrics.csv), notebook 05 lưu tại máy local, phần 12. Primary2022–2024 Ridge_recent meanRMSE0,0162190→0,0162930 (B cao hơn0,46%); Logistic balanced chỉ+0,09điểm%. Full2026 Ridge_recentRMSE0,0201191→0,0204083,Hit50,76%→44,67%. B tốt hơn một số năm nhưng chưa ổn định; giữA.
 
 Các năm là các population khác nhau, không coi chênh lệch độ cao cột giữa2022 và2026 là riêng tác động cải tiến feature. CI đi kèm trong study; phần lớn chưa phân biệt chắc chắn.
 
@@ -353,3 +353,17 @@ Tổng quan bổ sung khung ngắn/toàn bộ lịch sử, nến/Close, SMA20/50
 Cùng lượt hoàn thiện dashboard, bổ sung 3 sơ đồ trong “Hiểu cách model dự báo”, ví dụ đổi log return thành giá từ response thật và nội dung riêng cho từng model. Đã kiểm tra UI của Ridge+bias60, Ridge và Zero Return; đây chỉ là thay đổi trình bày, không train hoặc đổi kết quả dự báo.
 
 Trang Dự báo bổ sung cụm dashboard gồm return từng bước, thay đổi tích lũy và độ rộng band, kèm thẻ biên ở đích. Kiểm tra UI và đối chiếu số liệu trực tiếp với tỷ lệ giá API đạt; Zero Return không nhận band Ridge. Không đổi inference, train, dữ liệu hay model.
+
+## 16. Đối chiếu hai cách sử dụng bias60 — 21/11/2026
+
+**0 lượt fit mới.** Giữ Ridge6 và calibration của bundle `ridge6_20261029`. Dashboard mặc định chọn **Mỗi bước · cách cũ** và giữ **Chỉ bước đầu** để đối chiếu. API giữ `first_step` làm mặc định và chấp nhận `every_step` cho Ridge+bias60. Cả hai chế độ dùng residual bootstrap đã căn tâm. Cách cũ giữ độ rộng gốc 1× vì backtest độ phủ ở các mục trên dùng cách chỉ cộng bias ở bước đầu.
+
+So trên cùng snapshot 29/10/2026, giá gốc 52.700 VND:
+
+| Ngày đích dự kiến | Số bước từ snapshot | Mỗi bước · cách cũ | Chỉ bước đầu |
+| --- | ---: | ---: | ---: |
+| 30/10/2026 | 1 | 52.471 VND (−0,43%) | 52.471 VND (−0,43%) |
+| 23/11/2026 | 17 | 48.970 VND (−7,08%) | 51.786 VND (−1,73%) |
+| 27/11/2026 | 21 | 48.120 VND (−8,69%) | 51.666 VND (−1,96%) |
+
+Chênh lệch này đo tác động cộng lặp bias trong mô phỏng. Chưa có phép chấm trên nhãn thực tế trong lượt này.

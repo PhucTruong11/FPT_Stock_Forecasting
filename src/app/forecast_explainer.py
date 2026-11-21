@@ -15,6 +15,10 @@ def _flow(label, steps):
 def render_forecast_explainer(result):
     zero=result['model']=='Zero-Return'
     corrected=result['model']=='Ridge+bias60'
+    repeat_bias=result.get('bias_mode')=='every_step'
+    later_model='Ridge + cùng bias60' if repeat_bias else 'Ridge thô'
+    bias_rule = ('Cách cũ cộng cùng bias60 ở mỗi bước.' if repeat_bias else
+                 'Bias60 chỉ cộng ở bước 1.' if corrected else 'Ridge thô chạy mà không cộng bias60.')
     first=result['path'][0]
     final=result['path'][-1]
     with st.expander('Hiểu cách model dự báo',expanded=True):
@@ -49,14 +53,17 @@ def render_forecast_explainer(result):
             else:
                 _flow('Vòng lặp dự báo recursive',[
                     ('Bước 1 · lịch sử thật',f"Từ snapshot {result['origin_date']}, tính feature và chạy Ridge"+(' + bias60.' if corrected else ' nguyên bản.')),
-                    ('Bước 2 · cập nhật chuỗi','Đưa Close vừa dự báo vào cửa sổ, bỏ giá cũ nhất; tính lại 6 feature rồi dùng Ridge thô.'),
+                    ('Bước 2 · cập nhật chuỗi',f'Đưa Close vừa dự báo vào cửa sổ, bỏ giá cũ nhất; tính lại 6 feature rồi chạy {later_model}.'),
                     ('Lặp đến ngày đích',f"Tiếp tục với chuỗi có giá dự báo, tới bước {result['steps']} ({result['effective_target_date']})."),
                 ])
                 st.markdown('<div class="forecast-loop">↺ Giá dự báo → cập nhật cửa sổ 21 giá → tính lại feature → Ridge → giá dự báo kế tiếp</div>',unsafe_allow_html=True)
-                st.caption('Bias60 chỉ cộng ở bước 1 của Ridge hiệu chỉnh; không cộng dồn vào các bước sau. Trọng số/scaler giữ nguyên trong toàn bộ vòng lặp. Không tạo OHLCV tương lai.')
+                st.caption(f'{bias_rule} Trọng số/scaler giữ nguyên trong toàn bộ vòng lặp.')
             bridge=result.get('bridge_steps_before_requested_window',0)
             st.write(f"**Kết quả đang xem:** {result['steps']} bước từ snapshot; {bridge} bước nối trước khoảng chọn. Giá ở đích: **{final['predicted_close_adjusted']:,.0f} VND**.")
-            st.caption('Đoạn xám nối snapshot là mô phỏng; đoạn xanh thuộc khoảng bạn chọn. Model học h=1. Backtest lịch sử h=5/h=22 không xác nhận độ chính xác của mọi ngày đích hoặc bundle hiện tại.')
+            if repeat_bias:
+                st.caption('Cách cộng bias ở mỗi bước là kịch bản riêng chưa có backtest h=5/h=22. Model học h=1.')
+            else:
+                st.caption('Đoạn xám nối snapshot là mô phỏng; đoạn xanh thuộc khoảng bạn chọn. Model học h=1. Backtest lịch sử h=5/h=22 không xác nhận độ chính xác của mọi ngày đích hoặc bundle hiện tại.')
         with uncertainty:
             if zero:
                 st.info('Zero Return là đường so sánh giữ nguyên giá. API không gắn vùng sai số của Ridge cho baseline này.')
@@ -65,7 +72,7 @@ def render_forecast_explainer(result):
                 _flow('Tạo vùng kịch bản residual bootstrap',[
                     ('Sai số đã quan sát',('Dùng tối đa 60 residual hiệu chỉnh đã có nhãn trong bundle.' if corrected else 'Dùng tối đa 60 residual Ridge thô đã có nhãn trong bundle.')),
                     ('Center & lấy block',f"Trừ trung bình cả pool, lấy mẫu block vòng tròn {spec['block_observations']} residual; giữ liên hệ trong block."),
-                    ('Mô phỏng nhiều đường',f"Chạy {spec['paths']} đường: Ridge theo lịch sử riêng của từng đường + nhiễu; bias chỉ ở bước đầu nếu bật."),
+                    ('Mô phỏng nhiều đường',f"Chạy {spec['paths']} đường với lịch sử và nhiễu riêng. {bias_rule}"),
                     ('Đọc phân vị từng bước','Lấy P10 và P90 của giá mô phỏng ở từng bước; không phải min/max và không phải toàn bộ đường đi cùng được phủ.'),
                 ])
                 factor=final.get('band_scale_factor',1.)

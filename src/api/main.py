@@ -36,6 +36,7 @@ class ForecastRequest(BaseModel):
     model: str | None = None
     horizon: Literal["today", "tomorrow", "week", "month", "custom"] = "today"
     target_date: date | None = None
+    bias_mode: Literal["first_step", "every_step"] = "first_step"
 
     @model_validator(mode='after')
     def validate_target(self):
@@ -116,7 +117,8 @@ def create_app(root: Path = BASE_DIR, service_factory=LocalRidgeService) -> Fast
     def forecast_path(request: ForecastRequest):
         from src.models.forecast_path import forecast
         try:
-            return forecast(app.state.service, request.horizon, request.model, target_date=request.target_date)
+            return forecast(app.state.service, request.horizon, request.model,
+                target_date=request.target_date, bias_mode=request.bias_mode)
         except (ValueError, KeyError) as exc:
             raise HTTPException(status_code=422, detail=str(exc)) from exc
 
