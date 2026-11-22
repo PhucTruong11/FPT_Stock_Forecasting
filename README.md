@@ -26,7 +26,7 @@ Mở hai terminal tại thư mục repo, dùng môi trường đã cài dependen
 - Swagger / thử JSON: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 - Dữ liệu bundle local dừng ở **29/10/2026**, nguồn Vietcap. Không tự download khi mở app.
 - Bundle train nhãn đến 29/10/2026 chỉ dùng cho quan sát tiếp theo; không dùng nó chấm lại quá khứ rồi gọi là ngoài mẫu.
-- Chưa deploy công khai, chưa tự retrain hoặc tự thay model.
+- API demo đã deploy lên Render tại [https://fpt-stock-forecasting.onrender.com](https://fpt-stock-forecasting.onrender.com); hệ thống không tự retrain hoặc tự thay model trong request.
 
 Đổi địa chỉ backend nếu cần bằng biến môi trường `FPT_API_URL`. UI không load weights hoặc tự tính prediction. Môi trường mới có thể cài `requirements-local.txt` để chạy demo nhẹ, hoặc `requirements.txt` để nghiên cứu đầy đủ, gồm TensorFlow/XGBoost.
 
@@ -36,6 +36,65 @@ python -m venv venv
 ```
 
 Bundle phục vụ local được lưu cùng code, giữ nguyên bytes để kiểm tra SHA256 sau clone. Xem [model đang dùng và model nghiên cứu](#model-đang-dùng-và-model-nghiên-cứu) trước khi thay artifact hoặc bàn giao cho thành viên khác.
+
+## Kiểm thử API đã deploy (Render Cloud)
+
+Backend FastAPI hiện được deploy trên Render tại:
+- **Base URL:** [https://fpt-stock-forecasting.onrender.com](https://fpt-stock-forecasting.onrender.com)
+- **Cấu hình Render:** `Build Command`: `pip install -r requirements-local.txt`, `Start Command`: `uvicorn src.api.main:app --host 0.0.0.0 --port $PORT`, `PYTHON_VERSION`: `3.13.15`, `Health Check Path`: `/health`.
+
+> **Lưu ý khi sử dụng bản deploy Free trên Render:**
+> - Đường dẫn gốc `/` trả về `404 Not Found` là bình thường vì FastAPI không gắn trang chủ ở `/`; hãy truy cập `/docs`, `/health` hoặc `/api/v1/...`.
+> - Gói Free tự tạm ngủ (*spin down*) sau 15 phút không có request. Lần gọi đánh thức server có thể mất khoảng 30–60 giây, nên hãy mở [`/health`](https://fpt-stock-forecasting.onrender.com/health) trước khi bấm test trên Swagger hoặc mở Streamlit (do [streamlit_app.py](src/app/streamlit_app.py#L18) dùng `timeout=30`).
+
+### Cách 1: Test trực tiếp trên trình duyệt (Swagger UI & GET JSON)
+
+1. Mở giao diện tài liệu tương tác **Swagger UI**: [https://fpt-stock-forecasting.onrender.com/docs](https://fpt-stock-forecasting.onrender.com/docs)
+2. Các endpoint `GET` xem trực tiếp JSON trên trình duyệt:
+   - Trạng thái server & giới hạn ngày dự báo: [`/health`](https://fpt-stock-forecasting.onrender.com/health)
+   - Danh sách model phục vụ (`Ridge+bias60`, `Ridge`, `Zero-Return`): [`/api/v1/models`](https://fpt-stock-forecasting.onrender.com/api/v1/models)
+   - Chỉ số đánh giá: [`/api/v1/metrics`](https://fpt-stock-forecasting.onrender.com/api/v1/metrics)
+   - Kiểm định chất lượng dữ liệu & allowlist đặc trưng: [`/api/v1/data-quality`](https://fpt-stock-forecasting.onrender.com/api/v1/data-quality)
+   - Lịch sử các giai đoạn huấn luyện: [`/api/v1/training-history`](https://fpt-stock-forecasting.onrender.com/api/v1/training-history)
+   - Kết quả đối chứng năm 2026: [`/api/v1/backtest`](https://fpt-stock-forecasting.onrender.com/api/v1/backtest)
+3. Thao tác nhanh các endpoint `POST` ngay trên `/docs` (**Try it out** → điền Request body → **Execute**):
+   - **Dự báo 1 phiên kế tiếp (`POST /api/v1/predict`):** nhập `{}` để dùng snapshot đóng băng tại `2026-10-29`.
+   - **Dự báo quỹ đạo nhiều ngày kèm 512 đường Bootstrap (`POST /api/v1/forecast`):**
+     - Theo khung 1 tuần: `{"horizon": "week"}`
+     - Theo ngày đích tùy chỉnh (tối đa `MAX_STEPS = 23` phiên từ `2026-10-29`, ngày hiệu lực tối đa của snapshot là `2026-12-01`): `{"horizon": "custom", "target_date": "2026-12-01"}`
+     *(Lưu ý: nếu tính từ thời điểm gọi mà số phiên vượt quá `23` bước từ `2026-10-29`, API chủ động trả về HTTP `422` để chặn suy giảm sai số đệ quy; khung Responses `422` hiển thị sẵn bên dưới Swagger UI chỉ là mô tả schema, kết quả chạy thực tế nằm ở mục `Server response → Code 200`).*
+
+### Cách 2: Test bằng Terminal / PowerShell (Windows)
+
+Dùng khối here-string `@' ... '@` đẩy thẳng vào Python để tránh lỗi thoát dấu ngoặc `\"` của PowerShell (`pwsh`), đồng thời đặt `timeout=90` cho lần gọi `/health` đầu tiên để chờ Render thức dậy nếu đang ngủ:
+
+```powershell
+cd d:\Dev\Subject_Uni\Machine_Learning\Stock_Prediction_Project
+@'
+import requests
+base = "https://fpt-stock-forecasting.onrender.com"
+h = requests.get(base + "/health", timeout=90)
+print("1. Health:", h.status_code, h.json()["status"])
+p = requests.post(base + "/api/v1/predict", json={}, timeout=30).json()
+ci = p["interval"]
+print(f"2. Predict: {p['model']} -> {p['predicted_close_adjusted']:,.2f} VND (80% CI: [{ci['lower_close_adjusted']:,.2f}, {ci['upper_close_adjusted']:,.2f}])")
+f = requests.post(base + "/api/v1/forecast", json={"horizon": "week"}, timeout=30)
+print("3. Forecast (week):", f.status_code, f.json().get("effective_target_date") or f.json().get("detail"))
+'@ | .\venv\Scripts\python.exe -
+```
+
+### Cách 3: Kết nối giao diện Streamlit (`FPT Forecast Studio`) thẳng lên API Render
+
+Giao diện Streamlit đọc biến môi trường `FPT_API_URL`, nên có thể chạy UI ở máy local và gọi thẳng lên backend Render mà không cần bật server FastAPI local. Cần đặt `$env:PYTHONPATH = "."` và gọi qua `python -m streamlit run` để Python nhận diện đúng package `src` (tránh lỗi `ModuleNotFoundError: No module named 'src'`):
+
+```powershell
+cd d:\Dev\Subject_Uni\Machine_Learning\Stock_Prediction_Project
+$env:PYTHONPATH = "."
+$env:FPT_API_URL = "https://fpt-stock-forecasting.onrender.com"
+.\venv\Scripts\python.exe -m streamlit run src/app/streamlit_app.py --server.address 127.0.0.1 --server.port 8501
+```
+
+Mở trình duyệt tại [http://127.0.0.1:8501](http://127.0.0.1:8501) để sử dụng đầy đủ 4 trang trên dữ liệu trả về từ Render (giữ cửa sổ terminal chạy trong lúc demo, nhấn `Ctrl + C` để dừng).
 
 ## Model đang dùng và model nghiên cứu
 
@@ -273,7 +332,7 @@ Sau mở rộng lịch chọn ngày/phân tích: **149 unit tests đạt**, UI k
 
 Lệnh thứ hai chỉ dựng biểu đồ/timeline từ evidence đã lưu, không retrain. Hướng dẫn forward ledger: [ARCHITECTURE.md, mục Forward ledger](ARCHITECTURE.md#forward-ledger). Dự báo bấm trên dashboard **không tự ghi thành bằng chứng forward**.
 
-Kế hoạch tương lai: thu forecast trước target và chấm khi có nhãn; xem xét drift, acceptance gate và rollback; sau khi local ổn mới chọn host, đóng gói dependencies và deploy API/UI. `h=5`, regime clustering, xác suất/selective tốt hơn chỉ là các thí nghiệm đề xuất, chưa có trong bản chính. Lượt bàn giao GitHub ngày 31/10/2026 đưa code, bundle phục vụ và báo cáo lên GitHub và đã merge vào main; nhánh local làm việc hiện tại là `feature/train-model`. Chưa deploy public. Các nhật ký ghi “không commit/push” phản ánh trạng thái tại thời điểm nghiên cứu trước yêu cầu bàn giao này.
+Kế hoạch tương lai: thu forecast trước target và chấm khi có nhãn; xem xét drift, acceptance gate và rollback; `h=5`, regime clustering, xác suất/selective tốt hơn là các thí nghiệm đề xuất, chưa có trong bản chính. Code, bundle phục vụ và báo cáo đã được đưa lên GitHub (nhánh `main` và `feature/train-model`), đồng thời backend FastAPI đã được deploy demo công khai lên Render tại [https://fpt-stock-forecasting.onrender.com](https://fpt-stock-forecasting.onrender.com). Các nhật ký ghi “không commit/push” hoặc “chưa deploy” phản ánh trạng thái tại thời điểm nghiên cứu trước yêu cầu bàn giao và triển khai này.
 
 ## Ba tài liệu duy nhất
 
