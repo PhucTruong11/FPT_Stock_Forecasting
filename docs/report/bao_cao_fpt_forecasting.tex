@@ -102,6 +102,12 @@
 \renewcommand{\bottomfraction}{.73}
 \renewcommand{\textfraction}{.08}
 \renewcommand{\floatpagefraction}{.92}
+% Căn cụm hình/bảng lên đầu trang khi trang chỉ chứa các float.
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{12pt}
+\setlength{\@fpbot}{0pt plus 1fil}
+\makeatother
 \setlength{\textfloatsep}{11pt plus 3pt minus 3pt}
 \setlength{\intextsep}{10pt plus 3pt minus 2pt}
 \setlength{\floatsep}{9pt plus 3pt minus 2pt}
