@@ -4,6 +4,8 @@
 
 Đọc mục 1–5 để nắm mạch trình bày. Mỗi bạn xem thêm phần mang tên mình ở mục 7 và tập trả lời bằng ví dụ từ chính phần mình làm.
 
+Mục 8 có kịch bản demo khoảng 5 phút. Mục 9 ghi các giải thích chuyên sâu đã trao đổi, kèm công thức, ví dụ và đường dẫn tới code hoặc bằng chứng để cả nhóm ôn vấn đáp.
+
 ## Tech stack
 
 | Phần | Công cụ | Dùng trong đồ án |
@@ -189,3 +191,351 @@ Phân công và tỷ lệ lấy từ [bảng phân công trong báo cáo](bao_ca
 Thứ tự nói gợi ý: **Phúc mở bài → Nam nói dữ liệu → Đạt nói mô hình → Nguyên nói đối chứng và dẫn demo → Phúc kết luận**. Khi giảng viên hỏi sâu, chuyển đúng người phụ trách. Nếu phần đóng góp thực tế khác bảng trên, cả nhóm xác nhận lại và sửa tỷ lệ trước khi nộp, tổng bằng 100%.
 
 Tài liệu để mở lúc tập: [README chạy demo](../../README.md) · [Kiến trúc](../../ARCHITECTURE.md) · [Nhật ký thực nghiệm](../../TRAINING_HISTORY.md) · [Kịch bản vấn đáp đầy đủ](HUONG_DAN_DEMO_VA_TRA_LOI_VAN_DAP.md).
+
+## 8. Kịch bản giới thiệu và demo khoảng 5 phút
+
+Chia thành **4 đoạn**, thời lượng đã tính cả thao tác trên màn hình. Các bạn tập nói theo ý, dùng lời gợi ý dưới đây để nối mạch. Trước buổi trình bày, mở sẵn dashboard, Swagger `/docs` và bảng tổng quan 8 đợt ở mục 4. Gọi `/health` để kiểm tra kết nối và ngày dữ liệu cuối.
+
+### Đoạn 1 · Giới thiệu tổng quan · 0:00–0:45 · Phúc
+
+- Tên đề tài, lý do tập trung một mã FPT và sản phẩm nhóm xây dựng.
+- Đầu vào là lịch sử giá, đầu ra là lợi suất phiên kế tiếp rồi quy đổi thành giá đóng cửa.
+- Xác định bài toán hồi quy có giám sát và giới thiệu nhanh toàn bộ quy trình.
+
+> Chào thầy và các bạn, nhóm em thực hiện đề tài phân tích và dự báo cổ phiếu FPT bằng học máy. Nhóm tập trung vào một mã để kiểm tra dữ liệu và so sánh mô hình sâu hơn. Từ lịch sử giao dịch, hệ thống dự báo lợi suất phiên kế tiếp rồi quy đổi thành giá đóng cửa. Đây là bài toán hồi quy có giám sát, với nhãn được tính từ giá thực tế của phiên sau. Quy trình nhóm thực hiện gồm lấy dữ liệu, làm sạch, tạo đặc trưng, huấn luyện, đối chứng, chọn mô hình và đưa kết quả lên ứng dụng.
+
+**Trên màn hình**, chỉ sơ đồ quy trình ở đầu tài liệu, sau đó chuyển sang phần dữ liệu.
+
+### Đoạn 2 · Dữ liệu và cách chuẩn bị để học · 0:45–1:50 · Nam
+
+- Nguồn dữ liệu OHLCV ngày, lý do chọn Vietcap sau khi kiểm tra Yahoo và KBS.
+- Làm sạch, tạo 6 đặc trưng và gắn nhãn phiên kế tiếp.
+- Chia Train, Validation, Test theo thời gian và fit scaler trên Train.
+
+> Nhóm thu thập giá mở cửa, cao nhất, thấp nhất, đóng cửa và khối lượng giao dịch FPT từ năm 2018. Sau khi đối chiếu Yahoo Finance, Vietcap và KBS, nhóm chọn Vietcap làm nguồn chính vì snapshot kiểm tra có chất lượng tốt hơn. Khi làm sạch, nhóm loại dòng khối lượng bằng 0, cách ly nến sai và giữ lịch giao dịch thực tế. Từ giá đã quan sát, nhóm tạo các đặc trưng lợi suất. Bộ cuối cùng gồm 6 đặc trưng, tính từ 21 giá đóng cửa gần nhất. Mỗi mẫu được ghép với lợi suất phiên kế tiếp làm nhãn. Dữ liệu được chia theo thời gian, Train để học, Validation để chọn cấu hình và Test để đánh giá. Scaler chỉ fit trên Train để tránh sử dụng thông tin tương lai. Dù có lịch sử từ 2018, mỗi lần fit có thể dùng một cửa sổ gần hơn, tùy cấu hình đem so sánh.
+
+**Trên màn hình**, mở **Tổng quan**, chỉ nến FPT và ngày snapshot **29/10/2026**, rồi chuyển đến bảng tóm tắt thực nghiệm.
+
+### Đoạn 3 · Thử nghiệm và lý do chọn Ridge · 1:50–3:10 · Đạt
+
+- So baseline giữ nguyên giá với Ridge, XGBoost và LSTM.
+- Tóm tắt mục đích của 8 đợt, từ chọn dữ liệu đến chọn cửa sổ train.
+- Chốt Ridge6, `alpha=100`, cửa sổ 3 năm và hiệu chỉnh bias60.
+- Nêu một kết quả lịch sử cùng phạm vi đánh giá của nó.
+
+> Nhóm thử Ridge bằng scikit-learn, XGBoost và LSTM bằng TensorFlow/Keras. Đồng thời nhóm giữ baseline dự báo giá phiên sau bằng giá hiện tại để biết mô hình có tạo thêm giá trị hay không. Tám đợt thực nghiệm lần lượt kiểm tra pipeline, độ ổn định, nguồn dữ liệu, bộ đặc trưng và tham số, hiệu chỉnh sai lệch, phân loại tăng giảm, đặc trưng Gap/Body và độ dài lịch sử. Kết quả dẫn đến cấu hình Ridge dùng 6 lợi suất, alpha bằng 100 và cửa sổ 3 năm. Bộ đặc trưng gọn cho kết quả cạnh tranh trong các đối chứng, còn Gap/Body và nhánh phân loại chưa cải thiện ổn định. Nhóm thêm bias60 để hiệu chỉnh từ các sai số gần nhất đã biết. Trên 202 cặp lịch sử năm 2026, bản Ridge fit tới hết 2025 kèm bias60 đạt Balanced Accuracy 56,62% và RMSE gần baseline. Đây là căn cứ lịch sử cho lựa chọn demo. Bundle fit đến tháng 10/2026 cần được chấm tiếp bằng dự báo ghi trước và kết quả xuất hiện sau.
+
+**Trên màn hình**, chỉ bảng 8 đợt ở mục 4, rồi mở **Đối chứng** với tập **202 cặp** để minh họa đúng phạm vi kết quả vừa nói.
+
+### Đoạn 4 · Demo ứng dụng và kết luận · 3:10–5:00 · Nguyên, Phúc chốt
+
+- Minh họa luồng Streamlit gửi yêu cầu → FastAPI suy luận bằng model đã nạp → trả JSON → vẽ biểu đồ.
+- Demo giá lịch sử, một dự báo hợp lệ và đối chứng với giá thực tế.
+- Giải thích dự báo nhiều bước, vùng P10–P90 và hướng đánh giá tiếp theo.
+
+> Sau khi chọn mô hình, nhóm đóng gói Ridge cùng scaler, cấu hình hiệu chỉnh và snapshot dữ liệu. FastAPI phục vụ dự báo qua REST API, backend được cấu hình chạy trên Render, còn giao diện Streamlit gọi API để hiển thị kết quả. Ở trang Tổng quan, đây là các nến giá lịch sử. Sang Dự báo, người dùng chọn mô hình và ngày đích khả dụng để xem giá đóng cửa dự báo cùng vùng kịch bản P10–P90. Kỳ hạn tuần hoặc tháng được tạo bằng cách lặp mô hình dự báo một phiên. Khi đi xa hơn, sai số có thể tích lũy và độ phủ của vùng dự báo cần được kiểm tra bằng backtest. Ở trang Đối chứng, nhóm đặt dự báo lịch sử cạnh giá thực tế trên cùng ngày để xem cả sai số và khả năng đoán hướng. Qua đồ án, nhóm xây dựng được quy trình từ dữ liệu đến ứng dụng và lưu bằng chứng cho từng quyết định chọn mô hình. Bước tiếp theo là ghi dự báo trước khi biết giá thật, theo dõi sai số và chỉ thay mô hình khi có kết quả kiểm chứng phù hợp.
+
+**Thứ tự thao tác trong 1 phút 50 giây cuối**
+
+1. **3:10–3:30** — Chỉ nến lịch sử và ngày dữ liệu cuối trên **Tổng quan**. Giới thiệu luồng UI gọi API.
+2. **3:30–4:05** — Mở **Dự báo**, chọn ngày còn trong giới hạn API, chỉ giá dự báo và vùng P10–P90. Nếu lịch hiện tại đã vượt giới hạn snapshot, mở Swagger, gọi `POST /api/v1/predict` với `{}` để minh họa dự báo phiên kế tiếp từ snapshot.
+3. **4:05–4:40** — Mở **Đối chứng**, chọn **Tháng 6–10/2026 · 104 cặp, có LSTM**. Chỉ giá thực tế, các đường dự báo và bảng chỉ số trên cùng tập ngày. Có thể mở **Hành trình model** nếu thao tác còn thời gian.
+4. **4:40–5:00** — Phúc kết luận bằng hai câu cuối trong lời gợi ý, rồi mời thầy đặt câu hỏi.
+
+## 9. Giải thích chuyên sâu từ các buổi trao đổi
+
+Phần này tổng hợp kiến thức đã cùng tìm hiểu đến **24/11/2026**. Số liệu được ghi theo snapshot và từng thí nghiệm. Khi cần trình bày diễn biến 8 đợt, dùng bảng tổng quan và các kết quả chi tiết ở mục 4.
+
+### 9.1. Bài toán, đầu vào, nhãn và đầu ra
+
+Tên đồ án trên bìa là **Phân tích và dự báo giá đóng cửa cổ phiếu FPT bằng học máy**. Mô hình chính học lợi suất phiên kế tiếp, sau đó hệ thống quy đổi kết quả thành giá đóng cửa điều chỉnh. Nhóm tập trung FPT để kiểm tra dữ liệu, thực nghiệm và giải thích lựa chọn sâu hơn trên một mã.
+
+Gọi `C_t` là giá đóng cửa điều chỉnh của phiên gốc `t`. Một mẫu huấn luyện có hai phần.
+
+- **Đầu vào X_t** gồm các feature tính từ giá đã quan sát đến hết phiên `t`.
+- **Nhãn y_t** là `ln(C_next / C_t)`, với `C_next` là giá của quan sát giao dịch kế tiếp đủ điều kiện làm nhãn.
+
+Ví dụ, giá tại `t` là 50.000 đồng và phiên sau thực tế là 51.000 đồng. Nhãn của mẫu tại `t` bằng `ln(51.000 / 50.000) ≈ 0,0198`, tương ứng giá tăng 2%. Khi học trên lịch sử, giá phiên sau đã có nên tính được nhãn. Khi đưa ra dự báo mới, nhãn sẽ được bổ sung sau khi quan sát giá thực tế.
+
+Đây là **hồi quy có giám sát**, vì mô hình học từ cặp đầu vào và giá trị mục tiêu. Nhãn được tính tự động từ chuỗi giá. Nếu đổi mục tiêu thành tăng/giảm thì thành bài toán phân loại có giám sát. Các phương pháp như phân cụm hoặc PCA có thể hỗ trợ biểu diễn dữ liệu; nếu thử chúng trong tương lai, các tham số cũng cần được fit trên Train.
+
+**Câu trả lời khi được hỏi về “6 nhãn”** — Ridge đang dùng **6 feature đầu vào và 1 nhãn lợi suất phiên kế tiếp**. Cột `Target_Date_1d` ghi ngày của nhãn để kiểm soát việc chia tập. [Code tạo mẫu](../../src/features/build_features.py)
+
+### 9.2. Kiểm tra và làm sạch OHLCV cụ thể như thế nào?
+
+OHLCV là các cột Open, High, Low, Close và Volume, đi cùng ngày giao dịch. Chuỗi dùng trong nghiên cứu chính được lấy từ Vietcap sau khi đối chiếu với Yahoo Finance và KBS. File `download_dataset.py` là bộ tải Yahoo qua yfinance, còn `source_audit.py` chứa phần lấy và đối chiếu nhiều nguồn.
+
+| Việc kiểm tra | Cách xử lý trong pipeline | Lý do |
+| --- | --- | --- |
+| Ngày và thứ tự | Chuẩn hóa ngày D1, sắp xếp từ cũ đến mới | Xác định đúng quá khứ và phiên kế tiếp |
+| Dòng trùng ngày | Gộp dòng trùng giống nhau, báo lỗi khi số liệu mâu thuẫn | Mỗi ngày có một quan sát thống nhất |
+| Giá và khối lượng | Kiểm tra kiểu số, giá dương và Volume nguyên không âm | Phép tính lợi suất cần giá hợp lệ |
+| Quan hệ giữa các giá | Kiểm tra Low ≤ Open/Close ≤ High và Low ≤ High | Phát hiện nến sai hình học |
+| Volume bằng 0 | Loại khỏi tập quan sát dùng để học và ghi lý do | Những dòng giữ lại giá cũ có thể tạo nhãn lợi suất bằng 0 |
+| Giá thiếu hoặc vô hạn | Báo lỗi khi vi phạm điều kiện nguồn đầu vào | Giữ phép tính và nguồn sai sót có thể kiểm tra được |
+| Lịch quan sát | Giữ các ngày giao dịch có trong nguồn | Tránh tạo thêm quan sát giả vào ngày nghỉ |
+
+Ví dụ, High bằng 50.000 nhưng Close bằng 52.000 là một nến sai. Nếu quan sát kế tiếp có khối lượng dương nhưng là nến lỗi, pipeline loại nhãn tương ứng của phiên đứng trước. Ngày đích được xác định trước khi loại nến đó để kiểm soát sự thay đổi kỳ hạn.
+
+Trong bundle hiện tại, **2.202 dòng raw → loại 2 dòng Volume bằng 0 → còn 2.200 quan sát hợp lệ**. Giá có basis điều chỉnh của nhà cung cấp. Khi đối chiếu nguồn hoặc ghép dữ liệu mới, cần kiểm tra cùng đơn vị và cách điều chỉnh cổ tức/chia tách.
+
+Ngày gốc và ngày đích được ghi tường minh. `calendar_verified=false` cho biết lịch được suy từ các quan sát nguồn và chưa được xác minh độc lập bằng toàn bộ lịch HOSE. Snapshot đóng băng giúp tái lập đúng đầu vào của một lượt nghiên cứu. [Kiểm tra OHLCV](../../src/data/contracts.py) · [Đối chiếu nguồn](../../src/data/source_audit.py) · [Metadata bundle](../../models/local_demo/ridge6_20261029/manifest.json)
+
+### 9.3. Sáu feature đã chọn và ví dụ cách tính
+
+Viết `C[t]` là giá đóng cửa tại phiên `t` và `r[t] = ln(C[t] / C[t-1])`, trong đó chỉ số thời gian chạy theo các quan sát hợp lệ. Một hàng đầu vào Ridge gồm đúng thứ tự sau.
+
+| Feature | Công thức | Thông tin cung cấp |
+| --- | --- | --- |
+| `Log_Return` | `r[t]` | Biến động từ phiên trước tới phiên hiện tại |
+| `Return_Lag_1` | `r[t-1]` | Lợi suất một phiên tại thời điểm cách hiện tại 1 phiên |
+| `Return_Lag_2` | `r[t-2]` | Lợi suất một phiên tại thời điểm cách hiện tại 2 phiên |
+| `Return_Lag_5` | `r[t-5]` | Lợi suất một phiên tại thời điểm cách hiện tại 5 phiên |
+| `Return_5` | `ln(C[t] / C[t-5])` | Biến động tích lũy trong 5 phiên |
+| `Return_20` | `ln(C[t] / C[t-20])` | Biến động tích lũy trong 20 phiên |
+
+Ví dụ, Close hiện tại là 50.000 đồng và Close cách 5 phiên là 48.000 đồng. `Return_5 = ln(50.000 / 48.000) ≈ 0,04082`, tương ứng mức tăng giá tích lũy khoảng 4,167%. Log return được quy đổi sang phần trăm thay đổi giá bằng `(exp(r) − 1) × 100`.
+
+Để tính `Return_20`, cần giá ở cả `t` và `t−20`, nên lịch sử tối thiểu cho bộ 6 feature gồm **21 giá đóng cửa**. Thông tin của nhiều phiên đã được gói vào vector 6 số này.
+
+Pipeline chung tạo **16 feature** để phục vụ các đối chứng, gồm cả biến động, SMA, RSI, ATR và khối lượng. Model cuối chọn 6 cột lợi suất. Các chỉ báo trên dashboard còn có vai trò giúp người xem phân tích dữ liệu.
+
+Builder chung bỏ **49 dòng warm-up** để đủ lịch sử cho SMA50. Vì vậy snapshot còn **2.151 hàng feature**, gồm **2.150 hàng có nhãn** và một hàng mới nhất chờ kết quả phiên sau. API nhận OHLCV tự nhập yêu cầu ít nhất **51 dòng** theo hợp đồng builder chung. Các yêu cầu này xuất phát từ các bước khác nhau trong pipeline. [Công thức và warm-up](../../src/features/build_features.py)
+
+### 9.4. Phân biệt D1, h=1, lookback và cửa sổ train
+
+| Khái niệm | Ý nghĩa trong project |
+| --- | --- |
+| **D1** | Một nến tổng hợp một ngày giao dịch, gồm cả sáng và chiều |
+| **h=1** | Dự báo một quan sát giao dịch kế tiếp sau ngày gốc |
+| **H1 / H4** | Khung nến một giờ / bốn giờ, là các khung dữ liệu khác có thể nghiên cứu sau |
+| **21 giá đóng cửa** | Lịch sử đủ để tính 6 feature của Ridge |
+| **Lookback 30** | LSTM tham chiếu đọc một chuỗi gồm 30 hàng feature |
+| **Cửa sổ train 3 năm** | Khoảng lịch sử dùng để học trọng số của một phiên bản Ridge |
+
+Thứ Sáu có thể có ngày đích là thứ Hai nếu đó là quan sát giao dịch hợp lệ kế tiếp. Một bước được tính theo quan sát, còn khoảng cách ngày lịch phụ thuộc cuối tuần, ngày nghỉ và chất lượng nguồn. Muốn bổ sung H1/H4 cần thu thập dữ liệu tương ứng, tạo lại nhãn và đánh giá lại cấu hình.
+
+### 9.5. Chia theo thời gian, chuẩn hóa và tránh rò rỉ
+
+Trong benchmark ban đầu, dữ liệu được chia theo các mốc sau.
+
+~~~text
+Train đến hết 2022 → Validation trong 2023–2024 → Test trong 2025
+Học trọng số        Chọn cấu hình                Đánh giá cấu hình đã chọn
+~~~
+
+Mỗi mẫu có cả ngày gốc và ngày nhãn. Khi chốt Train ở cuối năm, chỉ nhận mẫu có ngày nhãn nằm trong giới hạn đã biết. Nếu mẫu cuối tháng 12 mang nhãn tháng 1 năm sau, mẫu đó nằm ngoài Train tại mốc này.
+
+`StandardScaler` học trung bình `mu_j` và độ lệch chuẩn `sigma_j` của từng cột trên Train. Nó biến đổi giá trị thành `z_j = (x_j − mu_j) / sigma_j`. Validation, Test và các lần dự báo sau dùng lại scaler đã fit.
+
+Feature được phép tính trước khi chia tập nếu từng hàng chỉ sử dụng hiện tại và quá khứ. Chẳng hạn, trung bình trượt kết thúc tại ngày gốc là feature nhân quả. Các bước học tham số từ dữ liệu, như scaler hoặc PCA, cần fit trong phạm vi Train của lượt đánh giá đó.
+
+Các đợt sau có đánh giá cuốn chiếu theo năm. Ví dụ, với cửa sổ 3 năm, để đánh giá năm 2025 thì fit trên 2022–2024. Việc tính feature đầu năm đánh giá có thể sử dụng lịch sử đã có trước đó để đủ ngữ cảnh. Nhãn và các tham số fit vẫn tuân theo mốc thời gian.
+
+**Vai trò của Validation và Test** — Validation phục vụ lựa chọn. Test phục vụ báo cáo sau khi cấu hình được khóa. Khi đã xem một giai đoạn nhiều lần và dựa vào kết quả để điều chỉnh nghiên cứu, cần ghi nhận việc tiếp xúc dữ liệu đó. Giai đoạn 2026 trong project đã được xem trong quá trình nghiên cứu. [Chia tập benchmark](../../src/models/experiment.py) · [Chia cửa sổ theo ngày nhãn](../../src/models/final_window_comparison.py) · [Lịch sử tiếp xúc dữ liệu đánh giá](../../reports/holdout_exposures.json)
+
+### 9.6. Ridge, XGBoost và LSTM học khác nhau thế nào?
+
+**Ridge** là hồi quy tuyến tính có phạt L2 lên trọng số. Sau khi chuẩn hóa đầu vào, model tính `y_hat = b + w1×z1 + ... + w6×z6`. Khi huấn luyện, nó tìm trọng số để giảm tổng sai số bình phương cùng mức phạt `alpha × tổng(w_j²)`. `alpha` lớn hơn tăng mức phạt khi giữ nguyên dữ liệu và quy ước hàm mục tiêu. Trong dự án, scikit-learn thực hiện bước fit trên CPU.
+
+**XGBoost** kết hợp nhiều cây quyết định, mỗi cây chia đầu vào theo các điều kiện. Các cây được thêm theo từng lượt nhằm cải thiện hàm mất mát của tập cây hiện có. Nó có thể học tương tác phi tuyến, chẳng hạn tác động của lợi suất gần nhất phụ thuộc vào xu hướng 20 phiên. `XGBRegressor` phục vụ nhánh hồi quy; `XGBClassifier` từng được thử cho nhánh dự báo hướng.
+
+**LSTM** là kiến trúc mạng nơ-ron xử lý chuỗi theo thời gian. Trạng thái và các cổng của mạng học cách giữ hoặc giảm bớt thông tin khi đọc qua các phiên. Benchmark thử lookback 10, 30 và 60; bản tham chiếu được chọn trong họ LSTM dùng **30 phiên × 16 feature**. Kiến trúc benchmark gồm LSTM 32 unit, Dropout 0,2, Dense 8 unit rồi một đầu ra liên tục. Huấn luyện dùng TensorFlow/Keras, optimizer Adam và loss Huber, có early stopping theo Validation.
+
+| Khía cạnh | Ridge đang dùng | XGBoost đối chứng | LSTM tham chiếu |
+| --- | --- | --- | --- |
+| Đầu vào | Một vector 6 feature | Một hàng feature theo cấu hình thử | Một chuỗi 30 × 16 ở bản tham chiếu |
+| Cách biểu diễn quan hệ | Tổng có trọng số tuyến tính | Tổ hợp cây quyết định | Trạng thái học từ chuỗi có thứ tự |
+| Công cụ | scikit-learn | Thư viện XGBoost | TensorFlow/Keras |
+| Vai trò | Phục vụ dự báo chính | Kiểm tra mô hình phi tuyến | Kiểm tra nhánh học sâu |
+
+Các feature trễ giúp Ridge và XGBoost tiếp cận thông tin quá khứ. Nhánh học sâu đã triển khai trong đồ án dùng LSTM. Google Colab là môi trường chạy, có GPU phục vụ thí nghiệm LSTM. CPU vẫn phù hợp với Ridge và có thể chạy suy luận LSTM nhỏ khi đủ thư viện. [Code mô hình và huấn luyện](../../src/models/experiment.py)
+
+### 9.7. Gói Ridge hiện tại chứa những gì?
+
+Bundle được chọn là `ridge6_20261029`, nguồn Vietcap, cửa sổ train 3 năm và nhãn đến **29/10/2026**. Lựa chọn mặc định trên API là `Ridge+bias60`. `alpha=100` là siêu tham số được chọn khi đối chứng cấu hình, còn các trọng số được học từ dữ liệu Train.
+
+| Thành phần | Nội dung |
+| --- | --- |
+| `ridge.pkl` | Pipeline StandardScaler và Ridge đã fit, gồm tham số chuẩn hóa, 6 trọng số, hệ số nền và `alpha=100` |
+| `calibration.json` | Cấu hình bias60, sai số lịch sử và thông tin hiệu chỉnh |
+| `raw.csv` | Snapshot OHLCV dùng làm đầu vào mặc định |
+| `backtest.csv.gz` | Dự báo lịch sử của các model dùng cho đối chứng |
+| `manifest.json` | Phiên bản, thứ tự feature, nguồn, ngày dữ liệu, mốc nhãn train và hash artifact |
+| `models/local_demo.json` | File trỏ đến bundle đang được phục vụ |
+
+Khi API khởi động, nó kiểm tra manifest, hash và thứ tự feature rồi nạp pipeline. Mỗi request thực hiện suy luận bằng các tham số đã lưu.
+
+Ba lựa chọn trong trang Dự báo có quan hệ như sau.
+
+- **Ridge+bias60** dùng đầu ra Ridge cộng mức hiệu chỉnh.
+- **Ridge** dùng trực tiếp đầu ra của cùng pipeline đã fit.
+- **Zero Return** giữ giá gốc bằng cách dự báo lợi suất bằng 0.
+
+Kết quả so sánh lịch sử trong `backtest.csv.gz` thuộc các model có mốc train phù hợp với giai đoạn được chấm. Bundle fit đến tháng 10/2026 cần được theo dõi bằng các nhãn xuất hiện sau mốc này. [Bundle và hợp đồng dữ liệu](../../models/local_demo/ridge6_20261029/manifest.json) · [Code nạp và suy luận](../../src/models/local_demo.py)
+
+### 9.8. Dựa vào đâu để nói một lượt training tốt hơn?
+
+Mỗi lượt bắt đầu bằng một câu hỏi cụ thể, chẳng hạn thay nguồn, rút gọn feature, thêm hiệu chỉnh hoặc đổi số năm train. Kết luận được rút từ dự báo trên các ngày đánh giá, so với kết quả thật và baseline tương ứng.
+
+| Chỉ số | Điều nó đo | Cách đọc |
+| --- | --- | --- |
+| **RMSE log return** | Căn bậc hai của trung bình sai số lợi suất bình phương | Càng thấp càng tốt, nhạy với lần sai lớn |
+| **MAE giá** | Trung bình trị tuyệt đối chênh lệch giá dự báo và giá thật | Càng thấp càng tốt, đơn vị VND dễ giải thích |
+| **Hit rate** | Tỷ lệ đoán đúng dấu trên các phiên có biến động thực tế | Đọc cùng tỷ lệ tăng/giảm và quy ước dự báo trung tính |
+| **Balanced Accuracy** | Trung bình recall của nhóm tăng và nhóm giảm | Cho biết khả năng nhận diện cả hai nhóm |
+| **Độ phủ vùng dự báo** | Tỷ lệ giá thật nằm trong band | Đọc cùng độ rộng band và interval score |
+| **Độ ổn định** | Mức thay đổi kết quả qua năm, fold hoặc seed | Xem cả trung bình và giai đoạn có kết quả tệ nhất |
+
+Trong một đối chứng, cần cùng ngày gốc/ngày đích, nguồn hoặc basis đã ghép hợp lệ, cùng kỳ hạn và quy tắc chấm. Baseline giúp biết mức cải thiện so với một cách dự báo đơn giản như giữ nguyên giá hoặc dùng lợi suất trung bình Train.
+
+Một ví dụ từ đợt 5, trên cùng **202 cặp năm 2026**, cập nhật Ridge từ bản đóng băng 2023 sang bản fit đến hết 2025 giảm RMSE khoảng **2,83%**. Thêm bias60 đưa MAE giá về khoảng **1.064,12 đồng** và Balanced Accuracy **56,62%**. RMSE của bản này là **0,0201116**, còn Zero Return là **0,0201157**, nên lợi thế theo chỉ số đó rất nhỏ.
+
+Hit **60,91%** của Ridge+bias60 được tính trên **197 phiên có biến động**. Trong cùng tập, luôn đoán giảm cũng đạt **59,39% hit**, vì số phiên giảm chiếm đa số; Balanced Accuracy của cách luôn giảm là **50%**. Vì vậy cần xem nhiều chỉ số và baseline trước khi kết luận khả năng dự báo hướng.
+
+Lỗi Train giảm cho biết quá trình fit đang thích nghi với dữ liệu học. Nếu lỗi Validation tăng cùng lúc, đó là dấu hiệu quá khớp. Unit test kiểm tra logic, hợp đồng API, công thức và khả năng tái lập. Khả năng dự báo cần được chấm bằng các nhãn thực tế trên những giai đoạn phù hợp. [Kết quả recency/bias](../../reports/recency_bias/20261030T022440928507Z/metrics.csv) · [Nhánh phân loại](../../reports/direction_selective/20261030T090621177786Z/metrics.csv)
+
+### 9.9. Vì sao có dữ liệu từ 2018 mà chốt train 3 năm?
+
+Lịch sử dài giúp phân tích nhiều chế độ thị trường, tạo feature và tổ chức các đối chứng. Cửa sổ train quyết định những mẫu nào được dùng để học trọng số tại một mốc. Hai khái niệm này có thể có độ dài khác nhau.
+
+Ở đợt cuối, nhóm giữ nguồn, 6 feature và `alpha=100`, chỉ đổi **3 năm, 5 năm, toàn bộ từ 2018**. Trên cùng 993 cặp validation của bốn năm 2022–2025, RMSE trung bình lần lượt là **0,01707812**, **0,01709506** và **0,01710787**. Cửa sổ 3 năm được chọn theo tiêu chí RMSE trung bình đã đặt trước.
+
+Độ chênh lệch còn nhỏ, khoảng tin cậy mô tả của chênh lệch MSE chứa 0. Kết quả hỗ trợ quyết định dùng 3 năm cho demo. Đánh giá bằng các phiên mới sẽ giúp kiểm tra độ ổn định tiếp theo. Lịch sử dài hơn có thể cung cấp thêm mẫu nhưng cũng chứa các giai đoạn có quan hệ giá khác với hiện tại. [Kết quả chọn cửa sổ](../../reports/final_window_comparison/20261101T014607720130Z/validation_summary.csv) · [Khoảng tin cậy](../../reports/final_window_comparison/20261101T014607720130Z/paired_validation_ci.csv)
+
+### 9.10. Bias60 là gì và tính từ đâu?
+
+Tại một thời điểm đã có nhãn, sai số của Ridge thô được tính bằng `e = lợi suất thực tế − lợi suất dự báo thô`. Bias60 lấy trung bình tối đa **60 sai số gần nhất đã biết**. Code yêu cầu ít nhất **20 sai số đã có nhãn** để kích hoạt hiệu chỉnh.
+
+~~~text
+bias60 = trung bình các sai số thô gần nhất đủ điều kiện
+lợi suất sau hiệu chỉnh = lợi suất Ridge thô + bias60
+~~~
+
+Ví dụ giả định, nếu Ridge gần đây thường dự báo cao hơn thực tế thì trung bình sai số âm. Cộng mức hiệu chỉnh âm sẽ hạ dự báo xuống. Nếu tình huống ngược lại, hiệu chỉnh có thể dương.
+
+Trong backtest, các sai số phải có nhãn ở thời điểm phát dự báo mới được đưa vào tính bias. Trong bundle phục vụ hiện tại, pool sai số và hiệu chỉnh đã được đóng băng theo version. Cập nhật chúng cần một lượt dựng bundle có kiểm soát. [Code hiệu chỉnh nhân quả](../../src/models/recency_bias.py) · [Hiệu chỉnh trong bundle](../../src/models/local_demo.py)
+
+### 9.11. Dự báo một phiên, tuần/tháng và hai chế độ cộng bias
+
+Model chính học mục tiêu **h=1**. Đường tuần/tháng được tạo bằng dự báo đệ quy, bắt đầu từ giá thật cuối cùng rồi dùng giá vừa dự báo để tính lại feature cho bước sau.
+
+~~~text
+Lịch sử thật → dự báo bước 1 → cập nhật Close → tính lại 6 feature
+                                                   ↓
+                         tiếp tục cho bước 2, 3, ... đến ngày đích
+~~~
+
+Code hỗ trợ hai chế độ cho Ridge+bias60.
+
+| Chế độ | Quy tắc | Phạm vi bằng chứng |
+| --- | --- | --- |
+| **Mỗi bước · cách cũ** | Cộng cùng mức bias ở từng bước | Dashboard mặc định chọn chế độ này sau lần đối chiếu tháng 11 |
+| **Chỉ bước đầu** | Bước đầu có bias, các bước sau dùng Ridge thô | API mặc định dùng chế độ này khi thiếu `bias_mode`; các backtest h=5/h=22 đã ghi dùng quy tắc này |
+
+Hai chế độ cho cùng kết quả ở bước đầu. Về sau, việc cộng bias lặp lại có thể tạo đường tăng/giảm mạnh hơn. Độ dốc quan sát được thể hiện cả tác động của quy tắc mô phỏng. Việc chọn cách vẽ dự báo cần đọc cùng kết quả kiểm chứng và mốc model.
+
+Dashboard giới hạn **23 bước ngày làm việc kể từ snapshot**. Với snapshot cũ, một phần đường nối đến thời điểm hiện tại cũng được tính bằng mô phỏng. Việc chọn khung một tháng phụ thuộc ngày lịch, còn `h=22` trong backtest là 22 quan sát giao dịch. Ngày dự kiến hiện loại cuối tuần và chưa xác minh đầy đủ lịch nghỉ HOSE. [Code forecast](../../src/models/forecast_path.py) · [Nhật ký hai chế độ và backtest](../../TRAINING_HISTORY.md)
+
+### 9.12. P10–P90, residual bootstrap và độ phủ
+
+**Residual** là sai số giữa kết quả thật và dự báo. Hệ thống dùng phân bố sai số đã biết để mô phỏng thêm các đường giá quanh kết quả của model.
+
+Trong `POST /api/v1/forecast`, quy trình được thực hiện theo các bước sau.
+
+1. Lấy pool sai số phù hợp với model và trừ trung bình của pool để căn tâm.
+2. Lấy mẫu lại theo block 5 quan sát, theo cơ chế vòng tròn, để giữ một phần cấu trúc phụ thuộc ngắn hạn có trong sai số lịch sử.
+3. Tạo **512 đường mô phỏng**. Mỗi đường cập nhật giá và feature theo ngữ cảnh của chính nó ở từng bước.
+4. Tại từng ngày đích, lấy phân vị 10% và 90% của 512 mức giá mô phỏng để tạo band.
+
+| Mốc | Cách hiểu |
+| --- | --- |
+| **P10** | Khoảng 10% giá mô phỏng tại ngày đó nằm thấp hơn mức này |
+| **P90** | Khoảng 90% giá mô phỏng tại ngày đó nằm thấp hơn mức này |
+| **Vùng P10–P90** | Khoảng giữa chứa xấp xỉ 80% giá mô phỏng tại từng ngày |
+
+Ví dụ giả định, P10 bằng 48.000 đồng và P90 bằng 53.000 đồng. Vùng tô ở ngày đó trải từ 48.000 đến 53.000 đồng. Đường dự báo điểm được tính bằng Ridge và quy tắc bias đã chọn. Các biên được tính từ các kịch bản sai số mô phỏng.
+
+Con số 80% mô tả phân bố mô phỏng. **Độ phủ thực tế** là tỷ lệ giá thật nằm trong band khi chấm backtest. Cần đọc thêm độ rộng và interval score, vì một vùng rất rộng có thể chứa nhiều kết quả nhưng ít giá trị quan sát. Các phân vị này được tính riêng theo từng ngày; việc toàn bộ một đường giá thật nằm trong band là một sự kiện khác.
+
+Căn tâm pool giúp kiểm soát việc phần trung bình sai số tiếp tục tạo thêm độ trôi trong các đường mô phỏng. Các nhiễu được lấy từ một pool có trung bình bằng 0, còn mức hiệu chỉnh có chủ đích được quy định riêng bằng chính sách bias. Giả định về phân bố sai số này cần được kiểm tra lại khi thị trường thay đổi hoặc có cú sốc mới.
+
+Trong `POST /api/v1/predict`, khoảng một phiên được tính trực tiếp từ phân vị sai số đã lưu. Các đường nhiều bước trên dashboard dùng block bootstrap như trên. Cấu hình hiệu chỉnh độ rộng đã được thử cho h=5/h=22, nhưng hệ số đang kích hoạt của bundle là **1×**. Nếu sau này kích hoạt hệ số nới, cần mô tả đó là band đã hiệu chỉnh. [Hàm mô phỏng](../../src/models/forecast_path.py) · [Khoảng một phiên](../../src/models/local_demo.py) · [Cấu hình hiệu chỉnh band](../../configs/recursive_band_calibration.json)
+
+### 9.13. Data flow từ dữ liệu gốc đến output hiện tại
+
+~~~mermaid
+flowchart TD
+    subgraph TRAIN["Huấn luyện và lựa chọn"]
+        A["OHLCV FPT đã kiểm tra nguồn"] --> B["Làm sạch và tạo feature X, nhãn y"]
+        B --> C["Chia theo thời gian, fit trên Train"]
+        C --> D["So baseline, Ridge, XGBoost và LSTM"]
+        D --> E["Đối chứng, chốt cấu hình và đóng gói"]
+    end
+    subgraph SERVE["Suy luận trên API và dashboard"]
+        U["Người dùng chọn model và kỳ hạn"] --> F["FastAPI nhận yêu cầu"]
+        F --> G["Snapshot hoặc OHLCV gửi vào, tính feature"]
+        G --> H["Scaler đã fit, Ridge và hiệu chỉnh đã chọn"]
+        H --> I["Lợi suất dự báo, quy đổi thành giá"]
+        I --> J["JSON, biểu đồ và bảng trên Streamlit"]
+    end
+    E --> H
+~~~
+
+Ví dụ sau lấy từ lần gọi pipeline một phiên trên snapshot Vietcap 29/10/2026, giá gốc **52.700 đồng**. Đây là dự báo cho quan sát kế tiếp sau snapshot, với version `ridge6_20261029`.
+
+~~~json
+{
+  "model": "Ridge+bias60",
+  "as_of": "2026-10-29",
+  "horizon_observations": 1,
+  "latest_close_adjusted": 52700.0,
+  "predicted_log_return": -0.0043491147643509405,
+  "predicted_simple_return_pct": -0.433967106027885,
+  "predicted_close_adjusted": 52471.2993351233,
+  "direction": "giam"
+}
+~~~
+
+Phép quy đổi là `52.700 × exp(−0,004349...) ≈ 52.471,30 đồng`. Giao diện hiển thị hướng giảm và phần trăm thay đổi từ giá gốc. Nến Nhật dùng OHLC thực đã quan sát, đường về sau dùng giá đóng cửa dự báo. [Suy luận một phiên](../../src/models/local_demo.py) · [Endpoint JSON](../../src/api/main.py) · [Giao diện](../../src/app/streamlit_app.py)
+
+### 9.14. Đóng gói model, API, deploy và UI có vai trò gì?
+
+**Đóng gói model** là lưu đúng pipeline đã fit cùng metadata và các dữ liệu phục vụ cần thiết. File scaler và thứ tự feature phải khớp với model. Hash hỗ trợ phát hiện artifact thay đổi và kiểm tra khả năng tái lập.
+
+**FastAPI** định nghĩa các endpoint. **Pydantic** kiểm tra kiểu dữ liệu và điều kiện request. **Uvicorn** chạy máy chủ Python. Các endpoint chính gồm `/health`, `/api/v1/predict`, `/api/v1/forecast` và `/api/v1/backtest`. Swagger tại `/docs` giúp gọi thử JSON trước khi nối giao diện.
+
+**Render** là nơi cấu hình chạy backend qua mạng theo hướng dẫn trong README. Khi bàn giao, kiểm tra `/health` để biết version và ngày snapshot thực tế của backend đang gọi. Chi phí và điều kiện gói dịch vụ cần kiểm tra tại thời điểm triển khai.
+
+**Streamlit** dựng giao diện, **Requests** gửi HTTP đến địa chỉ `FPT_API_URL`, còn **Plotly** vẽ biểu đồ từ kết quả API. Backend có thể chạy local hoặc ở địa chỉ đã deploy. Một request dùng model đã được nạp để tạo output, còn việc fit lại thuộc quy trình phát triển model.
+
+`requirements-local.txt` phục vụ môi trường API/UI nhẹ. `requirements.txt` có thêm môi trường nghiên cứu, gồm TensorFlow và XGBoost. Việc chạy dự báo mới từ các artifact nghiên cứu cần cả thư viện lẫn đúng model/scaler tương ứng. [Hướng dẫn chạy và cấu hình Render](../../README.md) · [Kiến trúc chi tiết](../../ARCHITECTURE.md)
+
+### 9.15. Model đang dùng và model giữ để nghiên cứu
+
+| Nhóm | Trạng thái đến 24/11/2026 |
+| --- | --- |
+| **Dự báo trên dashboard** | Ridge+bias60, Ridge thô và Zero Return |
+| **Đối chứng lịch sử có sẵn** | Có các dự báo LSTM tham chiếu trong tập chung tháng 6–10/2026, đọc cùng nguồn và mốc train của chúng |
+| **Artifact nghiên cứu** | XGBoost, LSTM và các model của những study được lưu theo manifest hoặc protocol để tái lập |
+| **Lượt quan sát ba model ngày 23/11** | Đã gọi thử các artifact có sẵn, sau đó gỡ phần mở rộng khỏi dashboard theo lựa chọn của người dùng |
+
+Lượt quan sát ngày 23/11 có số fit mới bằng 0. Các model tham chiếu học trên Yahoo với nhãn đến 30/12/2022 và chọn cấu hình đến cuối 2024. Ridge hiện tại học trên Vietcap đến tháng 10/2026. Khi đưa cùng snapshot Vietcap vào, các đầu ra giúp quan sát phản ứng của từng model trước dữ liệu đó. Việc đánh giá hơn/kém còn cần đối chứng cùng điều kiện và nhãn thật.
+
+`models/local_demo.json` trỏ bundle phục vụ. `models/reference_experiment.json` trỏ bộ tham chiếu đã khóa, còn `models/latest_experiment.json` thuộc pipeline thực nghiệm cũ. Các file này có vai trò riêng trong code. Bằng chứng của lần quan sát được ghi tại mục 17 của nhật ký. [Vai trò các thư mục model](../../README.md#model-đang-dùng-và-model-nghiên-cứu) · [Nhật ký quan sát](../../TRAINING_HISTORY.md#17-quan-sát-xgboost-và-lstm-trên-dashboard-local--23112026)
+
+### 9.16. Bài học lớn nhất và bước cải thiện có kiểm soát
+
+**Chất lượng dữ liệu và cách kiểm chứng quyết định độ đáng tin của kết luận.** Những thử nghiệm đã giúp nhóm rút ra các bài học sau.
+
+1. **Dữ liệu cần kiểm tra bằng quy tắc và đối chiếu nguồn.** Việc phát hiện các dòng Volume bằng 0, Close thiếu và nến sai dẫn tới quyết định dùng snapshot Vietcap.
+2. **Thêm độ phức tạp cần có bằng chứng.** Bộ 6 feature cho kết quả cạnh tranh trong các đối chứng. Các nhánh LSTM, phân loại và Gap/Body giúp kiểm tra giả thuyết, với mức lợi ích thay đổi theo giai đoạn.
+3. **Mỗi kết quả cần baseline và phạm vi đánh giá.** Hit cao cần xem cùng cân bằng lớp. Lợi thế nhỏ cần xem độ ổn định và khoảng tin cậy. Metric luôn đi cùng nguồn, ngày đích, horizon và mốc train.
+4. **Một lần thử có giá trị khi trả lời được câu hỏi.** Giữ cả kết quả chưa cải thiện giúp giải thích vì sao dừng mở rộng feature hoặc chọn lại cửa sổ train.
+5. **Bước tiếp theo cần thêm bằng chứng mới.** Ghi dự báo trước khi quan sát giá đích, đợi nhãn, chấm sai số và theo dõi drift. Khi có đủ dữ liệu, đối chứng model được retrain với bản đang dùng, rồi mới quyết định thay version và giữ khả năng quay lại bản cũ.
+
+Drift có thể thể hiện qua thay đổi phân bố feature, phân bố lợi suất hoặc sai số tăng trong các giai đoạn mới. Chuỗi ngắn trên một mã có nhiều nhiễu, nên cần xem cả lượng mẫu và mức thay đổi trước khi quyết định retrain. Quy trình này là kế hoạch quản lý model tiếp theo, còn hiện tại dashboard đọc bundle được đóng gói theo version. [Forward ledger và kế hoạch theo dõi](../../ARCHITECTURE.md#forward-ledger)
+
+**Lời gợi ý khi thầy hỏi nhóm học được gì**
+
+> Qua dự án, nhóm học được cách chuyển một câu hỏi về giá cổ phiếu thành bài toán hồi quy có giám sát, tạo dữ liệu nhân quả và kiểm chứng theo thời gian. Nhóm lựa chọn bằng đối chứng với baseline, xem nhiều chỉ số và lưu cả kết quả chưa cải thiện. Ridge6+bias60 là cấu hình nhóm chốt cho demo dựa trên các nghiên cứu đã thực hiện. Bằng chứng tiếp theo sẽ đến từ các dự báo ghi trước ngày đích và kết quả quan sát ở những phiên mới.

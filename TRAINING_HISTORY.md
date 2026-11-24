@@ -367,3 +367,23 @@ So trên cùng snapshot 29/10/2026, giá gốc 52.700 VND:
 | 27/11/2026 | 21 | 48.120 VND (−8,69%) | 51.666 VND (−1,96%) |
 
 Chênh lệch này đo tác động cộng lặp bias trong mô phỏng. Chưa có phép chấm trên nhãn thực tế trong lượt này.
+
+## 17. Quan sát XGBoost và LSTM trên dashboard local — 23/11/2026
+
+Đưa các artifact tham chiếu đã lưu vào chế độ so sánh một phiên. Số lượt fit mới bằng 0. API nạp model, scaler theo manifest và kiểm tra hash khi người dùng yêu cầu. Bộ tham chiếu `20261025T124951351761Z` học từ Yahoo đến 2022 và chọn cấu hình trên 2023–2024. Ridge tham chiếu dùng 16 feature, alpha=10; LSTM dùng lookback 30. Cùng đầu vào Vietcap đến 29/10/2026, giá gốc 52.700 VND, lần gọi API local trả về các giá trị sau.
+
+| Model | Nguồn train | Nhãn train cuối | Giá dự báo một phiên (VND) | Thay đổi từ giá gốc |
+| --- | --- | --- | ---: | ---: |
+| Ridge+bias60 đang dùng | Vietcap | 29/10/2026 | 52.471,30 | −0,4340% |
+| Ridge tham chiếu | Yahoo | 30/12/2022 | 52.855,80 | +0,2956% |
+| XGBoost tham chiếu | Yahoo | 30/12/2022 | 52.744,09 | +0,0837% |
+| LSTM tham chiếu | Yahoo | 30/12/2022 | 52.763,54 | +0,1206% |
+| Zero Return | Baseline | — | 52.700,00 | 0,0000% |
+
+Đây là quan sát suy luận trên cùng snapshot, với nguồn và mốc train khác nhau giữa bundle đang dùng và nhóm tham chiếu. Chênh lệch giá thể hiện phản ứng của các model. Việc đánh giá chất lượng dự báo cần nhãn tương lai hoặc đối chứng lịch sử phù hợp.
+
+Trong lượt thử, trang Đối chứng có thêm tập Yahoo năm 2025 với cùng 248 cặp cho Ridge, XGBoost, LSTM, Zero Return và Train Mean. Đã chạy lại dự báo từ ba model đã lưu, sai khác tuyệt đối lớn nhất so với CSV lịch sử dưới 1e-15 log return. Đây là tái lập bằng chứng cũ. Các số liệu năm 2025 đã được xem trong nghiên cứu.
+
+Toàn bộ 155 unit tests đạt sau khi tích hợp. Các kiểm tra mới bao gồm bộ ngày/nhãn dùng chung, lọc tháng, tái lập RMSE, suy luận thật từ artifact, hash bundle trước/sau và API Ridge tiếp tục hoạt động khi thiếu framework nghiên cứu. Endpoint suy luận mới hỗ trợ một phiên. API trả nguồn, phiên gốc, mốc train và phiên bản cho từng model.
+
+Sau khi quan sát, người dùng chọn kết thúc phần thử trên dashboard ngày 23/11/2026. Đã gỡ công tắc so sánh, lựa chọn đối chứng 2025 và các endpoint cùng mã chỉ phục vụ lần thử này. Bảng kết quả phía trên và các artifact nghiên cứu được lưu để tham khảo. Dashboard trở về giao diện dự báo Ridge và các tập đối chứng trước lượt thử.
