@@ -129,6 +129,26 @@ def create_app(root: Path = BASE_DIR, service_factory=LocalRidgeService) -> Fast
         frame["Date"] = pd.to_datetime(frame["Date"]).dt.strftime("%Y-%m-%d")
         return {"ticker": "FPT.VN", "price_basis": "provider_adjusted_ohlc", "observations": records(frame)}
 
+    @app.get("/api/v1/fpt/observed")
+    def observed_prices():
+        from src.data.market_observations import observation_response
+        try:
+            return observation_response(root, app.state.service.raw)
+        except (ValueError, KeyError, TypeError, OSError) as exc:
+            raise HTTPException(status_code=503, detail="Cache giá đối chiếu chưa hợp lệ; hãy cập nhật từ Vietcap.") from exc
+
+    @app.post("/api/v1/fpt/observed/refresh")
+    def refresh_observed_prices():
+        import requests
+        from src.data.market_observations import refresh_observations, observation_response
+        try:
+            refresh_observations(root)
+            return observation_response(root, app.state.service.raw)
+        except requests.RequestException as exc:
+            raise HTTPException(status_code=502, detail="Chưa kết nối được nguồn giá Vietcap. Hãy thử lại sau.") from exc
+        except (ValueError, KeyError, TypeError, OSError) as exc:
+            raise HTTPException(status_code=502, detail="Dữ liệu Vietcap chưa qua kiểm tra; không dùng làm giá thực tế.") from exc
+
     @app.get("/api/v1/data-quality")
     def data_quality():
         manifest = app.state.service.manifest
