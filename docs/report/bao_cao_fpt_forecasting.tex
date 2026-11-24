@@ -60,7 +60,7 @@
     linkcolor=primaryblue,
     citecolor=primaryblue,
     urlcolor=primaryblue,
-    pdftitle={FPT Forecast Studio - Bao cao Do an Mon hoc Hoc may},
+    pdftitle={FPT Stock Forecasting - Phân tích và dự báo giá đóng cửa cổ phiếu FPT bằng học máy},
     pdfauthor={Truong Trong Phuc, Pham Khanh Nguyen, Che Van Nam, Do Dat}
 }
 
@@ -85,8 +85,8 @@
 \setlength{\headheight}{15pt}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\textit{Báo cáo Đồ án Môn học: Học máy (Machine Learning)}}
-\fancyhead[R]{\small\textit{FPT Forecast Studio}}
+\fancyhead[L]{\small\textit{Phân tích và dự báo giá đóng cửa cổ phiếu FPT bằng học máy}}
+\fancyhead[R]{\small\textit{FPT Stock Forecasting}}
 \fancyfoot[C]{\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 
@@ -102,6 +102,12 @@
 \renewcommand{\bottomfraction}{.73}
 \renewcommand{\textfraction}{.08}
 \renewcommand{\floatpagefraction}{.92}
+% Căn cụm hình/bảng lên đầu trang khi trang chỉ chứa các float.
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{12pt}
+\setlength{\@fpbot}{0pt plus 1fil}
+\makeatother
 \setlength{\textfloatsep}{11pt plus 3pt minus 3pt}
 \setlength{\intextsep}{10pt plus 3pt minus 2pt}
 \setlength{\floatsep}{9pt plus 3pt minus 2pt}
@@ -379,7 +385,7 @@ thực nghiệm CPU và GPU.
 % ==========================================
 % CHƯƠNG 2: XÁC ĐỊNH, THU THẬP VÀ TIỀN XỬ LÝ DỮ LIỆU
 % ==========================================
-\FloatBarrier
+\clearpage
 \chapter{Xác định, thu thập và tiền xử lý dữ liệu}
 
 \section{Kiểm toán và đối chiếu ba nguồn dữ liệu}
@@ -586,7 +592,7 @@ Hệ thống khóa cứng bốn nguyên tắc bảo vệ tính nhân quả trong
 % ==========================================
 % CHƯƠNG 3: CÁC MÔ HÌNH THỰC NGHIỆM TRONG DỰ ÁN
 % ==========================================
-\FloatBarrier
+\clearpage
 \chapter{Các mô hình thực nghiệm trong dự án}
 
 Nhóm triển khai và so sánh năm nhóm thuật toán từ các đường cơ sở thống kê đơn giản đến mô hình tuyến tính điều chuẩn, cây tăng cường gradient, mạng học sâu chuỗi thời gian và phân loại xác suất.
@@ -772,12 +778,7 @@ Ba điểm kỹ thuật cốt lõi trong Hình~\ref{fig:ch3_recursive_diagram} b
 % ==========================================
 % CHƯƠNG 4: QUÁ TRÌNH THỰC NGHIỆM VÀ QUYẾT ĐỊNH CHỌN MÔ HÌNH
 % ==========================================
-\FloatBarrier
-% Keep the chapter opening and the beginning of Section 4.1 together.
-\par
-\ifdim\dimexpr\pagegoal-\pagetotal\relax<8\baselineskip
-    \newpage
-\fi
+\clearpage
 \chapter{Quá trình thực nghiệm và quyết định chọn mô hình}
 
 \section{Tám đợt huấn luyện và tiêu chí dừng}
@@ -1234,7 +1235,7 @@ Các hệ số trên mô tả quan hệ có điều kiện trong mô hình, khô
 % ==========================================
 % CHƯƠNG 5: KẾT LUẬN, HỆ THỐNG PHẦN MỀM VÀ HƯỚNG PHÁT TRIỂN
 % ==========================================
-\FloatBarrier
+\clearpage
 \chapter{Kết luận, hệ thống phần mềm và hướng phát triển}
 
 \section{Kết luận chung và Quyết định chọn mô hình cuối cùng}
