@@ -60,7 +60,7 @@ st.caption(f"Snapshot {health['data_as_of']} · Không phải giá realtime. Khu
 try:
     if page in {'Tổng quan','Dự báo'}:
         history=pd.DataFrame(api('/api/v1/fpt/history?limit=1000')['observations'])
-    if page=='Dự báo':forecast_view(api,history,health,registry)
+    if page=='Dự báo':forecast_view(api,history,health,registry,clear_api_cache=api_get.clear)
     elif page=='Tổng quan':overview_view(api,history,health)
     elif page=='Đối chứng':benchmark_view(api)
     elif page=='Hành trình model':journey_view(api)

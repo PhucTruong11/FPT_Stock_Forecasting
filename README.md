@@ -26,6 +26,8 @@ Mở hai terminal tại thư mục repo, dùng môi trường đã cài dependen
 - Swagger / thử JSON: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 - Dữ liệu bundle local dừng ở **29/10/2026**, nguồn Vietcap. Không tự download khi mở app.
 - Bundle train nhãn đến 29/10/2026 chỉ dùng cho quan sát tiếp theo; không dùng nó chấm lại quá khứ rồi gọi là ngoài mẫu.
+- Trang **Dự báo** có thêm biểu đồ **Giá thực tế sau snapshot so với dự báo**. Bấm **Cập nhật giá đóng cửa từ Vietcap** để lấy riêng các phiên D1 trước ngày hiện tại; đường liền xanh dương là giá đã quan sát, nét đứt vàng là mô phỏng từ snapshot. Nguồn có thể chậm cập nhật; chart ghi ngày dữ liệu cuối và chỉ ghép đúng ngày có giá thật, không điền ngày thiếu.
+- Dữ liệu đối chiếu nằm trong cache `.cache/observed-prices/`, không ghi đè bundle hoặc tự train lại. API `GET /api/v1/fpt/observed` chỉ đọc cache; `POST /api/v1/fpt/observed/refresh` tải Vietcap khi người dùng yêu cầu. Nếu giá lịch sử chồng lấp đã thay đổi basis điều chỉnh, biểu đồ chỉ hiện nguồn mới và không tính sai số trực tiếp. Đây là đối chiếu hồi cứu, không phải forecast đã được ghi trước sự kiện.
 - API demo đã deploy lên Render tại [https://fpt-stock-forecasting.onrender.com](https://fpt-stock-forecasting.onrender.com); hệ thống không tự retrain hoặc tự thay model trong request.
 
 Đổi địa chỉ backend nếu cần bằng biến môi trường `FPT_API_URL`. UI không load weights hoặc tự tính prediction. Môi trường mới có thể cài `requirements-local.txt` để chạy demo nhẹ, hoặc `requirements.txt` để nghiên cứu đầy đủ, gồm TensorFlow/XGBoost.

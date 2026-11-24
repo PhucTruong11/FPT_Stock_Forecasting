@@ -12,6 +12,7 @@ from src.app.analysis_view import render_market_analysis
 from src.app.forecast_explainer import render_forecast_explainer
 from src.app.forecast_analytics import render_forecast_analytics
 from src.app.market_analysis import prepare_market_frame
+from src.app.observed_comparison import render_observed_comparison
 
 HORIZONS = {'Hôm nay':'today','Ngày mai':'tomorrow','1 tuần':'week','1 tháng':'month','Chọn ngày':'custom'}
 MODEL_LABELS = {'Ridge+bias60':'Ridge · hiệu chỉnh bias', 'Ridge':'Ridge · nguyên bản', 'Zero-Return':'Zero Return · baseline'}
@@ -19,7 +20,7 @@ BIAS_MODE_LABELS = {'every_step': 'Mỗi bước · cách cũ', 'first_step': 'C
 FORECAST_HISTORY_POINTS = 60
 
 
-def forecast_view(api, history, health, registry):
+def forecast_view(api, history, health, registry, *, clear_api_cache=None):
     hero('FPT / Forecast studio', 'Từ dữ liệu đã có, nhìn về phía trước.',
          'Chọn khoảng dự báo, quan sát đường giá và xem vùng kịch bản. Một mã FPT, cùng một mô hình đã được đóng gói có phiên bản.')
     a,b = st.columns([2,1])
@@ -58,7 +59,7 @@ def forecast_view(api, history, health, registry):
     d.metric('Số bước từ origin', str(result['steps']), help='Model học h=1; từ bước thứ 2 dùng giá do chính model dự báo.')
     st.write('')
     if result.get('bridge_steps_before_requested_window',0):
-        st.info(f"Giá thật gần nhất dừng ở {result['origin_date']}. Đoạn xám nối snapshot tới trước {result['requested_start']} cũng là mô phỏng, không phải giá hôm nay đã quan sát. Đoạn xanh là khoảng dự báo đang chọn.")
+        st.info(f"Snapshot dùng để tính mô phỏng dừng ở {result['origin_date']}. Đoạn xám nối tới trước {result['requested_start']} là mô phỏng, không phải giá hôm nay đã quan sát. Đoạn xanh là khoảng dự báo đang chọn. Giá Vietcap lấy bổ sung nằm ở biểu đồ đối chiếu bên dưới.")
     if result['weekend_shifted']:
         st.info(f"Ngày chọn {result['requested_end']} rơi vào cuối tuần → chuyển sang ngày làm việc dự kiến {result['effective_target_date']}. Chưa trừ lịch nghỉ lễ.")
     if result['steps'] > 1:
@@ -90,6 +91,7 @@ def forecast_view(api, history, health, registry):
     if chosen != 'Zero-Return' and not repeat_bias:
         band=result['uncertainty'].get('band_calibration',{})
         st.caption(f"Hệ số band tại đích: {band.get('final_step_factor',1.):.2f}×. Backtest 5/22 quan sát giao dịch khác khung tuần/tháng theo lịch; hệ số chưa đạt điều kiện sẽ giữ 1×.")
+    render_observed_comparison(api, result, clear_api_cache=clear_api_cache)
     render_forecast_analytics(result)
     render_forecast_explainer(result)
     with st.expander('Bảng dự báo từng bước & tải kết quả'):
