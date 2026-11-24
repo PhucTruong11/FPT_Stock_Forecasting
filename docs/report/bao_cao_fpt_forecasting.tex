@@ -135,9 +135,9 @@
     \rule{\textwidth}{0.5pt}\\[4mm]
     {\large\bfseries Báo cáo Đồ án Môn học}\\[5mm]
     {\LARGE\bfseries FPT Stock Forecasting}\\[3mm]
-    {\Large Phân tích và dự báo lợi suất, giá đóng cửa\\cổ phiếu FPT bằng học máy}\\[4mm]
+    {\Large\bfseries PHÂN TÍCH VÀ DỰ BÁO GIÁ ĐÓNG CỬA\\CỔ PHIẾU FPT BẰNG HỌC MÁY}\\[4mm]
     \rule{\textwidth}{0.5pt}\\[4mm]
-    {\normalsize Kiểm toán dữ liệu, kiểm soát rò rỉ, thực nghiệm đa mô hình và triển khai hệ thống}
+    {\normalsize\itshape Đối chứng mô hình, kiểm định theo thời gian và triển khai ứng dụng dự báo}
   \end{center}
 
   \vfill
@@ -173,25 +173,48 @@
 % ==========================================
 % BẢNG PHÂN CÔNG VÀ TỶ LỆ ĐÓNG GÓP TRUNG THỰC
 % ==========================================
+\clearpage
+\begingroup
+\titleformat{name=\chapter,numberless}[block]
+  {\normalfont\LARGE\bfseries\color{primaryblue}\filcenter}{}{0pt}{}
 \chapter*{Bảng phân công nhiệm vụ và tỷ lệ đóng góp}
 \addcontentsline{toc}{chapter}{Bảng phân công nhiệm vụ và tỷ lệ đóng góp}
 
-\begingroup
 \small
-\renewcommand{\arraystretch}{1.08}
-\setlength{\tabcolsep}{5pt}
-\noindent\begin{tabularx}{\linewidth}{@{}L{3.25cm} >{\centering\arraybackslash}p{2.05cm} R >{\centering\arraybackslash}p{1.05cm}@{}}
+\renewcommand{\arraystretch}{1.20}
+\setlength{\tabcolsep}{6pt}
+\noindent\begin{tabularx}{\linewidth}{@{}L{4.1cm} >{\centering\arraybackslash}p{2.05cm} R >{\centering\arraybackslash}p{1.05cm}@{}}
 \toprule
 \textbf{Thành viên} & \textbf{MSSV} & \textbf{Nhiệm vụ} & \textbf{Tỷ lệ} \\
 \midrule
-\textbf{Trương Trọng Phúc} & 3124410287 & \textbf{Setup \& Điều phối Train + Đợt 1 \& Đợt 8:} Thiết lập môi trường, chuẩn hóa pipeline chống rò rỉ và điều phối huấn luyện; thực hiện \textbf{Đợt 1} (Pipeline v2 CPU/Colab GPU) và \textbf{Đợt 8} (Walk-Forward 3y/5y/2018); cài đặt dự báo đệ quy, Block Bootstrap và viết Chương 1 \& 5. & 25\% \\[3pt]
-\textbf{Đỗ Đạt} & 3124410054 & \textbf{Phát triển REST API + Đợt 2 \& Đợt 6:} Xây dựng máy chủ \texttt{FastAPI} (\texttt{/health}, \texttt{/predict}, \texttt{/forecast}, \texttt{/backtest}), kiểm tra schema \texttt{Pydantic} và kiểm thử API; thực hiện \textbf{Đợt 2} (Robustness 63 cấu hình) và \textbf{Đợt 6} (Phân loại chọn lọc); viết Chương 3. & 25\% \\[3pt]
-\textbf{Phạm Khánh Nguyên} & 3124410239 & \textbf{Giao diện Studio + Đợt 3 \& Đợt 7:} Xây dựng giao diện \texttt{Streamlit FPT Forecast Studio} (4 không gian phân tích và 3 sơ đồ giải thích); thực hiện \textbf{Đợt 3} (Đối chiếu 3 nguồn Yahoo/Vietcap/KBS -- 112 điều kiện) và \textbf{Đợt 7} (Tách nến Gap/Body A/B); viết đầu Chương 4. & 25\% \\[3pt]
-\textbf{Chế Văn Nam} & 3124410217 & \textbf{Tiền xử lý \& Feature Engineering + Đợt 4 \& Đợt 5:} Làm sạch dữ liệu, cách ly nến lỗi và trích xuất đặc trưng nhân quả (16 chỉ báo $\to$ 6 return \texttt{Ridge6}); thực hiện \textbf{Đợt 4} (Cửa sổ \& lưới $\alpha$ Ridge) và \textbf{Đợt 5} (Recency Refit \& \texttt{bias60}); viết Chương 2 \& phần chọn mô hình Chương 4. & 25\% \\[3pt]
+\mbox{\textbf{Trương Trọng Phúc}} & 3124410287 & \textbf{Setup \& Điều phối Train + Đợt 1 \& Đợt 8:} Thiết lập môi trường, chuẩn hóa pipeline chống rò rỉ và điều phối huấn luyện; thực hiện \textbf{Đợt 1} (Pipeline v2 CPU/Colab GPU) và \textbf{Đợt 8} (Walk-Forward 3y/5y/2018); cài đặt dự báo đệ quy, Block Bootstrap và viết Chương 1 \& 5. & 25\% \\
+\addlinespace[10pt]
+\mbox{\textbf{Đỗ Đạt}} & 3124410054 & \textbf{Phát triển REST API + Đợt 2 \& Đợt 6:} Xây dựng máy chủ \texttt{FastAPI} (\texttt{/health}, \texttt{/predict}, \texttt{/forecast}, \texttt{/backtest}), kiểm tra schema \texttt{Pydantic} và kiểm thử API; thực hiện \textbf{Đợt 2} (Robustness 63 cấu hình) và \textbf{Đợt 6} (Phân loại chọn lọc); viết Chương 3. & 25\% \\
+\addlinespace[10pt]
+\mbox{\textbf{Phạm Khánh Nguyên}} & 3124410239 & \textbf{Giao diện Studio + Đợt 3 \& Đợt 7:} Xây dựng giao diện \texttt{Streamlit FPT Forecast Studio} (4 không gian phân tích và 3 sơ đồ giải thích); thực hiện \textbf{Đợt 3} (Đối chiếu 3 nguồn Yahoo/Vietcap/KBS -- 112 điều kiện) và \textbf{Đợt 7} (Tách nến Gap/Body A/B); viết đầu Chương 4. & 25\% \\
+\addlinespace[10pt]
+\mbox{\textbf{Chế Văn Nam}} & 3124410217 & \textbf{Tiền xử lý \& Feature Engineering + Đợt 4 \& Đợt 5:} Làm sạch dữ liệu, cách ly nến lỗi và trích xuất đặc trưng nhân quả (16 chỉ báo $\to$ 6 return \texttt{Ridge6}); thực hiện \textbf{Đợt 4} (Cửa sổ \& lưới $\alpha$ Ridge) và \textbf{Đợt 5} (Recency Refit \& \texttt{bias60}); viết Chương 2 \& phần chọn mô hình Chương 4. & 25\% \\[5pt]
 \midrule
 \multicolumn{3}{r}{\textbf{Tổng cộng}} & \textbf{100\%} \\
 \bottomrule
 \end{tabularx}
+\endgroup
+
+% ==========================================
+% TRANG NHẬN XÉT CỦA GIẢNG VIÊN
+% ==========================================
+\clearpage
+\begingroup
+\titleformat{name=\chapter,numberless}[block]
+  {\normalfont\LARGE\bfseries\color{primaryblue}\filcenter}{}{0pt}{}
+\chapter*{Nhận xét của giảng viên}
+\addcontentsline{toc}{chapter}{Nhận xét của giảng viên}
+
+\setlength{\parskip}{0pt}
+\foreach \reviewline in {1,...,18}{%
+    \noindent\makebox[\linewidth]{\dotfill}\par
+    \vspace{0.6\baselineskip}
+}
 \endgroup
 
 \clearpage
@@ -677,7 +700,7 @@ XGBoost (depth=2) & 0,014046 & 0,010060 & \textbf{56,03} & 0,020017 & 0,013807 &
 Khả năng tổng quát hóa của các mô hình ở Pipeline v2 được minh họa trực quan tại Hình~\ref{fig:ch3_v2_pair}. Từ Hình~\ref{fig:ch3_lstm_curves}, Hình~\ref{fig:ch3_lstm_ablation} và Bảng~\ref{tab:ch3_v2_benchmark}, có hai điểm rút ra then chốt:
 \begin{enumerate}
     \item Trong nhóm LSTM, \texttt{LSTM30} đạt sai số Validation thấp nhất ($0,014033$) và dừng sớm ở epoch 12 (chạy lại trên Google Colab GPU A100 ở notebook 02 cũng xác nhận Lookback 30 đạt Val Hit Rate cao nhất $52,16\%$ so với $50,86\%$ của 10 ngày và $48,49\%$ của 60 ngày).
-    \item Tuy nhiên, trên tập Validation 2023--2024, mô hình chiến thắng chung cuộc lại là hằng số \texttt{Train Mean} ($0,013981$). Và khi đánh giá lại các mô hình v2 trên dữ liệu sạch Vietcap năm 2026 (Chương 4), biên độ lợi thế của LSTM biến mất hoàn toàn. Đây chính là động lực khiến nhóm không vội kết luận sau lượt train đầu tiên mà tiếp tục mở rộng sang các vòng nghiên cứu đối chứng sâu hơn.
+    \item Trên tập Validation 2023--2024, \texttt{Train Mean} đạt RMSE thấp nhất ($0,013981$). LSTM30 có RMSE thấp nhất trên tập Test 2025 trong bảng này, còn kết quả năm 2026 thay đổi theo giai đoạn và chỉ số. Nhóm tiếp tục đối chứng nguồn dữ liệu, bộ đặc trưng và chính sách cập nhật; các bảng tổng hợp tại Mục~\ref{sec:ch4_model_evidence} trình bày trực tiếp bằng chứng dùng khi chốt mô hình.
 \end{enumerate}
 
 \section{Nhánh Phân loại hướng và Dự báo có chọn lọc (Selective Classification)}
@@ -813,7 +836,7 @@ Không có một số lượng thử nghiệm cố định chung cho mọi bài 
 \section{Đối chứng CPU, GPU và kiểm tra độ bền}
 Ở Đợt huấn luyện 1 (25/10), nhóm chạy đối chứng CPU và Google Colab GPU với cùng snapshot và \texttt{seed=42}. Tệp \nolinkurl{reports/verification/colab_reloaded_comparison.json} xác nhận giao thức, đặc trưng, split và mã nguồn trùng khớp giữa hai bản được lưu; phiên bản Python khác nhau. Với \texttt{LSTM30}, các chỉ số gần trùng ở độ chính xác báo cáo: \texttt{val\_rmse $\approx$ 0,014032665}, \texttt{test\_rmse $\approx$ 0,019858318}. Đây là kiểm tra tái lập kỹ thuật trong các môi trường đã thử, không phải bảo đảm mọi thuật toán và mọi thiết bị luôn cho kết quả giống từng bit.
 
-Tuy nhiên, ở Đợt huấn luyện 2 (\textit{Robustness Study} mã \texttt{20261029T\-131205702813Z} gồm 63 ứng viên), khi thay đổi hạt giống ngẫu nhiên (seed 42, 123...), nhóm đặc trưng và các năm kiểm định 2022--2025, hai kết luận quan trọng đã lộ diện: (1) các mô hình phi tuyến phức tạp như XGBoost và LSTM dao động mạnh theo seed và thường xuyên tụt lại phía sau \nolinkurl{Zero-Return} ở các năm biến động mạnh như 2022; (2) nhóm mô hình tuyến tính điều chuẩn chỉ dùng lợi suất (\texttt{returns}) thể hiện phương sai sai số ổn định nhất.
+Ở Đợt huấn luyện 2 (\textit{Robustness Study} mã \texttt{20261029T\-131205702813Z} gồm 63 ứng viên), nhóm thay đổi seed, nhóm đặc trưng và các fold kiểm định. Trên ba năm đánh giá chính 2022--2024, thu gọn từ 16 đặc trưng xuống 6 lợi suất làm RMSE trung bình của Ridge giảm từ $0,016449$ xuống $0,016403$, của LSTM giảm từ $0,016542$ xuống $0,016432$. Cùng đối chứng, \texttt{Train Mean} đạt $0,016322$ và \nolinkurl{Zero-Return} đạt $0,016390$. Kết quả này hỗ trợ việc tiếp tục nghiên cứu bộ đầu vào gọn, đồng thời yêu cầu giữ baseline trong các lượt chọn mô hình tiếp theo.
 
 \section{Tinh chỉnh Ridge và phân tích sai số theo năm}
 Trong Đợt huấn luyện 4 (\textit{Ridge Refinement} mã \texttt{20261030T\-011109863274Z}), nhóm thực hiện quét lưới 48 lượt fit mới qua năm mức điều chuẩn $\alpha \in \{0,1; 1; 10; 100; 1000\}$ và bốn cửa sổ (\texttt{expanding}, \texttt{2y}, \texttt{3y}, \texttt{5y}) trên dữ liệu Vietcap sạch.
@@ -1094,7 +1117,83 @@ Năm 2025 ($n=248$) & \textbf{0,019655} & 0,019678 & 0,019680 \\
 
 Bảng~\ref{tab:ch4_final_window} và Hình~\ref{fig:ch4_final_window} cho thấy cửa sổ \textbf{3 năm} có RMSE thấp hơn ở \textbf{3/4 năm} và Mean RMSE thấp nhất ($0,0170781$). Đây là trung bình RMSE của bốn fold, không phải RMSE gộp trên 993 mẫu. Mức cải thiện chỉ khoảng $0,099\%$ so với 5 năm và $0,174\%$ so với toàn bộ từ 2018; cả hai khoảng tin cậy bootstrap 95\% của chênh lệch MSE ghép cặp đều chứa 0, nên chưa chứng minh ưu thế thống kê chắc chắn. Chẩn đoán 202 phiên năm 2026 của bản fit tới hết 2025 ($n_{\text{train}}=747$) kết hợp \texttt{bias60} đạt Hit Rate $60,91\%$ và Balanced Accuracy $56,62\%$. Năm 2026 đã được xem qua nhiều vòng nghiên cứu, vì vậy chỉ là chẩn đoán lịch sử, không còn là holdout hoàn toàn chưa đụng tới. Bản refit đến 29/10/2026 ($n_{\text{train}}=746$) có SHA-256 trùng bundle phục vụ; sự trùng khớp này kiểm chứng artifact, không chuyển các điểm lịch sử thành độ chính xác tương lai của bundle mới.
 
-\section{Giải phẫu trọng số mô hình phục vụ và 5 lý do chọn \texttt{Ridge6+bias60}}
+\FloatBarrier
+\section{Đối chứng liên mô hình và cơ sở chọn \texttt{Ridge6+bias60}}
+\label{sec:ch4_model_evidence}
+
+Quyết định chọn Ridge được xây dựng qua các bước đối chứng nguồn, đặc trưng, họ mô hình, tham số và độ dài lịch sử. Hai bảng dưới tổng hợp trực tiếp kết quả của Ridge, XGBoost, LSTM và baseline ngay tại phần quyết định. Mỗi bảng có một giao thức và tập ngày riêng, các con số được đọc trong phạm vi của bảng tương ứng.
+
+\subsection{So sánh các họ mô hình trên cùng 6 đặc trưng Vietcap}
+
+Bảng~\ref{tab:ch4_family_same_features} lấy từ Đợt 3, dùng chung nguồn Vietcap, bộ 6 đặc trưng lợi suất và các cặp ngày gốc/ngày đích của từng fold. Mỗi họ mô hình được chọn cấu hình bằng Validation trước giai đoạn đánh giá. Các chỉ số được tổng hợp theo ba năm 2022--2024; với XGBoost và LSTM, kết quả các seed được tổng hợp theo giao thức đã lưu. Đây là đối chứng để lựa chọn hướng phát triển trước bước tinh chỉnh Ridge.
+
+\begin{table}[!htbp]
+\centering
+\caption[Đối chứng Ridge, XGBoost và LSTM cùng 6 đặc trưng]{Đối chứng trên cùng bộ 6 đặc trưng Vietcap, trung bình ba fold đánh giá 2022--2024. RMSE và MAE đo trên log return.}
+\label{tab:ch4_family_same_features}
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{5pt}
+\begin{tabularx}{\linewidth}{@{}R r r r@{}}
+\toprule
+\textbf{Mô hình / baseline} & \shortstack[r]{\textbf{RMSE trung bình}\\$\downarrow$} & \shortstack[r]{\textbf{MAE trung bình}\\$\downarrow$} & \shortstack[r]{\textbf{RMSE năm tệ nhất}\\$\downarrow$} \\
+\midrule
+Train Mean & \textbf{0,016291} & 0,011453 & 0,021278 \\
+Zero Return & 0,016350 & 0,011455 & \textbf{0,021254} \\
+\textbf{Ridge, 6 lợi suất} & 0,016354 & \textbf{0,011433} & 0,021375 \\
+LSTM, 6 lợi suất & 0,016395 & 0,011456 & 0,021309 \\
+XGBoost, 6 lợi suất & 0,016472 & 0,011609 & 0,021699 \\
+\bottomrule
+\end{tabularx}
+\endgroup
+\end{table}
+
+\begin{itemize}
+    \item Ridge có RMSE trung bình thấp nhất trong ba họ mô hình học từ đặc trưng ở bảng này và có MAE trung bình thấp nhất trong toàn bảng. Kết quả hỗ trợ đưa Ridge vào bước tinh chỉnh tiếp theo.
+    \item Train Mean có RMSE trung bình thấp nhất, còn Zero Return có RMSE năm tệ nhất thấp nhất. LSTM có RMSE năm tệ nhất thấp hơn Ridge. Vì vậy, bằng chứng về Ridge cần đọc theo từng chỉ số và có đối chứng theo thời gian.
+\end{itemize}
+
+{\footnotesize Nguồn số liệu và xác minh bộ ngày chung được lưu tại \nolinkurl{reports/source_comparison/20261029T142732805710Z/primary_summary.csv} và \nolinkurl{reports/source_comparison/20261029T142732805710Z/verification.json}. Giá trị trong bảng là trung bình theo fold và seed theo giao thức, phân biệt với RMSE tính gộp trên toàn bộ mẫu.}
+
+\subsection{Đối chứng các pipeline trên cùng 200 cặp ngày năm 2026}
+
+Bảng~\ref{tab:ch4_pipeline_common200} ghép kết quả từ nghiên cứu đánh giá năm 2026 và nghiên cứu recency/bias trên \textbf{đúng cùng 200 cặp ngày}, từ origin 05/01/2026 đến ngày nhãn cuối 29/10/2026. Cả hai tệp dự báo dùng cùng lợi suất thực tế và giá đóng cửa điều chỉnh Vietcap để chấm. Trong tập này có 195 phiên biến động khác 0, là mẫu số tính Hit Rate.
+
+\begin{table}[!htbp]
+\centering
+\caption[Đối chứng liên mô hình trên 200 cặp chung năm 2026]{Ridge, XGBoost, LSTM và baseline trên cùng 200 cặp ngày năm 2026. RMSE đo log return, MAE giá đo bằng đồng.}
+\label{tab:ch4_pipeline_common200}
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}R r r r r@{}}
+\toprule
+\textbf{Pipeline lịch sử} & \shortstack[r]{\textbf{RMSE}\\$\downarrow$} & \shortstack[r]{\textbf{MAE giá}\\$\downarrow$} & \shortstack[r]{\textbf{Hit}\\(\%)} & \shortstack[r]{\textbf{Balanced}\\(\%)} \\
+\midrule
+\textbf{Ridge6 refit + bias60} & \textbf{0,0201082} & \textbf{1.064,24} & \textbf{61,03} & \textbf{56,41} \\
+Ridge6 refit, raw & 0,0201238 & 1.081,92 & 50,26 & 53,85 \\
+Ridge16 tham chiếu & 0,0205304 & 1.090,73 & 46,15 & 50,43 \\
+XGBoost tham chiếu & 0,0204885 & 1.106,21 & 43,59 & 47,65 \\
+LSTM30 tham chiếu & 0,0204281 & 1.092,46 & 51,28 & 54,27 \\
+Train Mean đến 2025 & 0,0202441 & 1.095,60 & 40,00 & 50,00 \\
+Zero Return & 0,0201138 & 1.082,06 & N/A & N/A \\
+\bottomrule
+\end{tabularx}
+\endgroup
+\end{table}
+
+\noindent\textbf{Điều kiện đọc bảng.} Ridge6 refit học trên cửa sổ 3 năm với nhãn đến hết 2025, nguồn Vietcap và $\alpha=100$. Phiên bản có bias60 chỉ dùng sai số đã có nhãn tại mỗi origin. Ridge16, XGBoost và LSTM30 tham chiếu học trên Yahoo đến 2022, chọn cấu hình đến hết 2024 và sử dụng ngữ cảnh Yahoo khi dự báo. Lợi suất dự báo được quy đổi bằng giá gốc Vietcap chung để so giá trên cùng basis. Bảng mô tả hiệu quả của các pipeline đã lưu với mốc train và đầu vào khác nhau. Chênh lệch bao gồm tác động của độ mới dữ liệu, đặc trưng, hiệu chỉnh và thuật toán.
+
+Trên 200 cặp này, Ridge6 refit kèm bias60 có RMSE, MAE giá và các chỉ số hướng thuận lợi nhất trong các hàng đã nêu. LSTM30 vẫn có Balanced Accuracy cao hơn Ridge6 raw ($54,27\%$ so với $53,85\%$), cho thấy vai trò của phần hiệu chỉnh trong lựa chọn cuối. Khoảng cách RMSE giữa Ridge6+bias60 và Zero Return rất nhỏ ($0,0201082$ so với $0,0201138$). Các điểm 200 cặp được giữ riêng với kết quả 202 cặp ở Bảng~\ref{tab:ch4_recency_bias} và kết quả 104 cặp ở Bảng~\ref{tab:ch4_period_104}.
+
+{\footnotesize Nguồn đối chứng là \nolinkurl{reports/evaluation_2026/20261030T014012158951Z/metrics.csv}, nhóm \texttt{common}, và \nolinkurl{reports/recency_bias/20261030T022440928507Z/metrics.csv}, nhóm \texttt{previous\_common}. Các cặp ngày và nhãn đã được kiểm tra trực tiếp từ hai tệp \nolinkurl{predictions.csv.gz} tương ứng.}
+
+Hai đối chứng này hỗ trợ lựa chọn một pipeline Ridge gọn, có hiệu chỉnh và có bằng chứng qua nhiều bước nghiên cứu. Các kết quả về cấu hình cửa sổ 3 năm được đọc thêm tại Bảng~\ref{tab:ch4_final_window}. Bộ dữ liệu năm 2026 đã được xem trong nghiên cứu; bước đánh giá tiếp theo cần các dự báo được ghi trước ngày đích và nhãn mới để kiểm tra bundle đang phục vụ.
+
+\FloatBarrier
+\subsection{Trọng số mô hình phục vụ và năm lý do chốt cấu hình}
 Nhóm trích xuất trực tiếp tham số chuẩn hóa \texttt{StandardScaler} và bộ trọng số của tệp \nolinkurl{models/local_demo/ridge6_20261029/ridge.pkl} (Bảng~\ref{tab:ch4_ridge_weights}) để minh họa khả năng giải thích tường minh của mô hình chính:
 
 \begin{table}[!htbp]
@@ -1126,8 +1225,8 @@ Nhóm trích xuất trực tiếp tham số chuẩn hóa \texttt{StandardScaler}
 Các hệ số trên mô tả quan hệ có điều kiện trong mô hình, không phải tác động nhân quả của thị trường. Với đầu vào tương quan, dấu và độ lớn có thể đổi khi refit. Từ toàn bộ chuỗi bằng chứng định lượng trong Chương 4, nhóm chốt lựa chọn \textbf{\texttt{Ridge6 (alpha=100, window=3 năm) + bias60}} làm mô hình chính thức vì năm lý do cốt lõi:
 \begin{enumerate}
     \item \textbf{Phù hợp với kích thước mẫu và mức nhiễu cao:} Với khoảng 746 mẫu trong cửa sổ 3 năm, độ co trọng số $|w_j| \le 0,0014$ nhờ $\alpha = 100$ giúp hạn chế độ phức tạp; vẫn cần kiểm định ngoài mẫu để phát hiện quá khớp.
-    \item \textbf{Kết quả thuận lợi trong các đối chứng đã lưu:} Thắng 3/4 năm Walk-Forward, đạt MAE giá thấp nhất (1.064,12 VNĐ toàn năm 2026; 767,28 VNĐ giai đoạn 06--10/2026) và Balanced Accuracy cao hơn LSTM trong đối chứng lịch sử ($57,95\%$ so với $50,83\%$).
-    \item \textbf{Thích nghi nhanh qua \texttt{bias60} nhân quả:} Kịp thời điều chỉnh độ lệch hệ thống trong nhịp giảm giá 2026 mà không phải huấn luyện lại toàn bộ mỗi ngày.
+    \item \textbf{Có đối chứng trực tiếp với các họ mô hình và baseline:} Bảng~\ref{tab:ch4_family_same_features} cho thấy Ridge có RMSE trung bình thấp nhất trong ba họ mô hình trên cùng 6 đặc trưng. Bảng~\ref{tab:ch4_pipeline_common200} cho thấy pipeline refit kèm bias60 có kết quả thuận lợi hơn các bản XGBoost và LSTM tham chiếu trên cùng 200 cặp ngày. Khi chỉ so độ dài cửa sổ của Ridge, phương án 3 năm có RMSE thấp nhất ở 3/4 năm đánh giá. Lợi thế RMSE so với Zero Return còn nhỏ.
+    \item \textbf{Hiệu chỉnh độ lệch từ sai số đã có nhãn:} Trong backtest, bias60 cập nhật nhân quả và cải thiện các chỉ số của bản Ridge refit trong giai đoạn đã xét. Bundle phục vụ lưu pool sai số và mức hiệu chỉnh theo version để có thể truy vết và tái lập.
     \item \textbf{Suy luận đệ quy đa bước khép kín:} Chỉ sử dụng chuỗi giá đóng cửa để cập nhật 6 đặc trưng qua các bước tương lai, không phải tự tạo giả OHLCV như mô hình 16 đặc trưng.
     \item \textbf{Gọn nhẹ, minh bạch và có thể truy vết:} Luồng phục vụ không cần TensorFlow/XGBoost, lưu bộ chuẩn hóa cùng trọng số, và kiểm tra toàn vẹn bằng mã băm SHA-256. Báo cáo chưa có benchmark độ trễ để cam kết thời gian phản hồi.
 \end{enumerate}
@@ -1153,13 +1252,13 @@ Tổng hợp kết quả từ \textbf{8 đợt huấn luyện chính thức} (ba
 \toprule
 \textbf{Mô hình / Cấu hình} & \textbf{Trạng thái chốt} & \textbf{Cơ sở quyết định từ thực nghiệm} \\
 \midrule
-\textbf{\texttt{Ridge6} ($\alpha=100$, cửa sổ 3 năm) + \texttt{bias60}} & \textbf{Mô hình chính} (Serving mặc định) & Thắng 3/4 năm Walk-Forward 2022--2025 ($0,017078$ RMSE); đạt MAE giá thấp nhất ($1.064,12$ VNĐ), Hit Rate $60,91\%$ và Balanced Accuracy $56,62\%$ trên 202 phiên 2026; tốt hơn \texttt{LSTM} trên 104 phiên 06--10/2026 ($57,95\%$ vs $50,83\%$ Balanced Acc); chỉ dùng 6 feature lợi suất nên chạy đệ quy khép kín an toàn. \\
+\textbf{\texttt{Ridge6} ($\alpha=100$, cửa sổ 3 năm) + \texttt{bias60}} & \textbf{Mô hình chính} (Serving mặc định) & Bảng~\ref{tab:ch4_pipeline_common200} đối chứng trực tiếp với XGBoost, LSTM và baseline trên cùng 200 cặp. Pipeline lịch sử đạt RMSE $0,0201082$, MAE giá $1.064,24$ đồng và Balanced Accuracy $56,41\%$. Cửa sổ 3 năm được chọn riêng bằng RMSE trung bình bốn năm Validation. Đầu vào 6 lợi suất cho phép cập nhật feature từ chuỗi Close trong mô phỏng. \\
 \midrule
 \texttt{Ridge6} nguyên bản (không bias) & \textbf{Đối chứng bắt buộc} & Dùng chung trọng số \texttt{ridge.pkl} để người dùng so sánh tác động của thành phần hiệu chỉnh nhân quả \texttt{bias60}, đồng thời đảm nhiệm các bước $h \ge 2$ trong mô phỏng đệ quy đa bước (\texttt{v2--v4}). \\
 \midrule
 \nolinkurl{Zero-Return} Baseline & \textbf{Chuẩn tham chiếu} & Giả định giá không đổi ($\hat{y}_t = 0$). Là mốc kiểm soát bắt buộc để đo \texttt{MSE Skill} và tránh ảo giác độ chính xác. \\
 \midrule
-\texttt{LSTM} (lb=30), \texttt{XGBoost}, \texttt{Logistic/XGB Classifier} & \textbf{Lưu nghiên cứu} (Không đưa vào API chính) & \texttt{LSTM30} đại diện cho hướng Deep Learning để đối chứng lịch sử trên UI (đạt $50,83\%$ Balanced Acc ở 104 phiên); nhánh Phân loại suy biến thành dự đoán giảm 100\% sau Sigmoid nên bị loại. \\
+\texttt{LSTM} (lb=30), \texttt{XGBoost}, \texttt{Logistic/XGB Classifier} & \textbf{Lưu nghiên cứu} (Không đưa vào API chính) & LSTM30 có RMSE thấp nhất trong bảng Test 2025 ở Chương 3. Trên cùng 200 cặp năm 2026, các bản LSTM/XGBoost tham chiếu có RMSE và MAE cao hơn Ridge6 refit+bias60, với các mốc train được ghi rõ tại Bảng~\ref{tab:ch4_pipeline_common200}. Nhánh phân loại được đánh giá riêng tại Bảng~\ref{tab:ch3_direction_selective}. \\
 \bottomrule
 \end{tabular}%
 }
